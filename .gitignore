@@ -1,0 +1,15 @@
+# Fichiers temporaires
+*~
+
+# Binaires compilés
+*.o
+*.so
+
+# Documentation/LaTeX compilée
+*.pdf
+*.div
+*.aux
+*.log
+*.nav
+*.out
+*.toc
