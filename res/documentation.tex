@@ -1,0 +1,98 @@
+\documentclass{res/univ-projet}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{DejaVuSans}
+
+\logo{res/logo_univ.png}
+\author{Damien Picard}
+\relecteur{Damien Picard}
+\filiere{M1 SSI}
+\projet{Univ-projet}
+\projdesc{Une classe pour documenter ce projet,\\
+une classe pour les documenter tous.}
+\title{Documentation}
+\version{1.0}
+
+\histentry{1.0}{13/11/2013}{Première version}
+\histentry{0.5}{10/12/2012}{Changelog pour la d\'emo}
+
+\begin{document}
+    \maketitle
+    \tableofcontents
+    \clearpage
+    
+    \section{Introduction} 
+    \label{sec:intro}
+
+        \subsection{Le but}
+        \label{sub:le_but}
+                Le but de cette classe est de permettre la production rapide et en
+                {\LaTeX} de documents li\'es à la gestion de projets.
+
+        \subsection{Pourquoi ne pas r\'eutiliser l'existant ?}
+        \label{sub:pourquoi_ne_pas_r'eutiliser_l_existant_}
+                Tout simplement car l'existant ne me convenait pas et que je le jugeais trop
+            l\'eger, seule la gestion des fiches et des en-têtes/pieds de pages \'etaient pr\'esents.
+
+                De plus de nombreux d\'efauts de conception \'etaient eux aussi pr\'esents, utilisation de
+            valeurs non d\'efinie dans le fichier, utilisation de paquets non import\'es, bref
+            c'est fait au pif et ça ça ne me convient pas.
+    
+        \subsection{Pourquoi celle ci serait elle mieux ?}
+        \label{sub:pourquoi_celle_ci_serait_elle_mieux_}
+                Parceque premièrement ce n'est plus un paquetage, mais une classe de document ce qui
+            est moins ambigü à mon sens. En effet un paquetage ne devrait pas red\'efinir aussi 
+            drastiquement la mise en page, seulement apporter des fonctionnalit\'es.
+
+                Deuxièmement le plus grand soin a \'et\'e apport\'e a l'\'evitement des erreur
+            de conception, tout ce dont la classe a besoin est import\'e dans la classe ou
+            d\'efini dans la classe. Cela l'alourdit certes mais cela allège la source du
+            document à produire.
+
+                Finalement, c'est moi qui l'ai fait alors ça ne peut que être bien.
+
+    \section{Comment ça fonctionne} 
+    \label{sec:comment_a_fonctionne}
+        
+        \subsection{Principes g\'en\'eraux}
+        \label{sub:principes_g'en'eraux}
+                La majeur partie du comportement de cette classe est h\'erit\'e de la
+            classe \verb?article?. Tout ce qui n'est pas mentionn\'e après est donc à consid\'erer
+            comme dans la class \verb?article?.
+        
+        \subsection{Utilisation}
+        \label{sub:utilisation}
+                Pour utiliser cette classe c'est très simple il suffit de d\'eclarer votre
+            document avec\\ \verb?\documentclass{<path-vers-univ-projet>}? sans l'extension \verb?.cls?.
+        
+        \subsubsection{Page de garde}
+        \label{sub:page_de_garde}
+                Bien que le comportement de article soit repris, il y a une page de garde
+            entière, paramêtrable à l'aide des champs suivants (en plus des champs usuels):
+            \begin{itemize}
+                \item \verb?\logo?: Le chemin vers l'image servant de logo.
+                \item \verb?\relecteur?: Le nom du relecteur.
+                \item \verb?\filiere?: Le nom de votre filière.
+                \item \verb?\projet?: Le nom du projet sur lequel porte le document.
+                \item \verb?\version?: La version du document.
+            \end{itemize}
+            
+                Il existe en plus une autre commande qui permet de paramêtrer le tableau de
+            changelog affich\'e sur la page de garde:
+            \begin{itemize}
+                \item \verb?\histentry{version}{date}{description}?
+            \end{itemize}
+            Chacun des appel à cette macro rajoute une entr\'ee dans le tableau.
+        
+        \subsubsection{Les en-têtes}
+        \label{sub:les_en_t_tes}
+                Les en-têtes et les pieds de pages ont \'et\'es modifi\'es pour prendre
+            en compte les diff\'erentes informations relatives au documents.
+        
+    \section{Évolutions possibles} 
+    \label{sec:_volutions_possibles}
+   
+            À l'heure actuelle il manque certainement beaucoup de choses. Donc
+        toute suggestion, ainsi que toute aide, sera la bienvenue.
+\end{document}

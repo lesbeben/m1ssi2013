@@ -1,0 +1,84 @@
+%Définition en-tête et pied de page
+\pagestyle{fancy}
+\fancyhf{} %efface les en-tête, pieds de page par defaut de LaTeX 
+\rhead{\includegraphics[width=9em]{res/logo_univ.png}}
+\lhead{
+	\bfseries{\filiere~  - \matiere}\\
+	\textcolor{red}{\completeName}\\
+	\docType{  Version }\version
+}
+\cfoot{\thepage\ / \pageref{LastPage}}
+
+%Page de garde
+\newcommand{\makeFirstPage}[0] {
+\begin{center}
+\begin{large}
+\vspace*{5cm}
+\textbf{\Huge{\docType}}
+\vspace*{7cm}
+
+\fcolorbox{black}{gris}{
+\begin{minipage}{15cm}
+\begin{tabularx}{10cm}{lXl}
+	& & \\
+	\bfseries{Version} & & \version\\
+	& & \\
+	\bfseries{Date} & & \docDate\\
+	& & \\
+	\bfseries{Rédigé par} & & \author \\
+	& & \\
+	\bfseries{Relu par} & & \checked \\
+	& & \\
+	\bfseries{Approuvé par} & & \approved \\
+	& & \\
+\end{tabularx}	
+\end{minipage}
+}
+\end{large}
+\end{center}
+}
+
+%Macro commande pour la création d'un tableau de type fiche
+\newcommand{\fiche}[9] {
+	\noindent
+\begin{tabular}{|p{3.5cm}| p{1cm} | p{3cm} | p{.5cm} | p{7cm}|} 
+\hline
+\multicolumn{2}{|>{\color{white}\columncolor{blue}}l|}{\bfseries{ Nom}} & \multicolumn{3}{>{\color{white}\columncolor{blue}}l|}{\bfseries{#1}}\\
+\hline
+\multicolumn{2}{|l|}{\bfseries{\bfseries{Acteurs concernés}}} & \multicolumn{3}{m{10.5cm}|}{#2}\\
+\hline
+\multicolumn{2}{|l|}{\bfseries{\bfseries{Description}}} & \multicolumn{3}{m{10.5cm}|}{#3}\\
+\hline
+\multicolumn{2}{|l|}{\bfseries{\bfseries{Préconditions}}} & \multicolumn{3}{m{10.5cm}|}{#4}\\
+\hline
+\multicolumn{2}{|l|}{\bfseries{\bfseries{Evénements déclenchants}}} & \multicolumn{3}{m{10.5cm}|}{#5}\\
+\hline
+\multicolumn{2}{|l|}{\bfseries{\bfseries{Conditions d'arrêt}}} & \multicolumn{3}{m{10.5cm}|}{#6}\\
+\hline
+\multicolumn{5}{|>{\columncolor[gray]{.7}}l|}{\bfseries{\bfseries{Description du flot d'événements principal:}}}\\
+\hline
+\multicolumn{3}{|>{\columncolor[gray]{.7}}c|}{\bfseries{\bfseries{Acteur(s)}}} & \multicolumn{2}{>{\columncolor[gray]{.7}}c|}{\bfseries{\bfseries{Système}}}\\
+\hline
+\multicolumn{3}{|p{7.5cm}|}{#7} & \multicolumn{2}{p{7.5cm}|}{#8}\\
+\hline
+\bfseries{Flots d'exceptions:} & \multicolumn{4}{|p{11.5cm}|}{#9}\\
+\hline
+\end{tabular}
+\\
+}
+
+
+%Les en-têtes de longtable pour les exigences
+\def\headerExigence{
+% Header for the first page of the table
+\multicolumn{1}{|>{\color{white}\columncolor{blue}}l|}{\bfseries{Référence}} & \multicolumn{1}{|>{\color{white}\columncolor{blue}}l|}{\bfseries{Fonctionnalité}} & \multicolumn{1}{|>{\color{white}\columncolor{blue}}l|}{\bfseries{Priorité}}
+\endfirsthead
+% Header for next pages of the table
+\multicolumn{1}{|>{\color{white}\columncolor{blue}}l|}{\bfseries{Référence}} & \multicolumn{1}{|>{\color{white}\columncolor{blue}}l|}{\bfseries{Fonctionnalité}} & \multicolumn{1}{|>{\color{white}\columncolor{blue}}l|}{\bfseries{Priorité}}
+\endhead
+%This is the footer for all pages except the last page of the table...
+\endfoot
+%This is the footer for the last page of the table...
+\endlastfoot
+}
+
