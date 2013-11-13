@@ -78,7 +78,7 @@ Rappel des commandes GIT
   ```
   $ git log
   ```
-  Mettre de coté les changements non-commitési et revenir au commit précédent:
+  Mettre de coté les changements non-commités et revenir au commit précédent:
   ```
   $ git stash
   ```
