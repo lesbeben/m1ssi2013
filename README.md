@@ -21,6 +21,10 @@ Rappel des commandes GIT
   ```
   $ git status
   ```
+  Afficher la liste des commit qui ont affecté un fichier:
+  ```
+  $ git log --follow nom-fichier
+  ```
   Ajouter des fichiers pour le prochain commit:
   ```
   $ git add file [file]*
@@ -29,11 +33,22 @@ Rappel des commandes GIT
   ```
   $ git reset file [file]*
   ```
-  Acter les changements sélectionner:
+  Acter les changements sélectionnés:
   ```
   $ git commit
   ```
-  
+  Modification du commit précédent(en cas d'oubli d'un fichier):
+  ```
+  $ git commit --amend
+  ```
+  Annulation d'un ou plusieur commit:
+  ```
+  $ git revert SHA1 [SHA1]*
+  ```
+  Annulation (définitive) des changements depuis le commit précédent:
+  ```
+  $ git checkout -- fichier [fichier]*
+  ```
 ###Gestion des branches ###
   Lister les branches:
   ```
@@ -47,6 +62,14 @@ Rappel des commandes GIT
   ```
   $ git checkout nom-branche
   ```
+  Revenir en arrière dans la branche(lecture seule):
+  ```
+  $ git checkout SHA-COMMIT
+  ```
+  Retourner en bout de branche (suite à la commande précédente):
+  ```
+  $ git checkout nom-branche-courante
+  ```
   Fusionner une branche dans la branche courante:
   ```
   $ git merge nom-branche
@@ -55,13 +78,17 @@ Rappel des commandes GIT
   ```
   $ git log
   ```
-  Mettre de coté les changements non-commités:
+  Mettre de coté les changements non-commitési et revenir au commit précédent:
   ```
   $ git stash
   ```
-  Réappliquer les derniers changements mis dans la stash:
+  Réappliquer les derniers changements mis dans la stash(ne dépile rien):
   ```
   $ git stash apply
+  ```
+  Vider la stash:
+  ```
+  $ git stash clear
   ```
   
 ###Partage et mise à jour###
@@ -73,3 +100,6 @@ Rappel des commandes GIT
   ```
   $ git pull
   ```
+
+###Références###
+  LE git pro book(en): http://git-scm.com/book
