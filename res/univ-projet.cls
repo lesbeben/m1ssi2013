@@ -77,6 +77,34 @@
 % Permet de conditionner la mise en page de la page de garde.
 \usepackage{ifthen}
 
+% Mecanique de fiche.
+\newcommand{\fiche}[9] {
+	\noindent
+\begin{tabular}{|p{3.5cm}| p{1cm} | p{3cm} | p{.5cm} | p{7cm}|} 
+\hline
+\multicolumn{2}{|>{\color{white}\columncolor{blue}}l|}{\bfseries{ Nom}} & \multicolumn{3}{>{\color{white}\columncolor{blue}}l|}{\bfseries{#1}}\\
+\hline
+\multicolumn{2}{|l|}{\bfseries{\bfseries{Acteurs concernés}}} & \multicolumn{3}{m{10.5cm}|}{#2}\\
+\hline
+\multicolumn{2}{|l|}{\bfseries{\bfseries{Description}}} & \multicolumn{3}{m{10.5cm}|}{#3}\\
+\hline
+\multicolumn{2}{|l|}{\bfseries{\bfseries{Préconditions}}} & \multicolumn{3}{m{10.5cm}|}{#4}\\
+\hline
+\multicolumn{2}{|l|}{\bfseries{\bfseries{Evénements déclenchants}}} & \multicolumn{3}{m{10.5cm}|}{#5}\\
+\hline
+\multicolumn{2}{|l|}{\bfseries{\bfseries{Conditions d'arrêt}}} & \multicolumn{3}{m{10.5cm}|}{#6}\\
+\hline
+\multicolumn{5}{|>{\columncolor[gray]{.7}}l|}{\bfseries{\bfseries{Description du flot d'événements principal:}}}\\
+\hline
+\multicolumn{3}{|>{\columncolor[gray]{.7}}c|}{\bfseries{\bfseries{Acteur(s)}}} & \multicolumn{2}{>{\columncolor[gray]{.7}}c|}{\bfseries{\bfseries{Système}}}\\
+\hline
+\multicolumn{3}{|p{7.5cm}|}{#7} & \multicolumn{2}{p{7.5cm}|}{#8}\\
+\hline
+\bfseries{Flots d'exceptions:} & \multicolumn{4}{|p{11.5cm}|}{#9}\\
+\hline
+\end{tabular}
+\\
+}
 
 % page de garde
 \makeatletter
