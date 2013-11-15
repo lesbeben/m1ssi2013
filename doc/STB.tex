@@ -3,67 +3,112 @@
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
 
-\begin{document}
-
 \title{Spécification Technique des Besoins}
-\author{}
+\author{\bsc{Michotte} Maxime}
+\projet{M1SSI}
+\projdesc{Projet de génération d'OTP}
+\filiere{M1SSI}
+\version{1.0}
+\relecteur{\bsc{Zigh} Benjamin}
+\signataire{\bsc{Bardet} Magali}
 \date{Novembre 2013}
 
+\histentry{1.0}{15/11/2013}{test}
+
+\begin{document}
+\maketitle
 %-------------------------------------------------------------------------------
 \section*{Objet}
-Etude et implémentations des systèmes d'auth via mdp jetable :
+Etude et implémentations des systèmes d'authentification utilisant des mots de passe jetables :
 \begin{itemize}
-Besoin op.
-\begin{itemize}
-\item etat de l'art sur le syst existant
-\item fournir un logiciel exploitable implémentant ce syst
-\item objectif : mise en prod
-\end{itemize}
-Obj tech
-\begin{itemize}	
-\item mise en place état de l'art sur certain (voir tous les) syst
-\item Implémentation
-\end{itemize}
-Contraintes et recom :
-\begin{itemize}
-\item Respecter les spécif de base
-\item Syst secure (le prouver)
-\item Choisir une implémentation adaptée en fonction des besoin et de l'état de l'art établie
-\end{itemize}
-Résultats attendus
-\begin{itemize}
-\item Etat de l'art le + exhaustif possible
-\item Impl. sur CàP et/ou Android
-\end{itemize}
+    \item Besoin opérationnel
+        \begin{itemize}
+            \item Garantir une authentification forte
+            \item Etat de l'art sur les systèmes existants
+            \item Objectif : mise en production
+        \end{itemize}
+    \item Objectifs techniques
+	    \begin{itemize}	
+            \item Implémentation des solutions retenues sur un ou plusieurs supports
+	    \end{itemize}
+    \item Contraintes et recommmandations
+        \begin{itemize}
+            \item Respecter les spécifications de base et norme RFC
+            \item Montrer que le système produit est sûr
+            \item Choisir une implémentation adaptée en fonction des besoins et de l'état de l'art établie
+        \end{itemize}
+    \item Résultats attendus
+        \begin{itemize}
+            \item Système sûr et fonctionnel
+            \item Etat de l'art le plus exhaustif possible
+            \item Implémentation sur Carte à puces et/ou Android
+        \end{itemize}
 \end{itemize}
 %-------------------------------------------------------------------------------
-\section*{Doc. appl et ref}
-	- Les rfc 2289, 4226, 4256, 4793, 6238
-	- Google auth
-
+\section*{Documents applicables et de référence}
+\begin{itemize}
+    \item \href{http://tools.ietf.org/html/rfc2289}{RFC 2289}, \href{http://www.ietf.org/rfc/rfc4226.txt}{RFC 4226}, \href{http://www.ietf.org/rfc/rfc4256.txt}{RFC 4256}, \href{http://tools.ietf.org/html/rfc4793}{RFC 4793}, \href{http://tools.ietf.org/html/rfc6238}{RFC 6238}
+	\item \href{http://code.google.com/p/google-authenticator/}{Google Authenticator}
+\end{itemize}
 %-------------------------------------------------------------------------------
-\section*{Terminologie et sigle}
+\section*{Terminologie et sigles utilisés}
 	- 
 %-------------------------------------------------------------------------------
-\section*{Exigence fonct}
-	Id	|	Intitulé			|	Acteur	|	Priorité\\
-	---------------------------------------------------------\\
-	1	|	Etat de l'art		|	Equipe	|	Indispensable\\
-	2	|	Association			|	Client	|	Indispensable\\
-	3	|	Génération			|	Client	|	Indispensable\\
-	4	|	Authentification	|	Client	|	Indispensable\\
-	5	|	Re-synchronisation	|	Equipe	|	Indispensable\\
+\section*{Exigence fonctionnelles}
+\begin{figure}
+\hfill
+\includegraphics[scale=0.5]{diagramme1.png}
+\hfill
+\caption{Schéma}
+\end{figure}
+\begin{tabular}{|c|l|l|c|}
+    \hline
+    \rowcolor{gray}
+    \textcolor{white}{Id} & \textcolor{white}{Intitulé} & \textcolor{white}{Acteur(s)} & \textcolor{white}{Priorité}\\
+    \hline
+    1 & Etat de l'art & Equipe & Indispensable\\
+    \hline
+    2 & Association & Client & Indispensable\\
+    \hline
+    3 & Génération & Client & Indispensable\\
+    \hline
+    4 & Authentification & Client & Indispensable\\
+    \hline
+    5 & Re-synchronisation & Equipe & Indispensable\\
+    \hline
+\end{tabular}
 	
-(Pour les fiches prenez vos notes)
 %-------------------------------------------------------------------------------
 \section*{Exigences opérationnelles}
-\begin{itemize}
-\item Respecter les RFC
-\item ...
-\end{itemize}
+\begin{tabular}{|c|l|c|}
+    \hline
+    \rowcolor{gray}
+    \textcolor{white}{Id} & \textcolor{white}{Intitulé} & \textcolor{white}{Priorité}\\
+    \hline
+    EF\_01 & Génération d'un OTP en moins d'une secondes & Indispensable\\
+    \hline
+    EF\_02 & OTP non prévisible & Indispensable\\
+    \hline
+    EF\_03 & Résistant à une attaque exhaustive & Indispensable\\
+    \hline
+    EF\_04 & Respect des RFC & Indispensable\\
+    \hline
+\end{tabular}
 
 %-------------------------------------------------------------------------------
 \section*{Exigences d'interface}
+\begin{tabular}{|c|l|c|}
+    \hline
+    \rowcolor{gray}
+    \textcolor{white}{Id} & \textcolor{white}{Intitulé} & \textcolor{white}{Priorité}\\
+    \hline
+    E\_INT01 & UNIX(Client/Serveur/Token) & Indispensable\\
+    \hline
+    E\_INT02 & Android(Token) & Important\\
+    \hline
+    E\_INT03 & Java Card & Secondaire\\
+    \hline
+\end{tabular}
 
 %-------------------------------------------------------------------------------
 \section*{Exigences de qualité}
