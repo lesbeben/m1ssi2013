@@ -22,6 +22,7 @@
     \newcommand{\filiere}[1]{\def \@filiere {#1}}
     \newcommand{\version}[1]{\def \@version {#1}}
     \newcommand{\relecteur}[1]{\def \@relecteur {#1}}
+    \newcommand{\signataire}[1]{\def \@signataire {#1}}
     \newcommand{\logo}[1]{\def \@logo {#1}}
     \newcommand{\histentry}[3]{\addtomacro{\@history}{#1&#2&#3\\\hline}}
     \projet{}
@@ -29,6 +30,7 @@
     \version{}
     \relecteur{}
     \logo{}
+    \signataire{}
     \def \@history {} % Initialise l'historique a vide.
 \makeatother
 
@@ -98,6 +100,7 @@
             \vspace{2em}
             Auteur: \@author\\
             Relecteur: \@relecteur\\
+            Approuv\'e par: \@signataire\\
             \vspace{5em}
             \begin{tabular}[t]{|c|c|p{10cm}|}
                 \hline
