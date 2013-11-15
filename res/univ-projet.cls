@@ -111,22 +111,32 @@
 \def \maketitle{%
     \begin{titlepage}
         \ifx \@logo \@empty
-            \hfill
+            \ifx \@projet \@empty
+                \relax
+            \else
+                    \flushright
+                    {\Huge {\bfseries \@projet}}\newline
+                    \ifx \@projdesc \@empty
+                        \relax
+                    \else
+                        {\Large \@projdesc} 
+                    \fi
+            \fi
         \else
             \includegraphics[width=0.33\textwidth]{\@logo}
-        \fi
-        \ifx \@projet \@empty
-            \relax
-        \else
-            \parbox[b][4em][b]{0.66\textwidth}{
-                \flushright
-                {\Huge {\bfseries \@projet}}\\
-                \ifx \@projdesc \@empty
-                    \relax
-                \else
-                    {\Large \@projdesc} 
-                \fi
-            }
+            \ifx \@projet \@empty
+                \relax
+            \else
+                \parbox[b][4em][b]{0.66\textwidth}{
+                    \flushright
+                    {\Huge {\bfseries \@projet}}\newline
+                    \ifx \@projdesc \@empty
+                        \relax
+                    \else
+                        {\Large \@projdesc} 
+                    \fi
+                }
+            \fi
         \fi
         
         ~\vfill
