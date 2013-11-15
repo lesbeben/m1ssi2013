@@ -115,29 +115,57 @@
         \else
             \includegraphics[width=0.33\textwidth]{\@logo}
         \fi
-        \parbox[b][4em][b]{0.66\textwidth}{
-            \flushright
-            {\Huge {\bfseries \@projet}}\\
-            {\Large \@projdesc} 
-        }
+        \ifx \@projet \@empty
+            \relax
+        \else
+            \parbox[b][4em][b]{0.66\textwidth}{
+                \flushright
+                {\Huge {\bfseries \@projet}}\\
+                \ifx \@projdesc \@empty
+                    \relax
+                \else
+                    {\Large \@projdesc} 
+                \fi
+            }
+        \fi
         
         ~\vfill
         \begin{center}
-            {\huge \textbf{\@title} {\Large \@version}}\\
+            \ifx \@title \@empty
+                \relax
+            \else
+                {\huge \textbf{\@title} {\Large \@version}}\\
+            \fi
             {\@date}\\
             \vspace{2em}
-            Auteur: \@author\\
-            Relecteur: \@relecteur\\
-            Approuv\'e par: \@signataire\\
+            \ifx \@author \@empty
+                \relax
+            \else
+                Auteur: \@author\\
+            \fi
+            \ifx \@relecteur \@empty
+                \relax
+            \else
+                Relecteur: \@relecteur\\
+            \fi
+            \ifx \@signataire \@empty    
+                \relax
+            \else
+                Approuv\'e par: \@signataire\\
+            \fi
             \vspace{5em}
-            \begin{tabular}[t]{|c|c|p{10cm}|}
-                \hline
-                \rowcolor{gray} \textcolor{white} {\bfseries Version} & \textcolor{white} {\bfseries Date} & \textcolor{white} {\bfseries Changelog} \\
-                \hline
-                \@history
-                &&\\
-                \hline 
-            \end{tabular}
+            \ifx \@history \@empty
+                \relax
+            \else
+                \begin{tabular}[t]{|c|c|p{10cm}|}
+                    \hline
+                    \rowcolor{gray} \textcolor{white} {\bfseries Version} & \textcolor{white} {\bfseries Date} & \textcolor{white} {\bfseries Changelog} \\
+                    \hline
+                    \@history
+                    &&\\
+                    \hline 
+                \end{tabular}
+            \fi
         \end{center}
         \vfill
     \end{titlepage}
