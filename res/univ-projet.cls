@@ -31,6 +31,7 @@
     \relecteur{}
     \logo{}
     \signataire{}
+    \projdesc{}
     \def \@history {} % Initialise l'historique a vide.
 \makeatother
 
@@ -111,30 +112,23 @@
 \def \maketitle{%
     \begin{titlepage}
         \ifx \@logo \@empty
-            \ifx \@projet \@empty
-                \relax
-            \else
-                    \flushright
-                    {\Huge {\bfseries \@projet}}\newline
-                    \ifx \@projdesc \@empty
-                        \relax
-                    \else
-                        {\Large \@projdesc} 
-                    \fi
-            \fi
+            \hfill
         \else
             \includegraphics[width=0.33\textwidth]{\@logo}
-            \ifx \@projet \@empty
-                \relax
+        \fi
+        \ifx \@projet \@empty
+            \relax
+        \else
+            \ifx \@projdesc \@empty
+            \parbox[b][4em][b]{0.66\textwidth}{
+                    \flushright
+                    {\Huge {\bfseries \@projet}}
+                }
             \else
                 \parbox[b][4em][b]{0.66\textwidth}{
                     \flushright
-                    {\Huge {\bfseries \@projet}}\newline
-                    \ifx \@projdesc \@empty
-                        \relax
-                    \else
-                        {\Large \@projdesc} 
-                    \fi
+                    {\Huge {\bfseries \@projet}}
+                    \newline {\Large \@projdesc} 
                 }
             \fi
         \fi
