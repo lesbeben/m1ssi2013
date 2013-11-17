@@ -67,9 +67,17 @@
     \renewcommand{\footrulewidth}{\headrulewidth}
     \fancyhf{}
 
-    \fancyhead[L]{\@filiere}
+    \ifx \@filier \@empty
+        \relax
+    \else
+        \fancyhead[L]{\@filiere}
+    \fi
     \fancyhead[C]{\large \@projet}
-    \fancyhead[R]{\@title-\@version}
+    \ifx \@empty \@version
+        \fancyhead[R]{\@title}
+    \else
+        \fancyhead[R]{\@title-\@version}
+    \fi
 
     \fancyfoot[L]{\@author}
     \fancyfoot[R]{\thepage}
@@ -122,12 +130,12 @@
             \ifx \@projdesc \@empty
             \parbox[b][4em][b]{0.66\textwidth}{
                     \flushright
-                    {\Huge {\bfseries \@projet}}
+                   \hfill {\Huge {\bfseries \@projet}}
                 }
             \else
                 \parbox[b][4em][b]{0.66\textwidth}{
                     \flushright
-                    {\Huge {\bfseries \@projet}}
+                    \hfill {\Huge {\bfseries \@projet}}
                     \newline {\Large \@projdesc} 
                 }
             \fi
