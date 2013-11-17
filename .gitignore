@@ -7,7 +7,7 @@
 
 # Documentation/LaTeX compilée
 *.pdf
-*.div
+*.dvi
 *.aux
 *.log
 *.nav
