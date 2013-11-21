@@ -1,0 +1,304 @@
+\documentclass{"../res/univ-projet"}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage{colortbl}
+
+\logo{../res/logo_univ.png}
+\title{Architecture Logicielle}
+\author{\bsc{Picard} Damien}
+\projet{M1SSI}
+\projdesc{Projet de g\'en\'eration d'OTP}
+\filiere{M1SSI}
+\version{0.1}
+\relecteur{\bsc{}}
+\signataire{\bsc{}}
+\date{Novembre 2013}
+
+\histentry{0.1}{21/11/2013}{Premier jets}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+%-------------------------------------------------------------------------------
+\section{Objet}
+Ce document à pour but de pr\'eciser les d\'etails techniques du logiciel final.
+
+\section{Documents de r\'ef\'erences}
+\subsection{Documents de sp\'ecifications}
+
+
+%-------------------------------------------------------------------------------    
+\section{Terminologie et sigle}
+\subsection{Glossaire}
+
+\subsection{Abbr\'eviation}
+\begin{description}
+    \item[MHz] M\'egahertz, le nombre d'op\'eration machine par secondes.
+\end{description}
+
+\subsection{Formalisme utilis\'e}
+
+\subsection{L\'egendes et convention}
+
+%-------------------------------------------------------------------------------
+\section{Configuration requise}
+\subsection{Performances de calcul}
+On suppose l'impl\'ementation du token possible sur de très petit 
+calculateurs, donc une fr\'equence processeur de \verb?700MHz? est
+suppos\'ee suffisante.
+
+\subsection{P\'eriph\'eriques et mat\'eriel sp\'ecifiques}
+\begin{tabular}{|c|l|c|}
+    \hline
+    \rowcolor{gray}
+    \textcolor{white}{\bfseries Identifiant} & 
+    \textcolor{white}{\bfseries Description} &
+    \textcolor{white}{\bfseries Priorit\'e} \\
+    \hline
+    PR-M\_001 &
+    Calculateur \verb?700MHz? pour le token &
+    Indispensable\\
+    \hline
+    PR-M\_002 &
+    Communication stable entre le client et le serveur &
+    Indispensable\\
+    \hline
+\end{tabular}
+
+\subsection{Système d'exploitation}
+\begin{tabular}{|c|l|c|}
+    \hline
+    \rowcolor{gray}
+    \textcolor{white}{\bfseries Identifiant} & 
+    \textcolor{white}{\bfseries Description} &
+    \textcolor{white}{\bfseries Priorit\'e} \\
+    \hline
+    OS\_001& 
+    GNU/Linux pour un token, un client et un serveur&
+    Indispensable\\
+    \hline
+    OS\_002&
+    Android pour un token&
+    Important\\
+    \hline
+\end{tabular}
+
+\subsection{Pr\'e-requis logiciels}
+\begin{tabular}{|c|l|c|}
+    \hline
+    \rowcolor{gray}
+    \textcolor{white}{\bfseries Identifiant} & 
+    \textcolor{white}{\bfseries Description} &
+    \textcolor{white}{\bfseries Priorit\'e} \\
+    \hline
+    PR-L\_001 &
+    Support de l'API POSIX pour le token, le client et le serveur &
+    Indispensable\\
+    \hline
+\end{tabular}
+
+
+%-------------------------------------------------------------------------------
+\section{Architectures statique}
+\subsection{Structure}
+        %-----------------------------------------------------------------------
+        %          GROS SCH\'EMA DE PORC
+        %-----------------------------------------------------------------------
+
+\subsection{Token GNU/Linux C}
+\subsubsection{Rôle}
+Générer des mots de passe jetables permettant de s'authentifier
+sur le client.
+
+\subsubsection{Propri\'et\'es et attributs de caractèrisation}
+\begin{description}
+    \item[Secret] Le secret de l'utilisateur qui permet de générer les
+        mots de passes jetables.
+    \item[OTP] Le mot de passe généré.
+\end{description}
+
+
+\subsubsection{Services offert}
+\begin{description}
+    \item[genererOTP()] Génère un OTP selon la méthode et les
+        paramêtres passés.
+\end{description}
+
+\subsubsection{D\'ependances}
+
+\subsubsection{Langage de programmation}
+\begin{itemize}
+    \item C
+\end{itemize}
+
+\subsubsection{Proc\'ed\'e de d\'eveloppement}
+\begin{enumerate}
+    \item D\'evelopper des modules r\'ealisant chaque algo de g\'en\'eration
+        d'OTP.
+    \item D\'evelopper un g\'en\'erateur de secrets.
+    \item Peut être une interface graphique ?
+\end{enumerate}
+
+
+\subsubsection{Taille et complexit\'e}
+\begin{itemize}
+    \item Taille et compléxité dépendantes de l'algo de génération
+        de mots de passes jetables
+\end{itemize}
+
+\subsection{Client}
+
+\subsubsection{Rôle}
+Permettre une authentification sur un service en demandant à
+l'utilisateur un mot de passe jetable.
+
+\subsubsection{Propri\'et\'es et attributs de caractèrisation}
+
+\subsubsection{Services offert}
+\begin{description}
+    \item[authenticate(char * server, int port, request req):] Permet
+        de s'authentifier auprès du serveur \verb?server? sur 
+        le port \verb?port?, d'après la requête \verb?req?.
+\end{description}
+
+\subsubsection{D\'ependances}
+\begin{itemize}
+    \item Sockets Berkeley
+\end{itemize}
+
+
+\subsubsection{Langage de programmation}
+\begin{itemize}
+    \item C
+\end{itemize}
+
+\subsubsection{Proc\'ed\'e de d\'eveloppement}
+\begin{enumerate}
+    \item Déterminer le protocole d'échange entre le client et le
+        serveur.
+    \item Déterminer le contenu d'une requête.
+\end{enumerate}
+
+
+\subsubsection{Taille et complexit\'e}
+La taille et la complexité du client sont assez faible.
+
+\subsection{Serveur}
+
+\subsubsection{Rôle}
+Dire si un mot de passe jetable est valide ou non pour 
+s'authentifier sur un service donné.
+
+\subsubsection{Propri\'et\'es et attributs de caractèrisation}
+\begin{description}
+    \item[Port] Le port utilisé pour accéder au serveur
+        d'authentification.
+    \item[Adresse] L'adresse pour accéder au serveur 
+        d'authentification.
+\end{description}
+
+\subsubsection{Services offert}
+\begin{description}
+    \item[associate(char * user, char * secret):] Associe un secret à un 
+    utilisateur.
+    \item[resynchronize(char * user):] Demande une resynchronisation pour
+    un utilisateur donné.
+\end{description}
+
+
+\subsubsection{D\'ependances}
+\begin{itemize}
+    \item Sockets Berkeley
+\end{itemize}
+
+
+\subsubsection{Langage de programmation}
+\begin{itemize}
+    \item C
+\end{itemize}
+
+
+\subsubsection{Proc\'ed\'e de d\'eveloppement}
+\begin{enumerate}
+    \item Déterminer le protocole de communication entre client et
+        serveur.
+    \item Déterminer le contenu d'une requête d'authentification
+    \item Utiliser les modules de g\'en\'eration d'OTP pour les v\'erification
+        de validit\'e d'OTP.
+\end{enumerate}        
+
+\subsubsection{Taille et complexit\'e}
+Probablement le composant le plus volumineux du système,
+puisqu'il doit être en mesure supporté plusieurs requête simultanées.
+
+
+\subsection{Justification des choix techniques}
+\subsubsection{Le langage C}
+    Le langage C a été choisi pour 2 raisons:
+    \begin{enumerate}
+        \item Car il est supposé connu de tout les membres de l'équipe, au vu
+        de l'enseignement reçu.
+        \item Car il permet de mieux maîtriser l'aspect sécurité en évitant un
+        nombre trop important de dépendances intermédiaire dont on ne peut
+        garantir la sécurité.
+    \end{enumerate}
+
+%-------------------------------------------------------------------------------
+\section{Fonctionnement dynamique}
+\subsection{Association/Partage du secret}
+\subsubsection{Principe}
+Le token et le serveur se mettent d'accord sur un secret.
+
+\subsubsection{Fonctionnement}
+\begin{enumerate}
+    \item partage du secret via un canal de communication sécurisé
+        au token et au serveur.
+    \item Indiquer l'échec ou la réussite de l'opération
+\end{enumerate}
+\includegraphics[width=\textwidth]{association.jpg}
+
+\subsection{Génération d'un mot de passe jetable}
+\subsubsection{Principe}
+Le token donne un mot de passe jetable à l'utilisateur.
+
+\subsubsection{Fonctionnement}
+\begin{enumerate}
+    \item Calcul d'un mot de passe jetable à partir du secret 
+        initial
+\end{enumerate}
+\includegraphics[width=\textwidth]{generation.jpg}
+
+\subsection{Authentification}
+\subsubsection{Principe}
+On entre le mot de passe généré par le token dans le client qui
+demandera une vérification au serveur.
+
+\subsubsection{Fonctionnement}
+\begin{enumerate}
+    \item L'utilisateur entre le mot de passe
+    \item Le client demande au serveur de vérifier la validité du
+        mot de passe
+    \item Le client répond:
+        \begin{description}
+            \item[OK] Si le serveur accepte le mot de passe
+            \item[KO] Si le serveur refuse le mot de passe
+        \end{description}
+\end{enumerate}
+\includegraphics[width=\textwidth]{authentification.jpg}
+
+\subsection{Resynchronisation}
+\subsubsection{Principe}
+    Le serveur et le token se resynchronisent pour être d'accord
+    sur la suite des mots de passes jetables g\'en\'er\'es.
+
+\subsubsection{Fonctionnement}
+    \begin{enumerate}
+        \item L'utilisateur ou le serveur font une demande de resynchronisation
+        \item Le serveur et le token se mettent d'accord sur l'\'etat de la suite
+            des mots de passe jetables.
+    \end{enumerate}
+    \includegraphics[width=\textwidth]{resynchronisation.jpg}
+
+\end{document}
