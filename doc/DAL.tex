@@ -8,54 +8,86 @@
 \title{Architecture Logicielle}
 \author{\bsc{Picard} Damien}
 \projet{M1SSI}
-\projdesc{Projet de g\'en\'eration d'OTP}
+\projdesc{Projet de génération d'OTP}
 \filiere{M1SSI}
 \version{0.1}
-\relecteur{\bsc{}}
-\signataire{\bsc{}}
+\relecteur{\bsc{Doe} John}
+\signataire{\bsc{Doe} John}
 \date{Novembre 2013}
 
 \histentry{0.1}{21/11/2013}{Premier jets}
 
 \begin{document}
 \maketitle
-\tableofcontents
-\newpage
 %-------------------------------------------------------------------------------
 \section{Objet}
-Ce document à pour but de pr\'eciser les d\'etails techniques du logiciel final.
+Ce document à pour but de préciser les détails techniques du logiciel final.
 
-\section{Documents de r\'ef\'erences}
-\subsection{Documents de sp\'ecifications}
+\section{Documents de références}
+\subsection{Documents de spécifications}
+\begin{tabular}{p{1,5cm}>{\raggedright\arraybackslash}p{13cm}}
+    {[ANS10]} & {ANSSI. Référentiel général de sécurité. \href{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}, 2010.}
+    \tabularnewline
+    \\
+    {[MvOV97]} & {Alfred J. Menezes, Paul C. van Oorschot, and Scott A. Vanstone. Handbook of applied cryptography. CRC Press Series on Discrete Mathematics and its Applications. CRC Press, Boca Raton, FL, 1997. With a foreword by Ronald L.Rivest.}
+    \tabularnewline
+    \\
+    {[RFC98]} & {A One-Time Password System. \href{http://tools.ietf.org/html/rfc2289}{http://tools.ietf.org/html/rfc2289}, 1998.}
+    \tabularnewline
+    \\
+    {[RFC05]} & {HOTP:An HMAC-Based One-Time Password Algorithm \href{http://tools.ietf.org/html/rfc4226}{http://tools.ietf.org/html/rfc4226}, 2005.}
+    \tabularnewline
+    \\
+    {[RFC06]} & {Generic Message Exchange Authentication for the Securer Shell Protocol (SSH).\href{http://tools.ietf.org/html/rfc4256}{http://tools.ietf.org/html/rfc4256}, 2006.}
+    \tabularnewline
+    \\
+    {[RFC07]} & {The EAP Protected One-Time Password Protocol (EAP-POTP). \href{http://tools.ietf.org/html/rfc4793}{http://tools.ietf.org/html/rfc4793}, 2007.}
+    \tabularnewline
+    \\
+    {[RFC11]} & {TOTP: Time-Based One-Time Password Algorithm \href{http://tools.ietf.org/html/rfc6238}{http://tools.ietf.org/html/rfc6238}, 2011.}
+    \tabularnewline
+    \\
+    {[goo]} & {Google Authentificator \href{https://code.google.com/p/google-authenticator/}{https://code.google.com/p/google-authenticator/}.}
+    \tabularnewline
+    \\
+\end{tabular}
 
 
 %-------------------------------------------------------------------------------    
 \section{Terminologie et sigle}
 \subsection{Glossaire}
-
-\subsection{Abbr\'eviation}
 \begin{description}
-    \item[MHz] M\'egahertz, le nombre d'op\'eration machine par secondes.
+    \item[OTP] Un Mot de passe unique ou OTP (One-time password) est un mot de 
+    passe qui n'est valable que pour une session ou une transaction.
+
+    \item[Token] Un token désigne dans notre projet un élément matériel ou
+    logiciel tiers servant à la génération d'un OTP.
+
+    \item[Serveur] Un serveur est un dispositif informatique matériel ou
+    logiciel qui offre des services, à différents clients. Pour notre cas
+    celui-ci permettra l'association d'un token, la v\'{e}rification de l'OTP
+    g\'{e}n\'{e}r\'{e} par le token, et l'\'{e}ventuelle re-synchronisation du
+    token.
+
+    \item[Client] Un client est le logiciel qui envoie des demandes à un
+    serveur.Pour notre cas celui-ci permettra de communiquer au serveur les OTP
+    g\'{e}n\'{e}r\'{e}s par le token.
 \end{description}
-
-\subsection{Formalisme utilis\'e}
-
-\subsection{L\'egendes et convention}
 
 %-------------------------------------------------------------------------------
 \section{Configuration requise}
 \subsection{Performances de calcul}
-On suppose l'impl\'ementation du token possible sur de très petit 
-calculateurs, donc une fr\'equence processeur de \verb?700MHz? est
-suppos\'ee suffisante.
+On suppose l'implémentation du token possible sur de très petit 
+calculateurs, donc une fréquence processeur de \verb?700MHz? est
+supposée suffisante.
 
-\subsection{P\'eriph\'eriques et mat\'eriel sp\'ecifiques}
+\subsection{Périphériques et matériel spécifiques}
 \begin{tabular}{|c|l|c|}
     \hline
     \rowcolor{gray}
     \textcolor{white}{\bfseries Identifiant} & 
     \textcolor{white}{\bfseries Description} &
-    \textcolor{white}{\bfseries Priorit\'e} \\
+    \textcolor{white}{\bfseries Priorité} \\
     \hline
     PR-M\_001 &
     Calculateur \verb?700MHz? pour le token &
@@ -73,7 +105,7 @@ suppos\'ee suffisante.
     \rowcolor{gray}
     \textcolor{white}{\bfseries Identifiant} & 
     \textcolor{white}{\bfseries Description} &
-    \textcolor{white}{\bfseries Priorit\'e} \\
+    \textcolor{white}{\bfseries Priorité} \\
     \hline
     OS\_001& 
     GNU/Linux pour un token, un client et un serveur&
@@ -85,13 +117,13 @@ suppos\'ee suffisante.
     \hline
 \end{tabular}
 
-\subsection{Pr\'e-requis logiciels}
+\subsection{Pré-requis logiciels}
 \begin{tabular}{|c|l|c|}
     \hline
     \rowcolor{gray}
     \textcolor{white}{\bfseries Identifiant} & 
     \textcolor{white}{\bfseries Description} &
-    \textcolor{white}{\bfseries Priorit\'e} \\
+    \textcolor{white}{\bfseries Priorité} \\
     \hline
     PR-L\_001 &
     Support de l'API POSIX pour le token, le client et le serveur &
@@ -104,146 +136,196 @@ suppos\'ee suffisante.
 \section{Architectures statique}
 \subsection{Structure}
         %-----------------------------------------------------------------------
-        %          GROS SCH\'EMA DE PORC
+        %          GROS SCHÉMA DE PORC
         %-----------------------------------------------------------------------
 
-\subsection{Token GNU/Linux C}
-\subsubsection{Rôle}
-Générer des mots de passe jetables permettant de s'authentifier
-sur le client.
+\subsection{Structure user}
+\label{sub:Structure_user}
+    Cette structure à pour but de pouvoir conserver l'état d'un générateur d'OTP
+    pour un utilisateur. Elle sera stocké dans une base de donnée sur le
+    serveur. Cela permet de ne charger qu'un seul module de génération de mot de
+    passe en mémoire pour gérer plusieurs utilisateurs.
+    \subsubsection{Champs}
+    \label{ssub:Champs}
+        Une structure identifiant un utilisateur pour un générateur d'otp 
+        contient les champs suivants:
+        \begin{description}
+            \item[login] le nom de l'utilisateur
+            \item[HPass] Une empreinte du mot de passe de l'utilisateur
+            \item[secret] Le secret permettant de générer n'importe quel OTP 
+                valide
+            \item[how] La méthode d'authentification OTP.
+            \item[otparams] Un pointeur vers une structure contenant des 
+                paramêtres relatifs à la méthode de génération d'OTP
+        \end{description}
 
-\subsubsection{Propri\'et\'es et attributs de caractèrisation}
-\begin{description}
-    \item[Secret] Le secret de l'utilisateur qui permet de générer les
-        mots de passes jetables.
-    \item[OTP] Le mot de passe généré.
-\end{description}
+\subsection{Token}
+    \subsubsection{Rôle}
+        Afficher les mots de passes jetables pour un utilisateur un secret
+        donné.
 
+    \subsubsection{Propriétés et attributs de caractèrisation}
+    \begin{description}
+        \item[Secret] Le secret de l'utilisateur qui permet de générer les
+            mots de passes jetables.
+        \item[User] La structure qui contient les données de l'utilisateur
+    \end{description}
 
-\subsubsection{Services offert}
-\begin{description}
-    \item[genererOTP()] Génère un OTP selon la méthode et les
-        paramêtres passés.
-\end{description}
+    \subsubsection{Dépendances}
+        \begin{itemize}
+            \item Générateurs d'OTP.
+            \item Toolkit d'interaction avec l'utilisateur.
+        \end{itemize}
 
-\subsubsection{D\'ependances}
+    \subsubsection{Langage de programmation}
+    \begin{itemize}
+        \item C
+        \item Java Mobile (optionel)
+        \item Java Card (optionel)
+    \end{itemize}
 
-\subsubsection{Langage de programmation}
-\begin{itemize}
-    \item C
-\end{itemize}
+    \subsubsection{Procédé de développement}
+    \begin{enumerate}
+        \item Développer des modules réalisant chaque algo de génération
+            d'OTP.
+        \item Développer un générateur de secrets.
+        \item Peut être une interface graphique ?
+    \end{enumerate}
 
-\subsubsection{Proc\'ed\'e de d\'eveloppement}
-\begin{enumerate}
-    \item D\'evelopper des modules r\'ealisant chaque algo de g\'en\'eration
-        d'OTP.
-    \item D\'evelopper un g\'en\'erateur de secrets.
-    \item Peut être une interface graphique ?
-\end{enumerate}
+    \subsubsection{Taille et complexité}
+    \begin{itemize}
+        \item Taille et compléxité dépendantes de l'algo de génération
+            de mots de passes jetables
+    \end{itemize}
 
+%------------------------------------------------------------------------------
+\subsection{Générateur d'OTP}
+    \subsubsection{Rôle}
+        Générer des mots de passe jetables permettant de s'authentifier.
 
-\subsubsection{Taille et complexit\'e}
-\begin{itemize}
-    \item Taille et compléxité dépendantes de l'algo de génération
-        de mots de passes jetables
-\end{itemize}
+    \subsubsection{Services offert}
+    \begin{description}
+        \item[initiate(user * utilisateur, char * seed):] Initialise
+            un générateur d'OTP pour l'utilisateur.
+        \item[getOTP(user * utilisateur)] Génère un OTP selon la méthode et les
+            paramêtres passés.
+    \end{description}
+
+    \subsubsection{Langage de programmation}
+    \begin{itemize}
+        \item C
+        \item Java Mobile (Optionel)
+        \item Java Card (Optionel)
+    \end{itemize}
+
+    \subsubsection{Procédé de développement}
+    \begin{enumerate}
+        \item Développer des modules réalisant chaque algo de génération
+            d'OTP.
+    \end{enumerate}
+
+    \subsubsection{Taille et complexité}
+    \begin{itemize}
+        \item Taille et compléxité dépendantes de l'algo de génération
+            de mots de passes jetables, mais suffisamment faible pour tenir sur
+            de petites capacités mémoire et permettre un calcul 
+            en t < 1s sur 700MHz.
+    \end{itemize}
 
 \subsection{Client}
+    \subsubsection{Rôle}
+        Permettre une authentification sur un service en demandant à
+    l'utilisateur un mot de passe jetable.
 
-\subsubsection{Rôle}
-Permettre une authentification sur un service en demandant à
-l'utilisateur un mot de passe jetable.
+    \subsubsection{Services offert}
+    \begin{description}
+        \item[authenticate(connection * c, req * request):] Permet
+            de s'authentifier auprès du serveur \verb?server? sur 
+            le port \verb?port?, d'après la requête \verb?request?.
+    \end{description}
 
-\subsubsection{Propri\'et\'es et attributs de caractèrisation}
+    \subsubsection{Dépendances}
+    \begin{itemize}
+        \item Sockets Berkeley
+    \end{itemize}
 
-\subsubsection{Services offert}
-\begin{description}
-    \item[authenticate(char * server, int port, request req):] Permet
-        de s'authentifier auprès du serveur \verb?server? sur 
-        le port \verb?port?, d'après la requête \verb?req?.
-\end{description}
+    \subsubsection{Langage de programmation}
+    \begin{itemize}
+        \item C
+    \end{itemize}
 
-\subsubsection{D\'ependances}
-\begin{itemize}
-    \item Sockets Berkeley
-\end{itemize}
+    \subsubsection{Procédé de développement}
+    \begin{enumerate}
+        \item Déterminer le protocole d'échange entre le client et le
+            serveur.
+        \item Déterminer le contenu d'une requête.
+    \end{enumerate}
 
-
-\subsubsection{Langage de programmation}
-\begin{itemize}
-    \item C
-\end{itemize}
-
-\subsubsection{Proc\'ed\'e de d\'eveloppement}
-\begin{enumerate}
-    \item Déterminer le protocole d'échange entre le client et le
-        serveur.
-    \item Déterminer le contenu d'une requête.
-\end{enumerate}
-
-
-\subsubsection{Taille et complexit\'e}
-La taille et la complexité du client sont assez faible.
+    \subsubsection{Taille et complexité}
+        Le client ne consiste qu'en l'envoie et la réception de données sur le
+        réseau, donc la taille et la complexité sont faible.
 
 \subsection{Serveur}
+    \subsubsection{Rôle}
+    Dire si un mot de passe jetable est valide ou non pour s'authentifier sur un
+    service donné.
 
-\subsubsection{Rôle}
-Dire si un mot de passe jetable est valide ou non pour 
-s'authentifier sur un service donné.
+    \subsubsection{Propriétés et attributs de caractèrisation}
+    \begin{description}
+        \item[Port] Le port utilisé pour accéder au serveur
+            d'authentification.
+        \item[Adresse] L'adresse pour accéder au serveur 
+            d'authentification.
+    \end{description}
 
-\subsubsection{Propri\'et\'es et attributs de caractèrisation}
-\begin{description}
-    \item[Port] Le port utilisé pour accéder au serveur
-        d'authentification.
-    \item[Adresse] L'adresse pour accéder au serveur 
-        d'authentification.
-\end{description}
+    \subsubsection{Services offert}
+    \begin{description}
+        \item[associate(user * u, char * secret):] Associe un secret à un 
+            utilisateur.
+        \item[check(user * u, char * OTP):] Vérifie que l'OTP est valide pour
+            l'utilisateur.
+        \item[lock(user * u):] Interdit la connection pour un utilisateur.
+        \item[warn(user * u):] Préviens par mail un utilisateur de son 
+            verrouillage.
+        \item[resynchronize(user * u):] Demande une resynchronisation pour
+            un utilisateur donné.
+    \end{description}
 
-\subsubsection{Services offert}
-\begin{description}
-    \item[associate(char * user, char * secret):] Associe un secret à un 
-    utilisateur.
-    \item[resynchronize(char * user):] Demande une resynchronisation pour
-    un utilisateur donné.
-\end{description}
+    \subsubsection{Dépendances}
+    \begin{itemize}
+        \item Sockets Berkeley.
+        \item Générateurs d'OTP.
+    \end{itemize}
 
+    \subsubsection{Langage de programmation}
+    \begin{itemize}
+        \item C
+    \end{itemize}
 
-\subsubsection{D\'ependances}
-\begin{itemize}
-    \item Sockets Berkeley
-\end{itemize}
+    \subsubsection{Procédé de développement}
+    \begin{enumerate}
+        \item Déterminer le protocole de communication entre client et serveur.
+        \item Déterminer le contenu d'une requête d'authentification
+        \item Utiliser les modules de génération d'OTP pour les vérification de
+        validité d'OTP.
+    \end{enumerate}        
 
-
-\subsubsection{Langage de programmation}
-\begin{itemize}
-    \item C
-\end{itemize}
-
-
-\subsubsection{Proc\'ed\'e de d\'eveloppement}
-\begin{enumerate}
-    \item Déterminer le protocole de communication entre client et
-        serveur.
-    \item Déterminer le contenu d'une requête d'authentification
-    \item Utiliser les modules de g\'en\'eration d'OTP pour les v\'erification
-        de validit\'e d'OTP.
-\end{enumerate}        
-
-\subsubsection{Taille et complexit\'e}
-Probablement le composant le plus volumineux du système,
-puisqu'il doit être en mesure supporté plusieurs requête simultanées.
+    \subsubsection{Taille et complexité}
+    Probablement le composant le plus volumineux du système, puisqu'il doit être
+    en mesure supporté plusieurs requête simultanées ainsi que plusieurs
+    protocoles de mot de passe jetables.
 
 
 \subsection{Justification des choix techniques}
 \subsubsection{Le langage C}
-    Le langage C a été choisi pour 2 raisons:
-    \begin{enumerate}
-        \item Car il est supposé connu de tout les membres de l'équipe, au vu
+Le langage C a été choisi pour 2 raisons:
+\begin{enumerate}
+    \item Car il est supposé connu de tout les membres de l'équipe, au vu
         de l'enseignement reçu.
-        \item Car il permet de mieux maîtriser l'aspect sécurité en évitant un
+    \item Car il permet de mieux maîtriser l'aspect sécurité en évitant un
         nombre trop important de dépendances intermédiaire dont on ne peut
         garantir la sécurité.
-    \end{enumerate}
+\end{enumerate}
 
 %-------------------------------------------------------------------------------
 \section{Fonctionnement dynamique}
@@ -272,8 +354,8 @@ Le token donne un mot de passe jetable à l'utilisateur.
 
 \subsection{Authentification}
 \subsubsection{Principe}
-On entre le mot de passe généré par le token dans le client qui
-demandera une vérification au serveur.
+On entre le mot de passe généré par le token dans le client qui demandera une
+vérification au serveur.
 
 \subsubsection{Fonctionnement}
 \begin{enumerate}
@@ -290,15 +372,15 @@ demandera une vérification au serveur.
 
 \subsection{Resynchronisation}
 \subsubsection{Principe}
-    Le serveur et le token se resynchronisent pour être d'accord
-    sur la suite des mots de passes jetables g\'en\'er\'es.
+Le serveur et le token se resynchronisent pour être d'accord sur la suite des
+mots de passes jetables générés.
 
 \subsubsection{Fonctionnement}
-    \begin{enumerate}
-        \item L'utilisateur ou le serveur font une demande de resynchronisation
-        \item Le serveur et le token se mettent d'accord sur l'\'etat de la suite
-            des mots de passe jetables.
-    \end{enumerate}
-    \includegraphics[width=\textwidth]{resynchronisation.jpg}
+\begin{enumerate}
+    \item L'utilisateur ou le serveur font une demande de resynchronisation
+    \item Le serveur et le token se mettent d'accord sur l'état de la suite des
+    mots de passe jetables.
+\end{enumerate}
+\includegraphics[width=\textwidth]{resynchronisation.jpg}
 
 \end{document}
