@@ -1,0 +1,130 @@
+\documentclass{../res/univ-projet}
+
+\title{\'Etude du syst\`eme d'OTP \og{}HOTP\fg{}}
+\author{Les chats sauvages}
+
+\projet{One Time Project}
+\projdesc{\`Etude des syst\`emes de mots de passe jetable}
+\filiere{M1SSI}
+\logo{../res/logo_univ.png}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Ce document présente une analyse du système d'OTP \og{}HOTP\fg{}. Toutes les informations présentées et analysées proviennent des RFCs 4226 et 2104, truc et truc ainsi que 
+de leurs correctifs. Le but de cet article est de déterminer dans quelles condition le système blabla est utilisable, sous quelles conditions et avec quelles garanties de 
+sécurité.Ce documents sera mis en relation avec plusieurs autres afin de réaliser un comparatif entre les systèmes d'OTP majeurs.
+\end{abstract}
+\newpage
+\tableofcontents
+\newpage
+
+\section{Prérequis}
+Le système d'OTP \og{}HOTP\fg{} est un système d'authentification par mot de passe jetable qui étend le système le système OTP définit dans la RFC 2289. Le système OTP 
+est étudié plus haut.
+Le système HOTP repose principalement sur l'utilisation du mécanisme d'authentification de message HMAC. Ce mécanisme destiné à vérifier si un message n'a pas été altéré
+et à authentifier l'expéditeur, repose lui m\^eme sur l'utilisation d'une fonction de hachage et d'un secret partagé. La ou un mécanisme classique de vérification 
+d'intégrité de message se contente de hacher ce dernier pour obtenir une empreinte, le mécanisme HMAC utilise une clef secrète pour authentifier l'expéditeur. Cette clef 
+est prise en compte de la manière suivante : 
+\begin{center}
+$HMAC_K(M) = h(K \oplus opad || h(K \oplus ipad || M))$ 
+\end{center}
+o\`u :\newline
+$K$ est la clef secrète \newline
+$opad$ = 0x36 répété un certain nombre de fois \newline
+$ipad$ = 0x5C répété le m\^eme nombre de fois \newline
+$\oplus$ est l'opération XOR \newline
+$M$ est le message \newline
+
+
+Dans le cadre de l'authentification de messages, le code HMAC du texte sera envoyé au destinataire sur un canal sécurisé différent de celui utilisé pour la transmission
+du message. Le destinataire, une fois reçu et le message et le code HMAC pourra vérifier l'authenticité du message en calculant le code HMAC de ce dernier et en le 
+comparannt avec celui envoyé.
+
+Le mécanisme HMAC sera ici utilisé pour la génération de mots de passes jetables.
+
+\section{Généralités}
+Lors de l'utilisation d'un système de mot de passe jetable le client (ou plus généralement l'entité souhaitant s'authentifier sur le service) fournit au service un 
+classique login et un mot de passe. Contrairement aux méthode classique d'authentification par login et mot de passe, ici le mot de passe n'est utilisable qu'une seule et 
+unique fois et sera donc différent à chaque connexion.
+Il existe deux grandes catégories de système de mots de passe jetable : les systèmes dits \og{}synchrones\fg{} et les systèmes dits \og{}asynchrones\fg{}. Les premiers 
+reposent sur le partage d'un secret entre le client et le serveur ainsi sur un élément de synchronisation (i.e un compteur partagé, l'heure actuelle...). Les seconds 
+au contraire ne reposent que sur le partage du secret et ne demande aucune synchronisations entre client et serveur.
+Le système \og{}HOTP\fg{} étudié ici est synchrone. Sont principe de fonctionnement est le suivant :
+\begin{itemize}
+ \item L'utilisateur demande à son token\footnote{Le token est un élément matériel ou logiciel dont la seule fonction est de générer des mots de passe jetables.} de 
+ générer un mot de passe jetable.
+ \item Le token génère le mot de passe en calculant $HMAC_K(C)$, avec K le secret partagé et C le compteur de synchronisation, et incrémente le compteur.
+ \item L'utilisateur récupère le mot de passe jetable fournit par le token et le passe au serveur d'authentification.
+ \item Le serveur calcul la valeur de $HMAC_K(C)$, avec K le secret partagé et le compteur de synchronisation, et incrémente le compteur.
+ \item Si la valeur calculée par le serveur coincide avec la valeur envoyée par l'utilisateur, ce dernier est authentifier. Dans le cas contraire, il est rejeté
+\end{itemize}
+
+Le principale intér\^et des méthodes d'authentification par mot de passe jetable, et donc de la méthode HOTP, est d'éviter les attaques dites \og{}par rejeu\fg{} durant 
+lesquelles un attaquant récupère le mot de passe durant une communication client-serveur et l'utilise ensuite pour usurper l'identité du client.
+
+\section{Approfondissement}
+  Étudions maintenant le fonctionnement précis du système de mot de passe jetable \og{}HOTP\fg{}.
+  \subsection{Generation et partage d'un secret}
+    Le secret partagé entre le client et le serveur est le point le plus sensible du système d'authentification par mot de passe jetable. En effet, si un attaquant 
+    parvient à s'emparer du secret d'un utilisateur, il sera capable de s'authentifier à sa place mettant en péril la sécurité du compte utilisateur. La méthode 
+    \og{}HOTP\fg{} propose pour la génération des secrets deux méthodes : une méthode déterministe et une méthode aléatoire.
+    
+  \subsection{Génération d'un mot de passe jetable}
+  Tous est dans le titre
+  
+  \subsection{Soumission et protocole de vérification}
+  Tout est dans le titre. Comment le mot de passe est-il soumis et quelles sont les étapes suivient par le serveur pour déterminer la validité de celui-ci.
+  
+  \subsection{Synchronisation}
+  Token et verificateurs peuvent ils perdre leur synchronisation. Comment ce problème est-il évité? Comment la synchronisation est elle rétablie?
+  
+  \subsection{Reinitialisation}
+  Ne concerne a priori pas tous les systèmes. Expliquer les procédures a utiliser pour reinitialiser le secret et autres.
+  
+\section{Analyse générale et sécurité}
+Partie cruciale du rapport. Merci de me la faire au petits oignons.
+
+  \subsection{Avantages et intér\^ets}
+  Tout est dans le titre. Merci d'\^etre exhaustif.
+  
+  \subsection{Inconvenients et limites}
+  Tous est dans le titre. Merci d`\^etre exhaustif.
+  
+  \subsection{Considérations de sécurité}
+  Le clou du spectacle.
+    \subsubsection{Attaques exhaustives}
+    Analyse de la résistance aux attaques exhaustives. Un calcul et / ou démonstration seront certainement bien vus par votre chargé de mission 
+    \og{}Coordination Recherche\fg{} ainsi que par les clients. N'ayez pas peur tous va bien se passer.
+    
+    \subsubsection{Attaques par collisions}
+    Cette partie n'est pas forcement necessaire. Se référer au résultats de la réunion du 19 Novembre.
+    
+    \subsubsection{Failles connues}
+    Tout est dans le titre.
+    
+    \subsubsection{Précautions et préconisation}
+    Tout est dans le titre.
+    
+\section{Utilisations}
+On présente ici les possibles utilisation du système.
+  \subsection{Cas concrets d'utilisation}
+  Tout est dans le titre.
+  
+  \subsection{Cas d'utilisation envisagés}
+  Cas possibles d'utilisation non encore exploité (On peut toujours r\^ever)
+  
+\section{Conclusion}
+La conclusion
+  \subsection{Utilisation dans le cadre du projet}
+  Reprendre les éléments de l'analyse telles que le performances du sytème le niveau de sécurité et autre afin de définir si, et dans quels contextes, le système devrait
+  \^etre utlisé dans le cadre du projet.
+  
+  \subsection{Perenité du système}
+  A voir, pas forcément utile. Se référer aux résultats de la réunion du 19 novembre.
+    
+\end{document}
