@@ -11,6 +11,9 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 
+\usepackage{algorithmic}
+\usepackage{algorithm}
+
 \begin{document}
 \maketitle
 
@@ -69,13 +72,72 @@ lesquelles un attaquant récupère le mot de passe durant une communication clie
 
 \section{Approfondissement}
   Étudions maintenant le fonctionnement précis du système de mot de passe jetable \og{}HOTP\fg{}.
-  \subsection{Generation et partage d'un secret}
+  \subsection{Génération et partage d'un secret}
     Le secret partagé entre le client et le serveur est le point le plus sensible du système d'authentification par mot de passe jetable. En effet, si un attaquant 
     parvient à s'emparer du secret d'un utilisateur, il sera capable de s'authentifier à sa place mettant en péril la sécurité du compte utilisateur. La méthode 
-    \og{}HOTP\fg{} propose pour la génération des secrets deux méthodes : une méthode déterministe et une méthode aléatoire.
+    \og{}HOTP\fg{} propose pour la génération des secrets deux méthodes : une méthode déterministe et une méthode aléatoire. Détaillons ces deux méthodes.
+    
+    \subsubsection{Méthode déterministe}
+    Pour la méthode déterministe, une clef maitresse, notée $K_M$ doit \^etre enregistrée sur le serveur. Puisque les clefs secr\^etes de tous les clients seront dérivées 
+    de $K_M$, cette clef devra \^etre stockée dans une zone très sécurisée voir inviolable. Lorsque qu'un nouveau client sera ajouté au service de connection, celui ci
+    se verra muni d'une clef secrète, $K_i$, personnelle qui sera partagée avec le serveur. Cette clef sera calculée à partir de la clef $K_M$ et d'une information, $i$, 
+    identifiant le client de la manière suivante : \newline
+    \begin{center}
+     $K_i = h(K_M || i)$ 
+    \end{center}
+    \hfill{},avec h une fonction de hachage.\newline
+    Cette clef constitue un secr\^et unique et robuste si l'on respecte les conditions suivante :
+    \begin{itemize}
+     \item La fonction $h$ est une fonction de hachage non inversible (md5, SHA\_1...).
+     \item Le secret $K_M$ est inviolable.
+     \item Le paramètre $i$ est un identifiant unique à chaque utilisateur (ID matériel, numéro de série...)
+    \end{itemize}
+    
+    \subsubsection{Méthode aléatoire}
+    Pour la seconde méthode, une clef aléatoire est générée pour chaque nouveau client demandant l'association.
+    Afin d'assurer la robustesse du secret, le générateur aléatoire doit \^etre choisi le moins prédictible possible. Il est en général préférable de choisir un génrateur 
+    matériel, reposant sur l'aléatoire d'un phénomène physique (décomposition de noyaux atomiques, bruit thermique...). A défaut, un très bon générateur pseudo-aléatoire 
+    reposant sur l'execution d'un algorithme (\emph{Yarrow}, \emph{Fortuna}, \emph{Blum Blum Shub}, \emph{ISAAC}...) peut \^etre utilisé. Quel que soit le générateur 
+    utilisé, celui ci doit fournir une sortie imprédictible et une distribution de probabilité entre les clef aussi uniforme que possible.
+  
+  Quelle que soit la méthode de génération utilisée, la clef produite doit \^etre d'une longueure correspondant au standards de sécurité actuels. A l'heure ou ce rapport 
+  est écrit, une longueure de clef de 128 bits parait \^etre un minimum. Choisir une longueure supérieur ou égal à 160 bits semble plus raisonnable et une clef de 256 
+  bits ou plus fournit un très bon niveau de sécurité.
     
   \subsection{Génération d'un mot de passe jetable}
-  Tous est dans le titre
+  La génération d'un OTP avec la méthode HOTP repose sur l'utilisation d'un compteur incrémental et de la clef secrète tous deux partagés entre le token et le service de 
+  validation. Une fonction HMAC définie pour une fonction de hachage donnée est aussi untilisée pour produire la base de l'OTP.
+  Au global, la génération de l'OTP se décompose en trois étapes principales selon l'algorithme \ref{HOTP:gene}.
+  \begin{algorithm}
+  \caption{Génération d'un OTP par HOTP}
+    \label{HOTP:gene}
+   
+    \begin{algorithmic}
+    \STATE $HVal \leftarrow HMAC(K, C)$
+    \STATE $HVal \leftarrow tronc(HVal)$
+    \STATE $HVal \leftarrow binToDec(HVal)$
+    \STATE $C \leftarrow C + 1$
+    \newline
+    \RETURN $HVal$
+    \end{algorithmic}
+  \end{algorithm}
+  
+  Dans ce schéma, la première étape consiste à calculer la valeur de HMAC pour la clé secr\^ete partagée et en prenant pour message le compteur de synchronisation. La 
+  longueur de la valeur obtenue dépend de la fonction de hachage utilisée. On aura par exemple une chaine de 160 bits en utilisant la fonction SHA\_1.
+  On pourrait utiliser la sortie de la fonction HMAC comme OTP cependant, écrit en décimal cette valeur se représenterai sur 48 chiffres et serait peut pratique à entrer 
+  pour un utilisateur. C'est pourquoi les étapes 2 et 3 vont permettre de réduire la longueur de l'OTP à une valeur sur 10 chiffres via les fonctions $tronc$ et 
+  $binToDec$. La fonction $tronc$ est définie par l'algorithme \ref{HOTP:trunc}.
+  
+  \begin{algorithm}
+    \caption{Réduction de la sortie de $HMAC$}
+    \label{HOTP:trunc}
+    
+    \begin{algorithmic}
+      \REQUIRE S une chaine de bit
+      \ENSURE S est de longueur 31 bits
+    \end{algorithmic}
+  \end{algorithm}
+
   
   \subsection{Soumission et protocole de vérification}
   Tout est dans le titre. Comment le mot de passe est-il soumis et quelles sont les étapes suivient par le serveur pour déterminer la validité de celui-ci.
