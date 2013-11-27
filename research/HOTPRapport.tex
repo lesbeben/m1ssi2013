@@ -113,12 +113,13 @@ lesquelles un attaquant récupère le mot de passe durant une communication clie
     \label{HOTP:gene}
    
     \begin{algorithmic}
+    \REQUIRE $K$ une clef secrète, $C$ un compteur de synchronisation.
     \STATE $HVal \leftarrow HMAC(K, C)$
     \STATE $HVal \leftarrow tronc(HVal)$
     \STATE $HVal \leftarrow binToDec(HVal)$
     \STATE $C \leftarrow C + 1$
     \newline
-    \RETURN $HVal$
+    \RETURN $HVal \bmod 10^L$ // L : longueur souhaitée de l'OTP
     \end{algorithmic}
   \end{algorithm}
   
@@ -126,21 +127,58 @@ lesquelles un attaquant récupère le mot de passe durant une communication clie
   longueur de la valeur obtenue dépend de la fonction de hachage utilisée. On aura par exemple une chaine de 160 bits en utilisant la fonction SHA\_1.
   On pourrait utiliser la sortie de la fonction HMAC comme OTP cependant, écrit en décimal cette valeur se représenterai sur 48 chiffres et serait peut pratique à entrer 
   pour un utilisateur. C'est pourquoi les étapes 2 et 3 vont permettre de réduire la longueur de l'OTP à une valeur sur 10 chiffres via les fonctions $tronc$ et 
-  $binToDec$. La fonction $tronc$ est définie par l'algorithme \ref{HOTP:trunc}.
+  $binToDec$. La fonction $tronc$, qui extrait une chaine de 31 bits de la sortie de $HMAC$, est définie par l'algorithme \ref{HOTP:trunc}.
   
   \begin{algorithm}
-    \caption{Réduction de la sortie de $HMAC$}
+    \caption{tronc : Réduction de la sortie de $HMAC$}
     \label{HOTP:trunc}
     
     \begin{algorithmic}
       \REQUIRE S une chaine de bit
       \ENSURE S est de longueur 31 bits
+      \STATE $offBits \leftarrow$ Les 4 bits de poids faible de S[19]
+      \STATE $offset \leftarrow binToDec(offBits)$ // 0 $\leq offset \leq$ 15
+      \STATE $P \leftarrow S[offset]..S[offset + 3]$ \newline
+      \RETURN Les 31 derniers bits de $P$
     \end{algorithmic}
   \end{algorithm}
 
+  La fonction $binToDec$, quant à elle, va convertir la chaine binaire retournée par $tronc$ en un nombre décimal, composé de 10 chiffres. Afin de faciliter encore un peu 
+  plus la saisie du mot de passe jetable, on ne conservera qu'une partie du nombre à 10 chiffres en en prenant le modulo $10^P$, o\`u P est la longueur souhaitée de l'OTP.
+  Afin que le mot de passe soit à la fois facilement utilisable et sécurisé, il est conseillé de choisir une valeur de $P$ comprise entre 6 et 8 inclus.
+  Après la génération du mot de passe, le compteur de synchronisation est incrémenté pour garantir l'unicité de la valeure produite.
   
   \subsection{Soumission et protocole de vérification}
-  Tout est dans le titre. Comment le mot de passe est-il soumis et quelles sont les étapes suivient par le serveur pour déterminer la validité de celui-ci.
+  La soumissions du mot de passe jetable est, pour HOTP, indépendante du reste du système. Dans la majorité des cas, cette étape passera par l'utilisation d'une interface 
+  de connection graphique ou en ligne de commande. Nous nous intéresserons dans cette section à la partie vérification du mot de passe par le serveur. Cette étape est 
+  décrite dans l'algorithme \ref{HOTP:verif}.
+  
+  \begin{algorithm}
+    \caption{Vérification d'un mot de passe jetable.}
+    \label{HOTP:verif}
+    
+    \begin{algorithmic}
+      \STATE $attentNB \leftarrow 0$
+      \STATE $C \leftarrow$ compteur de synchro de l'utilisateur
+      \STATE $K \leftarrow$ clef secrète de l'utilisateur
+      \STATE $OTP_1 \leftarrow HOTP_K(C)$
+      \WHILE{$attentNB < MAX\_ATTENT$}
+	\STATE $OTP_2 \leftarrow$ recuperer\_OTP
+	\STATE $attentNB \leftarrow attentNB + 1$
+	\IF{$OTP_1 = OTP_2$}
+	  \STATE accepter l'utilisateur
+	\ELSE
+	  \IF{resynchro possible}
+	    \STATE $resynchro$
+	    \STATE accepter l'utilisateur
+	  \ENDIF
+	\ENDIF
+      \ENDWHILE
+      \STATE $verouiller$
+      \STATE $prevenir$
+    \end{algorithmic}
+  \end{algorithm}
+
   
   \subsection{Synchronisation}
   Token et verificateurs peuvent ils perdre leur synchronisation. Comment ce problème est-il évité? Comment la synchronisation est elle rétablie?
