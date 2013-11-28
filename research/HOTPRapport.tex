@@ -4,7 +4,7 @@
 \author{Les chats sauvages}
 
 \projet{One Time Project}
-\projdesc{\`Etude des syst\`emes de mots de passe jetable}
+\projdesc{\'Etude des syst\`emes de mots de passe jetable}
 \filiere{M1SSI}
 \logo{../res/logo_univ.png}
 
@@ -151,8 +151,7 @@ lesquelles un attaquant récupère le mot de passe durant une communication clie
   \subsection{Soumission et protocole de vérification}
   La soumissions du mot de passe jetable est, pour HOTP, indépendante du reste du système. Dans la majorité des cas, cette étape passera par l'utilisation d'une interface 
   de connection graphique ou en ligne de commande. Nous nous intéresserons dans cette section à la partie vérification du mot de passe par le serveur. Cette étape est 
-  décrite dans l'algorithme \ref{HOTP:verif}.
-  
+  décrite dans l'algorithme \ref{HOTP:verif}.  
   \begin{algorithm}
     \caption{Vérification d'un mot de passe jetable.}
     \label{HOTP:verif}
@@ -166,6 +165,7 @@ lesquelles un attaquant récupère le mot de passe durant une communication clie
 	\STATE $OTP_2 \leftarrow$ recuperer\_OTP
 	\STATE $attentNB \leftarrow attentNB + 1$
 	\IF{$OTP_1 = OTP_2$}
+	  \STATE $C \leftarrow C + 1$
 	  \STATE accepter l'utilisateur
 	\ELSE
 	  \IF{resynchro possible}
@@ -178,10 +178,75 @@ lesquelles un attaquant récupère le mot de passe durant une communication clie
       \STATE $prevenir$
     \end{algorithmic}
   \end{algorithm}
-
+  
+  Dans cet algorithme, la variable $attentNB$ représente le nmobre de tentative d'OTP déjà effectuée par l'utilisateur. Elle permet de controler le nombre maxiaml de mot 
+  de passe entrés entre deux authentification réussies dans le but d'éviter les attaque par \emph{brute force}.
+  L'algorithme necessite aussi de connaitre la clef secrète et le compteur de synchronisation liés à l'utilisateur. Le mode de récupération de ces informations n'est pas 
+  détaillé dans cet algorithme puisqu'il est complètement indépendant de la méthode HOTP. Dans la majorité des cas, ces informations seront stockées dans une base de 
+  données et la récupération se résumera donc à une requ\^ete sur cette dernière. Il n'est pas possible de se passer de ces deux informations puisque le serveur 
+  d'authentification doit \^etre capable de calculer la valeur de $HOTP_K(C)$ de la m\^eme manière que le token de l'utilisateur afin de vérifier l'exactitude la valeur 
+  re\c{c}ue.
+  
+  Dans sa généralité, l'algorithme de vérification ressemble fortement à un algorithme d'authentification par login / mot de passe standard. A savoir, on demande à 
+  l'utilisateur de fournir ses paramètres de connection et on les verifie. Si les données passées s'avères correctes, l'utilisateur est authentifié, sinon on recommence 
+  l'opération jusqu'a l'obtention de données correctes ou jusqu'a atteindre le nombre maximal de tentative. Cependant, on retrouve une différence dans l'appel aux 
+  fonctions \og{}resynchro possible\fg{} et \og{}resynchro\fg{}. Ces fonctions, détaillées dans la section \ref{HOTP:synchro}, on pour but d'assurer la cohérence du 
+  compteur de synchronisation partagé.
   
   \subsection{Synchronisation}
-  Token et verificateurs peuvent ils perdre leur synchronisation. Comment ce problème est-il évité? Comment la synchronisation est elle rétablie?
+  \label{HOTP:synchro}
+  Par nature, le système HOTP requière que les compteurs du serveur et du token soient synchronisés. En effet, dans le cas contraire, les valeurs de l'OTP calculés par le 
+  token et le service d'authentification seraient différentes et aucun utilisateur ne pourrait se connecter.  Si le serveur incrémente le compteur de synchronisation à 
+  chaque connection réussie, le token l'incrémente lui à chaque génération et il est donc aisé de perdre la synchronisation entre le client et le token.
+  
+  Les fonctions \og{}resynchro possible\fg{} et \og{}resynchro\fg{} présentent dans l'algorithme \ref{HOTP:verif} ont pour fonction d'assurer que les écarts de 
+  synchronisations n'emp\^echerons pas la connection de l'utilisateur. Leur principe est simple et consiste à comparé la valeur donnée par l'utilisateur avec plusieurs 
+  valeurs d'OTP successives proches de la valeur théorique. Par exemple, si l'OTP fournit par l'utilisateur ne correspond pas à $HOTP_K(C)$ alors on vérifiera si il 
+  correspond à $HOTP_K(C + 1)$ et ainsi de suite jusqu'à trouver une valeur correspondant ou à dépasser le nombre de valeur vérifiables authorisé. Les algorithmes 
+  correspondant aux deux fonction de synchronisation sont les algorithmes \ref{HOTP:isSynch} et \ref{HOTP:synch}.
+
+  \begin{algorithm}
+    \caption{Vérification de la possibilité de resynchronisation}
+    \label{HOTP:isSynch}
+    
+    \begin{algorithmic}
+      \REQUIRE $OTP$ la valeur de l'OTP fournie par l'utilisateur
+      \REQUIRE $K$ la clef secrète de l'utilisation
+      \REQUIRE $C$ la valeur du concteur de synchronisation pour le token
+      \STATE $MAX\_FWD \leftarrow a$ //$MAX\_FWD$ contient le nombre maximal de valeur a verifier
+      \FOR{$i$ de $1$ à $MAX\_FWD$}
+	\STATE $OTP2 \leftarrow HOTP_K(C + i)$
+	\IF{$OTP = OTP2$}
+	  \RETURN vrai
+	\ENDIF
+      \ENDFOR
+      \RETURN faux
+    \end{algorithmic}
+  \end{algorithm}
+  
+  \begin{algorithm}
+    \caption{Resynchronisation}
+    \label{HOTP:synch}
+    
+    \begin{algorithmic}
+      \REQUIRE $OTP$ la valeur de l'OTP fournie par l'utilisateur
+      \REQUIRE $K$ la clef secrète de l'utilisation
+      \REQUIRE $C$ la valeur du compteur de synchronisation pour le token
+      \STATE $MAX\_FWD \leftarrow a$ //$MAX\_FWD$ contient le nombre maximal de valeur a verifier
+      \FOR{$i$ de $1$ à $MAX\_FWD$}
+	\STATE $OTP2 \leftarrow HOTP_K(C + i)$
+	\IF{$OTP = OTP2$}
+	  \STATE $C \leftarrow C + i + 1$
+	  \STATE accepter l'utilisateur
+	\ENDIF
+      \ENDFOR
+      \STATE rejeter l'utilisateur
+    \end{algorithmic}
+  \end{algorithm}
+  
+  Les deux algorithmes sont très similaires. Le premier parcours les valeurs autorisées à la recherche d'une concordance, le deuxième parcours à son tour les valeurs pour 
+  mettre à jour la valeur du compteur du serveur. En pratique, ces deux algorithmes pourront \^etre fusionnés en un seul vérifiant la possibilité de synchronisation et 
+  effectuant cette dernière à la suite.
   
   \subsection{Reinitialisation}
   Ne concerne a priori pas tous les systèmes. Expliquer les procédures a utiliser pour reinitialiser le secret et autres.
