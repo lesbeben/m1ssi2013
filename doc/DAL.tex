@@ -3,6 +3,9 @@
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
 \usepackage{colortbl}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
 
 \logo{../res/logo_univ.png}
 \title{Architecture Logicielle}
@@ -44,7 +47,7 @@ Ce document à pour but de préciser les détails techniques du logiciel final.
     {[RFC07]} & {The EAP Protected One-Time Password Protocol (EAP-POTP). \href{http://tools.ietf.org/html/rfc4793}{http://tools.ietf.org/html/rfc4793}, 2007.}
     \tabularnewline
     \\
-    {[RFC11]} & {TOTP: Time-Based One-Time Password Algorithm \href{http://tools.ietf.org/html/rfc6238}{http://tools.ietf.org/html/rfc6238}, 2011.}
+    {[RFC11]} & {HOTP: Time-Based One-Time Password Algorithm \href{http://tools.ietf.org/html/rfc6238}{http://tools.ietf.org/html/rfc6238}, 2011.}
     \tabularnewline
     \\
     {[goo]} & {Google Authentificator \href{https://code.google.com/p/google-authenticator/}{https://code.google.com/p/google-authenticator/}.}
@@ -72,6 +75,8 @@ Ce document à pour but de préciser les détails techniques du logiciel final.
     \item[Client] Un client est le logiciel qui envoie des demandes à un
     serveur.Pour notre cas celui-ci permettra de communiquer au serveur les OTP
     g\'{e}n\'{e}r\'{e}s par le token.
+    
+    \item[Seed] Variable utilis\'e pour initiliser une s\'equence al\'eatoire.
 \end{description}
 
 %-------------------------------------------------------------------------------
@@ -82,7 +87,7 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? est
 supposée suffisante.
 
 \subsection{Périphériques et matériel spécifiques}
-\begin{tabular}{|c|l|c|}
+\begin{tabular}{|p{0.15\textwidth}|p{0.7\textwidth}|p{0.15\textwidth}|}
     \hline
     \rowcolor{gray}
     \textcolor{white}{\bfseries Identifiant} & 
@@ -100,7 +105,7 @@ supposée suffisante.
 \end{tabular}
 
 \subsection{Système d'exploitation}
-\begin{tabular}{|c|l|c|}
+\begin{tabular}{|p{0.15\textwidth}|p{0.7\textwidth}|p{0.15\textwidth}|}
     \hline
     \rowcolor{gray}
     \textcolor{white}{\bfseries Identifiant} & 
@@ -118,7 +123,7 @@ supposée suffisante.
 \end{tabular}
 
 \subsection{Pré-requis logiciels}
-\begin{tabular}{|c|l|c|}
+\begin{tabular}{|p{0.15\textwidth}|p{0.7\textwidth}|p{0.15\textwidth}|}
     \hline
     \rowcolor{gray}
     \textcolor{white}{\bfseries Identifiant} & 
@@ -129,12 +134,16 @@ supposée suffisante.
     Support de l'API POSIX pour le token, le client et le serveur &
     Indispensable\\
     \hline
+    PR-L\_002 &
+    Base de donn\'ee pour stocker les informations relatives aux utilisateur dans le serveur&
+    Indispensable\\
+    \hline
 \end{tabular}
 
 
 %-------------------------------------------------------------------------------
 \section{Architectures statique}
-\subsection{Structure}
+\subsection{Structure g\'en\'erale du syst\`eme}
         %-----------------------------------------------------------------------
         %          GROS SCHÉMA DE PORC
         %-----------------------------------------------------------------------
@@ -168,7 +177,8 @@ supposée suffisante.
     \begin{description}
         \item[Secret] Le secret de l'utilisateur qui permet de générer les
             mots de passes jetables.
-        \item[User] La structure qui contient les données de l'utilisateur
+        \item[User] La structure qui contient les données de l'utilisateur.
+            Stock\'ee dans la m\'emoire à long terme du support.
     \end{description}
 
     \subsubsection{Dépendances}
@@ -200,6 +210,10 @@ supposée suffisante.
 
 %------------------------------------------------------------------------------
 \subsection{Générateur d'OTP}
+    Chaque algorithme \'etudi\'e et impl\'emet\'e (HOTP, OTPW, POTP) offrira les
+    mêmes services, seul le fonctionnement interne du module differera.
+    les algorithmes seront détaillés dans les dossiers associés au recherches sur 
+    chaques algos.
     \subsubsection{Rôle}
         Générer des mots de passe jetables permettant de s'authentifier.
 
@@ -207,7 +221,7 @@ supposée suffisante.
     \begin{description}
         \item[initiate(user * utilisateur, char * seed):] Initialise
             un générateur d'OTP pour l'utilisateur.
-        \item[getOTP(user * utilisateur)] Génère un OTP selon la méthode et les
+        \item[geHOTP(user * utilisateur)] Génère un OTP selon la méthode et les
             paramêtres passés.
     \end{description}
 
@@ -328,6 +342,11 @@ Le langage C a été choisi pour 2 raisons:
 \end{enumerate}
 
 %-------------------------------------------------------------------------------
+\subsubsection{Le langage Java}
+    Le langage java sera utilis\'e sur les plateformes android
+    et javacard, car bien qu'il soit possible de programmer en C
+    sur android, ce n'est pas recommand\'e.
+        
 \section{Fonctionnement dynamique}
 \subsection{Association/Partage du secret}
 \subsubsection{Principe}
@@ -382,5 +401,4 @@ mots de passes jetables générés.
     mots de passe jetables.
 \end{enumerate}
 \includegraphics[width=\textwidth]{resynchronisation.jpg}
-
 \end{document}
