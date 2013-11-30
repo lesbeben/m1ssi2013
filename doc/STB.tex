@@ -4,10 +4,10 @@
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
 
-\title{Spécification Technique des Besoins}
+\title{Sp\'{e}cification Technique des Besoins}
 \author{\bsc{Michotte} Maxime}
 \projet{M1SSI}
-\projdesc{Projet de génération d'OTP}
+\projdesc{Projet de g\'{e}n\'{e}ration d'OTP}
 \filiere{M1SSI}
 \version{1.0}
 \relecteur{\bsc{Zigh} Benjamin}
@@ -15,14 +15,15 @@
 \date{Novembre 2013}
 
 \histentry{1.0}{15/11/2013}{Version initiale.}
+\histentry{1.1}{28/11/2013}{Version 1.}
 
 \begin{document}
 \maketitle
 %-------------------------------------------------------------------------------
-\section*{1. Objet}
-Etude et implémentations des systèmes d'authentification utilisant des mots de passe jetables :
+\section{Objet}
+Etude et impl\'{e}mentations des systèmes d'authentification utilisant des mots de passe jetables :
 \begin{itemize}
-    \item Besoins opérationnels
+    \item Besoins op\'{e}rationnels
         \begin{itemize}
             \item Garantir une authentification forte
             \item Etat de l'art sur les systèmes existants
@@ -30,26 +31,26 @@ Etude et implémentations des systèmes d'authentification utilisant des mots de p
         \end{itemize}
     \item Objectifs techniques
     \begin{itemize}	
-            \item Implémentation des solutions retenues sur un ou plusieurs supports
+            \item Impl\'{e}mentation des solutions retenues sur un ou plusieurs supports
     \end{itemize}
     \item Contraintes et recommandations
         \begin{itemize}
-            \item Respecter les spécifications de base et les normes RFC
+            \item Respecter les sp\'{e}cifications de base et les normes RFC
             \item Montrer que le système produit est sûr
-            \item Choisir une implémentation adaptée en fonction des besoins et de l'état de l'art établi
+            \item Choisir une impl\'{e}mentation adapt\'{e}e en fonction des besoins et de l'\'{e}tat de l'art \'{e}tabli
         \end{itemize}
-    \item Résultats attendus
+    \item R\'{e}sultats attendus
         \begin{itemize}
             \item Système sûr et fonctionnel
             \item Etat de l'art le plus exhaustif possible
-            \item Implémentation sur Carte à puces et/ou Android
+            \item Impl\'{e}mentation sur Carte à puces et/ou Android
         \end{itemize}
 \end{itemize}
 %-------------------------------------------------------------------------------
-\section*{2. Documents applicables et de référence}
+\section{Documents applicables et de référence}
 
 \begin{tabular}{p{1,5cm}>{\raggedright\arraybackslash}p{13cm}}
-{[ANS10]} & {ANSSI. Référentiel général de sécurité. \href{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}, 2010.}
+{[ANS10]} & {ANSSI. R\'{e}f\'{e}rentiel g\'{e}n\'{e}ral de s\'{e}curit\'{e}. \href{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}, 2010.}
 \tabularnewline
 \\
 {[MvOV97]} & {Alfred J. Menezes, Paul C. van Oorschot, and Scott A. Vanstone. Handbook of applied cryptography. CRC Press Series on Discrete Mathematics and its Applications. CRC Press, Boca Raton, FL, 1997. With a foreword by Ronald L.Rivest.}
@@ -76,22 +77,28 @@ Etude et implémentations des systèmes d'authentification utilisant des mots de p
 \end{tabular}
 \newpage
 %-------------------------------------------------------------------------------
-\section*{3. Terminologie et sigles utilisés}
+\section{Terminologie et sigles utilisés}
 \begin{itemize}
 \item \textbf{Etat de l'art}\\
-  Dresser un état de l'art dans un domaine consiste à rechercher toutes les informations existantes concernant ce domaine et à en faire une synthèse.
+  Dresser un \'{e}tat de l'art dans un domaine consiste à rechercher toutes les informations existantes concernant ce domaine et à en faire une synthèse.
 
 \item \textbf{RFC}\\
-  Les RFC (Request For Comments) sont un ensemble de documents qui font référence auprès de la Communauté Internet et qui décrivent, spécifient, aident à l'implémentation, standardisent et débattent de la majorité des normes, standards, technologies et protocoles liés à Internet et aux réseaux en général.
+  Les RFC (Request For Comments) sont un ensemble de documents qui font r\'{e}f\'{e}rence auprès de la Communaut\'{e} Internet et qui d\'{e}crivent, sp\'{e}cifient, aident à l'impl\'{e}mentation, standardisent et d\'{e}battent de la majorit\'{e} des normes, standards, technologies et protocoles li\'{e}s à Internet et aux r\'{e}seaux en g\'{e}n\'{e}ral.
+
+\item \textbf{Utilisateur}\\
+  L'utilisateur est une personne physique qui dans notre cas souhaite utiliser une authentification utilisant les OTP.
+
+\item \textbf{Mot de passe}\\
+  Le mot de passe est une m\'{e}thode parmi d'autres pour effectuer une authentification, c'est-à-dire v\'{e}rifier qu'une personne correspond bien à l'identit\'{e} d\'{e}clar\'{e}e. Il s'agit d'une preuve que l'on possède et que l'on transmet au service charg\'{e} d'autoriser l'accès. Le mot de passe doit être tenu secret pour \'{e}viter qu'un tiers non autoris\'{e} puisse acc\'{e}der à la ressource ou au service.  
   
 \item \textbf{OTP}\\
   Un Mot de passe unique ou OTP (One-time password) est un mot de passe qui n'est valable que pour une session ou une transaction.
 
 \item \textbf{Token}\\
-  Un token désigne dans notre projet un élément matériel tiers servant à la génération d'un OTP.
+  Un token d\'{e}signe dans notre projet un \'{e}l\'{e}ment logiciel ou mat\'{e}riel tiers servant à la g\'{e}n\'{e}ration d'un OTP.
   
 \item \textbf{Serveur}\\
-  Un serveur est un dispositif informatique matériel ou logiciel qui offre des services, à différents clients. Pour notre cas celui-ci permettra l'association d'un token, la v\'{e}rification de l'OTP g\'{e}n\'{e}r\'{e} par le token, et l'\'{e}ventuelle re-synchronisation du token.
+  Un serveur est un dispositif informatique mat\'{e}riel ou logiciel qui offre des services, à diff\'{e}rents clients. Pour notre cas celui-ci permettra l'association d'un token, la v\'{e}rification de l'OTP g\'{e}n\'{e}r\'{e} par le token, et l'\'{e}ventuelle re-synchronisation du token.
   
 \item \textbf{Client}\\
   Un client est le logiciel qui envoie des demandes à un serveur.Pour notre cas celui-ci permettra de communiquer au serveur les OTP g\'{e}n\'{e}r\'{e}s par le token.
@@ -100,17 +107,17 @@ Etude et implémentations des systèmes d'authentification utilisant des mots de p
 
   
 %-------------------------------------------------------------------------------
-\section*{4. Exigence fonctionnelles}
+\section{Exigence fonctionnelles}
 \begin{tabular}{|c|l|l|c|}
     \hline
     \rowcolor{gray}
-    \textcolor{white}{Id} & \textcolor{white}{Intitulé} & \textcolor{white}{Acteur(s)} & \textcolor{white}{Priorité}\\
+    \textcolor{white}{Id} & \textcolor{white}{Intitul\'{e}} & \textcolor{white}{Acteur(s)} & \textcolor{white}{Priorit\'{e}}\\
     \hline
     EF\_01 & Etat de l'art & Equipe & Indispensable\\
     \hline
-    EF\_02 & Association & Utilisateur & Indispensable\\
+    EF\_02 & Association serveur-client-token & Utilisateur & Indispensable\\
     \hline
-    EF\_03 & Génération & Utilisateur & Indispensable\\
+    EF\_03 & G\'{e}n\'{e}ration de l'OTP par le token & Utilisateur & Indispensable\\
     \hline
     EF\_04 & Authentification & Utilisateur & Indispensable\\
     \hline
@@ -118,76 +125,92 @@ Etude et implémentations des systèmes d'authentification utilisant des mots de p
     \hline
 \end{tabular}\
 
+
+
 \begin{figure}[h]
   \centering
   \includegraphics[scale=0.5]{diagramme1.png}
-  \caption{Schéma Macroscopique du Projet}
+  \caption{Sch\'{e}ma Macroscopique du Projet}
+  \setlength{\parindent}{1cm}
+  \begin{flushleft}
+  Nous (l'équipe) commencerons  par une \'{e}tude des diff\'{e}rents protocoles de g\'{e}n\'{e}rations d'OTP afin d'en fournir un \'{e}tat de l'art le plus exhaustif possible. Une fois celui-ci terminé nous passerons \`{a} l'impl\'{e}mentation des meilleurs protocoles retenues. Enfin, pour v\'{e}rifier notre production, un audit sera organisé ainsi qu'une batterie de tests de sorte \`{a} corriger les erreurs de d\'{e}veloppement pour nous mener \`{a} une mise en application. 
+  \end{flushleft}
 \end{figure}
+
+
+
 
 \clearpage
 
-\fiche{Association}{Utilisateur}{Le token et le serveur se mettent d'accord sur un secret}{Il existe une communication token-serveur}{Bouton utilisateur}{Association réussie}{association.jpg}{Impossible d'associer le token au serveur}
+\fiche{Association serveur-client-token}{Utilisateur}{Le serveur commnunique au Token un secret}{Il existe une communication client-serveur}{Bouton utilisateur}{Association r\'{e}ussie}{association.jpg}{Impossible d'associer le token au serveur}
 \\
 
-\fiche{Génération}{Utilisateur}{L'utilisateur demande au token un nouvel OTP qui lui est retourné}{Le token est lié au serveur}{L'utilisateur demande un OTP}{OTP généré}{generation.jpg}{Null}
+\fiche{G\'{e}n\'{e}ration de l'OTP par le token}{Utilisateur}{L'utilisateur demande au token un nouvel OTP qui lui est retourn\'{e}}{Le token est li\'{e} au serveur}{L'utilisateur demande un OTP}{OTP g\'{e}n\'{e}r\'{e}}{generation.jpg}{Null}
 \\
 
-\fiche{Authentification}{Utilisateur}{L'utilisateur tente de s'authentifier sur le serveur}{L'utilisateur possède un OTP}{L'utilisateur donne le mot de passe au serveur}{Utilisateur authentifié ou rejeté}{authentification.jpg}{Crash du serveur}
+\fiche{Authentification}{Utilisateur}{L'utilisateur tente de s'authentifier sur le serveur}{L'utilisateur possède un OTP}{L'utilisateur donne le mot de passe au serveur}{Utilisateur authentifi\'{e} ou rejet\'{e}}{authentification.jpg}{Crash du serveur}
 \\
 
-\fiche{Re-Synchronisation}{Utilisateur}{Mise en accord du token et du serveur}{Il existe une connexion entre le token et le serveur}{Perte de la synchronisation}{Synchronisation retrouvé}{resynchronisation.jpg}{Ne peut pas re-synchroniser}
+\fiche{Re-Synchronisation}{Utilisateur}{Mise en accord du token et du serveur}{Il existe une connexion entre le token et le serveur}{Perte de la synchronisation}{Synchronisation retrouv\'{e}}{resynchronisation.jpg}{Ne peut pas re-synchroniser}
 \clearpage
 \newpage
 %-------------------------------------------------------------------------------
-\section*{5. Exigences opérationnelles}
+\section{Exigences opérationnelles}
 \begin{tabular}{|c|l|c|}
     \hline
     \rowcolor{gray}
-    \textcolor{white}{Id} & \textcolor{white}{Intitulé} & \textcolor{white}{Priorité}\\
+    \textcolor{white}{Id} & \textcolor{white}{Intitul\'{e}} & \textcolor{white}{Priorit\'{e}}\\
     \hline
-    EP\_01 & Génération d'un OTP en moins d'une seconde & Indispensable\\
+    EP\_01 & Le Token renvoie un OTP & Indispensable\\
     \hline
-    EP\_02 & OTP non prévisible & Indispensable\\
+    EP\_02 & L'OTP est utilisable 1 seule fois & Indispensable\\
     \hline
-    EP\_03 & Résistant à une attaque exhaustive & Indispensable\\
+    EP\_03 & L'OTP est non pr\'{e}visible (OTP qui ne peut \^{e}tre d\'{e}duit des anciens générés) & Indispensable\\
     \hline
-    EP\_04 & Respect des RFC & Indispensable\\
+    EP\_04 & R\'{e}sistant à une attaque exhaustive & Indispensable\\
     \hline
+    EP\_05 & R\'{e}sistant aux attaques par rejeu & Indispensable\\
+    EP\_06 & Respect des RFC (RFC2289, RFC4226, RFC4256, RFC4793, RFC6238) & Indispensable\\
+    \hline
+
+    \hline
+    
+    
 \end{tabular}
 
 %-------------------------------------------------------------------------------
-\section*{6. Exigences d'interface}
+\section{Exigences d'interface}
 \begin{tabular}{|c|l|c|}
     \hline
     \rowcolor{gray}
-    \textcolor{white}{Id} & \textcolor{white}{Intitulé} & \textcolor{white}{Priorité}\\
+    \textcolor{white}{Id} & \textcolor{white}{Intitul\'{e}} & \textcolor{white}{Priorit\'{e}}\\
     \hline
     EI\_01 & UNIX(Client/Serveur/Token) & Indispensable\\
     \hline
     EI\_02 & Android(Token) & Important\\
     \hline
-    EI\_03 & Java Card & Secondaire\\
+    EI\_03 & Java Card (Token) & Secondaire\\
     \hline
 \end{tabular}
 
 %-------------------------------------------------------------------------------
-\section*{7. Exigences de qualité}
+\section{Exigences de qualité}
 \begin{tabular}{|c|l|}
     \hline
     \rowcolor{gray}
-    \textcolor{white}{Id} & \textcolor{white}{Intitulé}\\
+    \textcolor{white}{Id} & \textcolor{white}{Intitul\'{e}}\\
     \hline
-    EQ\_01 & Génération de mots de passe inférieur à 1 seconde (sur un processeur cadencé à 700MHz)\\
+    EQ\_01 & G\'{e}n\'{e}ration de mots de passe inf\'{e}rieur à 1 seconde (sur un processeur cadenc\'{e} à 700MHz)\\
     \hline
-    EQ\_02 & Temps de réponse serveur (temps < 1 sec + 2 *tps communication)\\
+    EQ\_02 & Temps de r\'{e}ponse serveur (temps < 1 sec + 2 *tps communication)\\
     \hline
-    EQ\_03 & Le serveur supporte au moins 100 000 demandes de vérification\\
+    EQ\_03 & Le serveur supporte au moins 100 000 demandes de v\'{e}rification simultan\'{e}es\\
     \hline
-    EQ\_04 & La vérification est cohérente\\
+    EQ\_04 & La v\'{e}rification est coh\'{e}rente\\
     \hline
-    EQ\_05 & La génération utilise au plus 1 Mo de mémoire\\
+    EQ\_05 & La g\'{e}n\'{e}ration utilise au plus 10 Ko de m\'{e}moire\\
     \hline
-    EQ\_06 & La génération nécessite au plus 2 actions de l'utilisateur\\
+    EQ\_06 & \'{E}tat de l'art exhaustif, au moins trois protocoles OTP  \'{e}tudi\'{e}s\\
     \hline
 \end{tabular}
 %-------------------------------------------------------------------------------
