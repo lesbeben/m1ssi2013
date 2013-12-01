@@ -1,4 +1,4 @@
-\documentclass{"../res/univ-projet"}
+\documentclass{"../../res/univ-projet"}
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
@@ -7,7 +7,7 @@
 \usepackage{algorithmic}
 
 
-\logo{../res/logo_univ.png}
+\logo{../../res/logo_univ.png}
 \title{Architecture Logicielle}
 \author{\bsc{Picard} Damien}
 \projet{M1SSI}
@@ -144,10 +144,7 @@ supposée suffisante.
 %-------------------------------------------------------------------------------
 \section{Architectures statique}
 \subsection{Structure g\'en\'erale du syst\`eme}
-        %-----------------------------------------------------------------------
-        %          GROS SCHÉMA DE PORC
-        %-----------------------------------------------------------------------
-
+\includegraphics[width=\textwidth]{../architecture.png}
 \subsection{Structure user}
 \label{sub:Structure_user}
     Cette structure à pour but de pouvoir conserver l'état d'un générateur d'OTP
@@ -161,6 +158,8 @@ supposée suffisante.
         \begin{description}
             \item[login] le nom de l'utilisateur
             \item[HPass] Une empreinte du mot de passe de l'utilisateur
+            \item[isLocked] indique si l'utilisateur à le droit d'essayer de
+                se logger
             \item[secret] Le secret permettant de générer n'importe quel OTP 
                 valide
             \item[how] La méthode d'authentification OTP.
@@ -170,8 +169,7 @@ supposée suffisante.
 
 \subsection{Token}
     \subsubsection{Rôle}
-        Afficher les mots de passes jetables pour un utilisateur un secret
-        donné.
+        Afficher les mots de passes jetables pour un utilisateur donné.
 
     \subsubsection{Propriétés et attributs de caractèrisation}
     \begin{description}
@@ -210,7 +208,7 @@ supposée suffisante.
 
 %------------------------------------------------------------------------------
 \subsection{Générateur d'OTP}
-    Chaque algorithme \'etudi\'e et impl\'emet\'e (HOTP, OTPW, POTP) offrira les
+    Chaque algorithme \'etudi\'e et impl\'ement\'e (HOTP, OTPW, POTP) offrira les
     mêmes services, seul le fonctionnement interne du module differera.
     les algorithmes seront détaillés dans les dossiers associés au recherches sur 
     chaques algos.
@@ -221,7 +219,7 @@ supposée suffisante.
     \begin{description}
         \item[initiate(user * utilisateur, char * seed):] Initialise
             un générateur d'OTP pour l'utilisateur.
-        \item[geHOTP(user * utilisateur)] Génère un OTP selon la méthode et les
+        \item[getOTP(user * utilisateur)] Génère un OTP selon la méthode et les
             paramêtres passés.
     \end{description}
 
@@ -284,7 +282,7 @@ supposée suffisante.
     Dire si un mot de passe jetable est valide ou non pour s'authentifier sur un
     service donné.
 
-    \subsubsection{Propriétés et attributs de caractèrisation}
+    \subsubsection{Propriétés et attributs de caractérisation}
     \begin{description}
         \item[Port] Le port utilisé pour accéder au serveur
             d'authentification.
@@ -358,7 +356,7 @@ Le token et le serveur se mettent d'accord sur un secret.
         au token et au serveur.
     \item Indiquer l'échec ou la réussite de l'opération
 \end{enumerate}
-\includegraphics[width=\textwidth]{association.jpg}
+\includegraphics[width=\textwidth]{../association.jpg}
 
 \subsection{Génération d'un mot de passe jetable}
 \subsubsection{Principe}
@@ -369,7 +367,7 @@ Le token donne un mot de passe jetable à l'utilisateur.
     \item Calcul d'un mot de passe jetable à partir du secret 
         initial
 \end{enumerate}
-\includegraphics[width=\textwidth]{generation.jpg}
+\includegraphics[width=\textwidth]{../generation.jpg}
 
 \subsection{Authentification}
 \subsubsection{Principe}
@@ -387,7 +385,7 @@ vérification au serveur.
             \item[KO] Si le serveur refuse le mot de passe
         \end{description}
 \end{enumerate}
-\includegraphics[width=\textwidth]{authentification.jpg}
+\includegraphics[width=\textwidth]{../authentification.jpg}
 
 \subsection{Resynchronisation}
 \subsubsection{Principe}
@@ -400,5 +398,5 @@ mots de passes jetables générés.
     \item Le serveur et le token se mettent d'accord sur l'état de la suite des
     mots de passe jetables.
 \end{enumerate}
-\includegraphics[width=\textwidth]{resynchronisation.jpg}
+\includegraphics[width=\textwidth]{../resynchronisation.jpg}
 \end{document}
