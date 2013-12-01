@@ -1,4 +1,4 @@
-\documentclass{"../res/univ-projet"}
+\documentclass{"../../res/univ-projet"}
 \usepackage[latin1]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
@@ -7,7 +7,7 @@
 \usepackage{algorithmic}
 
 
-\logo{../res/logo_univ.png}
+\logo{../../res/logo_univ.png}
 \title{Architecture Logicielle}
 \author{\bsc{Picard} Damien}
 \projet{M1SSI}
@@ -87,56 +87,66 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? est
 supposée suffisante.
 
 \subsection{Périphériques et matériel spécifiques}
-\begin{tabular}{|p{0.15\textwidth}|p{0.7\textwidth}|p{0.15\textwidth}|}
+\begin{tabular}{|p{0.2\textwidth}|p{0.4\textwidth}|p{0.4\textwidth}|}
     \hline
     \rowcolor{gray}
     \textcolor{white}{\bfseries Identifiant} & 
     \textcolor{white}{\bfseries Description} &
-    \textcolor{white}{\bfseries Priorité} \\
+    \textcolor{white}{\bfseries Justification} \\
     \hline
     PR-M\_001 &
     Calculateur \verb?700MHz? pour le token &
-    Indispensable\\
+    Étant donn\'e que le calcul de l'OTP ne prends que très peu de ressources
+            et que les plateformes sont diverse le critère des \verb?700MHz? de puissances
+            de calcul paraît un bon facteur commun.\\
     \hline
     PR-M\_002 &
     Communication stable entre le client et le serveur &
-    Indispensable\\
+    La communication stable entre le client et le serveur permet d'assurer que si
+            il y a un problème lors de l'authentification ce n'est pas du à une perte de
+            requête.\\
     \hline
 \end{tabular}
 
 \subsection{Système d'exploitation}
-\begin{tabular}{|p{0.15\textwidth}|p{0.7\textwidth}|p{0.15\textwidth}|}
+\begin{tabular}{|p{0.2\textwidth}|p{0.4\textwidth}|p{0.4\textwidth}|}
     \hline
     \rowcolor{gray}
     \textcolor{white}{\bfseries Identifiant} & 
     \textcolor{white}{\bfseries Description} &
-    \textcolor{white}{\bfseries Priorité} \\
+    \textcolor{white}{\bfseries Justification} \\
     \hline
     OS\_001& 
     GNU/Linux pour un token, un client et un serveur&
-    Indispensable\\
+    À vrai dire comme la plupart des technologies employ\'ees seront libres
+    la seule choses qui justifie l'emploi de ce système d'exploitation
+    est qu'il est lui aussi libre et permet d'int\'egrer facilement ces technologies\\
     \hline
     OS\_002&
     Android pour un token&
-    Important\\
+    Ceci est dans l'hypothèse d'une implantation sur une plateforme type
+    smartphone/tablette. Une fois de plus ce choix se justifie par
+    l'aspect libre du système.\\
     \hline
 \end{tabular}
 
 \subsection{Pré-requis logiciels}
-\begin{tabular}{|p{0.15\textwidth}|p{0.7\textwidth}|p{0.15\textwidth}|}
+\begin{tabular}{|p{0.2\textwidth}|p{0.4\textwidth}|p{0.4\textwidth}|}
     \hline
     \rowcolor{gray}
     \textcolor{white}{\bfseries Identifiant} & 
     \textcolor{white}{\bfseries Description} &
-    \textcolor{white}{\bfseries Priorité} \\
+    \textcolor{white}{\bfseries Justification} \\
     \hline
     PR-L\_001 &
     Support de l'API POSIX pour le token, le client et le serveur &
-    Indispensable\\
+    Ceci va de paire avec le choix de GNU/Linux comme système d'exploitation,
+    c'est une technologie libre et performante.\\
     \hline
     PR-L\_002 &
     Base de donn\'ee pour stocker les informations relatives aux utilisateur dans le serveur&
-    Indispensable\\
+    Cela sera n\'ecessaire pour g\'erer plusieurs utilisateurs ainsi que plusieurs protocoles
+    OTP pour le serveur.\\
     \hline
 \end{tabular}
 
@@ -144,10 +154,7 @@ supposée suffisante.
 %-------------------------------------------------------------------------------
 \section{Architectures statique}
 \subsection{Structure g\'en\'erale du syst\`eme}
-        %-----------------------------------------------------------------------
-        %          GROS SCHÉMA DE PORC
-        %-----------------------------------------------------------------------
-
+\includegraphics[width=\textwidth]{../architecture.png}
 \subsection{Structure user}
 \label{sub:Structure_user}
     Cette structure à pour but de pouvoir conserver l'état d'un générateur d'OTP
@@ -161,6 +168,8 @@ supposée suffisante.
         \begin{description}
             \item[login] le nom de l'utilisateur
             \item[HPass] Une empreinte du mot de passe de l'utilisateur
+            \item[isLocked] indique si l'utilisateur à le droit d'essayer de
+                se connecter
             \item[secret] Le secret permettant de générer n'importe quel OTP 
                 valide
             \item[how] La méthode d'authentification OTP.
@@ -170,8 +179,7 @@ supposée suffisante.
 
 \subsection{Token}
     \subsubsection{Rôle}
-        Afficher les mots de passes jetables pour un utilisateur un secret
-        donné.
+        Afficher les mots de passes jetables pour un utilisateur donné.
 
     \subsubsection{Propriétés et attributs de caractèrisation}
     \begin{description}
@@ -199,7 +207,7 @@ supposée suffisante.
         \item Développer des modules réalisant chaque algo de génération
             d'OTP.
         \item Développer un générateur de secrets.
-        \item Peut être une interface graphique ?
+        \item Permettre une interaction avec l'utilisateur.
     \end{enumerate}
 
     \subsubsection{Taille et complexité}
@@ -210,7 +218,7 @@ supposée suffisante.
 
 %------------------------------------------------------------------------------
 \subsection{Générateur d'OTP}
-    Chaque algorithme \'etudi\'e et impl\'emet\'e (HOTP, OTPW, POTP) offrira les
+    Chaque algorithme \'etudi\'e et impl\'ement\'e (HOTP, OTPW, POTP) offrira les
     mêmes services, seul le fonctionnement interne du module differera.
     les algorithmes seront détaillés dans les dossiers associés au recherches sur 
     chaques algos.
@@ -221,7 +229,7 @@ supposée suffisante.
     \begin{description}
         \item[initiate(user * utilisateur, char * seed):] Initialise
             un générateur d'OTP pour l'utilisateur.
-        \item[geHOTP(user * utilisateur)] Génère un OTP selon la méthode et les
+        \item[getOTP(user * utilisateur)] Génère un OTP selon la méthode et les
             paramêtres passés.
     \end{description}
 
@@ -243,7 +251,7 @@ supposée suffisante.
         \item Taille et compléxité dépendantes de l'algo de génération
             de mots de passes jetables, mais suffisamment faible pour tenir sur
             de petites capacités mémoire et permettre un calcul 
-            en t < 1s sur 700MHz.
+            en t < 1s sur \verb?700MHz?.
     \end{itemize}
 
 \subsection{Client}
@@ -284,7 +292,7 @@ supposée suffisante.
     Dire si un mot de passe jetable est valide ou non pour s'authentifier sur un
     service donné.
 
-    \subsubsection{Propriétés et attributs de caractèrisation}
+    \subsubsection{Propriétés et attributs de caractérisation}
     \begin{description}
         \item[Port] Le port utilisé pour accéder au serveur
             d'authentification.
@@ -345,20 +353,20 @@ Le langage C a été choisi pour 2 raisons:
 \subsubsection{Le langage Java}
     Le langage java sera utilis\'e sur les plateformes android
     et javacard, car bien qu'il soit possible de programmer en C
-    sur android, ce n'est pas recommand\'e.
+    sur android, ce n'est pas recommand\'e par \verb?Google?
+    \footnote{\href{https://developer.android.com/tools/sdk/ndk/index.html}{Android NDK}}.
         
 \section{Fonctionnement dynamique}
 \subsection{Association/Partage du secret}
 \subsubsection{Principe}
-Le token et le serveur se mettent d'accord sur un secret.
+Le token et le serveur se mettent d'accord sur un secret partag\'e gr\^ace à l'utilisateur.
 
 \subsubsection{Fonctionnement}
 \begin{enumerate}
-    \item partage du secret via un canal de communication sécurisé
-        au token et au serveur.
+    \item partage du secret via une saisie utilisateur.
     \item Indiquer l'échec ou la réussite de l'opération
 \end{enumerate}
-\includegraphics[width=\textwidth]{association.jpg}
+\includegraphics[width=\textwidth]{../association.jpg}
 
 \subsection{Génération d'un mot de passe jetable}
 \subsubsection{Principe}
@@ -369,7 +377,7 @@ Le token donne un mot de passe jetable à l'utilisateur.
     \item Calcul d'un mot de passe jetable à partir du secret 
         initial
 \end{enumerate}
-\includegraphics[width=\textwidth]{generation.jpg}
+\includegraphics[width=\textwidth]{../generation.jpg}
 
 \subsection{Authentification}
 \subsubsection{Principe}
@@ -387,7 +395,7 @@ vérification au serveur.
             \item[KO] Si le serveur refuse le mot de passe
         \end{description}
 \end{enumerate}
-\includegraphics[width=\textwidth]{authentification.jpg}
+\includegraphics[width=\textwidth]{../authentification.jpg}
 
 \subsection{Resynchronisation}
 \subsubsection{Principe}
@@ -400,5 +408,5 @@ mots de passes jetables générés.
     \item Le serveur et le token se mettent d'accord sur l'état de la suite des
     mots de passe jetables.
 \end{enumerate}
-\includegraphics[width=\textwidth]{resynchronisation.jpg}
+\includegraphics[width=\textwidth]{../resynchronisation.jpg}
 \end{document}
