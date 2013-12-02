@@ -13,12 +13,14 @@
 \projet{M1SSI}
 \projdesc{Projet de génération d'OTP}
 \filiere{M1SSI}
-\version{0.1}
-\relecteur{\bsc{Doe} John}
-\signataire{\bsc{Doe} John}
-\date{Novembre 2013}
+\version{1.0}
+\relecteur{\bsc{Adegoloye} Tayewo John Yves}
+\signataire{\bsc{Bardet} Magali}
+\date{Décembre 2013}
 
-\histentry{0.1}{21/11/2013}{Premier jets}
+\histentry{1.0}{01/12/2013}{Version relue et corrigée}
+\histentry{0.1}{21/11/2013}{Premier jet}
+
 
 \begin{document}
 \maketitle
@@ -26,7 +28,7 @@
 \section{Objet}
 Ce document à pour but de préciser les détails techniques du logiciel final.
 
-\section{Documents de références}
+\section{Documents de référence}
 \subsection{Documents de spécifications}
 \begin{tabular}{p{1,5cm}>{\raggedright\arraybackslash}p{13cm}}
     {[ANS10]} & {ANSSI. Référentiel général de sécurité. \href{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}, 2010.}
@@ -50,17 +52,17 @@ Ce document à pour but de préciser les détails techniques du logiciel final.
     {[RFC11]} & {HOTP: Time-Based One-Time Password Algorithm \href{http://tools.ietf.org/html/rfc6238}{http://tools.ietf.org/html/rfc6238}, 2011.}
     \tabularnewline
     \\
-    {[goo]} & {Google Authentificator \href{https://code.google.com/p/google-authenticator/}{https://code.google.com/p/google-authenticator/}.}
+    {[goo]} & {Google Authenticator \href{https://code.google.com/p/google-authenticator/}{https://code.google.com/p/google-authenticator/}.}
     \tabularnewline
     \\
 \end{tabular}
 
 
 %-------------------------------------------------------------------------------    
-\section{Terminologie et sigle}
+\section{Terminologie et sigles}
 \subsection{Glossaire}
 \begin{description}
-    \item[OTP] Un Mot de passe unique ou OTP (One-time password) est un mot de 
+    \item[OTP] Un Mot de passe unique ou OTP (One-Time Password) est un mot de 
     passe qui n'est valable que pour une session ou une transaction.
 
     \item[Token] Un token désigne dans notre projet un élément matériel ou
@@ -76,13 +78,13 @@ Ce document à pour but de préciser les détails techniques du logiciel final.
     serveur.Pour notre cas celui-ci permettra de communiquer au serveur les OTP
     g\'{e}n\'{e}r\'{e}s par le token.
     
-    \item[Seed] Variable utilis\'e pour initiliser une s\'equence al\'eatoire.
+    \item[Seed] Variable utilis\'ee pour initiliser une s\'equence al\'eatoire.
 \end{description}
 
 %-------------------------------------------------------------------------------
 \section{Configuration requise}
 \subsection{Performances de calcul}
-On suppose l'implémentation du token possible sur de très petit 
+On suppose l'implémentation du token possible sur de très petits 
 calculateurs, donc une fréquence processeur de \verb?700MHz? est
 supposée suffisante.
 
@@ -96,8 +98,8 @@ supposée suffisante.
     \hline
     PR-M\_001 &
     Calculateur \verb?700MHz? pour le token &
-    Étant donn\'e que le calcul de l'OTP ne prends que très peu de ressources
-            et que les plateformes sont diverse le critère des \verb?700MHz? de puissances
+    Étant donn\'e que le calcul de l'OTP ne prend que très peu de ressources
+            et que les plateformes sont diverses le critère des \verb?700MHz? de puissances
             de calcul paraît un bon facteur commun.\\
     \hline
     PR-M\_002 &
@@ -119,7 +121,7 @@ supposée suffisante.
     OS\_001& 
     GNU/Linux pour un token, un client et un serveur&
     À vrai dire comme la plupart des technologies employ\'ees seront libres
-    la seule choses qui justifie l'emploi de ce système d'exploitation
+    la seule chose qui justifie l'emploi de ce système d'exploitation
     est qu'il est lui aussi libre et permet d'int\'egrer facilement ces technologies\\
     \hline
     OS\_002&
@@ -140,11 +142,11 @@ supposée suffisante.
     \hline
     PR-L\_001 &
     Support de l'API POSIX pour le token, le client et le serveur &
-    Ceci va de paire avec le choix de GNU/Linux comme système d'exploitation,
+    Ceci va de pair avec le choix de GNU/Linux comme système d'exploitation,
     c'est une technologie libre et performante.\\
     \hline
     PR-L\_002 &
-    Base de donn\'ee pour stocker les informations relatives aux utilisateur dans le serveur&
+    Base de donn\'ee pour stocker les informations relatives aux utilisateurs dans le serveur&
     Cela sera n\'ecessaire pour g\'erer plusieurs utilisateurs ainsi que plusieurs protocoles
     OTP pour le serveur.\\
     \hline
@@ -157,8 +159,8 @@ supposée suffisante.
 \includegraphics[width=\textwidth]{../architecture.png}
 \subsection{Structure user}
 \label{sub:Structure_user}
-    Cette structure à pour but de pouvoir conserver l'état d'un générateur d'OTP
-    pour un utilisateur. Elle sera stocké dans une base de donnée sur le
+    Cette structure a pour but de pouvoir conserver l'état d'un générateur d'OTP
+    pour un utilisateur. Elle sera stockée dans une base de données sur le
     serveur. Cela permet de ne charger qu'un seul module de génération de mot de
     passe en mémoire pour gérer plusieurs utilisateurs.
     \subsubsection{Champs}
@@ -179,12 +181,12 @@ supposée suffisante.
 
 \subsection{Token}
     \subsubsection{Rôle}
-        Afficher les mots de passes jetables pour un utilisateur donné.
+        Afficher les mots de passe jetables pour un utilisateur donné.
 
     \subsubsection{Propriétés et attributs de caractèrisation}
     \begin{description}
         \item[Secret] Le secret de l'utilisateur qui permet de générer les
-            mots de passes jetables.
+            mots de passe jetables.
         \item[User] La structure qui contient les données de l'utilisateur.
             Stock\'ee dans la m\'emoire à long terme du support.
     \end{description}
@@ -195,16 +197,16 @@ supposée suffisante.
             \item Toolkit d'interaction avec l'utilisateur.
         \end{itemize}
 
-    \subsubsection{Langage de programmation}
+    \subsubsection{Langages de programmation}
     \begin{itemize}
         \item C
         \item Java Mobile (optionel)
         \item Java Card (optionel)
     \end{itemize}
 
-    \subsubsection{Procédé de développement}
+    \subsubsection{Procédés de développement}
     \begin{enumerate}
-        \item Développer des modules réalisant chaque algo de génération
+        \item Développer des modules réalisants chaque algorithme de génération
             d'OTP.
         \item Développer un générateur de secrets.
         \item Permettre une interaction avec l'utilisateur.
@@ -212,8 +214,8 @@ supposée suffisante.
 
     \subsubsection{Taille et complexité}
     \begin{itemize}
-        \item Taille et compléxité dépendantes de l'algo de génération
-            de mots de passes jetables
+        \item Taille et compléxité dépendantes de l'algorithme de génération
+            de mots de passe jetables
     \end{itemize}
 
 %------------------------------------------------------------------------------
@@ -225,7 +227,7 @@ supposée suffisante.
     \subsubsection{Rôle}
         Générer des mots de passe jetables permettant de s'authentifier.
 
-    \subsubsection{Services offert}
+    \subsubsection{Services offerts}
     \begin{description}
         \item[initiate(user * utilisateur, char * seed):] Initialise
             un générateur d'OTP pour l'utilisateur.
@@ -233,7 +235,7 @@ supposée suffisante.
             paramêtres passés.
     \end{description}
 
-    \subsubsection{Langage de programmation}
+    \subsubsection{Langages de programmation}
     \begin{itemize}
         \item C
         \item Java Mobile (Optionel)
@@ -242,14 +244,14 @@ supposée suffisante.
 
     \subsubsection{Procédé de développement}
     \begin{enumerate}
-        \item Développer des modules réalisant chaque algo de génération
+        \item Développer des modules réalisants chaque algorithme de génération
             d'OTP.
     \end{enumerate}
 
     \subsubsection{Taille et complexité}
     \begin{itemize}
-        \item Taille et compléxité dépendantes de l'algo de génération
-            de mots de passes jetables, mais suffisamment faible pour tenir sur
+        \item Taille et compléxité dépendantes de l'algorithme de génération
+            de mots de passe jetables, mais suffisamment faibles pour tenir sur
             de petites capacités mémoire et permettre un calcul 
             en t < 1s sur \verb?700MHz?.
     \end{itemize}
@@ -266,7 +268,7 @@ supposée suffisante.
             le port \verb?port?, d'après la requête \verb?request?.
     \end{description}
 
-    \subsubsection{Dépendances}
+    \subsubsection{Dépendance}
     \begin{itemize}
         \item Sockets Berkeley
     \end{itemize}
@@ -284,8 +286,8 @@ supposée suffisante.
     \end{enumerate}
 
     \subsubsection{Taille et complexité}
-        Le client ne consiste qu'en l'envoie et la réception de données sur le
-        réseau, donc la taille et la complexité sont faible.
+        Le client ne consiste qu'en l'envoi et la réception de données sur le
+        réseau, donc la taille et la complexité sont faibles.
 
 \subsection{Serveur}
     \subsubsection{Rôle}
@@ -300,14 +302,14 @@ supposée suffisante.
             d'authentification.
     \end{description}
 
-    \subsubsection{Services offert}
+    \subsubsection{Services offerts}
     \begin{description}
         \item[associate(user * u, char * secret):] Associe un secret à un 
             utilisateur.
         \item[check(user * u, char * OTP):] Vérifie que l'OTP est valide pour
             l'utilisateur.
         \item[lock(user * u):] Interdit la connection pour un utilisateur.
-        \item[warn(user * u):] Préviens par mail un utilisateur de son 
+        \item[warn(user * u):] Prévient par mail un utilisateur de son 
             verrouillage.
         \item[resynchronize(user * u):] Demande une resynchronisation pour
             un utilisateur donné.
@@ -324,18 +326,18 @@ supposée suffisante.
         \item C
     \end{itemize}
 
-    \subsubsection{Procédé de développement}
+    \subsubsection{Procédés de développement}
     \begin{enumerate}
         \item Déterminer le protocole de communication entre client et serveur.
         \item Déterminer le contenu d'une requête d'authentification
-        \item Utiliser les modules de génération d'OTP pour les vérification de
+        \item Utiliser les modules de génération d'OTP pour les vérifications de
         validité d'OTP.
     \end{enumerate}        
 
     \subsubsection{Taille et complexité}
     Probablement le composant le plus volumineux du système, puisqu'il doit être
-    en mesure supporté plusieurs requête simultanées ainsi que plusieurs
-    protocoles de mot de passe jetables.
+    en mesure de supporter plusieurs requêtes simultanées ainsi que plusieurs
+    protocoles de mots de passe jetables.
 
 
 \subsection{Justification des choix techniques}
@@ -345,7 +347,7 @@ Le langage C a été choisi pour 2 raisons:
     \item Car il est supposé connu de tout les membres de l'équipe, au vu
         de l'enseignement reçu.
     \item Car il permet de mieux maîtriser l'aspect sécurité en évitant un
-        nombre trop important de dépendances intermédiaire dont on ne peut
+        nombre trop important de dépendances intermédiaires dont on ne peut
         garantir la sécurité.
 \end{enumerate}
 
@@ -400,7 +402,7 @@ vérification au serveur.
 \subsection{Resynchronisation}
 \subsubsection{Principe}
 Le serveur et le token se resynchronisent pour être d'accord sur la suite des
-mots de passes jetables générés.
+mots de passe jetables générés.
 
 \subsubsection{Fonctionnement}
 \begin{enumerate}
