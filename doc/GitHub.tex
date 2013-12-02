@@ -1,120 +1,38 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Beamer Presentation
-% LaTeX Template
-% Version 1.0 (10/11/12)
-%
-% This template has been downloaded from:
-% http://www.LaTeXTemplates.com
-%
-% License:
-% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%----------------------------------------------------------------------------------------
-%	PACKAGES AND THEMES
-%----------------------------------------------------------------------------------------
 \documentclass{beamer}
 
-\mode<presentation> {
-
-% The Beamer class comes with a number of default slide themes
-% which change the colors and layouts of slides. Below this is a list
-% of all the themes, uncomment each in turn to see what they look like.
-
-%\usetheme{default}
-%\usetheme{AnnArbor}
-%\usetheme{Antibes}
-%\usetheme{Bergen}
 \usetheme{Berkeley}
-%\usetheme{Berlin}
-%\usetheme{Boadilla}
-%\usetheme{CambridgeUS}
-%\usetheme{Copenhagen}
-%\usetheme{Darmstadt}
-%\usetheme{Dresden}
-%\usetheme{Frankfurt}
-%\usetheme{Goettingen}
-%\usetheme{Hannover}
-%\usetheme{Ilmenau}
-%\usetheme{JuanLesPins}
-%\usetheme{Luebeck}
-%\usetheme{Madrid}
-%\usetheme{Malmoe}
-%\usetheme{Marburg}
-%\usetheme{Montpellier}
-%\usetheme{PaloAlto}
-%\usetheme{Pittsburgh}
-%\usetheme{Rochester}
-%\usetheme{Singapore}
-%\usetheme{Szeged}
-%\usetheme{Warsaw}
 
-% As well as themes, the Beamer class has a number of color themes
-% for any slide theme. Uncomment each of these in turn to see how it
-% changes the colors of your current slide theme.
-
-%\usecolortheme{albatross}
-%\usecolortheme{beaver}
-%\usecolortheme{beetle}
-%\usecolortheme{crane}
-%\usecolortheme{dolphin}
-%\usecolortheme{dove}
-%\usecolortheme{fly}
-%\usecolortheme{lily}
-%\usecolortheme{orchid}
-%\usecolortheme{rose}
-%\usecolortheme{seagull}
-%\usecolortheme{seahorse}
-%\usecolortheme{whale}
-%\usecolortheme{wolverine}
-
-%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
-%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
-
-%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
-}
-
-\usepackage{graphicx} % Allows including images
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
 \graphicspath{{imgGit/}}
 \usepackage{hyperref}
-\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{booktabs}
 
-%----------------------------------------------------------------------------------------
-%	TITLE PAGE
-%----------------------------------------------------------------------------------------
+\title[Initiation GitHub]{Initiation \`{a} GitHub}
 
-\title[Initiation GitHub]{Initiation \`{a} GitHub} % The short title appears at the bottom of every slide, the full title is only on the title page
-
-\author{} % Your name
-\institute[Universit\'{e} de Rouen] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+\author{Maxime MICHOTTE}
+\institute[Universit\'{e} de Rouen]
 {
-Universit\'{e} de Rouen \\ % Your institution for the title page
+Universit\'{e} de Rouen \\
 \medskip
-\textit{} % Your email address
+\textit{}
 }
-\date{\today} % Date, can be changed to a custom date
+\date{\today}
 
 \begin{document}
 
 \begin{frame}
-\titlepage % Print the title page as the first slide
+\titlepage
 \end{frame}
 
 \begin{frame}
-\frametitle{vue d'ensemble} % Table of contents slide, comment this block out to remove it
-\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+\frametitle{vue d'ensemble}
+\tableofcontents
 \end{frame}
 
-%----------------------------------------------------------------------------------------
-%	PRESENTATION SLIDES
-%----------------------------------------------------------------------------------------
-
-%------------------------------------------------
-\section{Cr\'eation} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
-%------------------------------------------------
-
-\subsection{Cr\'eation du compte GitHub} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
+\section{Cr\'eation}
+\subsection{Cr\'eation du compte GitHub}
 \begin{frame}
 \frametitle{Cr\'eation du compte GitHub}
 \begin{itemize}
@@ -124,8 +42,6 @@ Universit\'{e} de Rouen \\ % Your institution for the title page
 \includegraphics[scale=0.3]{git_hub_home1.png}
 \end{frame}
 
-%------------------------------------------------
-
 \begin{frame}
 \frametitle{Cr\'eation du compte GitHub}
 \begin{itemize}
@@ -134,8 +50,6 @@ Universit\'{e} de Rouen \\ % Your institution for the title page
 \includegraphics[scale=0.3]{GitHubfininsc.png}
 \end{frame}
 
-%------------------------------------------------
-
 \begin{frame}
 \frametitle{Cr\'eation du compte GitHub}
 \begin{block}{Cr\'eation du compte GitHub fini}
@@ -143,15 +57,6 @@ Vous \^{e}tes redirigez vers votre page d'acceuil GitHub.
 \end{block}
 \end{frame}
 
-%------------------------------------------------
-
-
-
-%------------------------------------------------
-
-
-
-%------------------------------------------------
 \section{Installation}
 \begin{frame}
 \frametitle{Installation}
@@ -167,8 +72,6 @@ Pour installer Git, vous avez besoin des biblioth\`{e}ques suivantes: curl, zlib
 \end{block}
 \end{frame}
 
-%------------------------------------------------
-
 \subsection{Installation sur Windows}\label{Installation sur Windows}
 \begin{frame}
 \frametitle{Installation}
@@ -178,8 +81,6 @@ Pour installer Git, vous avez besoin des biblioth\`{e}ques suivantes: curl, zlib
 \end{itemize}
 \end{block}
 \end{frame}
-
-%------------------------------------------------
 
 \subsection{Installation sur Linux}\label{Installation sur Linux}
 \begin{frame}
@@ -201,8 +102,6 @@ Pour installer Git, vous avez besoin des biblioth\`{e}ques suivantes: curl, zlib
 \end{block}
 \end{frame}
 
-%------------------------------------------------
-
 \subsection{Installation sur Mac}\label{Installation sur Mac}
 \begin{frame}
 \frametitle{Installation}
@@ -213,8 +112,6 @@ Pour installer Git, vous avez besoin des biblioth\`{e}ques suivantes: curl, zlib
 \end{block}
 \end{frame}
 
-
-%------------------------------------------------
 \section{Utilisation}
 \begin{frame}
 \frametitle{Utilisation}
@@ -222,8 +119,6 @@ Pour installer Git, vous avez besoin des biblioth\`{e}ques suivantes: curl, zlib
 Nous allons voir dans cette section le param\'{e}trage pour la premi\`{e}re utilisation de Git, puis quelques notions pour se d\'{e}placer dans l'arbre et ainsi r\'{e}cup\'{e}rer les mises \`{a} jour.
 \end{block}
 \end{frame}
-
-%------------------------------------------------
 
 \subsection{Premi\`{e}re utilisation}
 \begin{frame}
@@ -242,7 +137,6 @@ Une fois Git install\'{e}, il faut r\'{e}gler votre identit\'{e} et votre \'{e}d
 \end{block}
 \end{frame}
 
-%------------------------------------------------
 \subsection{Clonage}
 \begin{frame}
 \frametitle{Utilisation (Clonage)}
@@ -256,14 +150,10 @@ L'objectif est de r\'{e}cup\'{e}rer l'int\'{e}gralit\'{e} du d\'{e}pot de sorte 
 \includegraphics[scale=0.6]{githubhomedepot.png}
 \end{frame}
 
-%------------------------------------------------
-
 \begin{frame}
 \frametitle{Utilisation (Clonage)}
 \includegraphics[scale=0.6]{URLdepot.png}
 \end{frame}
-
-%------------------------------------------------
 
 \begin{frame}
 \frametitle{Utilisation (Clonage)}
@@ -272,8 +162,6 @@ A l'aide du terminal, d\'{e}placez vous dans le r\'{e}pertoire ou vous souhaitez
 \$ git clone [URL]
 \end{block}
 \end{frame}
-
-%------------------------------------------------
 
 \subsection{D\'{e}placement dans l'arbre}
 \begin{frame}
@@ -291,8 +179,6 @@ Le git se pr\'{e}sente sous forme d'un arbre dans lequel on peut se d\'{e}placer
 \end{block}
 \end{frame}
 
-%------------------------------------------------
-
 \subsection{R\'{e}cup\'{e}ration des mises \`{a} jour}
 \begin{frame}
 \frametitle{R\'{e}cup\'{e}ration des mises \`{a} jour}
@@ -303,12 +189,5 @@ Le git se pr\'{e}sente sous forme d'un arbre dans lequel on peut se d\'{e}placer
 \end{itemize}
 \end{block}
 \end{frame}
-
-%------------------------------------------------
-
-
-
-
-%----------------------------------------------------------------------------------------
 
 \end{document} 
