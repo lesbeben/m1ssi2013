@@ -149,10 +149,16 @@ d'origine\fg{} et $X$ un quantum de temps arbitraire.
     synchronisation.
   
 \section{Analyse générale et sécurité}
-Partie cruciale du rapport. Merci de me la faire au petits oignons.
+Analysons maintenant cette méthode et sa sécurité.
 
   \subsection{Avantages et intér\^ets}
-  Tout est dans le titre. Merci d'\^etre exhaustif.
+  Le système \og{}TOTP\fg{} est une extension du système \og{}HOTP\fg{}. Par conséquent, il en reprend les principaux avantages. De plus, gr\^ace à l'utilisation du temps 
+  à la place d'un compteur de synchronisation, la synchronisation de ce système est plus difficile à perdre. En effet, lors de l'utilisation de \og{}HOTP\fg{}, il suffit 
+  que l'utilisateur demande au \emph{token} plusieurs mot de passe de suite sans les utiliser pour perdre la synchronisation des parties. Pour \og{}TOTP\fg{}, le seul 
+  moyen de perdre la synchronisation est que les horloges du client et du serveur n'avance pas à la m\^eme vitesse. Hors, pour que la synchronisation soit décalée d'une 
+  \og{}case\fg{}, il faut que le décalage d'horloge soit supérieur à $X$, qui , s'il est correctement choisi, doit \^etre de l'ordre de quelques dizaines de seconde
+  ce qui est considérable pour un décalage d'horloge. Bien entendu, il faut que les horloges du client et du serveur est été synchronisées une première fois lors de 
+  la première connexion ou lors de l'inscription de l'utilisateur sur le service.
   
   \subsection{Inconvenients et limites}
   Tous est dans le titre. Merci d`\^etre exhaustif.
