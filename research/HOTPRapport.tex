@@ -18,8 +18,8 @@
 \maketitle
 
 \begin{abstract}
-Ce document présente une analyse du système d'OTP \og{}HOTP\fg{}. Toutes les informations présentées et analysées proviennent des RFCs 4226 et 2104, truc et truc ainsi que 
-de leurs correctifs. Le but de cet article est de déterminer dans quelles condition le système blabla est utilisable, sous quelles conditions et avec quelles garanties de 
+Ce document présente une analyse du système d'OTP \og{}HOTP\fg{}. Toutes les informations présentées et analysées proviennent des RFCs 4226 et 2104 ainsi que 
+de leurs correctifs. Le but de cet article est de déterminer dans quelles mesures le système HOTP est utilisable, sous quelles conditions et avec quelles garanties de 
 sécurité.Ce documents sera mis en relation avec plusieurs autres afin de réaliser un comparatif entre les systèmes d'OTP majeurs.
 \end{abstract}
 \newpage
@@ -248,9 +248,6 @@ lesquelles un attaquant récupère le mot de passe durant une communication clie
   mettre à jour la valeur du compteur du serveur. En pratique, ces deux algorithmes pourront \^etre fusionnés en un seul vérifiant la possibilité de synchronisation et 
   effectuant cette dernière à la suite.
   
-  \subsection{Reinitialisation}
-  Ne concerne a priori pas tous les systèmes. Expliquer les procédures a utiliser pour reinitialiser le secret et autres.
-  
 \section{Analyse générale et sécurité}
 Partie cruciale du rapport. Merci de me la faire au petits oignons.
 
@@ -278,7 +275,7 @@ Partie cruciale du rapport. Merci de me la faire au petits oignons.
 \section{Utilisations}
 On présente ici les possibles utilisation du système.
   \subsection{Cas concrets d'utilisation}
-  Tout est dans le titre.
+  
   
   \subsection{Cas d'utilisation envisagés}
   Cas possibles d'utilisation non encore exploité (On peut toujours r\^ever)

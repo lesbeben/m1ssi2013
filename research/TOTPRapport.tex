@@ -1,0 +1,192 @@
+\documentclass{../res/univ-projet}
+
+\title{\'Etude du syst\`eme d'OTP \og{}TOTP\fg{}}
+\author{Les chats sauvages}
+
+\projet{One Time Project}
+\projdesc{\'Etude des syst\`emes de mots de passe jetable}
+\filiere{M1SSI}
+\logo{../res/logo_univ.png}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage{algorithmic}
+\usepackage{algorithm}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Ce document présente une analyse du système d'OTP \og{}TOTP\fg{}. Toutes les informations présentées et analysées proviennent de la RFC 6238 ainsi que de leurs 
+correctifs. Le but de cet article est de déterminer dans quelles conditions le système blabla est utilisable, sous quelles conditions et avec quelles garanties de sécurité.
+Ce documents sera mis en relation avec plusieurs autres afin de réaliser un comparatif entre les systèmes d'OTP majeurs.
+\end{abstract}
+\newpage
+\tableofcontents
+\newpage
+
+\section{Prérequis}
+Le système d'authentification par mot de passe jetable \og{}TOTP\fg est une extension du système \og{}HOTP\fg{}, par conséquent, il repose sur les m\^emes concepts. Ces 
+derniers ayant déjà été donnés dans le document relatif à \og{}HOTP\fg{}, nous ne les redétaillerons pas de nouveau ici.
+
+\section{Généralités}
+Le principe général de fonctionnement du système \og{}TOTP\fg{} est strictement identique à celui du système \og{}HOTP\fg{} à une différence pr\^et. Ici, un paramètre 
+temporel est utilisé en lieux et places du compteur de synchronisation. Ainsi, la fonction $HMAC_K$ utilisée par \og{}HOTP\fg{} ne sera plus appelée avec pour paramètre la 
+valeur du compteur de synchro mais avec la valeur $T = \lfloor{}\frac{curTime - T_0}{X}\rfloor{}$, o\`u $curTime$ représente le temps Unix actuel, $T_0$ le temps Unix \og{}
+d'origine\fg{} et $X$ un quantum de temps arbitraire.
+
+\section{Approfondissement}
+  \subsection{Generation et partage d'un secret}
+    Le problème de génération et de partage de secret pour \og{}TOTP\fg{} est strictement identique à celui de \og{}HOTP\fg{} reportez vous au document relatif à ce 
+    dernier pour un détails de méthodes.
+    
+  \subsection{Génération d'un mot de passe jetable}
+    La génération des mots de passe jetables pour le système \og{}TOTP\fg{} est similaire à celle de \og{}HOTP\fg{} hormis sur le point du calcul de $HMAC$. En sommes, la 
+    génération peut \^etre décrite par l'algorithme \ref{TOTP:gene}.
+    \begin{algorithm}
+      \caption{Génération d'un OTP par TOTP}
+      \label{TOTP:gene}
+   
+      \begin{algorithmic}
+	\REQUIRE $K$ une clef secrète
+	\STATE $T \leftarrow \lfloor{}\frac{curTime - T_0}{X}\rfloor{}$
+	\STATE $HVal \leftarrow HMAC(K, C)$
+	\STATE $HVal \leftarrow tronc(HVal)$
+	\STATE $HVal \leftarrow binToDec(HVal)$
+	\newline
+	\RETURN $HVal \bmod 10^L$ // L : longueur souhaitée de l'OTP
+      \end{algorithmic}
+    \end{algorithm}
+    
+    Les fonctions $tronc$ et $binToDec$ utilisées dans l'algorithme \ref{TOTP:gene} sont strictement identiques à celle utilisée dans l'algorithme de génération de 
+    \og{}HOTP\fg{}. Référez vous au document traitant de \og{}HOTP\fg{} pour plus de détails.
+    
+  \subsection{Soumission et protocole de vérification}
+    La vérification de mot de passe jetable suis le m\^eme schéma général que pour le système \og{}HOTP\fg{}. On trouve cependant quelque détails différents. Ces derniers 
+    sont résumés dans l'algorithme \ref{TOTP:verif}.
+    \begin{algorithm}
+      \caption{Vérification d'un mot de passe jetable.}
+      \label{TOTP:verif}
+      
+      \begin{algorithmic}
+	\STATE $attentNB \leftarrow 0$
+	\STATE $T \leftarrow \lfloor{}\frac{curTime - T_0 + \Delta_t}{X}\rfloor{}$
+	\STATE $K \leftarrow$ clef secrète de l'utilisateur
+	\STATE $OTP_1 \leftarrow TOTP_K(C)$
+	\WHILE{$attentNB < MAX\_ATTENT$}
+	  \STATE $OTP_2 \leftarrow$ recuperer\_OTP
+	  \STATE $attentNB \leftarrow attentNB + 1$
+	  \IF{$OTP_1 = OTP_2$}
+	    \STATE accepter l'utilisateur
+	  \ELSE
+	    \IF{resynchro possible}
+	      \STATE $resynchro$
+	      \STATE accepter l'utilisateur
+	    \ENDIF
+	  \ENDIF
+	\ENDWHILE
+	\STATE $verouiller$
+	\STATE $prevenir$
+      \end{algorithmic}
+    \end{algorithm}
+    Ainsi, on retrouve bien le schéma générale de verification vu précédemment, utilisant la valeur $T$ décrite plus haut au lieu de celle du compteur de synchronisation.
+    Cependant, dans cet algorithme, la valeur de $T$ est légèrement altérée afin d'y faire apparaitre la valeur $\Delta_t$. Cette dèrnière est utilisée pour garantir la 
+    synchronisation temporelle entre le client et le sereur. Le fonctionnement et le calcul de cette valeur est décrit dans la section \ref{OTP:syncSec}.
+    
+  \subsection{Synchronisation}
+  \label{OTP:syncSec}
+    De m\^eme que pour le système \og{}HOTP\fg{}, il est possible que le serveur et le client perdent leur synchronisation temporelle. Il suffit pour cela que soit 
+    l'horloge du client soit celle du serveur soit plus rapide que son homologue. Bien que l'utilisation de plus en plus répandue des serveur de synchronisation 
+    temporelle mondiaux tendent à réduire les possibilités de décalage des horloge, ce cas reste à envisager. C'est pourquoi on retrouve les fonction \og{}resynchro 
+    possible\fg{} et $resynchro$, chargées d'assurer la cohérence des vérification d'OTP en cas de désynchronisation d'horloge. Les descriptions de ces fonctions sont 
+    données dans les algorithme \ref{TOTP:isSynch} et \ref{TOTP:synch}.
+    \begin{algorithm}
+      \caption{Vérification de la possibilité de resynchronisation}
+      \label{TOTP:isSynch}
+      
+      \begin{algorithmic}
+	\REQUIRE $OTP$ la valeur de l'OTP fournie par l'utilisateur
+	\REQUIRE $K$ la clef secrète de l'utilisation
+	\STATE $T \leftarrow \lfloor{}\frac{curTime - T_0 + \Delta_t}{X}\rfloor{}$
+	\STATE $MAX\_BWD \leftarrow b$ //$MAX\_BWD$ contient le nombre maximal de valeurs a verifier vers l'arrière
+	\STATE $MAX\_FWD \leftarrow a$ //$MAX\_FWD$ contient le nombre maximal de valeur a verifier vers l'avant
+	\FOR{$i$ de $-MAX\_BWD$ à $MAX\_FWD$}
+	  \STATE $OTP2 \leftarrow HOTP_K(T + i)$
+	  \IF{$OTP = OTP2 AND not\_used(OTP)$}
+	    \RETURN vrai
+	  \ENDIF
+	\ENDFOR
+	\RETURN faux
+      \end{algorithmic}
+    \end{algorithm}
+    
+    \begin{algorithm}
+      \caption{Resynchronisation}
+      \label{TOTP:synch}
+      
+      \begin{algorithmic}
+	\REQUIRE $OTP$ la valeur de l'OTP fournie par l'utilisateur
+	\REQUIRE $K$ la clef secrète de l'utilisation
+	\STATE $T \leftarrow \lfloor{}\frac{curTime - T_0 + \Delta_t}{X}\rfloor{}$
+	\STATE $MAX\_BWD \leftarrow b$ //$MAX\_BWD$ contient le nombre maximal de valeurs a verifier vers l'arrière
+	\STATE $MAX\_FWD \leftarrow a$ //$MAX\_FWD$ contient le nombre maximal de valeur a verifier vers l'avant
+	\FOR{$i$ de $-MAX\_BWD$ à $MAX\_FWD$}
+	  \STATE $OTP2 \leftarrow HOTP_K(T + i)$
+	  \IF{$OTP = OTP2 AND not\_used(OTP)$}
+	    \STATE $\Delta_t \leftarrow \Delta_t + i * X$
+	    \STATE accepter l'utilisateur
+	  \ENDIF
+	\ENDFOR
+	\STATE rejeter l'utilisateur
+      \end{algorithmic}
+    \end{algorithm}
+    
+    Le fonctionnement de ces algorithmes est simple. Il s'agit de rechercher dans une fenetre temporelle donnée une valeur d'OTP correspondant à celle donnée par 
+    l'utilisateur. Si une telle valeur est trouvée, on calcul le décalage temporel entre les deux parties et on l'ajoute à la valeure courante du décalage $\Delta_t$.
+    Sinon, l'utilisateur est rejeté.
+    Comme pour le système \og{}HOTP\fg{}, ces deux fonctions pourront, en pratique, \^etre fusionnées en une seule réalisant à la fois la vérification et la 
+    synchronisation.
+  
+\section{Analyse générale et sécurité}
+Partie cruciale du rapport. Merci de me la faire au petits oignons.
+
+  \subsection{Avantages et intér\^ets}
+  Tout est dans le titre. Merci d'\^etre exhaustif.
+  
+  \subsection{Inconvenients et limites}
+  Tous est dans le titre. Merci d`\^etre exhaustif.
+  
+  \subsection{Considérations de sécurité}
+  Le clou du spectacle.
+    \subsubsection{Attaques exhaustives}
+    Analyse de la résistance aux attaques exhaustives. Un calcul et / ou démonstration seront certainement bien vus par votre chargé de mission 
+    \og{}Coordination Recherche\fg{} ainsi que par les clients. N'ayez pas peur tous va bien se passer.
+    
+    \subsubsection{Attaques par collisions}
+    Cette partie n'est pas forcement necessaire. Se référer au résultats de la réunion du 19 Novembre.
+    
+    \subsubsection{Failles connues}
+    Tout est dans le titre.
+    
+    \subsubsection{Précautions et préconisation}
+    Tout est dans le titre.
+    
+\section{Utilisations}
+On présente ici les possibles utilisation du système.
+  \subsection{Cas concrets d'utilisation}
+  Tout est dans le titre.
+  
+  \subsection{Cas d'utilisation envisagés}
+  Cas possibles d'utilisation non encore exploité (On peut toujours r\^ever)
+  
+\section{Conclusion}
+La conclusion
+  \subsection{Utilisation dans le cadre du projet}
+  Reprendre les éléments de l'analyse telles que le performances du sytème le niveau de sécurité et autre afin de définir si, et dans quels contextes, le système devrait
+  \^etre utlisé dans le cadre du projet.
+  
+  \subsection{Perenité du système}
+  A voir, pas forcément utile. Se référer aux résultats de la réunion du 19 novembre.
+    
+\end{document}
