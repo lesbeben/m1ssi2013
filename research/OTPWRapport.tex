@@ -1,0 +1,197 @@
+\documentclass{../res/univ-projet}
+
+\title{\'Etude du syst\`eme OTPW}
+\author{Damien \bsc{PICARD}}
+
+\projet{OTP}
+\projdesc{\`Etude des syst\`emes de mots de passe jetable}
+\filiere{M1SSI}
+\logo{../res/logo_univ.png}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+    Ce document présente une analyse du système d'OTPW. Toutes les
+    informations présentées et analysées proviennent 
+    \hyperref[de ce site]{http://www.cl.cam.ac.uk/~mgk25/otpw.html}. Le
+    but de cet
+    article est de déterminer dans quelles condition le
+    système OTPW est utilisable, sous quelles conditions et avec quelles garanties
+    de sécurité.
+    Ce documents sera mis en relation avec plusieurs autres afin de réaliser un
+    comparatif entre les systèmes d'OTP majeurs.
+\end{abstract}
+\newpage
+\tableofcontents
+\newpage
+
+\section{Prérequis}
+\begin{itemize}
+    \item Pouvoir stocker une liste de chaine de caractères sur la machine serveur.
+        environ 4 kilo octets. 
+\end{itemize}
+
+\section{Généralités}
+Ce système repose sur un fichiers de chaînes de caractères généré à partir
+d'un mot de passe préfix initial. Les mots de passes suffixe sont générés par un
+générateur aléatoire basé sur l'algorithme \verb?RIPEMD-160? initialisé en
+hashant la sortie de moult commandes du shell. Les mots de passes jetables sont
+la concaténation du mot de passe préfixe et du mot de passe suffixe.
+
+La liste des suffixes est stockée sur le serveur dans un fichier .otpw
+appartenant uniquement à l'utilisateur.
+
+\section{Approfondissement}
+\subsection{Generation et partage d'un secret}
+Le secret est une chaîne choisie par l'utilisateur. Il permet ensuite
+en le hashant avec de l'aléatoire de générer une liste de suffixe de mots de
+passe jetables. Cette liste sera stockée sur le serveur et donnée à
+l'utilisateur.
+\begin{algorithm}
+    \label{gen}
+    \begin{algorithmic}
+        \STATE $SEED \leftarrow HASH(stdout)$
+        \STATE $l1 \leftarrow vide()$
+        \STATE $l2 \leftarrow vide()$
+        \FOR{ i = 0 to nbSuffixe}
+        \STATE $H \leftarrow HASH(prefixe, SEED)[0..72]$
+        \STATE $ajouterListe(l1, H[0..72])$
+        \STATE $ajouterListe(l2, HASH(prefixe + H[0..72]))$
+        \STATE $SEED \leftarrow H[73..160]$
+        \ENDFOR
+        \STATE $ecrireServeur(l2)$
+        \STATE $envoyerClient(l1)$
+    \end{algorithmic}
+    \caption{Algorithme de génération de secret}
+\end{algorithm}
+
+La liste des suffixe est sotcké sous la forme qui suit:
+\begin{itemize}
+    \item une ligne contenant \verb?OTPW1?
+    \item une ligne contenant:
+        \begin{itemize}
+            \item Le nombre total de suffixe généré
+            \item Le nombre de digit nécessaire pour indicer les suffixes
+            \item Le nombre de caractères en base 64 pour un hash
+            \item Le nombres de caractères pour un suffixe
+        \end{itemize}
+    \item Autant de ligne que de suffixes générés, les lignes des
+        suffixes déja utilisés sont effacées avec des \verb?-?.
+        Ces lignes contiennent:
+        \begin{itemize}
+            \item Un num\'ero d'OTP
+            \item Le hash\'e \verb?RIPEMD-160? du pr\'efixe concat\'en\'e
+                au suffixe correspondant à ce num\'ero.
+        \end{itemize}
+\end{itemize}
+
+\subsection{Génération d'un mot de passe jetable}
+Les mots de passe sont générés en concatenant le préfixe et un suffixe 
+issu de la liste générée précédemment.
+
+\subsection{Soumission et protocole de vérification}
+Les mots de passe sont transmis via le réseau au serveur, il est
+recommandé de les transmettre via une connexion sécurisé, en 3 étapes:
+\begin{enumerate}
+    \item Demande de challenge avec login.
+    \item Transmission du login + $HASH(prefixe+suffixe)$ au serveur.
+    \item Réponse du serveur d'authentification.
+\end{enumerate}
+
+La vérification coté serveur fonctionne selon le principe suivant:
+\begin{algorithm}
+    \begin{algorithmic}
+        \STATE $otp \leftarrow recevoirOTP()$
+        \STATE $test \leftarrow rechercher(fichier, otp)$
+        \IF{$test$}
+        \STATE{$effacer(fichier, otp)$}
+        \ENDIF
+        \RETURN $test$
+    \end{algorithmic}
+    \caption{Vérification d'OTP}
+\end{algorithm}
+
+\subsection{Synchronisation}
+La synchronisation n'est pas importante, puisque le système fonctionne
+selon un modèle asynchrone, le serveur pose une question et l'utilisateur
+réponds.
+
+\subsection{Reinitialisation}
+Pour réinitialiser le système il faut repasser par l'algorithme de 
+génération du secret en \ref{gen}.
+
+\section{Analyse générale et sécurité}
+
+\subsection{Avantages et intér\^ets}
+L'avantage de ce système est de devoir posséder:
+\begin{itemize}
+    \item Le préfixe
+    \item La liste des suffixe OTP ou d'une machine dans un état
+        identique a celui du serveur lors de la génération de la liste des
+        suffixe.
+\end{itemize} 
+pour pouvoir usurper l'identité d'une personne.
+Il est impossible de le faire si l'un ou l'autres de ces éléments
+manquent à l'appel.
+
+\subsection{Inconvenients et limites}
+Le premier inconvénient est qu'il est nécessaire de stocker la liste
+des suffixes sur le serveur, et pour l'utilisateur comme token.
+
+Un autre inconvénient est de devoir mémoiriser un préfixe, chose que
+l'on ne trouvera pas dans d'autres systèmes d'OTP. 
+
+\subsection{Considérations de sécurité}
+\subsubsection{Attaques exhaustives}
+Nous considérerons ici que la distribution des OTP est équiprobable.
+Les chances de trouver la bonne réponse au challenge proposé sont donc:
+        \[\frac{1}{2^{\times longueur(otp)}}\]
+sachant que $longueur(otp)$ vaut 160 (bits) car c'est le r\'esultat d'un hash
+\verb?RIPEMD-160?.
+en limitant à $n$ le nombre de tentative possible pour un challenge
+on en vient donc à \[\frac{n}{2^{160}}\] chances
+de casser l'OTP.
+
+Il n'y à cependant aucune recommandation quant au nombre d'essai 
+autoris\'es.
+
+\subsubsection{Failles connues}
+Attaque \verb?race-for-the-last-key? qui est contourn\'ee par
+la demande de trois suffixes en cas de demande de login simultan\'ee.
+
+\subsubsection{Précautions et préconisation}
+\begin{itemize}
+    \item Mots de passes suffisamment longs.
+    \item Réduire le nombre de tentatives pour \'eviter les attaques 
+exhaustives
+    
+\end{itemize}
+
+\section{Utilisations}
+\subsection{Cas concrets d'utilisation}
+Ce système peut être utilisi\'e avec \verb?PAM? et donc permettre
+de l'utiliser pour a peu près n'importe quel service se servant de
+\verb?PAM? sous linux.
+
+\subsection{Cas d'utilisation envisagés}
+Permettre une authentification sur un site web, par exemple.
+
+\section{Conclusion}
+\subsection{Utilisation dans le cadre du projet}
+    Ce système pr\'esente l'avantage de ne pas avoir de recalcul pour le token
+et que de plus le token seul ne permet pas de s'authentifier. De plus il est
+pr\'evu pour que même si l'attaquant prends possession du token, il ne puisse
+toujours pas s'identifier.
+
+    De plus il est hautement improbable que deux utilisateur, pour un même pr\'efixe
+aient la même liste de suffixes. Car la liste des suffixes est g\'en\'er\'ee selon l'\'etat
+de la machine à un instant $t$.
+
+\end{document}
