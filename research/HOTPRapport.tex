@@ -258,64 +258,35 @@ lesquelles un attaquant récupère le mot de passe durant une communication clie
   seront compatibles avec un grand nombre de services d'authentification existants. En particulier, la majorité des tokens compatibles avec la norme OATH (Initiative For 
   Open Authentication) se conforment à la spécification RFC-4226 et reposent donc sur HOTP.
   
-  \subsection{Inconvenients et limites}
-  A TROUVER \\
-  
   \subsection{Considérations de sécurité}
   L'\'{e}tude men\'{e} sur la s\'{e}curit\'{e} de l'algorithme HOTP est r\'{e}sum\'{e} dans cette section.
   Cette analyse est r\'{e}ali\'{e}e dans le cas ou $Digit = 6$, avec $Digit$ le nombre de chiffre composant l'OTP, ce qui est le strict minimum 
   recommand\'{e} dans ce document.\\
   Soient :
   \begin{itemize}
-   \item $\{ 0,1 \} ^l$ l'ensemble des cha\^{i}nes de longueur l.
-   \item $\mathds{Z}\_\{n\} = \{0, ..,n-1\}$.
-   \item $IntDiv (a, b)$ la fonction de division enti\`{e}re prenant en entr\'{e}e des nombres entiers a, b avec $a >= b >= 1$ et renvoie le couple d'entiers (q ,r), 
-   respectivement quotient et reste, de la division de a par b.
-   \item $H$: $\{0,1\}^k \times{} \{0,1\}^c \rightarrow \{0,1\}^n$ tel que $H(K, C) = HMAC-SHA-1(K, C)$
+   \item S la taille de la fen\^{e}tre de synchronisation.
+   \item V nombre de tentatives autorisées.
+   \item Digit le nombre de chiffre composant le mot de passe jetable.
+   \item K une clé secrète de l'utilisateur.
+   \item C le compteur de synchronisation partagé.
   \end{itemize}
 
     \subsubsection{Attaques exhaustives}
-    Si l'authentificateur est constitu\'{e} de d chiffres al\'{e}atoires, une attaque par brute force \'{a} l'aide de tentatives de v\'{e}rification v r\'{e}ussirait avec 
-    une probabilit\'{e} de $\frac{sv}{10^{Digit}}$\\
-    Cependant, un adversaire peut exploiter les r\'{e}sultats pr\'{e}c\'{e}dent pour montrer une attaque un peu plus performante.\\
-    Supposons que le nombre de requ\^{e}tes de v\'{e}rification est au plus r. Avec $N = 2^{31}$ et $m = 10^6$, nous avons $r = 483648$, et la valeur de limite de 
-    tentative de connexion est certainement inférieur.\\
-    Proposition 1:\\
-    Supposons que $m = 10^d < 2^{31}$, et soit (q, r) = IntDiv ($2^{31}$, m) avec $s <= m$ et $v <= r$\\
-    \begin{center}
-      $Adv(B-bf) = 1 - (1 - v(q+1)/2^31)^s$ \`{a} peu pr\`{e}s \'{e}gale \`{a}  $sv * (q+1)/2^{31}$\\
-    \end{center}
-    Avec $m = 10^6$, nous obtenons $q = 2,147$. Dans ce cas, l'attaque par force brute
-    utilisant v tentatives de vérification réussit avec une probabilité:\\
-    \begin{center}    
-      Adv(B-bf) environ $= sv * 2148/2^{31} = sv * 1.00024045/10^6$\\
-    \end{center}
-    Comme cette équation le montre, la resynchronisation a un paramètre s qui \`{a}
-    un impact significatif dans  la probabilit\'{e} de r\'{e}ussite de l'adversaire qui est
-    proportionnelle \`{a} s. Cela signifie que s ne peut pas \^{e}tre fait trop grand
-    sans compromettre la s\'{e}curit\'{e}.\\
-    Une question centrale est de savoir s'il y a de meilleures attaques que la
-    la force brute. Par exemple, l'attaque exhaustive, n'a pas tenter de recueillir des authentificateurs envoy \'{e}es par l'utilisateur et de les cryptanalyser afin de 
-    mieux apprendre \`{a} les construire.\\
-    Nous allons d\'{e}sormais montrer qu'il ne sera pas possible d'obtenir des probabilit\'{e}s de r\'{e}ussite sup\'{e}rieur \`{a} celle d'une attaque par force brute.\\
-    Proposition 2:\\
-    Supposons $m = 10^d < 2^{31}$ et $(q, r) = IntDiv(2^{31},m)$.\\
-    Soit B n'importe quel adversaire attanquant le syst\`{e} en utilisant v v\'{e}rification avec $a <= 2^c - s$ requ\^{e}tes d'authentification.\\
-    \begin{center} 
-      $Adv(B) < = sv * (q+1)/ 2^{31}$\\
-    \end{center}
-    Remarque: Ce r\'{e}sultat est conditionnelle à l'adversaire de ne pas avoir plus
-    de $2^c - s$ authentifications effectu\'{e}es par l'utilisateur, ce qui n'est gu\`{e}re
-    restrictive tant que c est assez grand.\\
-    Avec $m = 10^6$, nous obtenons $q = 2,147$. Dans ce cas, la proposition 2 dit
-    que n'importe quel adversaire B attaquant ce syst\`{e} en faisant v tentatives de v\'{e}rification
-    r\'{e}ussit avec une probabilit\'{e} d'au plus:\\
-    \begin{center} 
-      $sv * 2148/2^{31} environ = sv * 1.00024045/10^6$\\
-    \end{center}
-    le taux de réussite de B n'est pas plus que celle obtenue par attaque par la force brute.
-      
-
+    Le mot de passe jetable est généré gràce à l'algorithlme SHA-1. Cet algorithme est réputé pour founir une sortie quasi aléatoire donnant une distribution 
+    de probabilité quasi uniforme. Ainsi, on peut supposer raisonnablement que la probabilité $\mathds{P}(H = $HMAC-SHA-1$(K, C)) = \frac{1}{2^{31}}$. 
+    Après passage par la fonction troncature, la sortie de la fonction HMAC est réduite à une taille de Digit chiffre. On a donc $10^{Digit}$ valeurs de sortie 
+    possibles qui, si l'on considère que la fonction de troncature ne change pas la distribution de probabilité, sortent avec une probabilité équitable de
+    $\mathds{P}(OTP = HOTP(K, C)) = \frac{1}{10^{Digit}}$. 
+    
+    Or, le serveur en utilisant les fonctions de synchronisation, permet à un utilisateur de tester jusqu'à $s$ valeurs simultanément, o\`u s est la taille de 
+    la fenetre de resynchronisation. De plus, il autorise aussi un utilisateur à effectuer jusqu'a v tentatives de connexion successives. Ceci augmente donc 
+    la probabilité de réussite d'un utilisateur par un facteur $s \times v$.
+    
+    On obtient finalement la probabilité de réussite d'un attaquant par brute force, $P_{finale} = \frac{sv}{10^{Digit}}$.
+   
+    Supposons que le nombre de requ\^{e}tes de v\'{e}rification, $v$, est au plus 3.
+    Avec $Digit = 6$, $s = 3$. On obtient : probabilité de réussite, $P =  \frac{3 \times 3}{10^6} = 9 \times 10^{-6}$
+    
     \subsubsection{Attaques par collisions}
     Les attaques par collisions concerne notamment les attaques sur SHA-1. Une collision pour une fonction de hachage h signifie une paire x, y avec des entr\'{e}es 
     diff\'{e}rentes de telle sorte que H(x)=H(y).\\
