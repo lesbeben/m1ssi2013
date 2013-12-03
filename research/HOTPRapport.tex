@@ -1,4 +1,5 @@
 \documentclass{../res/univ-projet}
+\usepackage{graphicx}
 
 \title{\'Etude du syst\`eme d'OTP \og{}HOTP\fg{}}
 \author{Les chats sauvages}
@@ -10,6 +11,7 @@
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\graphicspath{{imgHOTP/}}
 
 \usepackage{algorithmic}
 \usepackage{algorithm}
@@ -249,22 +251,69 @@ lesquelles un attaquant récupère le mot de passe durant une communication clie
   effectuant cette dernière à la suite.
   
 \section{Analyse générale et sécurité}
-Partie cruciale du rapport. Merci de me la faire au petits oignons.
 
   \subsection{Avantages et intér\^ets}
-  Tout est dans le titre. Merci d'\^etre exhaustif.
-  
+  \begin{itemize}
+  \item authentification forte normalisé \\
+  Ce protocole permet l'int\'{e}rop\'{e}rabilit\'{e} entre les diff\'{e}rrents systèmes et standards actuel; Les tokens les plus r\'{e}pendus bas\'{e}s sur OATH (Initiative For Open Authentification) se conforment à la sp\'{e}cification RFC-4226 soit HOTP.
+  \end{itemize}
   \subsection{Inconvenients et limites}
-  Tous est dans le titre. Merci d`\^etre exhaustif.
-  
+  \begin{itemize}
+  \item A TROUVER \\
+  \end{itemize}
   \subsection{Considérations de sécurité}
-  Le clou du spectacle.
+L'\'{e}tude men\'{e} sur la s\'{e}curit\'{e} de l'algorithme HOTP est r\'{e}sum\'{e} dans cette section.
+  Cette analyse est r\'{e}ali\'{e}e dans le cas ou Digit = 6, c'est \`{a} dire, une fonction HOTP qui produit des valeurs \`{a} 6 chiffres, ce qui est le strict minimum recommand\'{e} dans ce document.\\
+  Soit $\{ 0,1 \} ^l$ l'ensemble des cha\^{i}nes de longueur l.\\
+  let Z\_ $\{n\} = \{0, ..,n-1\}$.\\
+  IntDiv (a, b) d\'{e}signe l'algorithme de division enti\`{e}re qui prend en entr\'{e}e des nombre entiers a, b, o\`{u} a >= b >= 1 et renvoie des entiers (q ,r)\\
+  le quotient et le reste, respectivement, de la division de a par b.\\
+  H: $\{0,1\}^k \times{} \{0,1\}^c \rightarrow \{0,1\}^n$ la fonction de base qui prend une cl\'{e} K de k bits, un compteur C de c bits et renvoie un signal de sortie \`{a} n bits H (K, C).\\
+  (H correspondant \`{a} HMAC-SHA-1)
+
     \subsubsection{Attaques exhaustives}
-    Analyse de la résistance aux attaques exhaustives. Un calcul et / ou démonstration seront certainement bien vus par votre chargé de mission 
-    \og{}Coordination Recherche\fg{} ainsi que par les clients. N'ayez pas peur tous va bien se passer.
-    
+    Si l'authentificateur est constitu\'{e} de d chiffres al\'{e}atoires, une attaque par brute force \'{a} 		l'aide de tentatives de v\'{e}rification v r\'{e}ussirait avec une probabilit\'{e} de $sv/10^d$\\
+    Cependant, un adversaire peut exploiter les r\'{e}sultats pr\'{e}c\'{e}dent pour montrer une attaque un peu 		plus performante.\\
+    Supposons que le nombre de requ\^{e}tes de v\'{e}rification est au plus r. Avec $N = 2^{31}$ et $m = 10^6$, 	nous avons r =483648, et la valeur de limite de tentative de connexion est certainement inférieur.\\
+	Proposition 1:\\
+	Supposons que $m = 10^d < 2^{31}$, et soit (q, r) = IntDiv ($2^{31}$, m) avec $s <= m$ et $v <= r$\\
+	\begin{center}
+		$Adv(B-bf) = 1 - (1 - v(q+1)/2^31)^s$ \`{a} peu pr\`{e}s \'{e}gale \`{a}  $sv * (q+1)/2^{31}$\\
+	\end{center}
+	Avec $m = 10^6$, nous obtenons $q = 2,147$. Dans ce cas, l'attaque par force brute
+    utilisant v tentatives de vérification réussit avec une probabilité:\\
+	\begin{center}    
+    	Adv(B-bf) environ $= sv * 2148/2^{31} = sv * 1.00024045/10^6$\\
+    \end{center}
+    Comme cette équation le montre, la resynchronisation a un paramètre s qui \`{a}
+   	un impact significatif dans  la probabilit\'{e} de r\'{e}ussite de l'adversaire qui est
+  	proportionnelle \`{a} s. Cela signifie que s ne peut pas \^{e}tre fait trop grand
+   	sans compromettre la s\'{e}curit\'{e}.\\
+   	Une question centrale est de savoir s'il y a de meilleures attaques que la
+   	la force brute. Par exemple, l'attaque exhaustive, n'a pas tenter de recueillir des authentificateurs envoy		\'{e}es par l'utilisateur et de les cryptanalyser afin de mieux apprendre \`{a} les construire.\\
+   	Nous allons d\'{e}sormais montrer qu'il ne sera pas possible d'obtenir des probabilit\'{e}s de r\'{e}ussite 	sup\'{e}rieur \`{a} celle d'une attaque par force brute.\\
+   	Proposition 2:\\
+   	Supposons $m = 10^d < 2^{31}$ et $(q, r) = IntDiv(2^{31},m)$.\\
+   	Soit B n'importe quel adversaire attanquant le syst\`{e} en utilisant v v\'{e}rification avec $a <= 2^c - s		$ requ\^{e}tes d'authentification.\\
+   	\begin{center} 
+   		$Adv(B) < = sv * (q+1)/ 2^{31}$\\
+   	\end{center}
+   	Remarque: Ce r\'{e}sultat est conditionnelle à l'adversaire de ne pas avoir plus
+   	de $2^c - s$ authentifications effectu\'{e}es par l'utilisateur, ce qui n'est gu\`{e}re
+  	restrictive tant que c est assez grand.\\
+  	Avec $m = 10^6$, nous obtenons $q = 2,147$. Dans ce cas, la proposition 2 dit
+  	que n'importe quel adversaire B attaquant ce syst\`{e} en faisant v tentatives de v\'{e}rification
+   	r\'{e}ussit avec une probabilit\'{e} d'au plus:\\
+   	\begin{center} 
+   		$sv * 2148/2^{31} environ = sv * 1.00024045/10^6$\\
+   	\end{center}
+   	le taux de réussite de B n'est pas plus que celle obtenue par attaque par la force brute.
+   	
+
     \subsubsection{Attaques par collisions}
-    Cette partie n'est pas forcement necessaire. Se référer au résultats de la réunion du 19 Novembre.
+    Les attaques par collisions concerne notamment les attaques sur SHA-1. Une collision pour une fonction de hachage h signifie une paire x, y avec des entr\'{e}es diff\'{e}rentes de telle sorte que H(x)=H(y).\\
+    Pour SHA-1 avec 160 bits, l'attaque utilisant le paradoxe des anniversaires trouve une collision en $2^{80}$ essais. On a longtemps pens'{e} que c'\'{e}tait la meilleure attaque possible jusqu'\`{a} ce que Wang, Yin et Yu annonc\`{e}rent le 15 F'{e}vrier 2005, l'\'{e}xistance d'une attaque trouvant une collision en $2^{69}$ essais.\\
+   SHA-1 est cassé d'une fa\c con th\'{e}orique, mais pas pour des fins pratique car les ressources n\'{e}cessaires pour monter l'attaque sont énormes
     
     \subsubsection{Failles connues}
     Tout est dans le titre.
@@ -273,12 +322,29 @@ Partie cruciale du rapport. Merci de me la faire au petits oignons.
     Tout est dans le titre.
     
 \section{Utilisations}
-On présente ici les possibles utilisation du système.
+Les utilisations pour l'implantations du protocole HOTP sont vari\'{e}s, on peut très bien s'en servir \`{a} des fins personnelles, pour s\'{e}curiser ses donn\'{e}es ou dans un domaine professionnelle.
   \subsection{Cas concrets d'utilisation}
+  Google Authenticator
+  \begin{itemize}
+    \item Google Authenticator est un logiciel open-source qui est bas\'{e} sur une authentification en deux 		\'{e}tapes. Celui-ci est impl\'{e}ment\'{e} sur diff\'{e}rentes plateformes mobiles comme iOS, Android, 		Blackberry, et il est aussi adaptable sur les modules PAM
+  \end{itemize}
+  \includegraphics[scale=0.5]{GoogleAuthenticator_2.jpg}
   
+  OATH Toolkit
+  \begin{itemize}
+    \item Initiative for Open Authentication (OATH) RAJOUTER DEF ICI OATH Toolkit permet une cr\'{e}ation plus facile des mots de passe uniques des syst\'{e}mes d'authentifications. Il contient 
+    une librairie part\'{e}e et un outil de lignes de commandes, et un module PAM.
+  \end{itemize}
+  
+  LinOTP
+  \begin{itemize}
+    \item LinOTP est une solution basée Linux pour manager des sys\`{e}tes d'authentifications en deux \'{e}tapes avec un mot de passe unique.
+    Il est impl\'{e}ment\'{e} comme un service web bas\'{e} sur le framework python. C'est le seul serveur d'authentification open-source certifi\'{e} par OATH.
+  \end{itemize}
+  \includegraphics[scale=0.5]{linOTP.png}
   
   \subsection{Cas d'utilisation envisagés}
-  Cas possibles d'utilisation non encore exploité (On peut toujours r\^ever)
+  Pas trouvé
   
 \section{Conclusion}
 La conclusion
