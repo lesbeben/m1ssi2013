@@ -156,7 +156,7 @@ supposée suffisante.
 %-------------------------------------------------------------------------------
 \section{Architectures statique}
 \subsection{Structure g\'en\'erale du syst\`eme}
-\includegraphics[width=\textwidth]{../architecture.png}
+\includegraphics[width=\textwidth]{../graphics/architecture.png}
 \subsection{Structure user}
 \label{sub:Structure_user}
     Cette structure a pour but de pouvoir conserver l'état d'un générateur d'OTP
@@ -368,7 +368,7 @@ Le token et le serveur se mettent d'accord sur un secret partag\'e gr\^ace à l'
     \item partage du secret via une saisie utilisateur.
     \item Indiquer l'échec ou la réussite de l'opération
 \end{enumerate}
-\includegraphics[width=\textwidth]{../association.jpg}
+\includegraphics[width=\textwidth]{../graphics/association.jpg}
 
 \subsection{Génération d'un mot de passe jetable}
 \subsubsection{Principe}
@@ -379,7 +379,7 @@ Le token donne un mot de passe jetable à l'utilisateur.
     \item Calcul d'un mot de passe jetable à partir du secret 
         initial
 \end{enumerate}
-\includegraphics[width=\textwidth]{../generation.jpg}
+\includegraphics[width=\textwidth]{../graphics/generation.jpg}
 
 \subsection{Authentification}
 \subsubsection{Principe}
@@ -397,7 +397,7 @@ vérification au serveur.
             \item[KO] Si le serveur refuse le mot de passe
         \end{description}
 \end{enumerate}
-\includegraphics[width=\textwidth]{../authentification.jpg}
+\includegraphics[width=\textwidth]{../graphics/authentification.jpg}
 
 \subsection{Resynchronisation}
 \subsubsection{Principe}
@@ -410,5 +410,5 @@ mots de passe jetables générés.
     \item Le serveur et le token se mettent d'accord sur l'état de la suite des
     mots de passe jetables.
 \end{enumerate}
-\includegraphics[width=\textwidth]{../resynchronisation.jpg}
+\includegraphics[width=\textwidth]{../graphics/resynchronisation.jpg}
 \end{document}

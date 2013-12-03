@@ -1,4 +1,4 @@
-\documentclass{"../res/univ-projet"}
+\documentclass{"../../res/univ-projet"}
 \usepackage[latin1]{inputenc}
 \usepackage{array}
 \usepackage[T1]{fontenc}
@@ -129,7 +129,7 @@ Etude et impl\'{e}mentations des systèmes d'authentification utilisant des mots 
 
 \begin{figure}[h]
   \centering
-  \includegraphics[scale=0.5]{diagramme1.png}
+  \includegraphics[scale=0.5]{../graphics/diagramme1.png}
   \caption{Sch\'{e}ma Macroscopique du Projet}
   \setlength{\parindent}{1cm}
   \begin{flushleft}
@@ -142,16 +142,16 @@ Etude et impl\'{e}mentations des systèmes d'authentification utilisant des mots 
 
 \clearpage
 
-\fiche{Association serveur-client-token}{Utilisateur}{Le serveur commnunique au Token un secret}{Il existe une communication client-serveur}{Bouton utilisateur}{Association r\'{e}ussie}{association.jpg}{Impossible d'associer le token au serveur}
+\fiche{Association serveur-client-token}{Utilisateur}{Le serveur commnunique au Token un secret}{Il existe une communication client-serveur}{Bouton utilisateur}{Association r\'{e}ussie}{../graphics/association.jpg}{Impossible d'associer le token au serveur}
 \\
 
-\fiche{G\'{e}n\'{e}ration de l'OTP par le token}{Utilisateur}{L'utilisateur demande au token un nouvel OTP qui lui est retourn\'{e}}{Le token est li\'{e} au serveur}{L'utilisateur demande un OTP}{OTP g\'{e}n\'{e}r\'{e}}{generation.jpg}{Null}
+\fiche{G\'{e}n\'{e}ration de l'OTP par le token}{Utilisateur}{L'utilisateur demande au token un nouvel OTP qui lui est retourn\'{e}}{Le token est li\'{e} au serveur}{L'utilisateur demande un OTP}{OTP g\'{e}n\'{e}r\'{e}}{../graphics/generation.jpg}{Null}
 \\
 
-\fiche{Authentification}{Utilisateur}{L'utilisateur tente de s'authentifier sur le serveur}{L'utilisateur possède un OTP}{L'utilisateur donne le mot de passe au serveur}{Utilisateur authentifi\'{e} ou rejet\'{e}}{authentification.jpg}{Crash du serveur}
+\fiche{Authentification}{Utilisateur}{L'utilisateur tente de s'authentifier sur le serveur}{L'utilisateur possède un OTP}{L'utilisateur donne le mot de passe au serveur}{Utilisateur authentifi\'{e} ou rejet\'{e}}{../graphics/authentification.jpg}{Crash du serveur}
 \\
 
-\fiche{Re-Synchronisation}{Utilisateur}{Mise en accord du token et du serveur}{Il existe une connexion entre le token et le serveur}{Perte de la synchronisation}{Synchronisation retrouv\'{e}}{resynchronisation.jpg}{Ne peut pas re-synchroniser}
+\fiche{Re-Synchronisation}{Utilisateur}{Mise en accord du token et du serveur}{Il existe une connexion entre le token et le serveur}{Perte de la synchronisation}{Synchronisation retrouv\'{e}}{../graphics/resynchronisation.jpg}{Ne peut pas re-synchroniser}
 \clearpage
 \newpage
 %-------------------------------------------------------------------------------
