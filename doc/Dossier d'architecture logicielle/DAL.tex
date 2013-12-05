@@ -146,7 +146,7 @@ supposée suffisante.
     c'est une technologie libre et performante.\\
     \hline
     PR-L\_002 &
-    Base de donn\'ee pour stocker les informations relatives aux utilisateurs dans le serveur&
+    Base de donn\'ees pour stocker les informations relatives aux utilisateurs dans le serveur&
     Cela sera n\'ecessaire pour g\'erer plusieurs utilisateurs ainsi que plusieurs protocoles
     OTP pour le serveur.\\
     \hline
@@ -154,7 +154,7 @@ supposée suffisante.
 
 
 %-------------------------------------------------------------------------------
-\section{Architectures statique}
+\section{Architectures statiques}
 \subsection{Structure g\'en\'erale du syst\`eme}
 \includegraphics[width=\textwidth]{../graphics/architecture.png}
 \subsection{Structure user}
@@ -165,7 +165,7 @@ supposée suffisante.
     passe en mémoire pour gérer plusieurs utilisateurs.
     \subsubsection{Champs}
     \label{ssub:Champs}
-        Une structure identifiant un utilisateur pour un générateur d'otp 
+        Une structure identifiant un utilisateur pour un générateur d'OTP 
         contient les champs suivants:
         \begin{description}
             \item[login] le nom de l'utilisateur
@@ -183,7 +183,7 @@ supposée suffisante.
     \subsubsection{Rôle}
         Afficher les mots de passe jetables pour un utilisateur donné.
 
-    \subsubsection{Propriétés et attributs de caractèrisation}
+    \subsubsection{Propriétés et attributs de caractérisation}
     \begin{description}
         \item[Secret] Le secret de l'utilisateur qui permet de générer les
             mots de passe jetables.
@@ -223,7 +223,7 @@ supposée suffisante.
     Chaque algorithme \'etudi\'e et impl\'ement\'e (HOTP, OTPW, POTP) offrira les
     mêmes services, seul le fonctionnement interne du module differera.
     les algorithmes seront détaillés dans les dossiers associés au recherches sur 
-    chaques algos.
+    chaques algorithme.
     \subsubsection{Rôle}
         Générer des mots de passe jetables permettant de s'authentifier.
 
@@ -261,7 +261,7 @@ supposée suffisante.
         Permettre une authentification sur un service en demandant à
     l'utilisateur un mot de passe jetable.
 
-    \subsubsection{Services offert}
+    \subsubsection{Services offerts}
     \begin{description}
         \item[authenticate(connection * c, req * request):] Permet
             de s'authentifier auprès du serveur \verb?server? sur 
