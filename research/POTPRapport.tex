@@ -1,0 +1,120 @@
+\documentclass{../res/univ-projet}
+
+\title{\'Etude du syst\`eme d'EAP POTP}
+\author{Yves et Claire}
+
+\projet{Nom \`a d\'efinir}
+\projdesc{\`Etude des syst\`emes de mots de passe jetable}
+\filiere{M1SSI}
+\logo{../res/logo_univ.png}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Ce document présente une analyse du système d'EAP POTP. Toutes les informations présentées et analysées proviennent des RFCs 4793 ainsi que de leurs
+correctifs. Le but de cet article est de déterminer dans quelles conditions le système EAP POTP est utilisable, sous quelles conditions et avec quelles garanties de sécurité.
+Ce documents sera mis en relation avec plusieurs autres afin de réaliser un comparatif entre les systèmes d'OTP majeurs.
+\end{abstract}
+\newpage
+\tableofcontents
+\newpage
+
+\section{Prérequis}
+Dans cette section présenter les technos et concepts sous-jacent(e)s au systèmes étudiés.
+On a besoin d'EAP et d'un OTP (généré par exemple par un périphérique relié à la machine).
+HMAC et SHA256.
+
+\section{Généralités}
+Dans cette section présenter les principes et fonctionnements généraux des systèmes étudiés.
+Fournit une authentification unilatérale ou mutuelle.
+Protocol de la couche liaison de données comme PPP.
+
+\section{Approfondissement}
+  Dans cette section tout doit \^etre étudié en détail.
+  \subsection{Generation et partage d'un secret}
+  Tout est dans le titre
+  
+  \subsection{Génération d'un mot de passe jetable}
+  Tous est dans le titre
+  
+  Par un périphérique connecté à la machine ou un logiciel séparé.
+  
+  \subsection{Soumission et protocole de vérification}
+  Tout est dans le titre. Comment le mot de passe est-il soumis et quelles sont les étapes suivient par le serveur pour déterminer la validité de celui-ci.
+  
+  \subsection{Synchronisation}
+  Token et verificateurs peuvent ils perdre leur synchronisation. Comment ce problème est-il évité? Comment la synchronisation est elle rétablie?
+  
+  \subsection{Reinitialisation}
+  Ne concerne a priori pas tous les systèmes. Expliquer les procédures a utiliser pour reinitialiser le secret et autres.
+  
+\section{Analyse générale et sécurité}
+Partie cruciale du rapport. Merci de me la faire au petits oignons.
+
+  \subsection{Avantages et intér\^ets}
+  Tout est dans le titre. Merci d'\^etre exhaustif.
+  Inclut un grand nombre d'algorithmes OTP.
+  Permet aussi bien une authentification mutuelle que unilatérale.
+  Le mode protégé protège contre les attaques par rétrogradation de versions (version downgrade attacks).
+  L'utilisation du poivre permet une meilleure sécurité pour un coût initial plus élevé mais égal sur le long terme.
+  
+  \subsection{Inconvenients et limites}
+  Tous est dans le titre. Merci d`\^etre exhaustif.
+  L'utilisation d'un tunnel sécurisé offre une meilleure sécurité au système.
+  Beaucoup d'attaques reste possible même si on connait les moyens pour les contrer.
+  
+  \subsection{Considérations de sécurité}
+  Le clou du spectacle.
+    \subsubsection{Attaques exhaustives}
+    Analyse de la résistance aux attaques exhaustives. Un calcul et / ou démonstration seront certainement bien vus par votre chargé de mission
+    \og{}Coordination Recherche\fg{} ainsi que par les clients. N'ayez pas peur tous va bien se passer.
+    La sesion doit durer moins longtemps que le temps nécéssaire à une attaque exhaustive.
+    
+    \subsubsection{Attaques par collisions}
+    Cette partie n'est pas forcement necessaire. Se référer au résultats de la réunion du 19 Novembre.
+    
+    \subsubsection{Failles connues}
+    Tout est dans le titre.
+    Un ancien OTP permet de trouver certaines informations sur le PIN de l'utilisateur et représente donc toujours un risque (il faut donc s'assurer que le PIN de l'utilisateur change régulièrement).
+    Les attaques par déni de services sont possible, il faut donc ne pas tenir compte des OTP TLV avec un trop grand nombre d'itérations.
+    Attaque de course : il faut empécher la création simultanée de plusieurs sessions.
+    
+    Pour la version avancée:
+    Protection par la variante de la méthode EAP : temps limité d'une session afin d'éviter que l'attaquant (man-in-the-middle) ai le temps de trouvé l'OTP valide.
+    
+    Pour la version de base:
+    Une attaque par man-in-the-middle est possible (il faut être en authentification mutuelle pour s'en protéger).
+    Détournement de session et attaques par rejeu (pour s'en protéger il faut être connécté de façon sécurisé à un serveur authentifié, en utilisant PEAPv2 par exemple).
+    Lors de la reprise de sessions (en canal sécurisé) il reste possible de trouver la combinaison identifiant de session/OTP (pour s'en protéger il faut garder une trace du nombre de tentatives infructueuses de reprises).
+    
+    \subsubsection{Précautions et préconisations}
+    Dans le cas d'une reprise de session, celle-ci doit durer moins longtemps que le temps nécéssaire pour trouver l'OPT utiliser.
+    La version de base comporte de nombreuses failles, il vaut mieux utiliser la variante protégée (protected variante).
+    Le poivre doit être stocké de façon sur.
+    
+\section{Utilisations}
+On présente ici les possibles utilisation du système.
+  \subsection{Cas concrets d'utilisations}
+  Tout est dans le titre.
+  La réussite de l'authentification grâce aux mots de passes jetables de deux systèmes via le wifi.
+  Utilisation pour l'identification d'un téléphone mobile via le wifi par exemple?
+  
+  \subsection{Cas d'utilisations envisagés}
+  Cas possibles d'utilisations non encore exploités (On peut toujours r\^ever)
+  
+\section{Conclusion}
+La conclusion
+  \subsection{Utilisation dans le cadre du projet}
+  Reprendre les éléments de l'analyse telles que le performances du sytème le niveau de sécurité et autre afin de définir si, et dans quels contextes, le système devrait
+  \^etre utlisé dans le cadre du projet.
+  La réussite de l'authentification grâce aux mots de passes jetables (mutuelle???) de deux systèmes via le wifi.
+  
+  \subsection{Perenité du système}
+  A voir, pas forcément utile. Se référer aux résultats de la réunion du 19 novembre.
+  La perennité est au plus égale à celle de la fonction de hachage utilisée.
+    
+\end{document}
