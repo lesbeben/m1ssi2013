@@ -9,11 +9,12 @@
 \projet{M1SSI}
 \projdesc{Projet de génération d'OTP}
 \filiere{M1SSI}
-\version{1.0}
+\version{1.1}
 \relecteur{\bsc{Hardouin} Claire}
 \signataire{\bsc{Bardet} Magali}
 \date{Décembre 2013}
 
+\histentry{1.1}{15/12/2013}{Version relue et corrigée.}
 \histentry{1.0}{29/11/2013}{Version initiale.}
 
 \begin{document}
@@ -37,7 +38,7 @@
   Les objets à tester sont le token et le vérifieur, et plus précisément leurs composantes logicielles. L'ensemble des tests sera réalisé dans un contexte \og{}en 
   production\fg{} ou en simulant celui-ci.
   
-  Dans l'éventualité ou des tests seraient à effectuer sur des composantes Android, ceux-ci seraient effectués sur un terminal mobile Samsung Galaxy ACE.
+  Dans l'éventualité o\`u des tests seraient à effectuer sur des composantes Android, ceux-ci seraient effectués sur un terminal mobile Samsung Galaxy ACE.
   
   \section{Documents applicables et de références.}
   \begin{tabular}{p{1,5cm}>{\raggedright\arraybackslash}p{13cm}}
@@ -70,7 +71,7 @@
   \section{Environnement de test}
   L'ensemble des tests sera réalisé sur le site de l'Université de Rouen, antenne du madrillet.
   Pour les tests, nous utiliserons des machines munies d'architectures grand public. Pour assurer le maximum de compatibilité, des systèmes 32 et 64 bits seront utilisés 
-  indépendemment. Les tests Android seront réalisés sur un terminal mobile muni d'un processeur mono-coeur ARM v6 cadencé à 832MHz, disposant de 278 Mo de mémoire et tournant sur un 
+  indépendamment. Les tests Android seront réalisés sur un terminal mobile muni d'un processeur mono-coeur ARM v6 cadencé à 832MHz, disposant de 278 Mo de mémoire et tournant sur un 
   système d'exploitation Android 2.3.6.
   
   Dans l'ensemble, les tests seront effectués sur des configurations modestes afin d'assurer la performance sur la plupart des machines actuelles et futures.
@@ -78,7 +79,7 @@
   Les données utilisées pour les tests seront une succession de valeurs de mots de passe jetable successivement corrrectes, erronées et incohérentes.
   
   \section{Responsabilités}
-  La réalisation des tests ainsi que leur ex\'ecution seront réalisés par le responsable qualité et son assistant. Les données de test pourront être fournies par ces 
+  La réalisation des tests ainsi que leur ex\'ecution seront entrepris par le responsable qualité et son assistant. Les données de test pourront être fournies par ces 
   mêmes personnes.
   
   \section{Stratégie de test}
@@ -87,13 +88,13 @@
   Les tests seront toujours tous appliqués sur les éléments sur lesquels ils sont applicables sauf dans les cas ou un résultat négatif empêcherait de poursuivre les 
   procédures.
   
-  Les tests pourront généralement être exécutés indépendemment sur le token et le vérifieur. Les dépendances entre tests seront précisées dans la suite de ce document.
+  Les tests pourront généralement être exécutés indépendamment sur le token et le vérifieur. Les dépendances entre tests seront précisées dans la suite de ce document.
   
   \section{Gestion des anomalies}
   Lorsque des anomalies sont détéctées lors des tests, voici la procédure qui devrait être suivie :
   \begin{itemize}
    \item Création d'une note / mémo précisant l'anomalie rencontrée ainsi que les informations concernant l'état du système lors de la rencontre de l'anomalie. Un 
-   identitfiant unique sera donné au mémo de test.
+   identifiant unique sera donné au mémo de test.
    \item Ajout d'une entrée au journal de test précisant la date du test, la référence du mémo, la référence de l'objet testé ainsi que la référence de l'exigence de 
    qualité contrariée.
    \item Diffusion de la note à l'équipe de développement. Cette dernière devra établir une contre-note portant le même identifiant et précisant les raisons supposées 
@@ -196,7 +197,7 @@
       1 & Générer un OTP aléatoire $T$ & EP\_01 & OK \\
       2 & Tenter une connexion avec $T$ & - & - & - \\ \hline      
       \hline
-      \multicolumn{5}{|l|}{Répéter 1 et 2 jusqu'à la connection ou le rejet}\\
+      \multicolumn{5}{|l|}{Répéter 1 et 2 jusqu'à la connexion ou le rejet}\\
       \hline
       3 & si accepté $cpt \leftarrow cpt + 1$ & & & \\
       \hline
@@ -212,14 +213,14 @@
       \hline
       Id Exigence STB & Méthode de vérification & Procédure utilisée & Commentaire\\ \hline
       EF\_02 & Associer un token au serveur. & 
-      & Le test de cette exigence dépend de la'implémentation de la méthode d'OTP. Elle sera détaillée dans une prochaine version.\\ \hline
+      & Le test de cette exigence dépend de l'implémentation de la méthode d'OTP. Elle sera détaillée dans une prochaine version.\\ \hline
       EF\_03 & & Procédure N° 1, 5 & \\ \hline
       EF\_04 & & Procédure N° 2 & \\ \hline
       EF\_05 & & Procédure N° 6 & \\ \hline
       EP\_01 & & Procédure N° 1, 5 & \\ \hline
       EP\_02 & & Procédure N° 5 & \\ \hline
       EP\_03 & Utilisation d'un logiciel \og{}die hard\fg{} pour vérifier l'aléatoirité des mots de passe. &  
-      & Ce test, nécessitant l'utilisation d'un \fg{}die hard\og{}, requière une étude préalable et ne peut \^etre détaillé.\\ \hline
+      & Ce test, nécessitant l'utilisation d'un \og{}die hard\fg{}, requiert une étude préalable et ne peut \^etre détaillé.\\ \hline
       EP\_04 & & Procédure N° 7 & \\ \hline
       EP\_05 & & Procédure N° 5 & \\ \hline
       EQ\_01 & & Procédure N° 1 & \\ \hline
