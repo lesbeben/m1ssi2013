@@ -13,11 +13,12 @@
 \projet{M1SSI}
 \projdesc{Projet de génération d'OTP}
 \filiere{M1SSI}
-\version{1.0}
+\version{1.1}
 \relecteur{\bsc{Adegoloye} Tayewo John Yves}
 \signataire{\bsc{Bardet} Magali}
 \date{Décembre 2013}
 
+\histentry{1.1}{15/12/2013}{Ajoout des modifications demandées par le client}
 \histentry{1.0}{01/12/2013}{Version relue et corrigée}
 \histentry{0.1}{21/11/2013}{Premier jet}
 
@@ -26,7 +27,7 @@
 \maketitle
 %-------------------------------------------------------------------------------
 \section{Objet}
-Ce document à pour but de préciser les détails techniques du logiciel final.
+Ce document a pour but de préciser les détails techniques du logiciel final.
 
 \section{Documents de référence}
 \subsection{Documents de spécifications}
@@ -78,15 +79,14 @@ Ce document à pour but de préciser les détails techniques du logiciel final.
     serveur.Pour notre cas celui-ci permettra de communiquer au serveur les OTP
     g\'{e}n\'{e}r\'{e}s par le token.
     
-    \item[Seed] Variable utilis\'ee pour initiliser une s\'equence al\'eatoire.
+    \item[Seed] Variable utilis\'ee pour initialiser une s\'equence al\'eatoire.
 \end{description}
 
 %-------------------------------------------------------------------------------
 \section{Configuration requise}
 \subsection{Performances de calcul}
 On suppose l'implémentation du token possible sur de très petits 
-calculateurs, donc une fréquence processeur de \verb?700MHz? est
-supposée suffisante.
+calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisante.
 
 \subsection{Périphériques et matériel spécifiques}
 \begin{tabular}{|p{0.2\textwidth}|p{0.4\textwidth}|p{0.4\textwidth}|}
@@ -200,8 +200,8 @@ supposée suffisante.
     \subsubsection{Langages de programmation}
     \begin{itemize}
         \item C
-        \item Java Mobile (optionel)
-        \item Java Card (optionel)
+        \item Java Mobile
+        \item Java Card (optionnel)
     \end{itemize}
 
     \subsubsection{Procédés de développement}
@@ -221,7 +221,7 @@ supposée suffisante.
 %------------------------------------------------------------------------------
 \subsection{Générateur d'OTP}
     Chaque algorithme \'etudi\'e et impl\'ement\'e (HOTP, OTPW, POTP) offrira les
-    mêmes services, seul le fonctionnement interne du module differera.
+    mêmes services, seul le fonctionnement interne du module diffèrera.
     les algorithmes seront détaillés dans les dossiers associés au recherches sur 
     chaques algorithme.
     \subsubsection{Rôle}
@@ -229,17 +229,17 @@ supposée suffisante.
 
     \subsubsection{Services offerts}
     \begin{description}
-        \item[initiate(user * utilisateur, char * seed):] Initialise
+        \item[initiate(user *utilisateur, char *seed):] Initialise
             un générateur d'OTP pour l'utilisateur.
-        \item[getOTP(user * utilisateur)] Génère un OTP selon la méthode et les
+        \item[getOTP(user *utilisateur)] Génère un OTP selon la méthode et les
             paramêtres passés.
     \end{description}
 
     \subsubsection{Langages de programmation}
     \begin{itemize}
         \item C
-        \item Java Mobile (Optionel)
-        \item Java Card (Optionel)
+        \item Java Mobile
+        \item Java Card (optionnel)
     \end{itemize}
 
     \subsubsection{Procédé de développement}
@@ -263,7 +263,7 @@ supposée suffisante.
 
     \subsubsection{Services offerts}
     \begin{description}
-        \item[authenticate(connection * c, req * request):] Permet
+        \item[authenticate(connection *c, req *request):] Permet
             de s'authentifier auprès du serveur \verb?server? sur 
             le port \verb?port?, d'après la requête \verb?request?.
     \end{description}
@@ -286,7 +286,7 @@ supposée suffisante.
     \end{enumerate}
 
     \subsubsection{Taille et complexité}
-        Le client ne consiste qu'en l'envoi et la réception de données sur le
+        Le client ne procède qu'à l'envoi et la réception de données sur le
         réseau, donc la taille et la complexité sont faibles.
 
 \subsection{Serveur}
@@ -304,14 +304,14 @@ supposée suffisante.
 
     \subsubsection{Services offerts}
     \begin{description}
-        \item[associate(user * u, char * secret):] Associe un secret à un 
+        \item[associate(user *u, char *secret):] Associe un secret à un 
             utilisateur.
-        \item[check(user * u, char * OTP):] Vérifie que l'OTP est valide pour
+        \item[check(user *u, char *OTP):] Vérifie que l'OTP est valide pour
             l'utilisateur.
-        \item[lock(user * u):] Interdit la connection pour un utilisateur.
-        \item[warn(user * u):] Prévient par mail un utilisateur de son 
+        \item[lock(user *u):] Interdit la connection pour un utilisateur.
+        \item[warn(user *u):] Prévient par mail un utilisateur de son 
             verrouillage.
-        \item[resynchronize(user * u):] Demande une resynchronisation pour
+        \item[resynchronize(user *u):] Demande une resynchronisation pour
             un utilisateur donné.
     \end{description}
 
