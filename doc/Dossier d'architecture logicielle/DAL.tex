@@ -363,6 +363,12 @@ Le langage C a été choisi pour 2 raisons:
 \subsubsection{Principe}
 Le token et le serveur se mettent d'accord sur un secret partag\'e gr\^ace à l'utilisateur.
 
+\subsubsection{Flux réseau}
+Lors de l'association le client et le serveur échange le secret qui permet
+de générer tout les OTP. Il est donc préférable qu'il ne tombe pas aux mains
+d'un attaquant. Pour éviter ce souci il est préconnisé dans les RFC de passer
+par un tunnel sécurisé type SSL.
+
 \subsubsection{Fonctionnement}
 \begin{enumerate}
     \item partage du secret via une saisie utilisateur.
@@ -386,6 +392,21 @@ Le token donne un mot de passe jetable à l'utilisateur.
 On entre le mot de passe généré par le token dans le client qui demandera une
 vérification au serveur.
 
+\subsubsection{Flux réseau}
+Lors de cette étape il ya deux façon de procéder:
+
+    \paragraph{le défi/réponse:}
+    \begin{enumerate}
+        \item Le serveur envoie un challenge.
+        \item Le client envoie la réponse au challenge.
+        \item Le serveur confirme ou infirme l'authentification
+    \end{enumerate}
+    \paragraph{l'authentification classique:}
+    \begin{enumerate}
+        \item Le client envoie une demande d'authentification.
+        \item Le serveur confirme ou infirme l'authentification.
+    \end{enumerate}
+
 \subsubsection{Fonctionnement}
 \begin{enumerate}
     \item L'utilisateur entre le mot de passe
@@ -401,14 +422,14 @@ vérification au serveur.
 
 \subsection{Resynchronisation}
 \subsubsection{Principe}
-Le serveur et le token se resynchronisent pour être d'accord sur la suite des
+Le serveur se resynchronise sur le token pour être d'accord sur la suite des
 mots de passe jetables générés.
 
 \subsubsection{Fonctionnement}
 \begin{enumerate}
-    \item L'utilisateur ou le serveur font une demande de resynchronisation
-    \item Le serveur et le token se mettent d'accord sur l'état de la suite des
-    mots de passe jetables.
+    \item L'utilisateur essaie de s'authentifier.
+    \item Le serveur voit que le token de l'utilisateur est décalé.
+    \item Le serveur se décale au même niveau que le token.
 \end{enumerate}
 \includegraphics[width=\textwidth]{../graphics/resynchronisation.jpg}
 \end{document}
