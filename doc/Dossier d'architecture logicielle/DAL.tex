@@ -58,30 +58,6 @@ Ce document a pour but de préciser les détails techniques du logiciel final.
     \\
 \end{tabular}
 
-
-%-------------------------------------------------------------------------------    
-\section{Terminologie et sigles}
-\subsection{Glossaire}
-\begin{description}
-    \item[OTP] Un Mot de passe unique ou OTP (One-Time Password) est un mot de 
-    passe qui n'est valable que pour une session ou une transaction.
-
-    \item[Token] Un token désigne dans notre projet un élément matériel ou
-    logiciel tiers servant à la génération d'un OTP.
-
-    \item[Serveur] Un serveur est un dispositif informatique matériel ou
-    logiciel qui offre des services, à différents clients. Pour notre cas
-    celui-ci permettra l'association d'un token, la v\'{e}rification de l'OTP
-    g\'{e}n\'{e}r\'{e} par le token, et l'\'{e}ventuelle re-synchronisation du
-    token.
-
-    \item[Client] Un client est le logiciel qui envoie des demandes à un
-    serveur.Pour notre cas celui-ci permettra de communiquer au serveur les OTP
-    g\'{e}n\'{e}r\'{e}s par le token.
-    
-    \item[Seed] Variable utilis\'ee pour initialiser une s\'equence al\'eatoire.
-\end{description}
-
 %-------------------------------------------------------------------------------
 \section{Configuration requise}
 \subsection{Performances de calcul}
