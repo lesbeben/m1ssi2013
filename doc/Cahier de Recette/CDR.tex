@@ -1,48 +1,49 @@
 \documentclass{"../../res/univ-projet"}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage{array}
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
+\usepackage{textcomp}
 
 \title{Cahier de recettes}
 \author{\bsc{Ferry} Gaetan}
 \projet{M1SSI}
-\projdesc{Projet de génération d'OTP}
+\projdesc{Projet de gÃ©nÃ©ration d'OTP}
 \filiere{M1SSI}
 \version{1.1}
 \relecteur{\bsc{Hardouin} Claire}
 \signataire{\bsc{Bardet} Magali}
-\date{Décembre 2013}
+\date{DÃ©cembre 2013}
 
-\histentry{1.1}{15/12/2013}{Version relue et corrigée.}
+\histentry{1.1}{15/12/2013}{Version relue et corrigÃ©e.}
 \histentry{1.0}{29/11/2013}{Version initiale.}
 
 \begin{document}
   \maketitle
   \section{Introduction}
-  Fonctionnalités du logiciel :
+  FonctionnalitÃ©s du logiciel :
   \begin{itemize}
     \item Token : 
     \begin{itemize}
-      \item Générer des mots de passe jetables.
+      \item GÃ©nÃ©rer des mots de passe jetables.
     \end{itemize}
 
     \item Serveur :
     \begin{itemize}
       \item Authentifier des utilisateurs.
-      \item Stocker et ajouter des paramètres utilisateurs.
-      \item Gérer la synchronisation des deux parties.
+      \item Stocker et ajouter des paramÃ¨tres utilisateurs.
+      \item GÃ©rer la synchronisation des deux parties.
     \end{itemize}
   \end{itemize}
 
-  Les objets à tester sont le token et le vérifieur, et plus précisément leurs composantes logicielles. L'ensemble des tests sera réalisé dans un contexte \og{}en 
+  Les objets Ã  tester sont le token et le vÃ©rifieur, et plus prÃ©cisÃ©ment leurs composantes logicielles. L'ensemble des tests sera rÃ©alisÃ© dans un contexte \og{}en 
   production\fg{} ou en simulant celui-ci.
   
-  Dans l'éventualité o\`u des tests seraient à effectuer sur des composantes Android, ceux-ci seraient effectués sur un terminal mobile Samsung Galaxy ACE.
+  Dans l'Ã©ventualitÃ© o\`u des tests seraient Ã  effectuer sur des composantes Android, ceux-ci seraient effectuÃ©s sur un terminal mobile Samsung Galaxy ACE.
   
-  \section{Documents applicables et de références.}
+  \section{Documents applicables et de rÃ©fÃ©rences.}
   \begin{tabular}{p{1,5cm}>{\raggedright\arraybackslash}p{13cm}}
-    {[ANS10]} & {ANSSI. Référentiel général de sécurité. \href{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}, 2010.}
+    {[ANS10]} & {ANSSI. RÃ©fÃ©rentiel gÃ©nÃ©ral de sÃ©curitÃ©. \href{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}, 2010.}
     \tabularnewline
     \\
     {[MvOV97]} & {Alfred J. Menezes, Paul C. van Oorschot, and Scott A. Vanstone. Handbook of applied cryptography. CRC Press Series on Discrete Mathematics and its Applications. CRC Press, Boca Raton, FL, 1997. With a foreword by Ronald L.Rivest.}
@@ -69,139 +70,139 @@
   \end{tabular}
   
   \section{Environnement de test}
-  L'ensemble des tests sera réalisé sur le site de l'Université de Rouen, antenne du madrillet.
-  Pour les tests, nous utiliserons des machines munies d'architectures grand public. Pour assurer le maximum de compatibilité, des systèmes 32 et 64 bits seront utilisés 
-  indépendamment. Les tests Android seront réalisés sur un terminal mobile muni d'un processeur mono-coeur ARM v6 cadencé à 832MHz, disposant de 278 Mo de mémoire et tournant sur un 
-  système d'exploitation Android 2.3.6.
+  L'ensemble des tests sera rÃ©alisÃ© sur le site de l'UniversitÃ© de Rouen, antenne du madrillet.
+  Pour les tests, nous utiliserons des machines munies d'architectures grand public. Pour assurer le maximum de compatibilitÃ©, des systÃ¨mes 32 et 64 bits seront utilisÃ©s 
+  indÃ©pendamment. Les tests Android seront rÃ©alisÃ©s sur un terminal mobile muni d'un processeur mono-coeur ARM v6 cadencÃ© Ã  832MHz, disposant de 278 Mo de mÃ©moire et tournant sur un 
+  systÃ¨me d'exploitation Android 2.3.6.
   
-  Dans l'ensemble, les tests seront effectués sur des configurations modestes afin d'assurer la performance sur la plupart des machines actuelles et futures.
+  Dans l'ensemble, les tests seront effectuÃ©s sur des configurations modestes afin d'assurer la performance sur la plupart des machines actuelles et futures.
   
-  Les données utilisées pour les tests seront une succession de valeurs de mots de passe jetable successivement corrrectes, erronées et incohérentes.
+  Les donnÃ©es utilisÃ©es pour les tests seront une succession de valeurs de mots de passe jetable successivement corrrectes, erronÃ©es et incohÃ©rentes.
   
-  \section{Responsabilités}
-  La réalisation des tests ainsi que leur ex\'ecution seront entrepris par le responsable qualité et son assistant. Les données de test pourront être fournies par ces 
-  mêmes personnes.
+  \section{ResponsabilitÃ©s}
+  La rÃ©alisation des tests ainsi que leur ex\'ecution seront entrepris par le responsable qualitÃ© et son assistant. Les donnÃ©es de test pourront Ãªtre fournies par ces 
+  mÃªmes personnes.
   
-  \section{Stratégie de test}
-  Les tests seront effectués après la réalisation de chaque composante (token, client, serveur). Toute composante testée qui serait non conforme ferait l'objet d'un 
-  rapport d'erreur et serait renvoyée au stade de développement.
-  Les tests seront toujours tous appliqués sur les éléments sur lesquels ils sont applicables sauf dans les cas ou un résultat négatif empêcherait de poursuivre les 
-  procédures.
+  \section{StratÃ©gie de test}
+  Les tests seront effectuÃ©s aprÃ¨s la rÃ©alisation de chaque composante (token, client, serveur). Toute composante testÃ©e qui serait non conforme ferait l'objet d'un 
+  rapport d'erreur et serait renvoyÃ©e au stade de dÃ©veloppement.
+  Les tests seront toujours tous appliquÃ©s sur les Ã©lÃ©ments sur lesquels ils sont applicables sauf dans les cas ou un rÃ©sultat nÃ©gatif empÃªcherait de poursuivre les 
+  procÃ©dures.
   
-  Les tests pourront généralement être exécutés indépendamment sur le token et le vérifieur. Les dépendances entre tests seront précisées dans la suite de ce document.
+  Les tests pourront gÃ©nÃ©ralement Ãªtre exÃ©cutÃ©s indÃ©pendamment sur le token et le vÃ©rifieur. Les dÃ©pendances entre tests seront prÃ©cisÃ©es dans la suite de ce document.
   
   \section{Gestion des anomalies}
-  Lorsque des anomalies sont détéctées lors des tests, voici la procédure qui devrait être suivie :
+  Lorsque des anomalies sont dÃ©tÃ©ctÃ©es lors des tests, voici la procÃ©dure qui devrait Ãªtre suivie :
   \begin{itemize}
-   \item Création d'une note / mémo précisant l'anomalie rencontrée ainsi que les informations concernant l'état du système lors de la rencontre de l'anomalie. Un 
-   identifiant unique sera donné au mémo de test.
-   \item Ajout d'une entrée au journal de test précisant la date du test, la référence du mémo, la référence de l'objet testé ainsi que la référence de l'exigence de 
-   qualité contrariée.
-   \item Diffusion de la note à l'équipe de développement. Cette dernière devra établir une contre-note portant le même identifiant et précisant les raisons supposées 
+   \item CrÃ©ation d'une note / mÃ©mo prÃ©cisant l'anomalie rencontrÃ©e ainsi que les informations concernant l'Ã©tat du systÃ¨me lors de la rencontre de l'anomalie. Un 
+   identifiant unique sera donnÃ© au mÃ©mo de test.
+   \item Ajout d'une entrÃ©e au journal de test prÃ©cisant la date du test, la rÃ©fÃ©rence du mÃ©mo, la rÃ©fÃ©rence de l'objet testÃ© ainsi que la rÃ©fÃ©rence de l'exigence de 
+   qualitÃ© contrariÃ©e.
+   \item Diffusion de la note Ã  l'Ã©quipe de dÃ©veloppement. Cette derniÃ¨re devra Ã©tablir une contre-note portant le mÃªme identifiant et prÃ©cisant les raisons supposÃ©es 
    de l'anomalie ainsi que les contremesures mises en place. 
   \end{itemize}
 
-  \section{Procédures de test}  
+  \section{ProcÃ©dures de test}  
   \begin{center}
-    %---------------------------------------Test N° 1------------------------------------------------------------------------------
+    %---------------------------------------Test NÂ° 1------------------------------------------------------------------------------
     
     \begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
       \hline
-      \multicolumn{3}{|l|}{Objet testé : Token} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
-      \multicolumn{5}{|l|}{Objectif de test : Valider le temps de génération d'un OTP}\\ \hline
-      \multicolumn{3}{|l|}{Procédure n° 1} & \multicolumn{2}{p{3cm}|}{Prérequis : aucun}\\ \hline
-      \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
+      \multicolumn{3}{|l|}{Objet testÃ© : Token} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
+      \multicolumn{5}{|l|}{Objectif de test : Valider le temps de gÃ©nÃ©ration d'un OTP}\\ \hline
+      \multicolumn{3}{|l|}{ProcÃ©dure nÂ° 1} & \multicolumn{2}{p{3cm}|}{PrÃ©requis : aucun}\\ \hline
+      \multicolumn{1}{|c|}{NÂ°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{RÃ©sultats attendus} & 
       \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
-      1 & Demander un OTP & Un OTP est retourné & EP\_01 & OK\\
-      2 & Mesurer le temps de génération & Temps < 1s & EQ\_01 & OK\\
-      3 & Répéter 100 fois 2 & Temps toujours < 1s & EQ\_01 & OK\\ \hline
+      1 & Demander un OTP & Un OTP est retournÃ© & EP\_01 & OK\\
+      2 & Mesurer le temps de gÃ©nÃ©ration & Temps < 1s & EQ\_01 & OK\\
+      3 & RÃ©pÃ©ter 100 fois 2 & Temps toujours < 1s & EQ\_01 & OK\\ \hline
     \end{tabular}
     \newline
-    %---------------------------------------Test N° 2------------------------------------------------------------------------------
+    %---------------------------------------Test NÂ° 2------------------------------------------------------------------------------
     
     \begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
       \hline
-      \multicolumn{3}{|l|}{Objet testé : Serveur} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
-      \multicolumn{5}{|l|}{Objectif de test : Tester le temps de réponse du serveur}\\ \hline
-      \multicolumn{3}{|l|}{Procédure n° 2} & \multicolumn{2}{p{3cm}|}{Prérequis : EP\_01}\\ \hline
-      \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
+      \multicolumn{3}{|l|}{Objet testÃ© : Serveur} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
+      \multicolumn{5}{|l|}{Objectif de test : Tester le temps de rÃ©ponse du serveur}\\ \hline
+      \multicolumn{3}{|l|}{ProcÃ©dure nÂ° 2} & \multicolumn{2}{p{3cm}|}{PrÃ©requis : EP\_01}\\ \hline
+      \multicolumn{1}{|c|}{NÂ°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{RÃ©sultats attendus} & 
       \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
-      1 & Pinger le serveur & Récupérer le temps t de communication avec le serveur & - & - \\
-      2 & Tenter une connexion avec un OTP valide & Réponse : Accepté; Temps < 2t + 1s & EQ\_02; EQ\_04 &  OK \\
-      3 & Tenter une connexion avec un OTP invalide & Réponse : Refusé; Temps < 2t + 1s & EQ\_02; EQ\_04 & OK\\ \hline
+      1 & Pinger le serveur & RÃ©cupÃ©rer le temps t de communication avec le serveur & - & - \\
+      2 & Tenter une connexion avec un OTP valide & RÃ©ponse : AcceptÃ©; Temps < 2t + 1s & EQ\_02; EQ\_04 &  OK \\
+      3 & Tenter une connexion avec un OTP invalide & RÃ©ponse : RefusÃ©; Temps < 2t + 1s & EQ\_02; EQ\_04 & OK\\ \hline
     \end{tabular}
-    %---------------------------------------Test N° 3------------------------------------------------------------------------------
+    %---------------------------------------Test NÂ° 3------------------------------------------------------------------------------
     
     \begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
       \hline
-      \multicolumn{3}{|l|}{Objet testé : Serveur} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
-      \multicolumn{5}{|l|}{Objectif de test : Tester la résistance du serveur à la charge}\\ \hline
-      \multicolumn{3}{|l|}{Procédure n° 3} & \multicolumn{2}{p{3cm}|}{Prérequis : test 2, EP\_01}\\ \hline
-      \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
+      \multicolumn{3}{|l|}{Objet testÃ© : Serveur} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
+      \multicolumn{5}{|l|}{Objectif de test : Tester la rÃ©sistance du serveur Ã  la charge}\\ \hline
+      \multicolumn{3}{|l|}{ProcÃ©dure nÂ° 3} & \multicolumn{2}{p{3cm}|}{PrÃ©requis : test 2, EP\_01}\\ \hline
+      \multicolumn{1}{|c|}{NÂ°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{RÃ©sultats attendus} & 
       \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
-      1 & Pinger le serveur & Récupérer le temps t de communication avec le serveur & - & - \\
-      2 & Générer 100 000 valeurs d'OTP aléatoires & - & - & -\\
-      3 & Pour chaque valeur démarrer un client et tenter l'authentification & Pour chaque client temps < 2t + 1s & EQ\_03 & OK\\ \hline
+      1 & Pinger le serveur & RÃ©cupÃ©rer le temps t de communication avec le serveur & - & - \\
+      2 & GÃ©nÃ©rer 100 000 valeurs alÃ©atoires au format d'un OTP & - & - & -\\
+      3 & Pour chaque valeur dÃ©marrer un client prÃ©-associÃ©s et tenter l'authentification & Pour chaque client temps < 2t + 1s & EQ\_03 & OK\\ \hline
     \end{tabular}
-    %---------------------------------------Test N° 4------------------------------------------------------------------------------
+    %---------------------------------------Test NÂ° 4------------------------------------------------------------------------------
     
     \begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
       \hline
-      \multicolumn{3}{|l|}{Objet testé : Token} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
-      \multicolumn{5}{|l|}{Objectif de test : Mesurer la quantité de mémoire requise.}\\ \hline
-      \multicolumn{3}{|l|}{Procédure n° 4} & \multicolumn{2}{p{3cm}|}{Prérequis : aucun}\\ \hline
-      \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
+      \multicolumn{3}{|l|}{Objet testÃ© : Token} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
+      \multicolumn{5}{|l|}{Objectif de test : Mesurer la quantitÃ© de mÃ©moire requise.}\\ \hline
+      \multicolumn{3}{|l|}{ProcÃ©dure nÂ° 4} & \multicolumn{2}{p{3cm}|}{PrÃ©requis : aucun}\\ \hline
+      \multicolumn{1}{|c|}{NÂ°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{RÃ©sultats attendus} & 
       \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
       1 & Lancer un debugger & - & - & - \\
-      2 & Mesurer la charge mémoire actuelle & $m_0$ = charge mémoire & - & -\\
-      3 & Charger le générateur dans le debugger & - & - & -\\
+      2 & Mesurer la charge mÃ©moire actuelle & $m_0$ = charge mÃ©moire & - & -\\
+      3 & Charger le gÃ©nÃ©rateur dans le debugger & - & - & -\\
       \hline
-      \multicolumn{5}{|l|}{Répéter 4 et 5 jusqu'à la fin de l'exécution.}\\
+      \multicolumn{5}{|l|}{RÃ©pÃ©ter 4 et 5 jusqu'Ã  la fin de l'exÃ©cution du programme.}\\
       \hline
-      4 & Mesurer la charge mémoire actuelle & m - $m_0$ > 10Ko & EQ\_05 & KO\\
-      5 & Avancer d'un pas dans le debuggeur & - & - & -\\ \hline
-      6 & - & - & EQ\_05 & OK \\ \hline
+      4 & Mesurer la charge mÃ©moire actuelle & m - $m_0$ > 10Ko & EQ\_05 & KO\\
+      5 & Avancer d'une instruction dans le debuggeur & - & - & -\\ \hline
+      6 & Fin de l'Ã©xÃ©cution du programme & charge mÃ©moire toujours < 10Ko & EQ\_05 & OK \\ \hline
     \end{tabular}
     
-    %---------------------------------------Test N° 5------------------------------------------------------------------------------
+    %---------------------------------------Test NÂ° 5------------------------------------------------------------------------------
     \begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
       \hline
-      \multicolumn{3}{|l|}{Objet testé : Serveur} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
+      \multicolumn{3}{|l|}{Objet testÃ© : Serveur} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
       \multicolumn{5}{|l|}{Objectif de test : Mot de passe utilisable une seule fois}\\ \hline
-      \multicolumn{3}{|l|}{Procédure n° 5} & \multicolumn{2}{p{3cm}|}{Prérequis : EP\_01}\\ \hline
-      \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
+      \multicolumn{3}{|l|}{ProcÃ©dure nÂ° 5} & \multicolumn{2}{p{3cm}|}{PrÃ©requis : EP\_01}\\ \hline
+      \multicolumn{1}{|c|}{NÂ°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{RÃ©sultats attendus} & 
       \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
-      1 & Générer un OTP $K$& Un OTP est généré & EP\_01 & OK \\
-      2 & Demander une authentification avec $K$ & authentifié & EQ\_04 & OK\\
-      3 & Demander une authentification avec $K$ & rejeté & EP\_02 & OK\\ \hline
+      1 & GÃ©nÃ©rer un OTP $K$& Un OTP est gÃ©nÃ©rÃ© & EP\_01 & OK \\
+      2 & Demander une authentification avec $K$ & authentifiÃ© & EQ\_04 & OK\\
+      3 & Demander une authentification avec $K$ & rejetÃ© & EP\_02 & OK\\ \hline
     \end{tabular}
-    %---------------------------------------Test N° 6------------------------------------------------------------------------------
+    %---------------------------------------Test NÂ° 6------------------------------------------------------------------------------
     \begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
       \hline
-      \multicolumn{3}{|l|}{Objet testé : Serveur} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
+      \multicolumn{3}{|l|}{Objet testÃ© : Serveur} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
       \multicolumn{5}{|l|}{Objectif de test : Processus de resynchronisation}\\ \hline
-      \multicolumn{3}{|l|}{Procédure n° 6} & \multicolumn{2}{p{3cm}|}{Prérequis : EF\_04 }\\ \hline
-      \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
+      \multicolumn{3}{|l|}{ProcÃ©dure nÂ° 6} & \multicolumn{2}{p{3cm}|}{PrÃ©requis : EF\_04 }\\ \hline
+      \multicolumn{1}{|c|}{NÂ°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{RÃ©sultats attendus} & 
       \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
-      1 & Générer $N$ OTP, avec $1 < N \leq{} s$, la taille de la fenetre de resynchronisation& $N$ OTP générés & EP\_01 & OK \\
-      2 & Tenter une connexion avec le $N^{ième}$ OTP & Connexion accéptée. & EF\_05 & OK \\ \hline      
+      1 & GÃ©nÃ©rer $N$ OTP, avec $1 < N \leq{} s$, la taille de la fenetre de resynchronisation& $N$ OTP gÃ©nÃ©rÃ©s & EP\_01 & OK \\
+      2 & Tenter une connexion avec le $N^{iÃ¨me}$ OTP & Connexion accÃ©ptÃ©e. & EF\_05 & OK \\ \hline      
     \end{tabular}    
-     %---------------------------------------Test N° 7------------------------------------------------------------------------------
+     %---------------------------------------Test NÂ° 7------------------------------------------------------------------------------
     \begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
       \hline
-      \multicolumn{3}{|l|}{Objet testé : Serveur} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
+      \multicolumn{3}{|l|}{Objet testÃ© : Serveur} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
       \multicolumn{5}{|l|}{Objectif de test : Resistance aux attaques exhaustives}\\ \hline
-      \multicolumn{3}{|l|}{Procédure n° 7} & \multicolumn{2}{p{3cm}|}{Prérequis : EQ\_04 }\\ \hline
-      \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
+      \multicolumn{3}{|l|}{ProcÃ©dure nÂ° 7} & \multicolumn{2}{p{3cm}|}{PrÃ©requis : EQ\_04 }\\ \hline
+      \multicolumn{1}{|c|}{NÂ°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{RÃ©sultats attendus} & 
       \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
-      1 & Générer un OTP aléatoire $T$ & EP\_01 & OK \\
+      1 & GÃ©nÃ©rer un OTP alÃ©atoire $T$ & EP\_01 & OK \\
       2 & Tenter une connexion avec $T$ & - & - & - \\ \hline      
       \hline
-      \multicolumn{5}{|l|}{Répéter 1 et 2 jusqu'à la connexion ou le rejet}\\
+      \multicolumn{5}{|l|}{RÃ©pÃ©ter 1 et 2 jusqu'Ã  la connexion ou le rejet}\\
       \hline
-      3 & si accepté $cpt \leftarrow cpt + 1$ & & & \\
+      3 & si acceptÃ© $cpt \leftarrow cpt + 1$ & & & \\
       \hline
-      \multicolumn{5}{|l|}{Répéter 1 - 3 $N$ fois.}\\
+      \multicolumn{5}{|l|}{RÃ©pÃ©ter 1 - 3 $N$ fois.}\\
       \hline
       4 & Calculer $P = \frac{cpt}{N}$ & $P < 100000$ & EP\_04 & OK \\ \hline 
     \end{tabular}  
@@ -211,24 +212,23 @@
   \begin{center}
     \begin{tabular}{|p{3cm}|p{4cm}|p{3cm}|p{5cm}|}
       \hline
-      Id Exigence STB & Méthode de vérification & Procédure utilisée & Commentaire\\ \hline
+      Id Exigence STB & MÃ©thode de vÃ©rification & ProcÃ©dure utilisÃ©e & Commentaire\\ \hline
       EF\_02 & Associer un token au serveur. & 
-      & Le test de cette exigence dépend de l'implémentation de la méthode d'OTP. Elle sera détaillée dans une prochaine version.\\ \hline
-      EF\_03 & & Procédure N° 1, 5 & \\ \hline
-      EF\_04 & & Procédure N° 2 & \\ \hline
-      EF\_05 & & Procédure N° 6 & \\ \hline
-      EP\_01 & & Procédure N° 1, 5 & \\ \hline
-      EP\_02 & & Procédure N° 5 & \\ \hline
-      EP\_03 & Utilisation d'un logiciel \og{}die hard\fg{} pour vérifier l'aléatoirité des mots de passe. &  
-      & Ce test, nécessitant l'utilisation d'un \og{}die hard\fg{}, requiert une étude préalable et ne peut \^etre détaillé.\\ \hline
-      EP\_04 & & Procédure N° 7 & \\ \hline
-      EP\_05 & & Procédure N° 5 & \\ \hline
-      EQ\_01 & & Procédure N° 1 & \\ \hline
-      EQ\_02 & & Procédure N° 2 & \\ \hline
-      EQ\_03 & & Procédure N° 3 & \\ \hline
-      EQ\_04 & & Procédure N° 2, 5 & \\ \hline
-      EQ\_05 & & Procédure N° 4 & \\ \hline
+      & Le test de cette exigence dÃ©pend de l'implÃ©mentation de la mÃ©thode d'OTP. Elle sera dÃ©taillÃ©e dans une prochaine version.\\ \hline
+      EF\_03 & & ProcÃ©dure NÂ° 1, 5 & \\ \hline
+      EF\_04 & & ProcÃ©dure NÂ° 2 & \\ \hline
+      EF\_05 & & ProcÃ©dure NÂ° 6 & \\ \hline
+      EP\_01 & & ProcÃ©dure NÂ° 1, 5 & \\ \hline
+      EP\_02 & & ProcÃ©dure NÂ° 5 & \\ \hline
+      EP\_03 & Utilisation d'un logiciel \og{}die hard\fg{} pour vÃ©rifier l'alÃ©atoiritÃ© des mots de passe. &  
+      & Ce test, nÃ©cessitant l'utilisation d'un \og{}die hard\fg{}, requiert une Ã©tude prÃ©alable et ne peut \^etre dÃ©taillÃ©.\\ \hline
+      EP\_04 & & ProcÃ©dure NÂ° 7 & \\ \hline
+      EP\_05 & & ProcÃ©dure NÂ° 5 & \\ \hline
+      EQ\_01 & & ProcÃ©dure NÂ° 1 & \\ \hline
+      EQ\_02 & & ProcÃ©dure NÂ° 2 & \\ \hline
+      EQ\_03 & & ProcÃ©dure NÂ° 3 & \\ \hline
+      EQ\_04 & & ProcÃ©dure NÂ° 2, 5 & \\ \hline
+      EQ\_05 & & ProcÃ©dure NÂ° 4 & \\ \hline
     \end{tabular}  
   \end{center}
-
 \end{document}
