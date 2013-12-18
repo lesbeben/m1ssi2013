@@ -1,22 +1,23 @@
 \documentclass{"../../res/univ-projet"}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage{array}
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
 
-\title{Sp\'{e}cification Technique des Besoins}
+\logo{../../res/logo_univ.png}
+\title{Spécification Technique des Besoins}
 \author{\bsc{Michotte} Maxime}
 \projet{M1SSI}
-\projdesc{Projet de g\'{e}n\'{e}ration d'OTP}
+\projdesc{Projet de génération d'OTP}
 \filiere{M1SSI}
 \version{1.3}
 \relecteur{\bsc{Zigh} Benjamin}
 \signataire{\bsc{Bardet} Magali}
-\date{D�cembre 2013}
+\date{Décembre 2013}
 
-\histentry{1.3}{15/12/2013}{Ajout des modifications demand�es par le client}
+\histentry{1.3}{15/12/2013}{Ajout des modifications demandées par le client}
 \histentry{1.2}{04/12/2013}{Ajout des exigences correspondant au CdR}
-\histentry{1.1}{28/11/2013}{Ajout terminologie et modification sch\'{e}mas}
+\histentry{1.1}{28/11/2013}{Ajout terminologie et modification schémas}
 \histentry{1.0}{15/11/2013}{Version initiale.}
 
 
@@ -24,37 +25,37 @@
 \maketitle
 %-------------------------------------------------------------------------------
 \section{Objet}
-Etude et impl\'{e}mentations des syst�mes d'authentification utilisant des mots de passe jetables :
+Étude et implémentations des systèmes d'authentification utilisant des mots de passe jetables.
 
-    \subsection{Besoins op\'{e}rationnels} 
+    \subsection{Besoins opérationnels} 
         \begin{itemize}
-            \item Garantir une authentification forte
-            \item Etat de l'art sur les syst�mes existants
-            \item Objectif : mise en production
+            \item Garantir une authentification forte.
+            \item État de l'art sur les systèmes existants.
+            \item Objectif : mise en production.
         \end{itemize}
     \subsection{Objectifs techniques}
     \begin{itemize}	
-            \item Impl\'{e}mentation des solutions retenues sur un ou plusieurs supports
+            \item Implémentation des solutions retenues sur un ou plusieurs supports.
     \end{itemize}
     \subsection{Contraintes et recommandations} 
         \begin{itemize}
-            \item Respecter les sp\'{e}cifications de base et les normes RFC
-            \item Montrer que le syst�me produit est s�r
-            \item Choisir une impl\'{e}mentation adapt\'{e}e en fonction des besoins et de l'\'{e}tat de l'art \'{e}tabli
+            \item Respecter les spécifications de base et les normes RFC.
+            \item Montrer que le système produit est sûr.
+            \item Choisir une implémentation adaptée en fonction des besoins et de l'état de l'art établi.
         \end{itemize}
-    \subsection{R\'{e}sultats attendus} 
+    \subsection{Résultats attendus} 
         \begin{itemize}
-            \item Syst�me s�r et fonctionnel
-            \item Etat de l'art le plus exhaustif possible
-            \item Impl\'{e}mentation sur Carte � puces et/ou Android
+            \item Système sûr et fonctionnel.
+            \item État de l'art le plus exhaustif possible.
+            \item Implémentation sur Carte à puces et/ou Android.
         \end{itemize}
         
 \newpage
 %-------------------------------------------------------------------------------
-\section{Documents applicables et de r�f�rence}
+\section{Documents applicables et de référence}
 
 \begin{tabular}{p{1,5cm}>{\raggedright\arraybackslash}p{13cm}}
-{[ANS10]} & {ANSSI. R\'{e}f\'{e}rentiel g\'{e}n\'{e}ral de s\'{e}curit\'{e}. \href{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}, 2010.}
+{[ANS10]} & {ANSSI. Référentiel général de sécurité. \href{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}, 2010.}
 \tabularnewline
 \\
 {[MvOV97]} & {Alfred J. Menezes, Paul C. van Oorschot, and Scott A. Vanstone. Handbook of applied cryptography. CRC Press Series on Discrete Mathematics and its Applications. CRC Press, Boca Raton, FL, 1997. With a foreword by Ronald L.Rivest.}
@@ -85,13 +86,13 @@ Etude et impl\'{e}mentations des syst�mes d'authentification utilisant des mots 
 \begin{tabular}{|c|l|l|c|}
     \hline
     \rowcolor{gray}
-    \textcolor{white}{Id} & \textcolor{white}{Intitul\'{e}} & \textcolor{white}{Acteur(s)} & \textcolor{white}{Priorit\'{e}}\\
+    \textcolor{white}{Id} & \textcolor{white}{Intitulé} & \textcolor{white}{Acteur(s)} & \textcolor{white}{Priorité}\\
     \hline
-    EF\_01 & Etat de l'art & Equipe & Indispensable\\
+    EF\_01 & État de l'art & Équipe & Indispensable\\
     \hline
     EF\_02 & Association serveur-client-token & Utilisateur & Indispensable\\
     \hline
-    EF\_03 & G\'{e}n\'{e}ration de l'OTP par le token & Utilisateur & Indispensable\\
+    EF\_03 & Génération de l'OTP par le token & Utilisateur & Indispensable\\
     \hline
     EF\_04 & Authentification & Utilisateur & Indispensable\\
     \hline
@@ -102,10 +103,10 @@ Etude et impl\'{e}mentations des syst�mes d'authentification utilisant des mots 
 \begin{figure}[h]
   \centering
   \includegraphics[scale=0.5]{../graphics/diagramme1.png}
-  \caption{Sch\'{e}ma Macroscopique du Projet}
+  \caption{Schéma Macroscopique du Projet}
   \setlength{\parindent}{1cm}
   \begin{flushleft}
-  Nous (l'�quipe) commencerons  par une \'{e}tude des diff\'{e}rents protocoles de g\'{e}n\'{e}rations d'OTP afin d'en fournir un \'{e}tat de l'art le plus exhaustif possible. Une fois celui-ci termin� nous passerons \`{a} l'impl\'{e}mentation des meilleurs protocoles retenus. Enfin, pour v\'{e}rifier notre production, un audit sera organis� ainsi qu'une batterie de tests afin de corriger les erreurs de d\'{e}veloppement pour nous mener \`{a} une mise en application. 
+  Nous (l'équipe) commencerons  par une étude des différents protocoles de générations d'OTP afin d'en fournir un état de l'art le plus exhaustif possible. Une fois celui-ci terminé nous passerons \`{a} l'implémentation des meilleurs protocoles retenus. Enfin, pour vérifier notre production, un audit sera organisé ainsi qu'une batterie de tests afin de corriger les erreurs de développement pour nous mener \`{a} une mise en application. 
   \end{flushleft}
 \end{figure}
 
@@ -114,34 +115,34 @@ Etude et impl\'{e}mentations des syst�mes d'authentification utilisant des mots 
 
 \clearpage
 
-\fiche{Association serveur-client-token}{Utilisateur}{Le serveur commnunique au Token un secret}{Il existe une communication client-serveur}{Bouton utilisateur}{Association r\'{e}ussie}{../graphics/association.jpg}{Impossible d'associer le token au serveur}
+\fiche{Association serveur-client-token}{Utilisateur}{Le serveur communique au Token un secret}{Il existe une communication client-serveur}{Bouton utilisateur}{Association réussie}{../graphics/association.jpg}{Impossible d'associer le token au serveur}
 \\
 
-\fiche{G\'{e}n\'{e}ration de l'OTP par le token}{Utilisateur}{L'utilisateur demande au token un nouvel OTP qui lui est retourn\'{e}}{Le token est li\'{e} au serveur}{L'utilisateur demande un OTP}{OTP g\'{e}n\'{e}r\'{e}}{../graphics/generation.jpg}{Null}
+\fiche{Génération de l'OTP par le token}{Utilisateur}{L'utilisateur demande au token un nouvel OTP qui lui est retourné}{Le token est lié au serveur}{L'utilisateur demande un OTP}{OTP généré}{../graphics/generation.jpg}{Null}
 \\
 
-\fiche{Authentification}{Utilisateur}{L'utilisateur tente de s'authentifier sur le serveur}{L'utilisateur poss�de un OTP}{L'utilisateur donne le mot de passe au serveur}{Utilisateur authentifi\'{e} ou rejet\'{e}}{../graphics/authentification.jpg}{Crash du serveur}
+\fiche{Authentification}{Utilisateur}{L'utilisateur tente de s'authentifier sur le serveur}{L'utilisateur possède un OTP}{L'utilisateur donne le mot de passe au serveur}{Utilisateur authentifié ou rejeté}{../graphics/authentification.jpg}{Crash du serveur}
 \\
 
-\fiche{Re-Synchronisation}{Utilisateur}{Mise en accord du token et du serveur}{Il existe une connexion entre le token et le serveur}{Perte de la synchronisation}{Synchronisation retrouv\'{e}}{../graphics/resynchronisation.jpg}{Ne peut pas re-synchroniser}
+\fiche{Re-Synchronisation}{Utilisateur}{Mise en accord du token et du serveur}{Il existe une connexion entre le token et le serveur}{Perte de la synchronisation}{Synchronisation retrouvé}{../graphics/resynchronisation.jpg}{Ne peut pas re-synchroniser}
 \clearpage
 \newpage
 %-------------------------------------------------------------------------------
-\section{Exigences op�rationnelles}
+\section{Exigences opérationnelles}
 \begin{tabular}{|c|l|c|}
     \hline
     \rowcolor{gray}
-    \textcolor{white}{Id} & \textcolor{white}{Intitul\'{e}} & \textcolor{white}{Priorit\'{e}}\\
+    \textcolor{white}{Id} & \textcolor{white}{Intitulé} & \textcolor{white}{Priorité}\\
     \hline
     EP\_01 & Le Token renvoie un OTP & Indispensable\\
     \hline
     EP\_02 & L'OTP est utilisable 1 seule fois & Indispensable\\
     \hline
-    EP\_03 & L'OTP est non pr\'{e}visible (OTP qui ne peut \^{e}tre d\'{e}duit des anciens g�n�r�s) & Indispensable\\
+    EP\_03 & L'OTP est non prévisible (OTP qui ne peut être déduit des anciens générés) & Indispensable\\
     \hline
-    EP\_04 & R\'{e}sistant � une attaque exhaustive & Indispensable\\
+    EP\_04 & Résistant à une attaque exhaustive & Indispensable\\
     \hline
-    EP\_05 & R\'{e}sistant aux attaques par rejeu & Indispensable\\
+    EP\_05 & Résistant aux attaques par rejeu & Indispensable\\
     EP\_06 & Respect des RFC (RFC2289, RFC4226, RFC4256, RFC4793, RFC6238) & Indispensable\\
     \hline
 
@@ -155,7 +156,7 @@ Etude et impl\'{e}mentations des syst�mes d'authentification utilisant des mots 
 \begin{tabular}{|c|l|c|}
     \hline
     \rowcolor{gray}
-    \textcolor{white}{Id} & \textcolor{white}{Intitul\'{e}} & \textcolor{white}{Priorit\'{e}}\\
+    \textcolor{white}{Id} & \textcolor{white}{Intitulé} & \textcolor{white}{Priorité}\\
     \hline
     EI\_01 & UNIX(Client/Serveur/Token) & Indispensable\\
     \hline
@@ -166,23 +167,23 @@ Etude et impl\'{e}mentations des syst�mes d'authentification utilisant des mots 
 \end{tabular}
 
 %-------------------------------------------------------------------------------
-\section{Exigences de qualit�}
+\section{Exigences de qualité}
 \begin{tabular}{|c|l|}
     \hline
     \rowcolor{gray}
-    \textcolor{white}{Id} & \textcolor{white}{Intitul\'{e}}\\
+    \textcolor{white}{Id} & \textcolor{white}{Intitulé}\\
     \hline
-    EQ\_01 & G\'{e}n\'{e}ration de mots de passe inf\'{e}rieur � 1 seconde (sur un processeur cadenc\'{e} � 700MHz)\\
+    EQ\_01 & Génération de mots de passe inférieur à 1 seconde (sur un processeur cadencé à 700MHz)\\
     \hline
-    EQ\_02 & Temps de r\'{e}ponse serveur (temps < 1 sec + 2 *tps communication)\\
+    EQ\_02 & Temps de réponse serveur (temps < 1 sec + 2 * tps communication)\\
     \hline
-    EQ\_03 & Le serveur supporte au moins 100 000 demandes de v\'{e}rification simultan\'{e}es\\
+    EQ\_03 & Le serveur supporte au moins 100 000 demandes de vérification simultanées\\
     \hline
-    EQ\_04 & La v\'{e}rification est coh\'{e}rente\\
+    EQ\_04 & La vérification est cohérente\\
     \hline
-    EQ\_05 & La g\'{e}n\'{e}ration utilise au plus 10 Ko de m\'{e}moire\\
+    EQ\_05 & La génération utilise au plus 10 Ko de mémoire\\
     \hline
-    EQ\_06 & \'{E}tat de l'art exhaustif, au moins trois protocoles OTP  \'{e}tudi\'{e}s\\
+    EQ\_06 & état de l'art exhaustif, au moins trois protocoles OTP  étudiés\\
     \hline
 \end{tabular}
 %-------------------------------------------------------------------------------

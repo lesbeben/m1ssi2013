@@ -74,7 +74,7 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisa
     \hline
     PR-M\_001 &
     Calculateur \verb?700MHz? pour le token &
-    Étant donn\'e que le calcul de l'OTP ne prend que très peu de ressources
+    Étant donné que le calcul de l'OTP ne prend que très peu de ressources
             et que les plateformes sont diverses le critère des \verb?700MHz? de puissances
             de calcul paraît un bon facteur commun.\\
     \hline
@@ -96,9 +96,9 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisa
     \hline
     OS\_001& 
     GNU/Linux pour un token, un client et un serveur&
-    À vrai dire comme la plupart des technologies employ\'ees seront libres
+    À vrai dire comme la plupart des technologies employées seront libres
     la seule chose qui justifie l'emploi de ce système d'exploitation
-    est qu'il est lui aussi libre et permet d'int\'egrer facilement ces technologies\\
+    est qu'il est lui aussi libre et permet d'intégrer facilement ces technologies\\
     \hline
     OS\_002&
     Android pour un token&
@@ -123,7 +123,7 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisa
     \hline
     PR-L\_002 &
     Un moyen de stocker les informations relatives aux utilisateurs dans le serveur&
-    Cela sera n\'ecessaire pour g\'erer plusieurs utilisateurs ainsi que plusieurs protocoles
+    Cela sera nécessaire pour gérer plusieurs utilisateurs ainsi que plusieurs protocoles
     OTP pour le serveur.\\
     \hline
 \end{tabular}
@@ -131,7 +131,7 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisa
 
 %-------------------------------------------------------------------------------
 \section{Architectures statiques}
-\subsection{Structure g\'en\'erale du syst\`eme}
+\subsection{Structure générale du système}
 \includegraphics[width=\textwidth]{../graphics/architecture.png}
 \subsection{Structure user}
 \label{sub:Structure_user}
@@ -152,7 +152,7 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisa
                 valide
             \item[how] La méthode d'authentification OTP.
             \item[otparams] Un pointeur vers une structure contenant des 
-                paramêtres relatifs à la méthode de génération d'OTP
+                paramètres relatifs à la méthode de génération d'OTP
         \end{description}
 
 \subsection{Token}
@@ -164,7 +164,7 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisa
         \item[Secret] Le secret de l'utilisateur qui permet de générer les
             mots de passe jetables.
         \item[User] La structure qui contient les données de l'utilisateur.
-            Stock\'ee dans la m\'emoire à long terme du support.
+            Stockée dans la mémoire à long terme du support.
     \end{description}
 
     \subsubsection{Dépendances}
@@ -182,7 +182,7 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisa
 
     \subsubsection{Procédés de développement}
     \begin{enumerate}
-        \item Développer des modules réalisants chaque algorithme de génération
+        \item Développer des modules réalisant chaque algorithme de génération
             d'OTP.
         \item Développer un générateur de secrets.
         \item Permettre une interaction avec l'utilisateur.
@@ -190,13 +190,13 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisa
 
     \subsubsection{Taille et complexité}
     \begin{itemize}
-        \item Taille et compléxité dépendantes de l'algorithme de génération
+        \item Taille et complexité dépendantes de l'algorithme de génération
             de mots de passe jetables
     \end{itemize}
 
 %------------------------------------------------------------------------------
 \subsection{Générateur d'OTP}
-    Chaque algorithme \'etudi\'e et impl\'ement\'e (HOTP, OTPW, POTP) offrira les
+    Chaque algorithme étudié et implémenté (HOTP, OTPW, POTP) offrira les
     mêmes services, seul le fonctionnement interne du module diffèrera.
     les algorithmes seront détaillés dans les dossiers associés au recherches sur 
     chaques algorithme.
@@ -208,7 +208,7 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisa
         \item[initiate(user *utilisateur, char *seed):] Initialise
             un générateur d'OTP pour l'utilisateur.
         \item[getOTP(user *utilisateur)] Génère un OTP selon la méthode et les
-            paramêtres passés.
+            paramètres passés.
     \end{description}
 
     \subsubsection{Langages de programmation}
@@ -220,13 +220,13 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisa
 
     \subsubsection{Procédé de développement}
     \begin{enumerate}
-        \item Développer des modules réalisants chaque algorithme de génération
+        \item Développer des modules réalisant chaque algorithme de génération
             d'OTP.
     \end{enumerate}
 
     \subsubsection{Taille et complexité}
     \begin{itemize}
-        \item Taille et compléxité dépendantes de l'algorithme de génération
+        \item Taille et complexité dépendantes de l'algorithme de génération
             de mots de passe jetables, mais suffisamment faibles pour tenir sur
             de petites capacités mémoire et permettre un calcul 
             en t < 1s sur \verb?700MHz?.
@@ -329,20 +329,20 @@ Le langage C a été choisi pour 2 raisons:
 
 %-------------------------------------------------------------------------------
 \subsubsection{Le langage Java}
-    Le langage java sera utilis\'e sur les plateformes android
+    Le langage java sera utilisé sur les plateformes android
     et javacard, car bien qu'il soit possible de programmer en C
-    sur android, ce n'est pas recommand\'e par \verb?Google?
+    sur android, ce n'est pas recommandé par \verb?Google?
     \footnote{\href{https://developer.android.com/tools/sdk/ndk/index.html}{Android NDK}}.
         
 \section{Fonctionnement dynamique}
 \subsection{Association/Partage du secret}
 \subsubsection{Principe}
-Le token et le serveur se mettent d'accord sur un secret partag\'e gr\^ace à l'utilisateur.
+Le token et le serveur se mettent d'accord sur un secret partagé gr\^ace à l'utilisateur.
 
 \subsubsection{Flux réseau}
 Lors de l'association le client et le serveur échange le secret qui permet
 de générer tout les OTP. Il est donc préférable qu'il ne tombe pas aux mains
-d'un attaquant. Pour éviter ce souci il est préconnisé dans les RFC de passer
+d'un attaquant. Pour éviter ce souci il est préconisé dans les RFC de passer
 par un tunnel sécurisé type SSL.
 
 \subsubsection{Fonctionnement}
@@ -369,7 +369,7 @@ On entre le mot de passe généré par le token dans le client qui demandera une
 vérification au serveur.
 
 \subsubsection{Flux réseau}
-Lors de cette étape il ya deux façon de procéder:
+Lors de cette étape il y a deux façon de procéder:
 
     \paragraph{le défi/réponse:}
     \begin{enumerate}
