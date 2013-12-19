@@ -4,6 +4,8 @@
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
 
+\usepackage{multirow}
+
 \title{Analyse des Risques}
 \author{Adrien \bsc{Smondack}}
 \projet{M1SSI}
@@ -14,256 +16,276 @@
 \signataire{\bsc{Bardet} Magali}
 \date{Novembre 2013}
 
-\histentry{1.0}{29/11/2013}{Version initiale.}
+\histentry{1.0}{18/12/2013}{Version finale.}
 
 \begin{document}
 \maketitle
 
-%-------------------------------------------------------------------------------
-\section{Evaluation des risques potentiels}
+%------------------------------------------------------------------------------------------------------------------------------------------------------------------
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+\section{\'Evaluation des risques potentiels}
 
 \subsection{Classification des points durs selon leur importance}
-Intitulé [\emph{membre(s) concerné(s)}] :
-\begin{enumerate}
-	\item Etude des RFC décrivant les systèmes / Etat de l'art.
-	\item Démonstration de la sécurité des systèmes implémentés [\emph{Resp. qualité}].
-	\item Planifier l'évolution du projet [\emph{Chef de projet}].
-	\item Communication régulière avec le client [\emph{MOA}].
-	\item Formation / suivi des équipes [\emph{Resp. technique / Resp. qualité / Chef de projet}].
-	\item Surveiller l'évolution des spécifications [\emph{MOA}].
-	\item Emploi de technologies spécifiques (Android, Java Card).
-	\item Communication au sein de l'équipe [\emph{Chef de projet}].
-	\item Mutualisation des connaissances et des compétences.
-	\item Gestion globale du projet (documentation).
-	\item Veiller aux besoins techniques des membres de l'équipe [\emph{Chef de projet}].
-\end{enumerate}
 
-%-------------------------------------------------------------------------------
+\begin{tabular}{| p{9cm} | p{5cm} |} 
+	\hline
+	\cellcolor{gray} Description & \cellcolor{gray} Membres concernés \\ \hline
+	\'Etude des RFC décrivant les systèmes / \'Etat de l'art & Toute l'équipe \\ \hline
+	Démonstration de la sécurité des systèmes implémentés & Resp. qualité \\ \hline
+	Planifier l'évolution du projet & Chef de projet \\ \hline
+	Communication régulière avec le client & MOA \\ \hline
+	Formation/suivi des équipes & Resp. tech./qual., Chef de projet \\ \hline
+	Surveiller l'évolution des spécifications & MOA \\ \hline
+	Emploi de technologies spécifiques (Android, Java Card) & Toute l'équipe \\ \hline
+	Communication au sein de l'équipe & Chef de projet \\ \hline
+	Mutualisation des connaissances et des compétences & Toute l'équipe \\ \hline
+	Gestion globale du projet (documentation) & Toute l'équipe\\ \hline
+	Veiller aux besoins techniques des membres de l'équipe & Chef de projet \\ \hline
+\end{tabular}
+
+%------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \subsection{Points durs \& risques associés}
 
-\begin{enumerate}
-	\item
-		\begin{description}
-			\item [Point dur :] Etude des RFC décrivant les systèmes / Etat de l'art.
-			\item [Risques associés :] --
-				\begin{itemize}
-					\item Le développement effectué ne correspond pas aux RFC.
-					\item Etat de l'art pas assez exhaustif.
-				\end{itemize}
-		\end{description}
-	\item
-		\begin{description}
-			\item [Point dur :] Démonstration de la sécurité des systèmes implémentés [\emph{Resp. qualité}].
-			\item [Risque associé :] Faille de sécurité découverte après test.
-		\end{description}
-	\item
-		\begin{description}
-			\item [Point dur :] Planifier l'évolution du développement du projet.
-			\item [Risque associé :] Impondérables (surcharge de travail).
-		\end{description}
-	\item
-		\begin{description}
-			\item [Point dur :] Communication régulière avec le client [\emph{MOA}].
-			\item [Risques associés :] ---
-				\begin{itemize}
-					\item Le client change ses objectifs.
-					\item Passer à côté d'une demande du client.
-					\item Les clients font faillite.
-				\end{itemize}
-		\end{description}
-	\item
-		\begin{description}
-			\item [Point dur :] Formation / suivi des équipes [\emph{Resp. technique / Resp. qualité / Chef de projet}].
-			\item [Risque associé :] Retard d'une partie de l'équipe sur la compréhension théorique / les compétences techniques.
-		\end{description}
-	\item
-		\begin{description}
-			\item [Point dur :] Surveiller l'évolution des spécifications [\emph{MOA}].
-			\item [Risques associés :] --
-				\begin{itemize}
-					\item Spécification incomplète.
-					\item Spécification trop exigentes (Problème pour atteindre la performance désirée).
-				\end{itemize}
-		\end{description}
-	\item
-		\begin{description}
-			\item [Point dur :] Emploi de technologies spécifiques (Android, Java Card).
-			\item [Risque associé :] Appréhension des nouvelles technologies plus longue que prévue.
-		\end{description}
-	\item
-		\begin{description}
-			\item[Point dur :] Communication au sein de l'équipe [\emph{Chef de projet}].
-			\item[Risques associés :] --
-				\begin{itemize}
-					\item Chef de projet incompétent.
-					\item Conflit au sein de l'équipe.
-				\end{itemize}
-		\end{description}
-	\item
-		\begin{description}
-			\item [Point dur :] Mutualisation des connaissances et des compétences.
-			\item [Risque associé :] Départ d'une ou plusieurs personnes clé du projet.
-		\end{description}
-	\item
-		\begin{description}
-			\item [Point dur :] Gestion globale du projet (documentation).
-			\item [Risques associés :] ---
-				\begin{itemize}
-					\item Phase de développement plus longue que prévu.
-					\item Le développement effectué ne correspond pas à la demande du client.
-					\item Sous estimation des efforts nécessaires à la réalisation du projet.
-				\end{itemize}
-		\end{description}
-	\item
-		\begin{description}
-			\item [Point dur :] Veiller aux besoins techniques des membres de l'équipe [\emph{Chef de projet}].
-			\item [Risques associés :] --
-				\begin{itemize}
-					\item Un membre se retrouve privé de ses outils de travail.
-					\item Problème avec le git.
-				\end{itemize}
-		\end{description}
-\end{enumerate}
+\begin{tabular}{| p{8.5cm} | p{0.8cm} | p{4.7cm} |}
+	\hline
+	\cellcolor{gray} Point dur 
+		& \multicolumn{2}{p{6cm} |}{\cellcolor{gray} Risques associés} \\ \hline
+			\cellcolor{lightgray} & \cellcolor{lightgray} Id & \cellcolor{lightgray} Description \\ \hline
+	\multirow{2}{*}{\'Etude des RFC décrivant les systèmes / \'Etat de l'art} 
+		& R\_01 & Le développement effectué ne correspond pas aux RFC \\ \cline{2-3}
+		& R\_02 & \'Etat de l'art pas assez exhaustif \\ \hline
+	\multirow{2}{*}{Démonstration de la sécurité des systèmes implémentés}
+		& R\_03 & Faille de sécurité découverte après test \\ \hline
+	\multirow{1}{*}{Planifier l'évolution du développement du projet}
+		& R\_04 & Impondérables (surcharge de travail) \\ \hline
+	\multirow{3}{*}{Communication régulière avec le client}
+		& R\_05 & Le client change ses objectifs \\ \cline{2-3}
+		& R\_06 & Passer à côté d'une demande du client \\ \cline{2-3}
+		& R\_07 & Les clients font faillite \\ \hline
+	\multirow{1}{*}{Formation / suivi des équipes}
+		& R\_08 & Retard d'une partie de l'équipe sur la compréhension théorique ou les compétences techniques \\ \hline
+	\multirow{2}{*}{Surveiller l'évolution des spécifications}
+		& R\_09 & Spécification incomplète \\ \cline{2-3}
+		& R\_10 & Spécification trop exigentes (Problème pour atteindre la performance désirée) \\ \hline
+	\multirow{1}{*}{Emploi de technologies spécifiques (Android, Java Card)}
+		& R\_11 & Appréhension des nouvelles technologies plus longue que prévue \\ \hline
+	\multirow{2}{*}{Communication au sein de l'équipe}
+		& R\_12 & Chef de projet incompétent \\ \cline{2-3}
+		& R\_13 & Conflit au sein de l'équipe \\ \hline
+	\multirow{1}{*}{Mutualisation des connaissances et des compétences}
+		& R\_14 & Départ d'une ou plusieurs personnes clé du projet \\ \hline
+	\multirow{3}{*}{Gestion globale du projet (documentation)}
+		& R\_15 & Phase de développement plus longue que prévu \\ \cline{2-3}
+		& R\_16 & Le développement effectué ne correspond pas à la demande du client \\ \cline{2-3}
+		& R\_17 & Sous estimation des efforts nécessaires à la réalisation du projet \\ \hline
+	\multirow{2}{*}{Veiller aux besoins techniques des membres de l'équipe}
+		& R\_18 & Un membre se retrouve privé de ses outils de travail \\ \cline{2-3}
+		& R\_19 & Problème avec le git \\ \hline
+\end{tabular}
 
-%-------------------------------------------------------------------------------
+\newpage
+%------------------------------------------------------------------------------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \section{Gestion des risques les plus importants}
 
 \subsection{Top 5}
-\begin{itemize}
-	\item Risque 5
-		\begin{description}
-			\item [Evènement/situation redouté(e) :] Retard d'une partie de l'équipe sur la compréhension théorique / les compétences techniques.
-			\item [Point dur associé :] Formation / suivi des équipes [\emph{Resp. technique / Resp. qualité / Chef de projet}].
-			\item [Impact :] Préoccupant.
-			\item [Probabilité :] Forte.
-			\item [Plan de réduction de risque :] Suivi régulier des équipes par le responsable technique et le chef de projet.
-			\item [Plan d'action :] Consultation d'un responsable technique. Si aucune amélioration, re-manier l'équipe concernée (ajout d'une personne ayant suffisamment avancé dans son travail, le remplacement ne semblant pas être une bonne solution).
-		\end{description}
-	\item Risque 4
-		\begin{description}
-			\item [Evènement/situation redouté(e) :] Appréhension des nouvelles technologies plus longue que prévue.
-			\item [Point dur associé :] Emploi de technologies spécifiques (Android, Java Card).
-			\item [Impact :] Préoccupant.
-			\item [Probabilité :] Forte.
-			\item [Plan de réduction de risque :] Suivi régulier des équipes par le responsable technique et le chef de projet. Rédaction de rapports explicatifs quant à la technologie étudiée (généralités, fonctionnalités nécéssaires et/ou utiles pour le projet, particularités...).
-			\item [Plan d'action :] Ajout d'une personne à l'équipe concernée pour combler les lacunes, un remplacement est envisageable.
-		\end{description}
-	\item Risque 3
-		\begin{description}
-			\item [Evènement/situation redouté(e) :] Faille de sécurité découverte après test.
-			\item [Point dur associé :] Démonstration de la sécurité des systèmes implémentés [\emph{Resp. qualité}].
-			\item [Impact :] Important.
-			\item [Probabilité :] Moyenne.
-			\item [Plan de réduction de risque :] Suivi ($\Rightarrow$ tests) régulier des fonctionnalités du produit.
-			\item [Plan d'action :] Renvoie d'un rapport d'erreur détaillé à l'équipe ayant développé le sujet du test pour que celle-ci puisse la corriger dans les plus brefs délais. Si le temps manque, focaliser autant d'équipiers que nécessaire sur le problème.
-		\end{description}
-	\item Risque 2
-		\begin{description}
-			\item [Evènement/situation redouté(e) :] Phase de développement plus longue que prévue.
-			\item [Point dur associé :] Gestion globale du projet (documentation).
-			\item [Impact :] Important.
-			\item [Probabilité :] Forte.
-			\item [Plan de réduction de risque :] Suivi régulier des équipes par le responsable technique et le chef de projet.
-			\item [Plan d'action :] Réunion d'équipe pour analyser et adapter les démarches en vue d'accélérer la productivité.
-		\end{description}
-	\item Risque 1
-		\begin{description}
-			\item [Evènement/situation redouté(e) :] Impondérables (surcharge de travail).
-			\item [Point dur associé :] Planifier l'évolution du dévelopement du projet [\emph{Chef de projet}].
-			\item [Impact :] Important.
-			\item [Probabilité :] Forte.
-			\item [Plan de réduction de risque :] Raccourcir les délais afin de garder un peu d'avance.
-			\item [Plan d'action :] Préparation et ingurgitation massive de caféine pour des nuits blanches de travail. Mise en commun des ressources et des compétences de toute l'équipe. Prolonger les délais n'est pas envisageable.
-		\end{description}
-\end{itemize}
 
-%-------------------------------------------------------------------------------
+\subsubsection{Risque 5 :}
+	\begin{tabular}{| p{5cm} | p{9cm} |}
+		\hline
+		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_08} \\ \hline
+		\cellcolor{lightgray}Evènement/situation redouté(e) & Retard d'une partie de l'équipe sur la compréhension théorique ou les compétences techniques. \\ \hline
+		\cellcolor{lightgray}Point dur associé & Formation / suivi des équipes. \\ \hline
+		\cellcolor{lightgray}Impact & Préoccupant. \\ \hline
+		\cellcolor{lightgray}Probabilité & Forte. \\ \hline
+		\cellcolor{lightgray}Plan de réduction de risque & Suivi régulier des équipes par le responsable technique et le chef de projet. \\ \hline
+		\cellcolor{lightgray}Plan d'action & Consultation d'un responsable technique. Si aucune amélioration, re-manier l'équipe concernée (ajout d'une personne ayant suffisamment avancé 	dans son travail, le remplacement ne semblant pas être une bonne solution). \\ \hline	
+		\cellcolor{lightgray}Statut/Date/Responsable & Créé le 29/11/13 par Adrien \bsc{Smondack}. \\ \hline
+	\end{tabular}
+
+\subsubsection{Risque 4 :}
+	\begin{tabular}{| p{5cm} | p{9cm} |}
+		\hline
+		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_11} \\ \hline
+		\cellcolor{lightgray}Evènement/situation redouté(e) & Appréhension des nouvelles technologies plus longue que prévue. \\ \hline
+		\cellcolor{lightgray}Point dur associé & Emploi de technologies spécifiques (Android, Java Card). \\ \hline
+		\cellcolor{lightgray}Impact & Préoccupant. \\ \hline
+		\cellcolor{lightgray}Probabilité & Forte. \\ \hline
+		\cellcolor{lightgray}Plan de réduction de risque & Suivi régulier des équipes par le responsable technique et le chef de projet. Rédaction de rapports explicatifs quant à la technologie étudiée (généralités, fonctionnalités nécéssaires et/ou utiles pour le projet, particularités...). \\ \hline	
+		\cellcolor{lightgray}Plan d'action & Ajout d'une personne à l'équipe concernée pour combler les lacunes, un remplacement est envisageable. \\ \hline	
+		\cellcolor{lightgray}Statut/Date/Responsable & Créé le 29/11/13 par Adrien \bsc{Smondack}. \\ \hline
+	\end{tabular}
+
+\subsubsection{Risque 3}
+	\begin{tabular}{| p{5cm} | p{9cm} |}
+		\hline
+		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_03} \\ \hline
+		\cellcolor{lightgray}Evènement/situation redouté(e) & Faille de sécurité découverte après test. \\ \hline
+		\cellcolor{lightgray}Point dur associé & Démonstration de la sécurité des systèmes implémentés. \\ \hline
+		\cellcolor{lightgray}Impact & Important. \\ \hline
+		\cellcolor{lightgray}Probabilité & Moyenne. \\ \hline
+		\cellcolor{lightgray}Plan de réduction de risque & Suivi ($\Rightarrow$ tests) régulier des fonctionnalités du produit. \\ \hline
+		\cellcolor{lightgray}Plan d'action & Renvoie d'un rapport d'erreur détaillé à l'équipe ayant développé le sujet du test pour que celle-ci puisse la corriger dans les plus brefs 	délais. Si le temps manque, focaliser autant d'équipiers que nécessaire sur le problème. \\ \hline
+		\cellcolor{lightgray}Statut/Date/Responsable & Créé le 29/11/13 par Adrien \bsc{Smondack}. \\ \hline
+	\end{tabular}
+
+\subsubsection{Risque 2}
+	\begin{tabular}{| p{5cm} | p{9cm} |}
+		\hline
+		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_15} \\ \hline
+		\cellcolor{lightgray}Evènement/situation redouté(e) & Phase de développement plus longue que prévue. \\ \hline
+		\cellcolor{lightgray}Point dur associé & Gestion globale du projet (documentation). \\ \hline
+		\cellcolor{lightgray}Impact & Important. \\ \hline
+		\cellcolor{lightgray}Probabilité & Forte. \\ \hline
+		\cellcolor{lightgray}Plan de réduction de risque & Suivi régulier des équipes par le responsable technique et le chef de projet. \\ \hline
+		\cellcolor{lightgray}Plan d'action & Réunion d'équipe pour analyser et adapter les démarches en vue d'accélérer la productivité. \\ \hline
+		\cellcolor{lightgray}Statut/Date/Responsable & Créé le 29/11/13 par Adrien \bsc{Smondack}. \\ \hline
+	\end{tabular}
+
+\subsubsection{Risque 1}
+	\begin{tabular}{| p{5cm} | p{9cm} |}
+		\hline
+		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_04} \\ \hline
+		\cellcolor{lightgray}Evènement/situation redouté(e) & Impondérables (surcharge de travail). \\ \hline
+		\cellcolor{lightgray}Point dur associé & Planifier l'évolution du dévelopement du projet. \\ \hline
+		\cellcolor{lightgray}Impact & Important. \\ \hline
+		\cellcolor{lightgray}Probabilité & Forte. \\ \hline
+		\cellcolor{lightgray}Plan de réduction de risque & Raccourcir les délais afin de garder un peu d'avance. \\ \hline
+		\cellcolor{lightgray}Plan d'action & Préparation et ingurgitation massive de caféine pour des nuits blanches de travail. Mise en commun des ressources et des compétences de toute l'équipe. Prolonger les délais n'est pas envisageable. \\ \hline
+		\cellcolor{lightgray}Statut/Date/Responsable & Créé le 29/11/13 par Adrien \bsc{Smondack}. \\ \hline
+	\end{tabular}
+
+\newpage
+%------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \subsection{Les autres risques}
 
-\begin{description}
-	\item [Evènement/situation redouté :] Le développement effectué ne correspond pas aux RFC.
-	\item [Point dur associé :] Etude des RFC décrivant les systèmes / Etat de l'art.
-	\item [Impact :] Important.
-	\item [Probabilité :] Faible.
-\end{description}
-\begin{description}
-	\item [Evènement/situation redouté :] Etat de l'art pas assez exhaustif.
-	\item [Point dur associé :] Etude des RFC décrivant les systèmes / Etat de l'art.
-	\item [Impact :] Important.
-	\item [Probabilité :] Faible.
-\end{description}
-\begin{description}
-	\item [Evènement/situation redouté :] Le client change ses objectifs.
-	\item [Point dur associé :] Communication régulière avec le client [\emph{MOA}].
-	\item [Impact :] Important.
-	\item [Probabilité :] Faible.
-\end{description}
-\begin{description}
-	\item [Evènement/situation redouté :] Passer à côté d'une demande du client.
-	\item [Point dur associé :] Communication régulière avec le client [\emph{MOA}].
-	\item [Impact :] Préoccupant. 
-	\item [Probabilité :] Faible.
-\end{description}
-\begin{description}
-	\item [Evènement/situation redouté :] Les clients font faillite.
-	\item [Point dur associé :] Communication régulière avec le client [\emph{MOA}].
-	\item [Impact :] Critique.
-	\item [Probabilité :] (Très) Faible.
-\end{description}
-\begin{description}
-	\item [Evènement/situation redouté :] Spécification incomplète.
-	\item [Point dur associé :] Surveiller l'évolution des spécifications [\emph{MOA}].
-	\item [Impact :] Préoccupant.
-	\item [Probabilité :] Moyenne.
-\end{description}
-\begin{description}
-	\item [Evènement/situation redouté :] Spécification trop exigentes (Problème pour atteindre la performance désirée).
-	\item [Point dur associé :] Surveiller l'évolution des spécifications [\emph{MOA}].
-	\item [Impact :] Préoccupant.
-	\item [Probabilité :] Moyenne.
-\end{description}
-\begin{description}
-	\item [Evènement/situation redouté :] Chef de projet incompétent.
-	\item [Point dur associé :] Communication au sein de l'équipe [\emph{Chef de projet}].
-	\item [Impact :] Acceptable.
-	\item [Probabilité :] Moyenne.
-\end{description}
-\begin{description}
-	\item [Evènement/situation redouté :] Conflit au sein de l'équipe.
-	\item [Point dur associé :] Communication au sein de l'équipe [\emph{Chef de projet}].
-	\item [Impact :] Préoccupant.
-	\item [Probabilité :] Faible.
-\end{description}
-\begin{description}
-	\item [Evènement/situation redouté :] Départ d'une ou plusieurs personnes clé du projet.
-	\item [Point dur associé :] Mutualisation des connaissances et des compétences.
-	\item [Impact :] Important.
-	\item [Probabilité :] Faible.
-\end{description}
-\begin{description}
-	\item [Evènement/situation redouté :] Le développement effectué ne correspond pas à la demande du client.
-	\item [Point dur associé :] Gestion globale du projet (documentation).
-	\item [Impact :] Critique.
-	\item [Probabilité :] Faible.
-\end{description}
-\begin{description}
-	\item [Evènement/situation redouté :] Sous estimation des efforts nécessaires à la réalisation du projet.
-	\item [Point dur associé :] Gestion globale du projet (documentation).
-	\item [Impact :] Important.
-	\item [Probabilité :] Faible.
-\end{description}
-\begin{description}
-	\item [Evènement/situation redouté :] Un membre se retrouve privé de ses outils de travail.
-	\item [Point dur associé :] Veiller aux besoins techniques des membres de l'équipe [\emph{Chef de projet}].
-	\item [Impact :] Acceptable.
-	\item [Probabilité :] Faible.
-\end{description}
-\begin{description}
-	\item [Evènement/situation redouté :] Problème avec le git.
-	\item [Point dur associé :] Veiller aux besoins techniques des membres de l'équipe [\emph{Chef de projet}].
-	\item [Impact :] Préoccupant
-	\item [Probabilité :] (Très) Faible.
-\end{description}
+\paragraph{}
+	\begin{tabular}{| p{5cm} | p{9cm} |}
+		\hline
+		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_01} \\ \hline
+		\cellcolor{lightgray}Evènement/situation redouté & Le développement effectué ne correspond pas aux RFC. \\ \hline
+		\cellcolor{lightgray}Point dur associé & Etude des RFC décrivant les systèmes / Etat de l'art. \\ \hline
+		\cellcolor{lightgray}Impact & Important. \\ \hline
+		\cellcolor{lightgray}Probabilité & Faible. \\ \hline
+	\end{tabular} \\
+\paragraph{}
+	\begin{tabular}{| p{5cm} | p{9cm} |}
+		\hline
+		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_02} \\ \hline
+		\cellcolor{lightgray}Evènement/situation redouté & Etat de l'art pas assez exhaustif. \\ \hline
+		\cellcolor{lightgray}Point dur associé & Etude des RFC décrivant les systèmes / Etat de l'art. \\ \hline
+		\cellcolor{lightgray}Impact & Important. \\ \hline
+		\cellcolor{lightgray}Probabilité & Faible. \\ \hline
+	\end{tabular} \\
+\paragraph{}
+	\begin{tabular}{| p{5cm} | p{9cm} |}
+		\hline
+		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_05} \\ \hline
+		\cellcolor{lightgray}Evènement/situation redouté & Le client change ses objectifs. \\ \hline
+		\cellcolor{lightgray}Point dur associé & Communication régulière avec le client. \\ \hline
+		\cellcolor{lightgray}Impact & Important. \\ \hline
+		\cellcolor{lightgray}Probabilité & Faible. \\ \hline
+	\end{tabular} \\
+\paragraph{}
+	\begin{tabular}{| p{5cm} | p{9cm} |}
+		\hline
+		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_06} \\ \hline
+		\cellcolor{lightgray}Evènement/situation redouté & Passer à côté d'une demande du client. \\ \hline
+		\cellcolor{lightgray}Point dur associé & Communication régulière avec le client. \\ \hline
+		\cellcolor{lightgray}Impact & Préoccupant. \\ \hline 
+		\cellcolor{lightgray}Probabilité & Faible. \\ \hline
+	\end{tabular} \\
+\paragraph{}
+	\begin{tabular}{| p{5cm} | p{9cm} |}
+		\hline
+		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_07} \\ \hline
+		\cellcolor{lightgray}Evènement/situation redouté & Les clients font faillite. \\ \hline
+		\cellcolor{lightgray}Point dur associé & Communication régulière avec le client. \\ \hline
+		\cellcolor{lightgray}Impact & Critique. \\ \hline
+		\cellcolor{lightgray}Probabilité & (Très) Faible. \\ \hline
+	\end{tabular} \\
+\paragraph{}
+	\begin{tabular}{| p{5cm} | p{9cm} |}
+		\hline
+		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_09} \\ \hline
+		\cellcolor{lightgray}Evènement/situation redouté & Spécification incomplète. \\ \hline
+		\cellcolor{lightgray}Point dur associé & Surveiller l'évolution des spécifications. \\ \hline
+		\cellcolor{lightgray}Impact & Préoccupant. \\ \hline
+		\cellcolor{lightgray}Probabilité & Moyenne. \\ \hline
+	\end{tabular} \\
+\paragraph{}
+	\begin{tabular}{| p{5cm} | p{9cm} |}
+		\hline
+		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_10} \\ \hline
+		\cellcolor{lightgray}Evènement/situation redouté & Spécification trop exigentes (Problème pour atteindre la performance désirée). \\ \hline
+		\cellcolor{lightgray}Point dur associé & Surveiller l'évolution des spécifications. \\ \hline
+		\cellcolor{lightgray}Impact & Préoccupant. \\ \hline
+		\cellcolor{lightgray}Probabilité & Moyenne. \\ \hline
+	\end{tabular} \\
+\paragraph{}
+	\begin{tabular}{| p{5cm} | p{9cm} |}
+		\hline
+		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_11} \\ \hline
+		\cellcolor{lightgray}Evènement/situation redouté & Chef de projet incompétent. \\ \hline
+		\cellcolor{lightgray}Point dur associé & Communication au sein de l'équipe. \\ \hline
+		\cellcolor{lightgray}Impact & Acceptable. \\ \hline
+		\cellcolor{lightgray}Probabilité & Moyenne. \\ \hline
+	\end{tabular} \\
+\paragraph{}
+	\begin{tabular}{| p{5cm} | p{9cm} |}
+		\hline
+		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_13} \\ \hline
+		\cellcolor{lightgray}Evènement/situation redouté & Conflit au sein de l'équipe. \\ \hline
+		\cellcolor{lightgray}Point dur associé & Communication au sein de l'équipe. \\ \hline
+		\cellcolor{lightgray}Impact & Préoccupant. \\ \hline
+		\cellcolor{lightgray}Probabilité & Faible. \\ \hline
+	\end{tabular} \\
+\paragraph{}
+	\begin{tabular}{| p{5cm} | p{9cm} |}
+		\hline
+		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_14} \\ \hline
+		\cellcolor{lightgray}Evènement/situation redouté & Départ d'une ou plusieurs personnes clé du projet. \\ \hline
+		\cellcolor{lightgray}Point dur associé & Mutualisation des connaissances et des compétences. \\ \hline
+		\cellcolor{lightgray}Impact & Important. \\ \hline
+		\cellcolor{lightgray}Probabilité & Faible. \\ \hline
+	\end{tabular} \\
+\paragraph{}
+	\begin{tabular}{| p{5cm} | p{9cm} |}
+		\hline
+		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_16} \\ \hline
+		\cellcolor{lightgray}Evènement/situation redouté & Le développement effectué ne correspond pas à la demande du client. \\ \hline
+		\cellcolor{lightgray}Point dur associé & Gestion globale du projet (documentation). \\ \hline
+		\cellcolor{lightgray}Impact & Critique. \\ \hline
+		\cellcolor{lightgray}Probabilité & Faible. \\ \hline
+	\end{tabular} \\
+\paragraph{}
+	\begin{tabular}{| p{5cm} | p{9cm} |}
+		\hline
+		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_17} \\ \hline
+		\cellcolor{lightgray}Evènement/situation redouté & Sous estimation des efforts nécessaires à la réalisation du projet. \\ \hline
+		\cellcolor{lightgray}Point dur associé & Gestion globale du projet (documentation). \\ \hline
+		\cellcolor{lightgray}Impact & Important. \\ \hline
+		\cellcolor{lightgray}Probabilité & Faible. \\ \hline
+	\end{tabular} \\
+\paragraph{}
+	\begin{tabular}{| p{5cm} | p{9cm} |}
+		\hline
+		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_18} \\ \hline
+		\cellcolor{lightgray}Evènement/situation redouté & Un membre se retrouve privé de ses outils de travail. \\ \hline
+		\cellcolor{lightgray}Point dur associé & Veiller aux besoins techniques des membres de l'équipe. \\ \hline
+		\cellcolor{lightgray}Impact & Acceptable. \\ \hline
+		\cellcolor{lightgray}Probabilité & Faible. \\ \hline
+	\end{tabular} \\
+\paragraph{}
+	\begin{tabular}{| p{5cm} | p{9cm} |}
+		\hline
+		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_19} \\ \hline
+		\cellcolor{lightgray}Evènement/situation redouté & Problème avec le git. \\ \hline
+		\cellcolor{lightgray}Point dur associé & Veiller aux besoins techniques des membres de l'équipe. \\ \hline
+		\cellcolor{lightgray}Impact & Préoccupant. \\ \hline
+		\cellcolor{lightgray}Probabilité & (Très) Faible. \\ \hline
+	\end{tabular} \\
 
-%-------------------------------------------------------------------------------
+%-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+%------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \end{document}
