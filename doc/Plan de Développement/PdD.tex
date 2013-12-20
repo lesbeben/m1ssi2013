@@ -1,18 +1,18 @@
 \documentclass{../../res/univ-projet}
 
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
 
-\title{Plan de D\'eveloppement}
+\title{Plan de Développement}
 \author{Adrien \bsc{Smondack}}
 \projet{M1SSI}
-\projdesc{Projet de g\'en\'eration d'OTP}
+\projdesc{Projet de génération d'OTP}
 \filiere{M1SSI}
 \version{1.0}
 \relecteur{Benjamin \bsc{Zigh}}
 \signataire{Magali \bsc{Bardet}}
-\date{D\'ecembre 2013}
+\date{Décembre 2013}
 
 \histentry{1.0}{06/12/2013}{Version initiale.}
 
@@ -21,88 +21,92 @@
 
 %----------------------------------------------------------------------------------------------------------------------------------------------
 \section{Contexte du projet}
-	Origine du projet : r\'eponse \'a un appel d'offre concernant l'impl\'ementation de syst\`eme d'authentification via OTP par Magali Bardet et Bruno Macadre.
+	\subsection{Origine du projet}
+	Ce projet a été mis en place en réponse à un appel d'offre concernant l'implémentation de système d'authentification via OTP par Magali Bardet et Bruno Macadré.
 	
-	Contexte du d\'eveloppement :
+	\subsection{Contexte du développement}
 	\begin{description} 
-		\item [Cadre :] Dans le cadre du projet annuel de la formation M1GMI;
-		\item [P\'eriode :] Novembre-Avril;
-		\item [Contrainte :] gestion et \'etat de l'art rendus pour Janvier.
+		\item [Cadre :] Dans le cadre du projet annuel de la formation M1SSI;
+		\item [Période :] Novembre-Avril;
+		\item [Contraintes :] Documents techniques et état de l'art rendus pour Janvier.
 	\end{description}
-	Acteurs :
+	\subsection{Acteurs}
 	\begin{description}
-		\item [Emetteur :] Bardet, Macadre;
-		\item [Soutien technique :] M Google, M man, Mme Bardet
-		\item [Coach :] M Abdellah Godard
+		\item [Émetteur :] Bardet, Macadre;
+		\item [Soutien technique :] Mme Bardet, Documentation.
+		\item [Coach :] M Abdellah-Godard
 	\end{description}
-	Objectifs poursuivi :
+	\subsection{Objectifs poursuivis}
 	\begin{itemize}
-		\item Fournir un \'etat de l'art sur les syst\'eme existants;
-		\item Impl\'ementer un ou plusieurs de ces m\'ethodes;
-		\item Garantir une s\'ecurit\'e forte.
+		\item Fournir un état de l'art sur les systèmes existants;
+		\item Implémenter une ou plusieurs de ces méthodes;
+		\item Garantir une sécurité forte.
 	\end{itemize}
-	Ref : cf. references.pdf
+	\subsection{Références} 
+	cf. references.pdf ??????????????????????????
+\newpage
 
 %----------------------------------------------------------------------------------------------------------------------------------------------
-\section{M\'ethodologie de dev}
-	<schema de la STB>
-
+\section{Méthodologie de développement}
 	\begin{description}
-	    \item [\'Etape 1 :] \'Etat de l'art
+	    \item [Étape 1 :] État de l'art
 		    \begin{description}
-		        \item [Objectif :] Se familiariser avec les technologie actuelles et faire le points sur celle qu'on devra employer
-		        \item [Activit\'e :] \'etudier les RFC
-		        \item [Produit livrable :] Document
-		        \item [Responsabilit\'e :] Toute l'\'equipe
+		        \item [Objectif :] Se familiariser avec les technologie actuelles et faire le points sur celles que l'on devra employer.
+		        \item [Activité :] Étudier les RFC.
+		        \item [Produit livrable :] Rapport.
+		        \item [Responsabilité :] Toute l'équipe.
             \end{description}
-	    \item [\'Etape 2 :] Impl\'ementation des modules d'algo
+	    \item [Étape 2 :] Implémentation des bibliothèques outils
 		    \begin{description}
-		        \item [Objectif :] D\'evelopper la tool box
-		        \item [Activit\'e :] Comm. client/serveur, fonctions de hachage, hmac
-		        \item [Produit livrable :] /
-		        \item [Responsabilit\'e :] Par groupes
+		        \item [Objectif :] Développer la boite à outils.
+		        \item [Activité :] Communication client/serveur, fonctions de hachage, HMAC.
+		        \item [Produit livrable :] Documentation.
+		        \item [Responsabilité :] Toute l'équipe.
 		    \end{description}
-	    \item [\'Etape 3 :] impl\'ementation des modules OTP
+	    \item [Étape 3 :] Implémentation des modules OTP
 		    \begin{description}
-		        \item [Objectif :] Avoir des lib de calcul et de vérif d'OTP
-		        \item [Activit\'e :] Suivre les algos s\'electionn\'es (comform\'ement aux RFC)
-		        \item [Produit livrable :] /
-		        \item [Responsabilit\'e :] Par groupes
+		        \item [Objectif :] Avoir des bibliothèques de calcul et de vérification d'OTP.
+		        \item [Activité :] Suivre les algorithmes sélectionnés (conformément aux RFC).
+		        \item [Produit livrable :] Documentation.
+		        \item [Responsabilité :] Par groupes.
 		    \end{description}
-	    \item [\'Etape 4 :] Programmer les tokens (si n\'ecessaire, selon le protocole)
+	    \item [Étape 4 :] Programmer les tokens (si nécessaire, selon le protocole)
 		    \begin{description}
-		        \item [Objectif :] Fournir un g\'en\'erateur d'OTP
-		        \item [Activit\'e :] Int\'egration des toolbox et des modules de calculs d'OTP dans une UI
-		        \item [Produit livrable :] Les tokens
-		        \item [Responsabilit\'e :]  Par groupes
+		        \item [Objectif :] Fournir un générateur d'OTP.
+		        \item [Activité :] Intégration des outils et des modules de calculs d'OTP dans une IHM.
+		        \item [Produit livrable :] Les tokens.
+		        \item [Responsabilité :]  Par groupes.
 		    \end{description}
-	    \item [Etape 5 :] D\'evelopper un serveur d'authentification et un client
+	    \item [Étape 5 :] Développer un serveur d'authentification et un client
 		    \begin{description}
-		        \item [Objectif :] Permettre un user de s'auth. sur un service
-		        \item [Activit\'e :] Int\'egration des modules de v\'erification d'OTP
-		        \item [Produit livrable :] Serveur d'auth. + clients
-		        \item [Responsabilit\'e :] Par groupes
+		        \item [Objectif :] Permettre à un utilisateur de s'authentifier sur un service.
+		        \item [Activité :] Intégration des modules de vérification d'OTP.
+		        \item [Produit livrable :] Serveur d'authentification + client.
+		        \item [Responsabilité :] Par groupes.
 	        \end{description}
     \end{description}
 
 %----------------------------------------------------------------------------------------------------------------------------------------------
-\section{Organisation et responsabilit\'es}
+\section{Organisation et responsabilités}
 %Définir l’organisation en présentant
 %	L’organigramme (schéma)
 %	La description des rôles associés à l’organisation
 %	La définition des responsabilités et attributions de chaque intervenant
 
-\begin{tabular}{|p{4cm}|p{4cm}|p{4cm}|p{4cm}|}
+\begin{tabular}{|p{4.8cm}|p{3.2cm}|p{4cm}|p{4cm}|}
 	\hline
-	{R\^ole} & {Attribution} & {Description} & {Responsabilit\'e}\\
+	{R\^ole} & {Attribution} & {Description} & {Responsabilité}\\
 	\hline
-    Chef de projet & Adrien \bsc{Smondack} & \\
-    MOA & Benjamin \bsc{Zigh} & \\
-    Assistant MOA & Maxime \bsc{Michotte} & \\
-    Responsable technique & Damien \bsc{Picard} & \\
-    Responsable tech. Android & Yves \bsc{Adegoloye} & \\
-    Responsable qualit\'e & Gaetan \bsc{Ferry} & \\
-    Assist. responsable qualit\'e & Claire \bsc{Hardouin} & \\
+    Chef de projet & Adrien \bsc{Smondack} & &\\
+    &&&\\
+    MOA & Benjamin \bsc{Zigh} & &\\
+    Assistant MOA & Maxime \bsc{Michotte} & &\\
+     &&&\\
+    Responsable technique & Damien \bsc{Picard} & &\\
+    Responsable technique Android & Yves \bsc{Adegoloye} & &\\
+     &&&\\
+    Responsable qualité & Gaetan \bsc{Ferry} & &\\
+    Assist. responsable qualité & Claire \bsc{Hardouin} & &\\
     \hline
 \end{tabular}
 
@@ -115,7 +119,7 @@
 %	La liste des moyens matériel et/ou logiciels à mettre en place pour réaliser les produits ou exécuter les tâches
 
 %----------------------------------------------------------------------------------------------------------------------------------------------
-\section{\'Evaluation du projet et dimensionnement des moyens}
+\section{évaluation du projet et dimensionnement des moyens}
 %Présenter et justifier
 %L’évaluation globale de la charge et la répartition par phase 
 %Le besoin en moyens et en ressources
@@ -123,13 +127,13 @@
 %pour la plate-forme de tests
 
 %----------------------------------------------------------------------------------------------------------------------------------------------
-\section{Planning g\'en\'eral}
+\section{Planning général}
 %Construire et présenter un planning général du projet avec les dates clés du projet et les livraisons prévues.
 
 %N.B. : Un planning détaillé de la première itération sera annexé sous forme de diagramme PERT ou Gantt.
 
 %----------------------------------------------------------------------------------------------------------------------------------------------
-\section{Proc\'ed\'es de gestion}
+\section{Procédés de gestion}
 \subsection{Gestion de la documentation}
 %Lister les documents à produire pendant le projet en précisant les responsabilités de rédaction, de relecture et d’approbation.
 %Définir brièvement  les règles de production et de gestion de la documentation.
@@ -147,7 +151,7 @@
 %Intervenants
 
 %----------------------------------------------------------------------------------------------------------------------------------------------
-\section{Proc\'edure de suivi et d'avancement}
+\section{Procédure de suivi et d'avancement}
 %Définir les procédures mises en œuvre pendant le projet pour en assurer le suivi
 %Suivi interne (processus, modalités, fréquence, etc.)
 %Comptes-rendus d’avancement externe (forme, fréquence, destinataires, etc.)
