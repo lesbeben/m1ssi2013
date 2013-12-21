@@ -8,8 +8,8 @@
         <option id="taskLabelDown" value="length"/>
     </view>
     <view id="resource-table">
-        <field id="0" name="Nom" width="70" order="0"/>
-        <field id="1" name="Rôle par défaut" width="29" order="1"/>
+        <field id="0" name="Nom" width="56" order="0"/>
+        <field id="1" name="Rôle par défaut" width="43" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -42,18 +42,18 @@
             <depend id="3" type="2" difference="0" hardness="Strong"/>
             <depend id="11" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="3" name="Implémentation des outils requis pour le développement en C." color="#ff6633" meeting="false" start="2014-01-21" duration="21" complete="0" priority="2" expand="true">
+        <task id="3" name="Outils pour le développement en C." color="#ff6633" meeting="false" start="2014-01-21" duration="21" complete="0" priority="2" expand="true">
             <depend id="7" type="2" difference="0" hardness="Strong"/>
             <depend id="32" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="11" name="Implémentation des outils nécessaires au développement en JAVA" color="#ff6633" meeting="false" start="2014-01-21" duration="21" complete="0" priority="2" expand="true">
+        <task id="11" name="Outils pour le développement en JAVA" color="#ff6633" meeting="false" start="2014-01-21" duration="21" complete="0" priority="2" expand="true">
             <depend id="16" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="7" name="Implémentation des algorithmes relatif aux calcul des OTP en C" color="#ff6633" meeting="false" start="2014-02-11" duration="30" complete="0" priority="2" expand="true">
+        <task id="7" name="Algorithmes de calcul des OTP en C" color="#ff6633" meeting="false" start="2014-02-11" duration="30" complete="0" priority="2" expand="true">
             <depend id="24" type="2" difference="0" hardness="Strong"/>
             <depend id="32" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="16" name="Implémentation des algorithmes relatif aux calcul des OTP en JAVA" color="#ff6633" meeting="false" start="2014-02-11" duration="30" complete="0" expand="true">
+        <task id="16" name="Algorithmes de calcul des OTP en JAVA" color="#ff6633" meeting="false" start="2014-02-11" duration="30" complete="0" expand="true">
             <depend id="27" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="52" name="Mise en relations des éléments (token UNIX)" color="#ffff00" meeting="false" start="2014-04-27" duration="7" complete="0" expand="true">
@@ -63,14 +63,14 @@
             <depend id="70" type="2" difference="0" hardness="Strong"/>
         </task>
         <task id="70" name="tests finaux" color="#ffff00" meeting="false" start="2014-05-04" duration="6" complete="0" expand="true"/>
-        <task id="32" name="Développement du client / serveur d'authentification." color="#ff6633" meeting="false" start="2014-03-13" duration="45" complete="0" priority="2" expand="true">
+        <task id="32" name="Client / serveur d'authentification." color="#ff6633" meeting="false" start="2014-03-13" duration="45" complete="0" priority="2" expand="true">
             <depend id="52" type="2" difference="0" hardness="Strong"/>
             <depend id="56" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="24" name="Développement des token nécessaires en C" color="#ff6633" meeting="false" start="2014-03-13" duration="30" complete="0" priority="2" expand="true">
+        <task id="24" name="Tokens en C" color="#ff6633" meeting="false" start="2014-03-13" duration="30" complete="0" priority="2" expand="true">
             <depend id="52" type="2" difference="0" hardness="Strong"/>
         </task>
-        <task id="27" name="Développement des tokens nécessaires en JAVA android" color="#ffff00" meeting="false" start="2014-03-13" duration="30" complete="0" expand="true">
+        <task id="27" name="Tokens en JAVA android" color="#ffff00" meeting="false" start="2014-03-13" duration="30" complete="0" expand="true">
             <depend id="56" type="2" difference="0" hardness="Strong"/>
         </task>
     </tasks>
@@ -92,5 +92,6 @@
         <displaycolumn property-id="tpd5" order="2" width="75" visible="true"/>
     </taskdisplaycolumns>
     <previous/>
+    <roles roleset-name="Default"/>
     <roles roleset-name="SoftwareDevelopment"/>
 </project>
