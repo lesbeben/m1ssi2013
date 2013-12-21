@@ -22,7 +22,9 @@
 %----------------------------------------------------------------------------------------------------------------------------------------------
 \section{Contexte du projet}
 	\subsection{Origine du projet}
-	Ce projet a été mis en place en réponse à un appel d'offre concernant l'implémentation de système d'authentification via OTP par Magali Bardet et Bruno Macadré.
+	Ce projet a été mis en place en réponse à un appel d'offre concernant 
+	l'implémentation de système d'authentification via OTP par Magali Bardet et 
+	Bruno Macadré.
 	
 	\subsection{Contexte du développement}
 	\begin{description} 
@@ -119,12 +121,55 @@
 %	La liste des moyens matériel et/ou logiciels à mettre en place pour réaliser les produits ou exécuter les tâches
 
 %----------------------------------------------------------------------------------------------------------------------------------------------
-\section{évaluation du projet et dimensionnement des moyens}
+\section{Évaluation du projet et dimensionnement des moyens}
 %Présenter et justifier
 %L’évaluation globale de la charge et la répartition par phase 
 %Le besoin en moyens et en ressources
 %pour la plate-forme de développement (matériels, logiciels et outils)
 %pour la plate-forme de tests
+Pour rappel, le projet peut être décomposé en 11 tâches distinctes :
+\begin{itemize}
+  \item Réalisation de l'état de l'art.
+  \item Implémentation des outils pour le développement en C.
+  \item Implémentation des outils pour le développement en JAVA.
+  \item Implémentation des algorithmes pour le calcul des OTP en C.
+  \item Implémentation des algorithmes pour le calcul des OTP en JAVA.
+  \item Implémentation des client/serveur d'authentification en C.
+  \item Développement des tokens en C.
+  \item Développement des tokens en JAVA.
+  \item Mise en relation des éléments UNIX/UNIX.
+  \item Mise en relation des éléments ANDROID/UNIX.
+  \item Test finaux.
+\end{itemize}
+
+
+Pour réaliser toutes ces taches, on dispose de 169 jours de complets de travail. Sur ces 169 jours, 7 collaborateurs travaillerons à temps plein sur le projet.
+Au total, nous disposont donc d'un total de 1183 jours-hommes de capacité de travail.
+Évaluons la charge requise pour chacunes des taches.
+L'état de l'art est une étape importante qui nécéssite d'être parfaitement réalisée. Nous estimons la charge de travail nécessaire à sa réalisation à 420 jours-hommes. \\
+Les implémentations des outils pour les développement en C et JAVA sont évaluées respectivement à 84 et 63 jours-hommes. \\
+Les implémentations des algorithmes pour les calculs d'OTP en C et en JAVA, étapes cruciales à l'avancement du projet, sont évaluées respectivements à 120 et 90 jours-hommmes. \\
+Les implémentation des tokens en C et JAVA sont évaluées respectivement à 60 et 90j, l'implémentation Android nécessitant la mise en place d'une interface graphique. \\
+Le développement du serveur d'authentification compatible avec toutes les méthodes de génération d'OTP, est évalué à 90 jours-hommes. \\
+Une fois les tokens et le serveur mis en place il sera nécessaire de mettre tous les éléments en relation afin de vérifier le bon fonctionnement des communication. Ces taches sont en fait des test. Leurs charge est évaluée à 49 joursxhommes découpés en 21 jours-hommmes pour les tokens UNIX et 28 jours-hommes pour les tokens Android.\\
+Enfin l'étape des tests finaux est évaluée à 42 jours-hommes.\\
+Ces informations sont résumées dans le tableau suivant :
+
+\begin{tabular}{|l|l|l|}
+Tache & Durée & Ressources mobilisées \\ \hline
+Etat de l'art & 60 Jours & 7 personnes \\
+Outils pour le développement en C & 21 Jours & 4 personnes \\
+Outils pour le développement en Java & 21 Jours & 3 personnes \\
+Algorithmes pour le calcul des OTP en C & 30 Jours & 4 personnes \\
+Algorithmes pour le calcul des OTP en Java & 30 Jours & 3 personnes \\
+Client / serveur d'authentification & 45 Jours & 2 personnes \\
+Tokens en C & 30 Jours & 2 personnes \\
+Tokens en Java & 30 Jours & 3 personnes \\
+Mise en relation des éléments UNIX & 7 Jours & 3 personnes \\
+Mise en relation des éléments JAVA & 7 Jours & 4 personnes \\
+Tests finaux & 6 Jours & 7 personnes \\ \hline
+\end{tabular}
+
 
 %----------------------------------------------------------------------------------------------------------------------------------------------
 \section{Planning général}
