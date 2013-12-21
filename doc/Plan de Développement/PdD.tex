@@ -4,17 +4,20 @@
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
 
+\logo{../../res/logo_univ.png}
 \title{Plan de Développement}
 \author{Adrien \bsc{Smondack}}
 \projet{M1SSI}
 \projdesc{Projet de génération d'OTP}
 \filiere{M1SSI}
 \version{1.0}
-\relecteur{Benjamin \bsc{Zigh}}
+\relecteur{Gaëtan \bsc{Ferry}}
 \signataire{Magali \bsc{Bardet}}
 \date{Décembre 2013}
 
-\histentry{1.0}{06/12/2013}{Version initiale.}
+
+\histentry{1.0}{19/12/2013}{Version initiale.}
+\histentry{0.1}{06/12/2013}{Ébauche.}
 
 \begin{document}
 \maketitle
@@ -43,7 +46,32 @@
 		\item Garantir une sécurité forte.
 	\end{itemize}
 	\subsection{Références} 
-	cf. references.pdf ??????????????????????????
+	\begin{tabular}{p{1,5cm}>{\raggedright\arraybackslash}p{13cm}}
+{[ANS10]} & {ANSSI. Référentiel général de sécurité. \href{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}, 2010.}
+\tabularnewline
+\\
+{[MvOV97]} & {Alfred J. Menezes, Paul C. van Oorschot, and Scott A. Vanstone. Handbook of applied cryptography. CRC Press Series on Discrete Mathematics and its Applications. CRC Press, Boca Raton, FL, 1997. With a foreword by Ronald L.Rivest.}
+\tabularnewline
+\\
+{[RFC98]} & {A One-Time Password System. \href{http://tools.ietf.org/html/rfc2289}{http://tools.ietf.org/html/rfc2289}, 1998.}
+\tabularnewline
+\\
+{[RFC05]} & {HOTP:An HMAC-Based One-Time Password Algorithm \href{http://tools.ietf.org/html/rfc4226}{http://tools.ietf.org/html/rfc4226}, 2005.}
+\tabularnewline
+\\
+{[RFC06]} & {Generic Message Exchange Authentication for the Securer Shell Protocol (SSH).\href{http://tools.ietf.org/html/rfc4256}{http://tools.ietf.org/html/rfc4256}, 2006.}
+\tabularnewline
+\\
+{[RFC07]} & {The EAP Protected One-Time Password Protocol (EAP-POTP). \href{http://tools.ietf.org/html/rfc4793}{http://tools.ietf.org/html/rfc4793}, 2007.}
+\tabularnewline
+\\
+{[RFC11]} & {TOTP: Time-Based One-Time Password Algorithm \href{http://tools.ietf.org/html/rfc6238}{http://tools.ietf.org/html/rfc6238}, 2011.}
+\tabularnewline
+\\
+{[goo]} & {Google Authentificator \href{https://code.google.com/p/google-authenticator/}{https://code.google.com/p/google-authenticator/}.}
+\tabularnewline
+\\
+\end{tabular}
 \newpage
 
 %----------------------------------------------------------------------------------------------------------------------------------------------
@@ -51,7 +79,7 @@
 	\begin{description}
 	    \item [Étape 1 :] État de l'art
 		    \begin{description}
-		        \item [Objectif :] Se familiariser avec les technologie actuelles et faire le points sur celles que l'on devra employer.
+		        \item [Objectif :] Se familiariser avec les technologies actuelles et faire le point sur celles que l'on devra employer.
 		        \item [Activité :] Étudier les RFC.
 		        \item [Produit livrable :] Rapport.
 		        \item [Responsabilité :] Toute l'équipe.
@@ -85,30 +113,26 @@
 		        \item [Responsabilité :] Par groupes.
 	        \end{description}
     \end{description}
-
+\newpage
 %----------------------------------------------------------------------------------------------------------------------------------------------
 \section{Organisation et responsabilités}
 %Définir l’organisation en présentant
 %	L’organigramme (schéma)
 %	La description des rôles associés à l’organisation
 %	La définition des responsabilités et attributions de chaque intervenant
+\begin{figure}[h]
+\includegraphics[scale=0.5]{organigramme.png}
+\caption{Organigramme des rôles au sein de l'équipe}
+\end{figure}
+\begin{description}
+\item[Chef de Projet :] Chargé de la coordination du projet et de la communication au sein de l'équipe.
+\item[Branche MOA :] Chargée de la communication entre l'équipe et le client.
+\item[Branche Technique :] Chargée de l'organisation du développement.
+\item[Branche Qualité :] Chargée du bon fonctionnement des livrables. 
+\end{description}
+\newpage
 
-\begin{tabular}{|p{4.8cm}|p{3.2cm}|p{4cm}|p{4cm}|}
-	\hline
-	{R\^ole} & {Attribution} & {Description} & {Responsabilité}\\
-	\hline
-    Chef de projet & Adrien \bsc{Smondack} & &\\
-    &&&\\
-    MOA & Benjamin \bsc{Zigh} & &\\
-    Assistant MOA & Maxime \bsc{Michotte} & &\\
-     &&&\\
-    Responsable technique & Damien \bsc{Picard} & &\\
-    Responsable technique Android & Yves \bsc{Adegoloye} & &\\
-     &&&\\
-    Responsable qualité & Gaetan \bsc{Ferry} & &\\
-    Assist. responsable qualité & Claire \bsc{Hardouin} & &\\
-    \hline
-\end{tabular}
+
 
 %----------------------------------------------------------------------------------------------------------------------------------------------
 \section{Organigramme des t\^aches}
@@ -116,10 +140,23 @@
 %Faire figurer dans l’OT
 %	La liste des produits intermédiaires 
 %	La liste des tâches élémentaires associées à la réalisation des produits
-%	La liste des moyens matériel et/ou logiciels à mettre en place pour réaliser les produits ou exécuter les tâches
-
+%	La liste des moyens matériels et/ou logiciels à mettre en place pour réaliser les produits ou exécuter les tâches
+L'organisation suivante est déduite de l'état de l'art, qui n'est donc pas inclus.
+\begin{figure}[h]
+\includegraphics[scale=0.5]{taches.png}
+\caption{Organigramme des tâches à accomplir}
+\end{figure}
+\begin{description}
+\item[Hachage :]Implémentation des fonctions de hachages standards recommandées par les RFC (SHA1, Keccac, MD5, RipeMD160).
+\item[Réseau :]Implémentation de bibliothèques pour l'emploi de sockets UNIX.
+\item[HMAC :]Implémentations de HMAC pour différentes fonctions de hachage.
+\item[HOTP, OTPW, TOTP :]Génération des OTP pour les protocoles choisis.
+\item[Token :]Développement de l'interface utilisateur pour la génération d'OTP.
+\item[Client :]Développement de l'interface utilisateur pour la communication avec le serveur.
+\item[Serveur :]Serveur d'authentification compatible avec tous les protocoles choisis.
+\end{description}
 %----------------------------------------------------------------------------------------------------------------------------------------------
-\section{évaluation du projet et dimensionnement des moyens}
+\section{Évaluation du projet et dimensionnement des moyens}
 %Présenter et justifier
 %L’évaluation globale de la charge et la répartition par phase 
 %Le besoin en moyens et en ressources
