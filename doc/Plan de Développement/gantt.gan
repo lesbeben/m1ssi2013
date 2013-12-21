@@ -1,15 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="m1ssi otp" company="m1ssi" webLink="http://" view-date="2013-11-01" view-index="0" gantt-divider-location="353" resource-divider-location="300" version="2.0" locale="fr">
+<?xml version="1.0" encoding="UTF-8"?><project name="m1ssi otp" company="m1ssi" webLink="http://" view-date="2013-12-01" view-index="0" gantt-divider-location="624" resource-divider-location="396" version="2.0" locale="fr">
     <description><![CDATA[Création d'un système d'authentification par mot de passe jetable.]]></description>
     <view zooming-state="default:8" id="gantt-chart">
         <field id="tpd3" name="Nom" width="56" order="0"/>
-        <field id="tpd4" name="Date de début" width="21" order="1"/>
-        <field id="tpd5" name="Date de fin" width="21" order="2"/>
+        <field id="tpd4" name="Date de début" width="20" order="1"/>
+        <field id="tpd5" name="Date de fin" width="23" order="2"/>
         <option id="taskLabelUp" value="name"/>
         <option id="taskLabelDown" value="length"/>
     </view>
     <view id="resource-table">
-        <field id="0" name="Nom" width="56" order="0"/>
-        <field id="1" name="Rôle par défaut" width="43" order="1"/>
+        <field id="0" name="Nom" width="38" order="0"/>
+        <field id="1" name="Rôle par défaut" width="33" order="1"/>
+        <field id="tpc0" name="Responsable" width="28" order="2"/>
     </view>
     <!-- -->
     <calendars>
@@ -74,8 +75,59 @@
             <depend id="56" type="2" difference="0" hardness="Strong"/>
         </task>
     </tasks>
-    <resources/>
-    <allocations/>
+    <resources>
+        <custom-property-definition id="tpc0" name="Responsable" type="boolean" default-value="true"/>
+        <resource id="0" name="Adrien SMONDACK" function="Default:1" contacts="" phone=""/>
+        <resource id="1" name="Benjamin ZIGh" function="SoftwareDevelopment:3" contacts="" phone=""/>
+        <resource id="2" name="Damien PICARD" function="SoftwareDevelopment:2" contacts="" phone=""/>
+        <resource id="6" name="Gaetan FERRY" function="SoftwareDevelopment:4" contacts="" phone=""/>
+        <resource id="3" name="Claire HARDOUIN" function="SoftwareDevelopment:4" contacts="" phone="">
+            <custom-property definition-id="tpc0" value="false"/>
+        </resource>
+        <resource id="4" name="Yves ADEGOLOYE" function="SoftwareDevelopment:2" contacts="" phone="">
+            <custom-property definition-id="tpc0" value="false"/>
+        </resource>
+        <resource id="5" name="Maxime MICHOTTE" function="SoftwareDevelopment:3" contacts="" phone="">
+            <custom-property definition-id="tpc0" value="false"/>
+        </resource>
+    </resources>
+    <allocations>
+        <allocation task-id="0" resource-id="0" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="3" resource-id="0" function="Default:1" responsible="false" load="100.0"/>
+        <allocation task-id="7" resource-id="0" function="Default:1" responsible="false" load="100.0"/>
+        <allocation task-id="24" resource-id="0" function="Default:1" responsible="false" load="100.0"/>
+        <allocation task-id="52" resource-id="0" function="Default:1" responsible="false" load="100.0"/>
+        <allocation task-id="0" resource-id="1" function="SoftwareDevelopment:3" responsible="false" load="100.0"/>
+        <allocation task-id="11" resource-id="1" function="SoftwareDevelopment:3" responsible="false" load="100.0"/>
+        <allocation task-id="16" resource-id="1" function="SoftwareDevelopment:3" responsible="false" load="100.0"/>
+        <allocation task-id="24" resource-id="1" function="SoftwareDevelopment:3" responsible="true" load="100.0"/>
+        <allocation task-id="56" resource-id="1" function="SoftwareDevelopment:3" responsible="false" load="100.0"/>
+        <allocation task-id="0" resource-id="2" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
+        <allocation task-id="3" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="7" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="32" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="52" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="0" resource-id="6" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="11" resource-id="6" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="16" resource-id="6" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="32" resource-id="6" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="52" resource-id="6" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="0" resource-id="3" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="3" resource-id="3" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="7" resource-id="3" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="27" resource-id="3" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="56" resource-id="3" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="0" resource-id="4" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
+        <allocation task-id="11" resource-id="4" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="16" resource-id="4" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="27" resource-id="4" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="56" resource-id="4" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
+        <allocation task-id="0" resource-id="5" function="SoftwareDevelopment:3" responsible="false" load="100.0"/>
+        <allocation task-id="3" resource-id="5" function="SoftwareDevelopment:3" responsible="false" load="100.0"/>
+        <allocation task-id="7" resource-id="5" function="SoftwareDevelopment:3" responsible="false" load="100.0"/>
+        <allocation task-id="27" resource-id="5" function="SoftwareDevelopment:3" responsible="false" load="100.0"/>
+        <allocation task-id="56" resource-id="5" function="SoftwareDevelopment:3" responsible="false" load="100.0"/>
+    </allocations>
     <vacations/>
     <taskdisplaycolumns>
         <displaycolumn property-id="tpd2" order="-1" width="75" visible="false"/>
@@ -87,9 +139,9 @@
         <displaycolumn property-id="tpd9" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd8" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd0" order="-1" width="75" visible="false"/>
-        <displaycolumn property-id="tpd3" order="0" width="200" visible="true"/>
-        <displaycolumn property-id="tpd4" order="1" width="76" visible="true"/>
-        <displaycolumn property-id="tpd5" order="2" width="75" visible="true"/>
+        <displaycolumn property-id="tpd3" order="0" width="351" visible="true"/>
+        <displaycolumn property-id="tpd4" order="1" width="126" visible="true"/>
+        <displaycolumn property-id="tpd5" order="2" width="145" visible="true"/>
     </taskdisplaycolumns>
     <previous/>
     <roles roleset-name="Default"/>
