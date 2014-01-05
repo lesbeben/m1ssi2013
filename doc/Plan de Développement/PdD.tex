@@ -6,7 +6,7 @@
 
 \logo{../../res/logo_univ.png}
 \title{Plan de Développement}
-\author{Adrien \bsc{Smondack}}
+\author{Adrien \bsc{Smondack}, Benjamin \bsc{Zigh}}
 \projet{M1SSI}
 \projdesc{Projet de génération d'OTP}
 \filiere{M1SSI}
@@ -35,48 +35,50 @@
 		\item [Période :] Novembre-Avril;
 		\item [Contraintes :] Documents techniques et état de l'art rendus pour Janvier.
 	\end{description}
+
 	\subsection{Acteurs}
 	\begin{description}
 		\item [Émetteur :] Bardet, Macadre;
 		\item [Soutien technique :] Mme Bardet, Documentation.
 		\item [Coach :] M Abdellah-Godard
 	\end{description}
+
 	\subsection{Objectifs poursuivis}
 	\begin{itemize}
 		\item Fournir un état de l'art sur les systèmes existants;
 		\item Implémenter une ou plusieurs de ces méthodes;
 		\item Garantir une sécurité forte.
 	\end{itemize}
+
 	\subsection{Références} 
 	\begin{tabular}{p{1,5cm}>{\raggedright\arraybackslash}p{13cm}}
-{[ANS10]} & {ANSSI. Référentiel général de sécurité. \href{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}, 2010.}
-\tabularnewline
-\\
-{[MvOV97]} & {Alfred J. Menezes, Paul C. van Oorschot, and Scott A. Vanstone. Handbook of applied cryptography. CRC Press Series on Discrete Mathematics and its Applications. CRC Press, Boca Raton, FL, 1997. With a foreword by Ronald L.Rivest.}
-\tabularnewline
-\\
-{[RFC98]} & {A One-Time Password System. \href{http://tools.ietf.org/html/rfc2289}{http://tools.ietf.org/html/rfc2289}, 1998.}
-\tabularnewline
-\\
-{[RFC05]} & {HOTP:An HMAC-Based One-Time Password Algorithm \href{http://tools.ietf.org/html/rfc4226}{http://tools.ietf.org/html/rfc4226}, 2005.}
-\tabularnewline
-\\
-{[RFC06]} & {Generic Message Exchange Authentication for the Securer Shell Protocol (SSH).\href{http://tools.ietf.org/html/rfc4256}{http://tools.ietf.org/html/rfc4256}, 2006.}
-\tabularnewline
-\\
-{[RFC07]} & {The EAP Protected One-Time Password Protocol (EAP-POTP). \href{http://tools.ietf.org/html/rfc4793}{http://tools.ietf.org/html/rfc4793}, 2007.}
-\tabularnewline
-\\
-{[RFC11]} & {TOTP: Time-Based One-Time Password Algorithm \href{http://tools.ietf.org/html/rfc6238}{http://tools.ietf.org/html/rfc6238}, 2011.}
-\tabularnewline
-\\
-{[goo]} & {Google Authentificator \href{https://code.google.com/p/google-authenticator/}{https://code.google.com/p/google-authenticator/}.}
-\tabularnewline
-\\
-\end{tabular}
+		{[ANS10]} & {ANSSI. Référentiel général de sécurité. \href{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}, 2010.}
+		\tabularnewline
+		\\
+		{[MvOV97]} & {Alfred J. Menezes, Paul C. van Oorschot, and Scott A. Vanstone. Handbook of applied cryptography. CRC Press Series on Discrete Mathematics and its Applications. CRC Press, Boca Raton, FL, 1997. With a foreword by Ronald L.Rivest.}
+		\tabularnewline
+		\\
+		{[RFC98]} & {A One-Time Password System. \href{http://tools.ietf.org/html/rfc2289}{http://tools.ietf.org/html/rfc2289}, 1998.}
+		\tabularnewline
+		\\
+		{[RFC05]} & {HOTP:An HMAC-Based One-Time Password Algorithm \href{http://tools.ietf.org/html/rfc4226}{http://tools.ietf.org/html/rfc4226}, 2005.}
+		\tabularnewline
+		\\
+		{[RFC06]} & {Generic Message Exchange Authentication for the Securer Shell Protocol (SSH).\href{http://tools.ietf.org/html/rfc4256}{http://tools.ietf.org/html/rfc4256}, 2006.}
+		\tabularnewline
+		\\
+		{[RFC07]} & {The EAP Protected One-Time Password Protocol (EAP-POTP). \href{http://tools.ietf.org/html/rfc4793}{http://tools.ietf.org/html/rfc4793}, 2007.}
+		\tabularnewline
+		\\
+		{[RFC11]} & {TOTP: Time-Based One-Time Password Algorithm \href{http://tools.ietf.org/html/rfc6238}{http://tools.ietf.org/html/rfc6238}, 2011.}
+		\tabularnewline
+		\\
+		{[goo]} & {Google Authentificator \href{https://code.google.com/p/google-authenticator/}{https://code.google.com/p/google-authenticator/}.}
+		\tabularnewline
+		\\
+	\end{tabular}
 \newpage
-
-%----------------------------------------------------------------------------------------------------------------------------------------------
+%---------------------------------------------------------------------------------------------------------------------------------------------
 \section{Méthodologie de développement}
 	\begin{description}
 	    \item [Étape 1 :] État de l'art
@@ -116,188 +118,222 @@
 	        \end{description}
     \end{description}
 \newpage
-%----------------------------------------------------------------------------------------------------------------------------------------------
+%---------------------------------------------------------------------------------------------------------------------------------------------
 \section{Organisation et responsabilités}
-%Définir l’organisation en présentant
-%	L’organigramme (schéma)
-%	La description des rôles associés à l’organisation
-%	La définition des responsabilités et attributions de chaque intervenant
-\begin{figure}[h]
-\includegraphics[scale=0.5]{organigramme.png}
-\caption{Organigramme des rôles au sein de l'équipe}
-\end{figure}
-\begin{description}
-\item[Chef de Projet :] Chargé de la coordination du projet et de la communication au sein de l'équipe.
-\item[Branche MOA :] Chargée de la communication entre l'équipe et le client.
-\item[Branche Technique :] Chargée de l'organisation du développement.
-\item[Branche Qualité :] Chargée du bon fonctionnement des livrables. 
-\end{description}
+	\begin{figure}[h]
+	\includegraphics[scale=0.5]{organigramme.png}
+	\caption{Organigramme des rôles au sein de l'équipe}
+	\end{figure}
+	\begin{description}
+	\item[Chef de Projet :] Chargé de la coordination du projet et de la communication au sein de l'équipe.
+	\item[Branche MOA :] Chargée de la communication entre l'équipe et le client.
+	\item[Branche Technique :] Chargée de l'organisation du développement.
+	\item[Branche Qualité :] Chargée du bon fonctionnement des livrables. 
+	\end{description}
 \newpage
-
-
-
-%----------------------------------------------------------------------------------------------------------------------------------------------
+%---------------------------------------------------------------------------------------------------------------------------------------------
 \section{Organigramme des t\^aches}
-%A partir de l’arborescence produit et du processus de développement choisi, construire et formaliser un Organigramme des Tâches.
-%Faire figurer dans l’OT
-%	La liste des produits intermédiaires 
-%	La liste des tâches élémentaires associées à la réalisation des produits
-%	La liste des moyens matériels et/ou logiciels à mettre en place pour réaliser les produits ou exécuter les tâches
-L'organisation suivante est déduite de l'état de l'art, qui n'est donc pas inclus.
-\begin{figure}[h]
-\includegraphics[scale=0.5]{taches.png}
-\caption{Organigramme des tâches à accomplir}
-\end{figure}
-\begin{description}
-\item[Hachage :]Implémentation des fonctions de hachages standards recommandées par les RFC (SHA1, Keccac, MD5, RipeMD160).
-\item[Réseau :]Implémentation de bibliothèques pour l'emploi de sockets UNIX.
-\item[HMAC :]Implémentations de HMAC pour différentes fonctions de hachage.
-\item[HOTP, OTPW, TOTP :]Génération des OTP pour les protocoles choisis.
-\item[Token :]Développement de l'interface utilisateur pour la génération d'OTP.
-\item[Client :]Développement de l'interface utilisateur pour la communication avec le serveur.
-\item[Serveur :]Serveur d'authentification compatible avec tous les protocoles choisis.
-\end{description}
+	L'organisation suivante est déduite de l'état de l'art, qui n'est donc pas inclus.
+	\begin{figure}[h]
+	\includegraphics[scale=0.5]{taches.png}
+	\caption{Organigramme des tâches à accomplir}
+	\end{figure}
+	\begin{description}
+	\item[Hachage :]Implémentation des fonctions de hachages standards recommandées par les RFC (SHA1, Keccac, MD5, RipeMD160).
+	\item[Réseau :]Implémentation de bibliothèques pour l'emploi de sockets UNIX.
+	\item[HMAC :]Implémentations de HMAC pour différentes fonctions de hachage.
+	\item[HOTP, OTPW, TOTP :]Génération des OTP pour les protocoles choisis.
+	\item[Token :]Développement de l'interface utilisateur pour la génération d'OTP.
+	\item[Client :]Développement de l'interface utilisateur pour la communication avec le serveur.
+	\item[Serveur :]Serveur d'authentification compatible avec tous les protocoles choisis.
+	\end{description}
 \newpage
-%----------------------------------------------------------------------------------------------------------------------------------------------
+%---------------------------------------------------------------------------------------------------------------------------------------------
 \section{Évaluation du projet et dimensionnement des moyens}
-%Présenter et justifier
-%L’évaluation globale de la charge et la répartition par phase 
-%Le besoin en moyens et en ressources
-%pour la plate-forme de développement (matériels, logiciels et outils)
-%pour la plate-forme de tests
-Pour rappel, le projet peut être décomposé en 11 tâches distinctes :
-\begin{itemize}
-  \item Réalisation de l'état de l'art.
-  \item Implémentation des outils pour le développement en C.
-  \item Implémentation des outils pour le développement en JAVA.
-  \item Implémentation des algorithmes pour le calcul des OTP en C.
-  \item Implémentation des algorithmes pour le calcul des OTP en JAVA.
-  \item Implémentation des client/serveur d'authentification en C.
-  \item Développement des tokens en C.
-  \item Développement des tokens en JAVA.
-  \item Mise en relation des éléments UNIX/UNIX.
-  \item Mise en relation des éléments ANDROID/UNIX.
-  \item Test finaux.
-\end{itemize}
+	Pour rappel, le projet peut être décomposé en 11 tâches distinctes :
+	\begin{itemize}
+	  \item Réalisation de l'état de l'art.
+	  \item Implémentation des outils pour le développement en C.
+	  \item Implémentation des outils pour le développement en JAVA.
+	  \item Implémentation des algorithmes pour le calcul des OTP en C.
+	  \item Implémentation des algorithmes pour le calcul des OTP en JAVA.
+	  \item Implémentation des client/serveur d'authentification en C.
+	  \item Développement des tokens en C.
+	  \item Développement des tokens en JAVA.
+	  \item Mise en relation des éléments UNIX/UNIX.
+	  \item Mise en relation des éléments ANDROID/UNIX.
+	  \item Test finaux.
+	\end{itemize}
 
 
-Pour réaliser toutes ces taches, on dispose de 169 jours de complets de travail. Sur ces 169 jours, 7 collaborateurs travaillerons à temps plein sur le projet.
-Au total, nous disposons donc d'un total de 1183 jours-hommes de capacité de travail.
-Évaluons la charge requise pour chacune des taches.
-L'état de l'art est une étape importante qui nécessite d'être parfaitement réalisée. Nous estimons la charge de travail nécessaire à sa réalisation à 420 jours-hommes. \\
-Les implémentations des outils pour les développement en C et JAVA sont évaluées respectivement à 84 et 63 jours-hommes. \\
-Les implémentations des algorithmes pour les calculs d'OTP en C et en JAVA, étapes cruciales à l'avancement du projet, sont évaluées respectivement à 120 et 90 jours-hommes. \\
-Les implémentation des tokens en C et JAVA sont évaluées respectivement à 60 et 90j, l'implémentation Android nécessitant la mise en place d'une interface graphique. \\
-Le développement du serveur d'authentification compatible avec toutes les méthodes de génération d'OTP, est évalué à 90 jours-hommes. \\
-Une fois les tokens et le serveur mis en place il sera nécessaire de mettre tous les éléments en relation afin de vérifier le bon fonctionnement des communication. Ces taches sont en fait des test. Leurs charge est évaluée à 49 jours-hommes découpés en 21 jours-hommes pour les tokens UNIX et 28 jours-hommes pour les tokens Android.\\
-Enfin l'étape des tests finaux est évaluée à 42 jours-hommes.\\
-Ces informations sont résumées dans le tableau suivant :
-\newline
+	Pour réaliser toutes ces taches, on dispose de 169 jours complets de travail. Sur ces 169 jours, 7 collaborateurs travaillerons à temps plein sur le projet.
+	Au total, nous disposons donc d'un total de 1183 jours-hommes de capacité de travail.
+	Évaluons la charge requise pour chacune des taches.
+	L'état de l'art est une étape importante qui nécessite d'être parfaitement réalisée. Nous estimons la charge de travail nécessaire à sa réalisation à 420 jours-hommes. \\
+	Les implémentations des outils pour les développement en C et JAVA sont évaluées respectivement à 84 et 63 jours-hommes. \\
+	Les implémentations des algorithmes pour les calculs d'OTP en C et en JAVA, étapes cruciales à l'avancement du projet, sont évaluées respectivement à 120 et 90 jours-hommes. \\
+	Les implémentation des tokens en C et JAVA sont évaluées respectivement à 60 et 90j, l'implémentation Android nécessitant la mise en place d'une interface graphique. \\
+	Le développement du serveur d'authentification compatible avec toutes les méthodes de génération d'OTP, est évalué à 90 jours-hommes. \\
+	Une fois les tokens et le serveur mis en place il sera nécessaire de mettre tous les éléments en relation afin de vérifier le bon fonctionnement des communication. Ces taches sont en fait des test. Leurs charge est évaluée à 49 jours-hommes découpés en 21 jours-hommes pour les tokens UNIX et 28 jours-hommes pour les tokens Android.\\
+	Enfin l'étape des tests finaux est évaluée à 42 jours-hommes.\\
+	Ces informations sont résumées dans le tableau suivant :
+	\newline
 
-\begin{tabular}{|l|l|l|}
- \hline
-Tache & Durée & Ressources mobilisées \\ \hline
-État de l'art & 60 Jours & 7 personnes \\
-Outils pour le développement en C & 21 Jours & 4 personnes \\
-Outils pour le développement en Java & 21 Jours & 3 personnes \\
-Algorithmes pour le calcul des OTP en C & 30 Jours & 4 personnes \\
-Algorithmes pour le calcul des OTP en Java & 30 Jours & 3 personnes \\
-Client / serveur d'authentification & 45 Jours & 2 personnes \\
-Tokens en C & 30 Jours & 2 personnes \\
-Tokens en Java & 30 Jours & 3 personnes \\
-Mise en relation des éléments UNIX & 7 Jours & 3 personnes \\
-Mise en relation des éléments JAVA & 7 Jours & 4 personnes \\
-Tests finaux & 6 Jours & 7 personnes \\ \hline
-\end{tabular}
+	\begin{tabular}{|l|l|l|}
+	 \hline
+	Tache & Durée & Ressources mobilisées \\ \hline
+	État de l'art & 60 Jours & 7 personnes \\
+	Outils pour le développement en C & 21 Jours & 4 personnes \\
+	Outils pour le développement en Java & 21 Jours & 3 personnes \\
+	Algorithmes pour le calcul des OTP en C & 30 Jours & 4 personnes \\
+	Algorithmes pour le calcul des OTP en Java & 30 Jours & 3 personnes \\
+	Client / serveur d'authentification & 45 Jours & 2 personnes \\
+	Tokens en C & 30 Jours & 2 personnes \\
+	Tokens en Java & 30 Jours & 3 personnes \\
+	Mise en relation des éléments UNIX & 7 Jours & 3 personnes \\
+	Mise en relation des éléments JAVA & 7 Jours & 4 personnes \\
+	Tests finaux & 6 Jours & 7 personnes \\ \hline
+	\end{tabular}
 
 
 \newpage
-%----------------------------------------------------------------------------------------------------------------------------------------------
+%---------------------------------------------------------------------------------------------------------------------------------------------
 \section{Planning général}
-%Construire et présenter un planning général du projet avec les dates clés du projet et les livraisons prévues.
+	\begin{figure}[h]
+	\includegraphics[scale=0.33]{ressources.png}
+	\caption{Répartition des ressources sur le projet.}
+	\end{figure}
+	\begin{figure}[h]
+	\includegraphics[scale=0.33]{gantt.png}
+	\caption{Planning des étapes du projet.}
+	\end{figure}
 
-%N.B. : Un planning détaillé de la première itération sera annexé sous forme de diagramme PERT ou Gantt.
-\begin{figure}[h]
-\includegraphics[scale=0.33]{ressources.png}
-\caption{Répartition des ressources sur le projet.}
-\end{figure}
-\begin{figure}[h]
-\includegraphics[scale=0.33]{gantt.png}
-\caption{Planning des étapes du projet.}
-\end{figure}
+	\begin{figure}[h]
+	\includegraphics[scale=0.33]{pert.png}
+	\caption{Ordonnancement des tâches du projet.}
+	\end{figure}
 
-\begin{figure}[h]
-\includegraphics[scale=0.33]{pert.png}
-\caption{Ordonnancement des tâches du projet.}
-\end{figure}
-
-\newpage
-
-
-%----------------------------------------------------------------------------------------------------------------------------------------------
+	\newpage
+%---------------------------------------------------------------------------------------------------------------------------------------------
 \section{Procédés de gestion}
-\subsection{Gestion de la documentation}
-%Lister les documents à produire pendant le projet en précisant les responsabilités de rédaction, de relecture et d’approbation.
-%Définir brièvement  les règles de production et de gestion de la documentation.
-\begin{tabular}{|l|l|l|}
- \hline
- Document & Rédaction & Relecture \\
- \hline
- Documentation Bibliothèques C & Damien PICARD & Maxime MICHOTTE\\
- Documentation Bibliothèques Java & Yves ADEGOLOYE & Gaëtan FERRY\\
- Documentation OTP C & Damien PICARD & Claire HARDOUIN\\
- Documentation OTP Java & Gaëtan FERRY & Benjamin ZIGH \\
- Documentation Token C & Adrien SMONDACK & Maxime MICHOTTE\\
- Documentation Token Android & Yves ADEGOLOYE & Benjamin ZIGH\\
- Documentation Client\&Serveur & Claire HARDOUIN & Damien PICARD \\
- Rapports de tests & Gaëtan FERRY & Claire HARDOUIN \\
- Manuel d'utilisation & Benjamin ZIGH & Maxime MICHOTTE \\
- Rapport de projet & Maxime MICHOTTE & Benjamin ZIGH \\
- \hline
- 
-\end{tabular}
+	\subsection{Gestion de la documentation}
+		\begin{tabular}{|l|l|l|}
+			\hline
+			Document & Rédaction & Relecture \\
+			\hline
+			Documentation Bibliothèques C & Damien PICARD & Maxime MICHOTTE\\
+			Documentation Bibliothèques Java & Yves ADEGOLOYE & Gaëtan FERRY\\
+			Documentation OTP C & Damien PICARD & Claire HARDOUIN\\
+			Documentation OTP Java & Gaëtan FERRY & Benjamin ZIGH \\
+			Documentation Token C & Adrien SMONDACK & Maxime MICHOTTE\\
+			Documentation Token Android & Yves ADEGOLOYE & Benjamin ZIGH\\
+			Documentation Client\&Serveur & Claire HARDOUIN & Damien PICARD \\
+			Rapports de tests & Gaëtan FERRY & Claire HARDOUIN \\
+			Manuel d'utilisation & Benjamin ZIGH & Maxime MICHOTTE \\
+			Rapport de projet & Maxime MICHOTTE & Benjamin ZIGH \\
+			\hline 
+		\end{tabular}
 
-\subsection{Gestion des configurations}
-%Définir les procédés de gestion à mettre en œuvre pour assurer la maîtrise des configurations pendant le développement  (règles d’identification, organisation des espaces, sauvegardes et archivages, traitement des évolutions, etc.)
-\subsubsection{Gestion des versions}
-\includegraphics[scale=1]{git-logo.png}
+	\subsection{Gestion des configurations}
+		\subsubsection{Gestion des versions}
+			% \includegraphics[scale=1]{git-logo.png}
 
-Nous avons choisi d'utiliser le logiciel git pour gérer les différentes versions du projet 'et des documents). A l'aide de celui-ci, nous pourrons aisément contrôler les étapes d'avancement du projet au cours de son développement. 
+			Nous avons choisi d'utiliser le logiciel git pour gérer les différentes versions du projet et des documents). A l'aide de celui-ci, nous pourrons aisément contrôler les étapes d'avancement du projet au cours de son développement. 
 
-Git permet de développer collaborativement à distance en enregistrant et/ou fusionnant les modifications apportées par les différents membres de l'équipe. Nous ne nous attarderons pas ici sur le fonctionnement de git (voir \href{http://git-scm.com/book/fr/Démarrage-rapide-Rudiments-de-Git}{http://git-scm.com/book/fr/Démarrage-rapide-Rudiments-de-Git}).
+			Git permet de développer collaborativement à distance en enregistrant et/ou fusionnant les modifications apportées par les différents membres de l'équipe. Nous ne nous attarderons pas ici sur le fonctionnement de git (voir \href{http://git-scm.com/book/fr/Démarrage-rapide-Rudiments-de-Git}{http://git-scm.com/book/fr/Démarrage-rapide-Rudiments-de-Git}).
 
-La majorité de l'équipe était déjà formée à l'utilisation du logiciel, nous avons donc pu être opérationnels rapidement pour la rédaction des divers documents techniques.
+			La majorité de l'équipe était déjà formée à l'utilisation du logiciel, nous avons donc pu être opérationnels rapidement pour la rédaction des divers documents techniques.
 
-La gestion du git est attribuée au responsable technique.
+			La gestion du git est attribuée au responsable technique.
 
+		\subsubsection{Hébergement}
+			% \includegraphics[scale=0.5]{github-logo.png}
 
-\subsubsection{Hébergement}
-\includegraphics[scale=0.5]{github-logo.png}
+			Github est un site d'hébergement de dépôts git proposant l'hébergement gratuit des projets publics. Il permet également aux étudiants de créer des projets privés dans un cadre universitaire.
 
-Github est un site d'hébergement de dépôts git proposant l'hébergement gratuit des projets publics. Il permet également aux étudiants de créer des projets privés dans un cadre universitaire.
-
-Le site est bien établi dans la communauté open-source et garantit une disponibilité de 99.9\%. Le fonctionnement de git nous permet en plus d'avoir chacun des versions locales, donc la perte de données ne représente pas un risque important.
+			Le site est bien établi dans la communauté open-source et garantit une disponibilité de 99.9\%. Le fonctionnement de git nous permet en plus d'avoir chacun des versions locales, donc la perte de données ne représente pas un risque important.
 
 
-Encore une fois, la majorité des membres de l'équipe était déjà inscrite sur github et il semblait logique de l'utiliser afin d'être efficace rapidement. 
+			Encore une fois, la majorité des membres de l'équipe était déjà inscrite sur github et il semblait logique de l'utiliser afin d'être efficace rapidement. 
 
-Github propose de nombreuses fonctionnalités supplémentaires, à la disposition du responsable technique pour communiquer avec l'équipe sur le développement du projet.
+			Github propose de nombreuses fonctionnalités supplémentaires, à la disposition du responsable technique pour communiquer avec l'équipe sur le développement du projet.
 
-\newpage
-%----------------------------------------------------------------------------------------------------------------------------------------------
+	\newpage
+%---------------------------------------------------------------------------------------------------------------------------------------------
 \section{Revues et points clef}
-%Décrire les points clefs prévus dans le planning
-%Objectifs
-%Calendrier prévisionnel et/ou événements déclenchants
-%Objet des vérifications
-%Modalités de contrôle
-%Intervenants
-
-%----------------------------------------------------------------------------------------------------------------------------------------------
+Points clés du projet :
+\begin{itemize}
+	\item Réalisation de l'état de l'art
+	\begin{description}
+		\item[Objectifs :] Prendre connaissance des protocles existant et de leurs spécificités, puis déterminer ceux que nous utiliserons.
+		\item[Prévisions :] Du 22/11/13 au 20/01/14.
+		\item[Objet des vérifications :] Accord du client.
+		\item[Modalité de contrôle :] Rapport détaillé sur chaque protocoles étudiés ainsi que nos conclusions.
+		\item[Intervenants :] Toute l'équipe.
+	\end{description}
+	\item Création des outils de développement
+	\begin{description}
+		\item[Objectifs :] Fournir des bibliothèques de fonctions nécessaires à la réalisation des étapes suivantes
+		\item[Prévisions :] Du 21/01/14 au 11/02/14 - \'Etat de l'art terminé.
+		\item[Objet des vérifications :] Compilation du code + Tests.
+		\item[Modalité de contrôle :] Documentation à remettre au client.
+		\item[Intervenants :] Par groupes.
+	\end{description}
+	\item Implémentation des algorithmes de calculs des OTP
+	\begin{description}
+		\item[Objectifs :] Concevoir des outils de calculs et de vérification d'OTP.
+		\item[Prévisions :] Du 11/02/14 au 13/03/14 - Outils de développement disponibles.
+		\item[Objet des vérifications :] Compilation du code + tests.
+		\item[Modalité de contrôle :] Documentation à remettre au client.
+		\item[Intervenants :] Par groupes.
+	\end{description}
+	\item Création des tokens
+	\begin{description}
+		\item[Objectifs :] Fournir des générateurs d'OTP.
+		\item[Prévisions :] Du 13/03/14 au 12/04/14 - Implémentation des algorithmes terminée.
+		\item[Objet des vérifications :] Retour d'un OTP respectant les spécifications suite à un évènement déclencheur.
+		\item[Modalité de contrôle :] Manuel d'utilisation à remettre au client.
+		\item[Intervenants :] Par groupes.
+	\end{description}
+	\item Mise en relation des éléments
+	\begin{description}
+		\item[Objectifs :] Faire fonctionner les outils développés précédemment en créant le serveur d'authentification et le client.
+		\item[Prévisions :] Du 27/04/14 au 04/05/14 - Tokens disponibles.
+		\item[Objet des vérifications :] Authentification avec succès.
+		\item[Modalité de contrôle :] Documentation à remettre au client.
+		\item[Intervenants :] Par groupes.
+	\end{description}
+	\item Test finaux
+	\begin{description}
+		\item[Objectifs :] Assurer une sécurité mi-forte (authentification à deux facteurs).
+		\item[Prévisions :] Du 04/05/14 au 10/05/14 - Authentifications possible.
+		\item[Objet des vérifications :] Résultat des tests positifs.
+		\item[Modalité de contrôle :] Rapport de tests + Rapport de projet à remettre au client.
+		\item[Intervenants :] Toute l'équipe.
+	\end{description}
+\end{itemize}
+%---------------------------------------------------------------------------------------------------------------------------------------------
 \section{Procédure de suivi et d'avancement}
-%Définir les procédures mises en œuvre pendant le projet pour en assurer le suivi
-%Suivi interne (processus, modalités, fréquence, etc.)
-%Comptes-rendus d’avancement externe (forme, fréquence, destinataires, etc.)
-%Réunions prévues
+
+	L'évolution du projet sera suivi en interne par : 
+	\begin{itemize}
+		\item des réunions régulières 
+		\begin{description}
+			\item[Objectif :] Faire le point sur l'avancement de chacun dans la tâche qui leur à été attribué et combler les lacunes qui pourraient se présenter.
+			\item[Fréquence :] Toutes les deux semaines.
+		\end{description}
+		\item des séances de brainstorming par groupes
+		\begin{description}
+			\item[Objectif :] Décider des solutions à mettre en oeuvre et de l'organisation du travail au sein du groupe pour résoudre la problématique.
+			\item[Fréquence :] Aussi souvent que nécessaire.
+		\end{description}
+	\end{itemize}
+
+	Côté client, l'avancement du projet pourra être suivi en permanence par l'intermédiaire du site d'hébergement Github. Ce procédé permettra aux clients de constater non seulement l'évolution de la documentation et des outils de développement, mais aussi d'avoir une idée plus précise sur la contribution de chaque groupes et de la régularité de leur travail.
+
+	De plus, chaque étapes débouchera sur la rédaction de documentations (compte-rendu ou manuel d'utilisation) dont une version imprimée sera remise en mains propre aux clients par la MOA.
+
+
+	Outre les soutenances prévues en Janvier et en Mai, la MOA prévois au minimum deux réunions par mois avec les clients pour faire le points sur l'avancement du projet et sur les besoins du client (pouvant entrainer une réactualisation de la documentation).
 
 \end{document}
