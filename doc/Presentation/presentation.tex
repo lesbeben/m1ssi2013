@@ -34,7 +34,7 @@ Universit\'{e} de Rouen \\
 \section{Pr\'{e}sentation}
 %------------------------------------------------
 
-\subsection{qu'est ce qu'un OTP}
+\subsection{Qu'est ce qu'un OTP}
 
 \begin{frame}
 \frametitle{Description OTP}
@@ -49,12 +49,10 @@ Universit\'{e} de Rouen \\
 
 % Peut être séparer ces deux blocks sur deux frames ? voir le rendu
 \begin{block}{Utilité}
-    L'utilité de ce genre de mots de passe est de permettre une authentification 
-  à partir d'une machine qui n'est pas sûre sans donner d'informations 
-  permettant de se connecter une deuxième fois.
-
-    Les OTP sont aussi utilisé pour les authentifications à 2 facteurs. Comme un 
-  mécanisme pour garantir l'identité de la personne qui veut se connecter.
+  \begin{itemize}
+    \item Permettre une authentification forte.
+    \item Éviter les attaques par rejeu.
+  \end{itemize}
 \end{block}
 \end{frame}
 
@@ -67,9 +65,9 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 \begin{description}
  \item[OTP] Protocole de base.
  \item[HOTP] Protocole utilisant la fonction HMAC et un compteur de 
-synchronisation.
+  synchronisation.
  \item[TOTP] Protocole reprenant HOTP avec le temps comme compteur.
- \item[POTP] /!\ A COMPLETER DEMAIN LULZ
+ \item[EAP-POTP] Architecture pour s'authentifer sur \verb?IEEE 802.1x?. 
  \item[OTPW] Protocole basé sur l'état de la machine et la fonction de hashage RIPEMD-160.
 \end{description}
 \end{block}
@@ -84,9 +82,9 @@ synchronisation.
     \item Un serveur d'authentification
     \item Un client d'authentification
     \item Un token\footnote[1]{Programme permettant à l'utilisateur d'obtenir un 
-      OTP pour s'authentifer.} android\footnote[2]{Tout les protocoles ne 
-      nécessitent pas de tokens.}
-    \item Un token\footnotemark[1] Linux\footnotemark[2]
+      OTP pour s'authentifer.}\footnote[2]{Tout les protocoles ne 
+      nécessitent pas de tokens.} android
+    \item Un token Linux
   \end{itemize}
 \end{block}
 
@@ -94,65 +92,13 @@ synchronisation.
 
 
 %------------------------------------------------
-\section{Aspect technique}
-%------------------------------------------------
-
-\subsection{Technique}
-
-\begin{frame}
-\frametitle{Technique}
-\begin{block}{Technologies utilisés}
-\begin{itemize}
-  \item Pour le serveur et le token Linux le C est de rigueur.
-  % Parceque le C c'est beau et rapide.
-  \item Pour le token android nous comptons utiliser Java. 
-  % Recommandé par Google parceque le NDK c'est sale.
-\end{itemize}
-\end{block}
-
-\begin{figure}
- \includegraphics[scale=0.1]{img/architecture.png} % À MODIFIER !
- \caption{Schéma de l'architecture logicielle}
-\end{figure}
-
-\end{frame}
-
-
-%------------------------------------------------
-\section{Test et vérification}
-%------------------------------------------------
-
-\subsection{Vérification}
-
-\begin{frame}
-\frametitle{Vérification}
-Chaque partie de developpement fera le cadre d'un verification 
-\end{frame}
-
-\subsection{Tests}
-
-\begin{frame}
-\frametitle{Tests}
-Nous ferons des test de qualité afin de ...
-\end{frame}
-
-%------------------------------------------------
 \section{Organisation du travail}
 %------------------------------------------------
-
-\subsection{Découpage des rendus}
-%/!\ Planning poker non present ds le PDD
-\begin{frame}
-  \begin{figure}
-    \includegraphics[scale=0.1]{img/gantt.png} % À MODIFIER !
-    \caption{Planning des étapes du projet}
-  \end{figure}
-\end{frame}
 
 \subsection{Organisation des taches}
 \begin{frame}
 \frametitle{formation des equipes de travail}
-\begin{block}{Équipe lors de l'état de l'art}%
+\begin{block}{Équipe lors de l'état de l'art}
   \begin{itemize}
     \item POTP
     \begin{itemize}
@@ -168,15 +114,58 @@ Nous ferons des test de qualité afin de ...
     \item OTPW - OTP
     \begin{itemize}
       \item Damien \bsc{PICARD}
-      \item Adrien \bsc{SMONDACK} % R.I.P Lulz j avais pas vu ca ^^
+      \item Adrien \bsc{SMONDACK}
     \end{itemize}
   \end{itemize}
 \end{block}
-
 \end{frame}
 
 %------------------------------------------------
-\section{Planning des étapes du projet}
+\section{Aspect technique}
+%------------------------------------------------
+
+\subsection{Langages}
+\begin{frame}
+\frametitle{Technique}
+\begin{block}{Technologies utilisés}
+\begin{itemize}
+  \item Pour le serveur et le token Linux le C est de rigueur.
+  \item Pour le token android nous comptons utiliser Java. 
+\end{itemize}
+\end{block}
+\end{frame}
+
+\subsection{Architecture logicielle}
+\begin{frame}
+\begin{figure}
+ \includegraphics[scale=0.1]{img/architecture.png} % À MODIFIER !
+ \caption{Schéma de l'architecture logicielle}
+\end{figure}
+
+\end{frame}
+
+
+%------------------------------------------------
+\section{Test et vérification}
+%------------------------------------------------
+
+\subsection{Vérification}
+
+\begin{frame}
+  \frametitle{Vérification}
+  Chaque partie de developpement fera le cadre d'un verification 
+\end{frame}
+
+\subsection{Tests}
+
+\begin{frame}
+  \frametitle{Tests}
+  Nous ferons des test de qualité afin de ...
+\end{frame}
+
+
+%------------------------------------------------
+\section{Plan de développement}
 %------------------------------------------------
 \begin{block}{Diagramme de gantt}
   \begin{figure}
@@ -199,7 +188,7 @@ Nous ferons des test de qualité afin de ...
 
 \begin{frame}
 \frametitle{Conclusion}
-Le projet est réalisable...ou pas.
+  Le projet est réalisable...ou pas.
 \end{frame}
 
 
