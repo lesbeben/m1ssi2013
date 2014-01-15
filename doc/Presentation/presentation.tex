@@ -1,14 +1,16 @@
-\documentclass{beamer}
+\documentclass[xcolor=table]{beamer}
 
 \mode<presentation> {
 \usetheme{Madrid}
 }
 
 \usepackage{graphicx}
-\usepackage{booktabs}
+%\usepackage{booktabs}
 \usepackage[utf8]{inputenc} % Ton fichier est en utf8 ;-)
 \usepackage[french]{babel}
 
+\usepackage{multirow}
+\usepackage[table]{xcolor}
 
 \title[M1SSI]{Authentification \`{a} base d'OTP}
 
@@ -97,7 +99,7 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 
 \subsection{Organisation des taches}
 \begin{frame}
-\frametitle{formation des equipes de travail}
+\frametitle{Formation des equipes de travail}
 \begin{block}{Équipe lors de l'état de l'art}
   \begin{itemize}
     \item POTP
@@ -137,8 +139,9 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 
 \subsection{Architecture logicielle}
 \begin{frame}
+\frametitle{Technique}
 \begin{figure}
- \includegraphics[scale=0.1]{img/architecture.png} % À MODIFIER !
+ \includegraphics[scale=0.3]{img/architecture.png} % À MODIFIER !
  \caption{Schéma de l'architecture logicielle}
 \end{figure}
 
@@ -146,21 +149,20 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 
 
 %------------------------------------------------
-\section{Test et vérification}
+\section{Tests et vérifications}
 %------------------------------------------------
 
-\subsection{Vérification}
-
 \begin{frame}
-  \frametitle{Vérification}
-  Chaque partie de developpement fera le cadre d'un verification 
-\end{frame}
-
-\subsection{Tests}
-
-\begin{frame}
-  \frametitle{Tests}
-  Nous ferons des test de qualité afin de ...
+  \frametitle{Tests et vérifications}
+  \begin{itemize}
+   \item Tests effectuées après la réalisation de chaque composante (token, client, serveur). \\Si composante non conforme alors retour en phase de developpement.
+   \item  Lorsque des anomalies sont détectées lors des tests, la procédure est la suivante:
+    \begin{itemize}
+     \item Création d'une note / mémo précisant l'anomalie rencontrée.
+     \item Ajout d'une entrée au journal de test précisant la date du test.
+     \item Diffusion de la note à l'équipe de développement.
+    \end{itemize}
+  \end{itemize}
 \end{frame}
 
 
@@ -168,28 +170,49 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 \section{Plan de développement}
 %------------------------------------------------
 \begin{frame}
-  \begin{block}{Planning Poker}
-    \begin{figure}
-      \includegraphics[scale=0.1]{img/planningpoker.png} % À MODIFIER !
-      \caption{Planning poker}
-    \end{figure}
-  \end{block}
+\frametitle{Planning Poker}
+  \begin{figure}
+    \includegraphics[scale=0.3]{img/planningpoker.png} % À MODIFIER !
+    \caption{Planning poker}
+  \end{figure}
 \end{frame}
 
 \begin{frame}
-  \begin{block}{Diagramme de gantt}
-    \begin{figure}
-      \includegraphics[scale=0.1]{img/gantt.png} % À MODIFIER !
-      \caption{Planning des étapes du projet}
-    \end{figure}
-  \end{block}
+\frametitle{Schéma Macroscopique du Projet}
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.2]{../graphics/diagramme1.png}
+  \caption{Schéma Macroscopique du Projet}
+  \setlength{\parindent}{1cm}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Diagramme de Gantt}
+  \begin{figure}
+    \includegraphics[scale=0.22]{img/gantt.png} % À MODIFIER !
+    \caption{Planning des étapes du projet}
+  \end{figure}
 \end{frame}
 
 %------------------------------------------------
 \section{Gestion des risques}
 %------------------------------------------------
 % Synthèse des risques ? On ne recopies pas tout les risque je suppose
-
+\begin{frame}[fragile]
+\frametitle{Gestions des risques}
+  \begin{center}
+  \begin{tabular}{| p{5cm} | p{2cm} |p{2cm} |}
+  \hline
+  \rowcolor{lightgray}Libelle & Impact & Probabilité\\ \hline
+  Retard pour une partie de l'équipe (compréhension et/ou compétences) & \textcolor{orange}{Préoccupant} & \textcolor{red}{forte}\\ \hline
+  Appréhension des nouvelles technologies plus longue que prévu & \textcolor{orange}{Préoccupant} & \textcolor{red}{forte}\\ \hline
+  Faille de sécurité découverte après test. & \textcolor{red}{Important} & \textcolor{orange}{Moyenne}\\ \hline
+  Phase de développement plus longue que prévu.& \textcolor{red}{Important} & \textcolor{red}{forte}\\ \hline
+  Impondérables (surcharge de travail).& \textcolor{red}{Important} & \textcolor{red}{forte}\\ \hline
+  \end{tabular}
+  \end{center}
+\end{frame}
 
 %------------------------------------------------
 \section{Conclusion}
@@ -199,7 +222,10 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 
 \begin{frame}
 \frametitle{Conclusion}
-  Le projet est réalisable...ou pas.
+  \begin{itemize}
+   \item Le projet est réalisable (ref Diagramme de Gantt).
+  \end{itemize}
+
 \end{frame}
 
 
