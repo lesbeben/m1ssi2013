@@ -152,7 +152,7 @@ l'on ne trouvera pas dans d'autres systèmes d'OTP.
 \subsubsection{Attaques exhaustives}
 Nous considérerons ici que la distribution des OTP est équiprobable.
 Les chances de trouver la bonne réponse au challenge proposé sont donc:
-        \[\frac{1}{2^{\times longueur(otp)}}\]
+        \[\frac{1}{2^{longueur(otp)}}\]
 sachant que $longueur(otp)$ vaut 160 (bits) car c'est le r\'esultat d'un hash
 \verb?RIPEMD-160?.
 en limitant à $n$ le nombre de tentative possible pour un challenge
