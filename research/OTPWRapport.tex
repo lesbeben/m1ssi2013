@@ -4,7 +4,7 @@
 \author{Damien \bsc{PICARD}}
 
 \projet{OTP}
-\projdesc{\'Etude des syst\`emes de mots de passe jetable}
+\projdesc{\'Etude des syst\`emes de mots de passe jetables}
 \filiere{M1SSI}
 \logo{../res/logo_univ.png}
 
@@ -21,10 +21,10 @@
         Ce document présente une analyse du système OTPW. Toutes les
     informations présentées et analysées proviennent 
     \hyperref[de ce site]{http://www.cl.cam.ac.uk/~mgk25/otpw.html}. Le
-    but de cet article est de déterminer dans quelles condition le
+    but de cet article est de déterminer dans quelles conditions le
     système OTPW est utilisable, sous quelles conditions et avec quelles 
     garanties de sécurité.
-    Ce documents sera mis en relation avec plusieurs autres afin de réaliser un
+    Ce document sera mis en relation avec plusieurs autres afin de réaliser un
     comparatif entre les systèmes d'OTP majeurs.
 
     Les algorithmes donnés sont extrapolés des descriptions textuelles.
@@ -43,16 +43,16 @@
         Le générateur d'OTP repose sur la fonction de hachage RIPEMD-160.
 
 \section{Généralités}
-        Ce protocole fonctionne grâce à deux liste numérotées, une permettant 
+        Ce protocole fonctionne grâce à deux listes numérotées, une permettant 
     de former les OTP. Et une permettant de vérifier les OTP. Afin d'initialiser
     ces listes l'utilisateur doit entrer un mot de passe que l'on appellera plus
     tard le préfixe. Le serveur va générer deux listes une qu'il va donner à
-    l'utilisateur que l'on appellera liste de suffixes. Et un qu'il va garder
+    l'utilisateur que l'on appellera liste de suffixes. Et une qu'il va garder
     et qui permettra de vérifier les OTP.
 
         Ces OTP sont construits en concaténant le préfixe avec l'un des suffixes.
     Le serveur pour vérifier la validité d'un OTP va le hacher avec la fonction
-    RIPEMD-160 et comparer ce haché et avec celui dans sa liste.
+    RIPEMD-160 et comparer ce haché et avec celui de sa liste.
 
         Quand un utilisateur veut s'authentifier le client demandera un challenge 
     au serveur. Ce challenge est un numéro permettant d'identifier un suffixe sur
@@ -118,13 +118,13 @@
                     au suffixe correspondant à ce numéro noté dans une variante de base-64.
             \end{itemize}
     \end{itemize}
-    Sur le site de M.Kuhn on peut voir qu'il ne stock que les 72 premiers octets des haché.\\
+    Sur le site de M.Kuhn on peut voir qu'il ne stock que les 72 premiers octets des hachés.\\
     Je pense que c'est une aberration, avec les machines actuelles qui font office de serveur
     on peut se permettre de stocker la totalité des hachés, si nous ne prenons que 72 octets
     cela revient à réduire le nombre d'étape pour obtenir une collision.
     
     De plus on voit apparaître le nombre de caractères pour un suffixe. C'est le seul endroit
-    sur le site ou il est fait mention de ce paramêtre. Peut-on le modifier ?\\
+    sur le site où il est fait mention de ce paramêtre. Peut-on le modifier ?\\
     L'utilisation d'un codage en base 64 est il réellement plus efficace que de stocker
     des valeurs hexadécimale pour des hachés ?
 
@@ -166,9 +166,9 @@
 \subsection{Avantages et intérêts}
         Premièrement il faut deux choses pour s'authentifier, connaître le préfixe et avoir
     la liste des suffixes. Sans ces deux morceaux impossible de reconstituer l'OTP
-    demandé lors du login. De plus le ``token'' le requiert jamais de recalculer un
+    demandé lors du login. De plus le ``token'' ne requiert jamais de recalculer un
     OTP. Une fois donnée la liste est figée, il suffit de barrer les OTP utilisés au
-    fur et a mesure.
+    fur et à mesure.
 
 \subsection{Inconvénients et limites}
         Le plus gros problème avec ce système est qu'il est périssable, une fois tout les
@@ -182,7 +182,7 @@
     concaténation d'une chaîne de caractères de taille variable et d'une chaîne
     de caractère de longueur prédéterminée. Il n'existe a priori pas de limite
     de taille pour le préfixe. On peut supposer raisonnable de limiter les
-    OTP a des chaînes de strictement moins de 17 caractère.
+    OTP à des chaînes de strictement moins de 17 caractère.
     Cette ensemble compte donc $\sum_{i=0}^{16}(2^8)^i$ éléments.
     On peut compter  $2^{8\times 17} - 1$ soit $2^136 -1$ autrement dit
     $87112285931760246646623899502532662132735$ possibilités.
@@ -194,12 +194,12 @@
     \[\frac{3}{2^{136}}\]
 
         Tout ceci en admettant que les OTP soient constitués de strictement moins
-    de 17 caractères. De facto la meilleur attaque revient a trouver une collision.
+    de 17 caractères. De facto la meilleur attaque revient à trouver une collision.
 
 \subsubsection{Attaques par collisions}
         Étant donné que les OTP son re-hachés par le serveur le système est potentiellement sensible
     aux collisions. La fonction de hachage utilisée étant RIPEMD-160 à ce jour aucune méthode rapide
-    n'a été identifiée pour trouver des collisions. Donc les probabilité de trouver des collisions
+    n'a été identifiée pour trouver des collisions. Donc les probabilités de trouver des collisions
     suivent le paradoxe des anniversaire soit 50\% de chance en $2^80$.
 
 \subsubsection{Failles connues} 
@@ -210,16 +210,16 @@
     Cette attaque tire parti du fait qu'une machine peut envoyer beaucoup plus vite qu'un utilisateur.
     Du coup un attaquant pourrait sur une connexion parallèle attendre la fin de la saisie et envoyer
     le code de fin de chaîne pour valider l'entrée et se connecter à la place de l'utilisateur.
-    Pour palier à cela si deux tentative de login ont lieu en même temps la seconde se verra demandé
+    Pour palier à cela si deux tentatives de login ont lieu en même temps la seconde se verra demandé
     non plus un mais 3 suffixes.
 
     % Réflexion personnelle, pas forcément pertinent.
-        L'implémentation de M.Kuhn présente un autre ``défaut'', les suffixes sont toujours de tailles fixe.
+        L'implémentation de M.Kuhn présente un autre ``défaut'', les suffixes sont toujours de taille fixe.
     8 caractères en base 64. Ce qui veut dire que si on voit passer un OTP en clair on peut donc déterminer le
     préfixe en supprimant les 8 derniers caractères. Donc l'attaque exhaustive passe de $(2^8)^i$ où $i$ est
     la taille maximale de chaine que l'on veut tester à $(2^6)^8$ soit $2^48$ cela reste énorme surtout
     face au trois essais proposés mais constitue un amoindrissement considérable de la sécurité à mon sens
-    la où l'on pouvait aisément rendre les tailles de suffixes non prédictible.
+    la où l'on pouvait aisément rendre les tailles de suffixes non prédictibles.
 
 \subsubsection{Précautions et préconisation}
         Les OTP étant transmis en clair avec quelques OTP on peut déterminer assez
@@ -240,7 +240,7 @@
 
 \section{Utilisations}
 \subsection{Cas concrets d'utilisation}
-        Il existe déjà un implémentation qui fourni un module pour s'authentifier avec SSH, et un module
+        Il existe déjà une implémentation qui fourni un module pour s'authentifier avec SSH, et un module
     PAM pour s'authentifier pour a peu près n'importe quoi sous Linux.
 
 \subsection{Cas d'utilisation envisagés}
@@ -262,13 +262,13 @@
     trafiqué bien que effectivement les \verb?l1I? ainsi que les \verb?0O? soient parfois difficile a distingués. 
 
         Pour moi le choix de ne stocker qu'une partie des hachés constitue un affaiblissement de la sécurité puisqu'on facilite
-    les collisions. Et ne pas pouvoir choisir la taille de ses suffixe facilite beaucoup trop les attaques exhaustive
-    si l'attaquant à récupéré un OTP. En effet on passe d'une quinzaine de caractère et une taille variable à 8 caractères.
+    les collisions. Et ne pas pouvoir choisir la taille de ses suffixe facilite beaucoup trop les attaques exhaustives
+    si l'attaquant à récupéré un OTP. En effet on passe d'une quinzaine de caractères et une taille variable à 8 caractères.
     C'est un amoindrissement de taille !
 
         Une modification plutôt interessante serait d'utiliser non plus la fonction RIPEMD-160 pour générer des hachés mais
     une fonction qui génère des hachés de 256 voir 384 ou 512\footnote{\verb?SHA-2? par exemple} bits ceci afin d'avoir une
-    plage de sélection plus large pour les suffixe et de pouvoir faire varier leur taille d'une liste à l'autres.
+    plage de sélection plus large pour les suffixe et de pouvoir faire varier leur taille d'une liste à l'autre.
     De plus comme les listes ne sont générées qu'une fois par le serveur le problème de la puissance de calcul se pose moins.
 
         Le fait que ce protocole date de 2003 et n'ai jamais été soumis à l'IETF pour une RFC joue sûrement dans la présence
