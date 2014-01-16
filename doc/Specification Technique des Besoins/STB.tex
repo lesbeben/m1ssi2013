@@ -26,8 +26,8 @@
 \maketitle
 %-------------------------------------------------------------------------------
 \section{Objet}
-Ce document définit les exigences sur l'étude et l'implémentation des systèmes d'authentification 
-utilisant des mots de passe jetables ainsi que son domaine de fonctionnement.
+Ce document définit les exigences de l'étude et l'implémentation des systèmes d'authentification 
+utilisant des mots de passe jetables ainsi que leurs domaines de fonctionnement.
 
     \subsection{Besoins opérationnels} 
         \begin{itemize}
@@ -57,7 +57,7 @@ utilisant des mots de passe jetables ainsi que son domaine de fonctionnement.
 \section{Documents applicables et de référence}
 
 \begin{tabular}{p{1,5cm}>{\raggedright\arraybackslash}p{13cm}}
-{[sujet]} & {Expression du besoin client soit l'étude et implémentations des systèmes d'authentification utilisant des mots de passe jetables.}
+{[sujet]} & {Expression du besoin client: Étude et implémentations des systèmes d'authentification utilisant des mots de passe jetables.}
 \tabularnewline
 \\
 {[goo]} & {Google Authentificator \href{https://code.google.com/p/google-authenticator/}{https://code.google.com/p/google-authenticator/}.}
@@ -116,7 +116,7 @@ utilisant des mots de passe jetables ainsi que son domaine de fonctionnement.
   \begin{flushleft}
   Nous (l'équipe) commencerons par une étude de la \href{http://tools.ietf.org/html/rfc2289}{RFC2289} et toutes les RFC basées sur celle-ci
   soit, \href{http://tools.ietf.org/html/rfc4226}{RFC4226}, \href{http://tools.ietf.org/html/rfc4256}{RFC4256}, 
-  \href{http://tools.ietf.org/html/rfc4793}{RFC4793}, \href{http://tools.ietf.org/html/rfc6238}{RFC6238} afin d'en fournir un état de l'art le plus exhaustif possible. Une fois celui-ci terminé nous passerons \`{a} 
+  \href{http://tools.ietf.org/html/rfc4793}{RFC4793}, \href{http://tools.ietf.org/html/rfc6238}{RFC6238} afin de fournir un état de l'art le plus exhaustif possible. Une fois celui-ci terminé nous passerons à
   l'implémentation des meilleurs protocoles retenus. Enfin, pour vérifier notre production,
   un audit sera organisé ainsi qu'une batterie de tests afin de corriger les erreurs de développement pour nous mener \`{a} 
   une mise en application. 
@@ -141,14 +141,14 @@ demande à travers son application un secret au serveur. Le serveur génère le 
 \vspace{0.5cm}
 
 
-Ce protocole décrit la Génération de l'OTP par le token gràce à une demande de l'utilisateur.
+Ce protocole décrit la Génération de l'OTP par le token grâce à une demande de l'utilisateur.
 \\
 \fiche{Authentification}{Utilisateur}{L'utilisateur tente de s'authentifier sur le serveur}{L'utilisateur possède un OTP}{L'utilisateur donne le mot de passe au serveur}{Utilisateur authentifié ou rejeté}{../graphics/authentification.jpg}{Crash du serveur}
 
 \vspace{0.5cm}
 
 
-L'Authentification permet de valider la légimité d'un utilisateur; ce protocole décrit une demande d'authentification auprès du serveur pour cela l'utilisateur
+L'Authentification permet de valider la légitimité d'un utilisateur; ce protocole décrit une demande d'authentification auprès du serveur pour cela l'utilisateur
 entre un mot de passe à travers le client. Le client se charge alors de se connecter au serveur afin de procéder à un test de validation du mot de passe; si celui-ci
 est accepté alors le client est authentifié sinon il peut réessayer un mot de passe, au bout de n tentatives celui-ci est rejeté.
 \\
@@ -157,7 +157,7 @@ est accepté alors le client est authentifié sinon il peut réessayer un mot de
 
 \vspace{0.5cm}
 
-Lors d'une demande d'authentification au serveur, soit le client est identifié, soit l'identification est un echec et dans ce cas
+Lors d'une demande d'authentification au serveur, soit le client est identifié, soit l'identification est un échec et dans ce cas
 le serveur tente une resynchronisation.
 \clearpage
 \newpage
@@ -201,8 +201,8 @@ le serveur tente une resynchronisation.
 \vspace{0.5cm}
 \begin{description}
  \item[Unix] Unix désigne pour notre cas un système GNU/Linux et afin de permettre une plus grande compatibilité
- nous acceptons les versions kernel 3.x ainsi que glibc supérieur à la version 2.15.
- \item[Android] Android désigne pour notre cas toutes les versions Android 2.3.x et versions Android 4.x.
+ nous acceptons les kernels de version 3.x ainsi que glibc supérieur à la version 2.15.
+ \item[Android] Android désigne pour notre cas toutes les terminaux mobiles tournant sous le système d'exploitation Android en version 2.3.x et 4.x.
 \end{description}
 
 %-------------------------------------------------------------------------------
