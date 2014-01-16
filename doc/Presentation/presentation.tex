@@ -1,14 +1,16 @@
-\documentclass{beamer}
+\documentclass[xcolor=table]{beamer}
 
 \mode<presentation> {
 \usetheme{Madrid}
 }
 
 \usepackage{graphicx}
-\usepackage{booktabs}
+%\usepackage{booktabs}
 \usepackage[utf8]{inputenc} % Ton fichier est en utf8 ;-)
 \usepackage[french]{babel}
 
+\usepackage{multirow}
+\usepackage[table]{xcolor}
 
 \title[M1SSI]{Authentification \`{a} base d'OTP}
 
@@ -34,7 +36,7 @@ Universit\'{e} de Rouen \\
 \section{Pr\'{e}sentation}
 %------------------------------------------------
 
-\subsection{qu'est ce qu'un OTP}
+\subsection{Qu'est ce qu'un OTP}
 
 \begin{frame}
 \frametitle{Description OTP}
@@ -49,12 +51,10 @@ Universit\'{e} de Rouen \\
 
 % Peut être séparer ces deux blocks sur deux frames ? voir le rendu
 \begin{block}{Utilité}
-    L'utilité de ce genre de mots de passe est de permettre une authentification 
-  à partir d'une machine qui n'est pas sûre sans donner d'informations 
-  permettant de se connecter une deuxième fois.
-
-    Les OTP sont aussi utilisé pour les authentifications à 2 facteurs. Comme un 
-  mécanisme pour garantir l'identité de la personne qui veut se connecter.
+  \begin{itemize}
+    \item Permettre une authentification forte.
+    \item Éviter les attaques par rejeu.
+  \end{itemize}
 \end{block}
 \end{frame}
 
@@ -67,9 +67,9 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 \begin{description}
  \item[OTP] Protocole de base.
  \item[HOTP] Protocole utilisant la fonction HMAC et un compteur de 
-synchronisation.
+  synchronisation.
  \item[TOTP] Protocole reprenant HOTP avec le temps comme compteur.
- \item[POTP] /!\ A COMPLETER DEMAIN LULZ
+ \item[EAP-POTP] Architecture pour s'authentifer sur \verb?IEEE 802.1x?. 
  \item[OTPW] Protocole basé sur l'état de la machine et la fonction de hashage RIPEMD-160.
 \end{description}
 \end{block}
@@ -84,9 +84,9 @@ synchronisation.
     \item Un serveur d'authentification
     \item Un client d'authentification
     \item Un token\footnote[1]{Programme permettant à l'utilisateur d'obtenir un 
-      OTP pour s'authentifer.} android\footnote[2]{Tout les protocoles ne 
-      nécessitent pas de tokens.}
-    \item Un token\footnotemark[1] Linux\footnotemark[2]
+      OTP pour s'authentifer.}\footnote[2]{Tout les protocoles ne 
+      nécessitent pas de tokens.} android
+    \item Un token Linux
   \end{itemize}
 \end{block}
 
@@ -94,65 +94,13 @@ synchronisation.
 
 
 %------------------------------------------------
-\section{Aspect technique}
-%------------------------------------------------
-
-\subsection{Technique}
-
-\begin{frame}
-\frametitle{Technique}
-\begin{block}{Technologies utilisés}
-\begin{itemize}
-  \item Pour le serveur et le token Linux le C est de rigueur.
-  % Parceque le C c'est beau et rapide.
-  \item Pour le token android nous comptons utiliser Java. 
-  % Recommandé par Google parceque le NDK c'est sale.
-\end{itemize}
-\end{block}
-
-\begin{figure}
- \includegraphics[scale=0.1]{img/architecture.png} % À MODIFIER !
- \caption{Schéma de l'architecture logicielle}
-\end{figure}
-
-\end{frame}
-
-
-%------------------------------------------------
-\section{Test et vérification}
-%------------------------------------------------
-
-\subsection{Vérification}
-
-\begin{frame}
-\frametitle{Vérification}
-Chaque partie de developpement fera le cadre d'un verification 
-\end{frame}
-
-\subsection{Tests}
-
-\begin{frame}
-\frametitle{Tests}
-Nous ferons des test de qualité afin de ...
-\end{frame}
-
-%------------------------------------------------
 \section{Organisation du travail}
 %------------------------------------------------
 
-\subsection{Découpage des rendus}
-%/!\ Planning poker non present ds le PDD
-\begin{frame}
-  \begin{figure}
-    \includegraphics[scale=0.1]{img/gantt.png} % À MODIFIER !
-    \caption{Planning des étapes du projet}
-  \end{figure}
-\end{frame}
-
 \subsection{Organisation des taches}
 \begin{frame}
-\frametitle{formation des equipes de travail}
-\begin{block}{Équipe lors de l'état de l'art}%
+\frametitle{Formation des equipes de travail}
+\begin{block}{Équipe lors de l'état de l'art}
   \begin{itemize}
     \item POTP
     \begin{itemize}
@@ -168,28 +116,103 @@ Nous ferons des test de qualité afin de ...
     \item OTPW - OTP
     \begin{itemize}
       \item Damien \bsc{PICARD}
-      \item Adrien \bsc{SMONDACK} % R.I.P Lulz j avais pas vu ca ^^
+      \item Adrien \bsc{SMONDACK}
     \end{itemize}
   \end{itemize}
 \end{block}
-
 \end{frame}
 
 %------------------------------------------------
-\section{Planning des étapes du projet}
+\section{Aspect technique}
 %------------------------------------------------
-\begin{block}{Diagramme de gantt}
+
+\subsection{Langages}
+\begin{frame}
+\frametitle{Technique}
+\begin{block}{Technologies utilisés}
+\begin{itemize}
+  \item Pour le serveur et le token Linux le C est de rigueur.
+  \item Pour le token android nous comptons utiliser Java. 
+\end{itemize}
+\end{block}
+\end{frame}
+
+\subsection{Architecture logicielle}
+\begin{frame}
+\frametitle{Technique}
+\begin{figure}
+ \includegraphics[scale=0.3]{img/architecture.png} % À MODIFIER !
+ \caption{Schéma de l'architecture logicielle}
+\end{figure}
+
+\end{frame}
+
+
+%------------------------------------------------
+\section{Tests et vérifications}
+%------------------------------------------------
+
+\begin{frame}
+  \frametitle{Tests et vérifications}
+  \begin{itemize}
+   \item Tests effectuées après la réalisation de chaque composante (token, client, serveur). \\Si composante non conforme alors retour en phase de developpement.
+   \item  Lorsque des anomalies sont détectées lors des tests, la procédure est la suivante:
+    \begin{itemize}
+     \item Création d'une note / mémo précisant l'anomalie rencontrée.
+     \item Ajout d'une entrée au journal de test précisant la date du test.
+     \item Diffusion de la note à l'équipe de développement.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+%------------------------------------------------
+\section{Plan de développement}
+%------------------------------------------------
+\begin{frame}
+\frametitle{Planning Poker}
   \begin{figure}
-    \includegraphics[scale=0.1]{img/gantt.png} % À MODIFIER !
+    \includegraphics[scale=0.3]{img/planningpoker.png} % À MODIFIER !
+    \caption{Planning poker}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Schéma Macroscopique du Projet}
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.2]{../graphics/diagramme1.png}
+  \caption{Schéma Macroscopique du Projet}
+  \setlength{\parindent}{1cm}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Diagramme de Gantt}
+  \begin{figure}
+    \includegraphics[scale=0.22]{img/gantt.png} % À MODIFIER !
     \caption{Planning des étapes du projet}
   \end{figure}
-\end{block}
+\end{frame}
 
 %------------------------------------------------
 \section{Gestion des risques}
 %------------------------------------------------
 % Synthèse des risques ? On ne recopies pas tout les risque je suppose
-
+\begin{frame}[fragile]
+\frametitle{Gestions des risques}
+  \begin{center}
+  \begin{tabular}{| p{5cm} | p{2cm} |p{2cm} |}
+  \hline
+  \rowcolor{lightgray}Libelle & Impact & Probabilité\\ \hline
+  Retard pour une partie de l'équipe (compréhension et/ou compétences) & \textcolor{orange}{Préoccupant} & \textcolor{red}{forte}\\ \hline
+  Appréhension des nouvelles technologies plus longue que prévu & \textcolor{orange}{Préoccupant} & \textcolor{red}{forte}\\ \hline
+  Faille de sécurité découverte après test. & \textcolor{red}{Important} & \textcolor{orange}{Moyenne}\\ \hline
+  Phase de développement plus longue que prévu.& \textcolor{red}{Important} & \textcolor{red}{forte}\\ \hline
+  Impondérables (surcharge de travail).& \textcolor{red}{Important} & \textcolor{red}{forte}\\ \hline
+  \end{tabular}
+  \end{center}
+\end{frame}
 
 %------------------------------------------------
 \section{Conclusion}
@@ -199,7 +222,10 @@ Nous ferons des test de qualité afin de ...
 
 \begin{frame}
 \frametitle{Conclusion}
-Le projet est réalisable...ou pas.
+  \begin{itemize}
+   \item Le projet est réalisable (ref Diagramme de Gantt).
+  \end{itemize}
+
 \end{frame}
 
 
