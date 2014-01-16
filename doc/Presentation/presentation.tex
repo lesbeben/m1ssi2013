@@ -5,8 +5,7 @@
 }
 
 \usepackage{graphicx}
-%\usepackage{booktabs}
-\usepackage[utf8]{inputenc} % Ton fichier est en utf8 ;-)
+\usepackage[utf8]{inputenc} 
 \usepackage[french]{babel}
 
 \usepackage{multirow}
@@ -14,7 +13,6 @@
 
 \title[M1SSI]{Authentification \`{a} base d'OTP}
 
-%\author{}
 \institute[Universit\'{e} de Rouen] {
 Universit\'{e} de Rouen \\
 \medskip
@@ -49,7 +47,6 @@ Universit\'{e} de Rouen \\
   \end{itemize}
 \end{block}
 
-% Peut être séparer ces deux blocks sur deux frames ? voir le rendu
 \begin{block}{Utilité}
   \begin{itemize}
     \item Permettre une authentification forte.
@@ -161,7 +158,7 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 \begin{frame}
 \frametitle{Technique}
 \begin{figure}
- \includegraphics[scale=0.3]{img/architecture.png} % À MODIFIER !
+ \includegraphics[scale=0.3]{img/architecture.png} 
  \caption{Schéma de l'architecture logicielle}
 \end{figure}
 
@@ -175,7 +172,8 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 \begin{frame}
   \frametitle{Tests et vérifications}
   \begin{itemize}
-   \item Tests effectuées après la réalisation de chaque composante (token, client, serveur). \\Si composante non conforme alors retour en phase de developpement.
+   \item Tests effectuées après la réalisation de chaque composante (token, client, serveur). \\
+    Si composante non conforme alors retour en phase de developpement.
    \item  Lorsque des anomalies sont détectées lors des tests, la procédure est la suivante:
     \begin{itemize}
      \item Création d'une note / mémo précisant l'anomalie rencontrée.
@@ -192,7 +190,7 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 \begin{frame}
 \frametitle{Planning Poker}
   \begin{figure}
-    \includegraphics[scale=0.3]{img/planningpoker.png} % À MODIFIER !
+    \includegraphics[scale=0.3]{img/planningpoker.png}
     \caption{Planning poker}
   \end{figure}
 \end{frame}
@@ -210,7 +208,7 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 \begin{frame}
 \frametitle{Diagramme de Gantt}
   \begin{figure}
-    \includegraphics[scale=0.22]{img/gantt.png} % À MODIFIER !
+    \includegraphics[scale=0.22]{img/gantt.png}
     \caption{Planning des étapes du projet}
   \end{figure}
 \end{frame}
@@ -218,7 +216,7 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 %------------------------------------------------
 \section{Gestion des risques}
 %------------------------------------------------
-% Synthèse des risques ? On ne recopies pas tout les risque je suppose
+
 \begin{frame}[fragile]
 \frametitle{Gestions des risques}
   \begin{center}
@@ -245,10 +243,6 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
   \begin{itemize}
    \item Le projet est réalisable (ref Diagramme de Gantt).
   \end{itemize}
-
 \end{frame}
-
-
-
 %------------------------------------------------
 \end{document}
