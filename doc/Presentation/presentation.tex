@@ -13,8 +13,8 @@
 
 \title[M1SSI]{Authentification \`{a} base d'OTP}
 
-\institute[Universit\'{e} de Rouen] {
-Universit\'{e} de Rouen \\
+\institute[Université de Rouen] {
+Université de Rouen \\
 \medskip
 }
 \date{\today}
@@ -26,12 +26,12 @@ Universit\'{e} de Rouen \\
 \end{frame}
 
 \begin{frame}
-\frametitle{Table des mati\`{e}res}
+\frametitle{Table des matières}
 \tableofcontents
 \end{frame}
 
 %------------------------------------------------
-\section{Pr\'{e}sentation}
+\section{Présentation}
 %------------------------------------------------
 
 \subsection{Qu'est ce qu'un OTP}
@@ -42,7 +42,7 @@ Universit\'{e} de Rouen \\
     Un OTP est un mot de passe jetable, c'est à dire qu'il satisfait les deux 
   critères suivants:
   \begin{itemize}
-    \item Il n'est pas prédictible
+    \item Il n'est pas prévisible
     \item Il n'est valide que pour une unique session.
   \end{itemize}
 \end{block}
@@ -59,15 +59,15 @@ Universit\'{e} de Rouen \\
 
 \begin{frame}
 \frametitle{Le livrable}
-\begin{block}{Etat de l'art} 
+\begin{block}{État de l'art} 
 Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 \begin{description}
  \item[OTP] Protocole de base.
  \item[HOTP] Protocole utilisant la fonction HMAC et un compteur de 
   synchronisation.
  \item[TOTP] Protocole reprenant HOTP avec le temps comme compteur.
- \item[EAP-POTP] Architecture pour s'authentifer sur \verb?IEEE 802.1x?. 
- \item[OTPW] Protocole basé sur l'état de la machine et la fonction de hashage RIPEMD-160.
+ \item[EAP-POTP] Architecture pour s'authentifier sur \verb?IEEE 802.1x?. 
+ \item[OTPW] Protocole basé sur l'état de la machine et la fonction de hachage RipeMD-160.
 \end{description}
 \end{block}
 \end{frame}
@@ -75,14 +75,14 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 \begin{frame}
 \frametitle{Le livrable}
 \begin{block}{Application}
-    L'application se fera sur les protocole qui auront été retenu après l'étude de 
+    L'application se fera sur les protocole qui auront été retenus après l'étude de 
   l'état de l'art et comportera pour chaque protocole:
   \begin{itemize}
     \item Un serveur d'authentification
     \item Un client d'authentification
     \item Un token\footnote[1]{Programme permettant à l'utilisateur d'obtenir un 
-      OTP pour s'authentifer.}\footnote[2]{Tout les protocoles ne 
-      nécessitent pas de tokens.} android
+      OTP pour s'authentifier.}\footnote[2]{Tout les protocoles ne 
+      nécessitent pas de tokens.} Android
     \item Un token Linux
   \end{itemize}
 \end{block}
@@ -114,7 +114,7 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 
 \subsection{Organisation des taches}
 \begin{frame}
-\frametitle{Formation des equipes de travail}
+\frametitle{Formation des équipes de travail}
 \begin{block}{Équipe lors de l'état de l'art}
   \begin{itemize}
     \item POTP
@@ -149,7 +149,7 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 \begin{block}{Technologies utilisés}
 \begin{itemize}
   \item Pour le serveur et le token Linux le C est de rigueur.
-  \item Pour le token android nous comptons utiliser Java. 
+  \item Pour le token Android nous comptons utiliser Java. 
 \end{itemize}
 \end{block}
 \end{frame}
@@ -172,7 +172,7 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 \begin{frame}
   \frametitle{Tests et vérifications}
   \begin{itemize}
-   \item Procédures de tests écrites au début du développement de chaque composante. (test driven developement)
+   \item Procédures de tests écrites au début du développement de chaque composante. (Test Driven Development)
    \item Tests exécutés par les équipes de développement tout au long du processus de création.
    \item  Lorsque des anomalies sont détectées lors des tests, la procédure est la suivante:
     \begin{itemize}
