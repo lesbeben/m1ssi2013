@@ -13,11 +13,12 @@
 \projet{M1SSI}
 \projdesc{Projet de génération d'OTP}
 \filiere{M1SSI}
-\version{1.1}
+\version{2.0}
 \relecteur{\bsc{Adegoloye} Tayewo John Yves}
 \signataire{\bsc{Bardet} Magali}
-\date{Décembre 2013}
+\date{Janvier 2014}
 
+\histentry{2.0}{16/01/2014}{Version pour la revue de lancement}
 \histentry{1.1}{15/12/2013}{Ajout des modifications demandées par le client}
 \histentry{1.0}{01/12/2013}{Version relue et corrigée}
 \histentry{0.1}{21/11/2013}{Premier jet}
@@ -60,9 +61,6 @@ Ce document a pour but de préciser les détails techniques du logiciel final.
 
 %-------------------------------------------------------------------------------
 \section{Configuration requise}
-\subsection{Performances de calcul}
-On suppose l'implémentation du token possible sur de très petits 
-calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisante.
 
 \subsection{Périphériques et matériel spécifiques}
 \begin{tabular}{|p{0.2\textwidth}|p{0.4\textwidth}|p{0.4\textwidth}|}
@@ -95,15 +93,15 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisa
     \textcolor{white}{\bfseries Justification} \\
     \hline
     OS\_001& 
-    GNU/Linux pour un token, un client et un serveur&
+    GNU/Linux kernel 3.x / glibc >= 2.15 pour un token, un client et un serveur&
     À vrai dire comme la plupart des technologies employées seront libres
     la seule chose qui justifie l'emploi de ce système d'exploitation
     est qu'il est lui aussi libre et permet d'intégrer facilement ces technologies\\
     \hline
     OS\_002&
-    Android pour un token&
-    Ceci est dans l'hypothèse d'une implantation sur une plateforme type
-    smartphone/tablette. Une fois de plus ce choix se justifie par
+    Android 2.3.x comptabile 4.x pour un token&
+    Ceci est dans le cas de l'implantation sur une plateforme type
+    smartphone. Une fois de plus ce choix se justifie par
     l'aspect libre du système.\\
     \hline
 \end{tabular}
@@ -118,7 +116,7 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisa
     \hline
     PR-L\_001 &
     Support de l'API POSIX pour le token, le client et le serveur &
-    Ceci va de pair avec le choix de GNU/Linux comme système d'exploitation,
+    Ceci va de paire avec le choix de GNU/Linux comme système d'exploitation,
     c'est une technologie libre et performante.\\
     \hline
     PR-L\_002 &
@@ -130,30 +128,9 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisa
 
 
 %-------------------------------------------------------------------------------
-\section{Architectures statiques}
-\subsection{Structure générale du système}
+\part*{Architectures statiques}
+\section{Structure générale du système}
 \includegraphics[width=\textwidth]{../graphics/architecture.png}
-\subsection{Structure user}
-\label{sub:Structure_user}
-    Cette structure a pour but de pouvoir conserver l'état d'un générateur d'OTP
-    pour un utilisateur. Elle sera stockée dans une base de données sur le
-    serveur. Cela permet de ne charger qu'un seul module de génération de mot de
-    passe en mémoire pour gérer plusieurs utilisateurs.
-    \subsubsection{Champs}
-    \label{ssub:Champs}
-        Une structure identifiant un utilisateur pour un générateur d'OTP 
-        contient les champs suivants:
-        \begin{description}
-            \item[login] le nom de l'utilisateur
-            \item[HPass] Une empreinte du mot de passe de l'utilisateur
-            \item[isLocked] indique si l'utilisateur à le droit d'essayer de
-                se connecter
-            \item[secret] Le secret permettant de générer n'importe quel OTP 
-                valide
-            \item[how] La méthode d'authentification OTP.
-            \item[otparams] Un pointeur vers une structure contenant des 
-                paramètres relatifs à la méthode de génération d'OTP
-        \end{description}
 
 \subsection{Token}
     \subsubsection{Rôle}
@@ -174,11 +151,9 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisa
         \end{itemize}
 
     \subsubsection{Langages de programmation}
-    \begin{itemize}
-        \item C
-        \item Java Mobile
-        \item Java Card (optionnel)
-    \end{itemize}
+        Les langages utilisés pour créer des tokens seront: le C pour GNU/Linux,
+    et Java pour Android. Dans le cas de JavaCard (optionnel) il n'y a pas besoin
+    de tokens puisque c'est la carte qui fourni ce service
 
     \subsubsection{Procédés de développement}
     \begin{enumerate}
@@ -189,17 +164,18 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisa
     \end{enumerate}
 
     \subsubsection{Taille et complexité}
-    \begin{itemize}
-        \item Taille et complexité dépendantes de l'algorithme de génération
-            de mots de passe jetables
-    \end{itemize}
+            Taille et complexité dépendantes de l'algorithme de génération
+        de mots de passe jetables
 
 %------------------------------------------------------------------------------
 \subsection{Générateur d'OTP}
     Chaque algorithme étudié et implémenté (HOTP, OTPW, POTP) offrira les
     mêmes services, seul le fonctionnement interne du module diffèrera.
-    les algorithmes seront détaillés dans les dossiers associés au recherches sur 
-    chaques algorithme.
+    les algorithmes seront détaillés dans les dossiers associés aux recherches sur 
+    chaque algorithme.
+    
+        Chaque protocole choisi fera l'objet de l'implémentation d'une bibliothèque
+    logicielle permettant de s'intégrer dans un serveur et un token.
     \subsubsection{Rôle}
         Générer des mots de passe jetables permettant de s'authentifier.
 
@@ -212,11 +188,10 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisa
     \end{description}
 
     \subsubsection{Langages de programmation}
-    \begin{itemize}
-        \item C
-        \item Java Mobile
-        \item Java Card (optionnel)
-    \end{itemize}
+        Pour créer les tokens Android nous utiliserons le langage Java.
+    Pour créer les tokens GNU/Linux, nous utiliserons le langage C.
+    Dans le cas de JavaCard (optionnel) c'est aussi le langage Java qui sera
+    utilisé.
 
     \subsubsection{Procédé de développement}
     \begin{enumerate}
@@ -225,12 +200,10 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisa
     \end{enumerate}
 
     \subsubsection{Taille et complexité}
-    \begin{itemize}
-        \item Taille et complexité dépendantes de l'algorithme de génération
-            de mots de passe jetables, mais suffisamment faibles pour tenir sur
-            de petites capacités mémoire et permettre un calcul 
-            en t < 1s sur \verb?700MHz?.
-    \end{itemize}
+            Taille et complexité dépendantes de l'algorithme de génération
+        de mots de passe jetables, mais suffisamment faibles pour tenir sur
+        de petites capacités mémoire et permettre un calcul 
+        en t < 1s sur \verb?700MHz?.
 
 \subsection{Client}
     \subsubsection{Rôle}
@@ -250,9 +223,8 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisa
     \end{itemize}
 
     \subsubsection{Langage de programmation}
-    \begin{itemize}
-        \item C
-    \end{itemize}
+        Comme le client n'est prévu que sur un système GNU/Linux nous n'utiliserons
+    que le langage C.
 
     \subsubsection{Procédé de développement}
     \begin{enumerate}
@@ -274,7 +246,7 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisa
     \begin{description}
         \item[Port] Le port utilisé pour accéder au serveur
             d'authentification.
-        \item[Adresse] L'adresse pour accéder au serveur 
+        \item[Adresses] L'adresse pour accéder au serveur 
             d'authentification.
     \end{description}
 
@@ -298,10 +270,9 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisa
     \end{itemize}
 
     \subsubsection{Langage de programmation}
-    \begin{itemize}
-        \item C
-    \end{itemize}
-
+        Comme le serveur n'est prévu que sur un système GNU/Linux nous n'utiliserons
+    que le langage C.
+    
     \subsubsection{Procédés de développement}
     \begin{enumerate}
         \item Déterminer le protocole de communication entre client et serveur.
@@ -315,6 +286,27 @@ calculateurs, donc une fréquence processeur de \verb?700MHz? doit être suffisa
     en mesure de supporter plusieurs requêtes simultanées ainsi que plusieurs
     protocoles de mots de passe jetables.
 
+\subsection{Structure user}
+\label{sub:Structure_user}
+    Cette structure a pour but de pouvoir conserver l'état d'un générateur d'OTP
+    pour un utilisateur. Elle sera stockée dans une base de données sur le
+    serveur. Cela permet de ne charger qu'un seul module de génération de mot de
+    passe en mémoire pour gérer plusieurs utilisateurs.
+    \subsubsection{Champs}
+    \label{ssub:Champs}
+        Une structure identifiant un utilisateur pour un générateur d'OTP 
+        contient les champs suivants:
+        \begin{description}
+            \item[login] le nom de l'utilisateur
+            \item[HPass] Une empreinte du mot de passe de l'utilisateur
+            \item[isLocked] indique si l'utilisateur à le droit d'essayer de
+                se connecter
+            \item[secret] Le secret permettant de générer n'importe quel OTP 
+                valide
+            \item[how] La méthode d'authentification OTP.
+            \item[otparams] Un pointeur vers une structure contenant des 
+                paramètres relatifs à la méthode de génération d'OTP
+        \end{description}
 
 \subsection{Justification des choix techniques}
 \subsubsection{Le langage C}
@@ -369,7 +361,7 @@ On entre le mot de passe généré par le token dans le client qui demandera une
 vérification au serveur.
 
 \subsubsection{Flux réseau}
-Lors de cette étape il y a deux façon de procéder:
+Lors de cette étape il y a deux façons de procéder:
 
     \paragraph{le défi/réponse:}
     \begin{enumerate}
