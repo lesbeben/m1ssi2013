@@ -15,6 +15,7 @@
 \signataire{Magali \bsc{Bardet}}
 \date{Janvier 2013}
 
+\histentry{2.0}{16/01/2014}{Version pour la revue de lancement.}
 \histentry{1.2}{06/01/2014}{Version Finale.}
 \histentry{1.1}{30/12/2013}{Version relue.}
 \histentry{1.0}{19/12/2013}{Version initiale.}
@@ -81,6 +82,47 @@
 \newpage
 %---------------------------------------------------------------------------------------------------------------------------------------------
 \section{Méthodologie de développement}
+\subsection{Le choix de la méthode}
+
+	Nous avons comparé les différentes méthodes de développement vues en cours afin d'employer la mieux adaptée à notre projet. Parmi les méthodologies Agiles, qui nous étaient imposées, deux ont retenu notre attention: Scrum et eXtreme Programming (XP). En effet, ces deux méthodes sont bien adaptées à des équipes de taille réduite comme la notre. Nous avons donc comparé point par point les différents aspects de Scrum et XP.	
+\\
+
+		Les deux ont l'avantage de bien s'adapter à des effectifs réduits comme le notre. XP est de plus pensé spécifiquement pour les projets de taille réduite. XP est plus orienté technique, avec des pratiques de codes établies tandis que Scrum met plus l'accent sur la gestion de projet pure et favorise la communication au sein de l'équipe.\\
+		
+		
+		Les différents comparatif que nous avons pu étudier montrent que XP est généralement plus rapide mais plus couteux que Scrum. XP centre sa dynamique autour du client, tandis que Scrum favorise l'indépendance des équipes de développement.
+	
+	Au final, de nombreux critères nous ont orienté dans notre choix mais aucun n'a été plus important que la sécurité. Il s'agit en effet de l'objectif principal à atteindre pour un projet comme le notre et nous avons donc décidé de baser le choix de notre méthodologie dessus.
+\\
+		
+	Nous avons donc opté pour XP comme base,car cela semblait le plus cohérent pour un projet orienté sécurité, mais nous avons prévu d'adapter la méthode au contraintes de notre projet. En effet, les méthodes Agiles ne sont pas au point pour ce qui est des projets de sécurité informatique et les témoignages que nous avons pu recueillir préviennent que l'attachement à une méthode particulière peut se révéler contre-productif. 
+\\
+
+
+	Néanmoins, afin de nous prêter à l'évaluation du projet dans les meilleures conditions possible, nous resterons au plus proche d'XP à travers tous le développement.
+	
+
+\subsection{eXtreme Programming: les grands principes}
+
+Il y a de nombreux principes qui composent l'eXtreme Programming, nous décrirons ici celles sur lesquelles nous comptons nous focaliser.
+
+	\subsubsection{Test Driven Development}
+	
+Cette méthodologie liée à XP implique la création systématique de tests unitaires, automatisés si possible, pour chaque fonctionnalité. Le développement vient après la création des tests et se déroule en gardant la satisfaction du test comme priorité en continu.
+
+Les développeurs doivent donc faire en sorte de satisfaire les exigences de qualité, tout en gardant leur code le plus simple possible, selon la philosophie K.I.S.S. (Keep It Simple and Stupid).
+	 
+	 \subsubsection{Intégration Continue et Refactoring}
+	 
+Selon les principes d'intégration continue, on interface les composants entre eux au fur et à mesure du développement, afin de faciliter la livraison. Le refactoring  consiste à revoir régulièrement le code sans changer les fonctionnalités ou le comportement, ceci afin de produire du code facilement reprenable.
+
+\subsubsection{Appropriation collective du code et programmation en binôme}
+
+Chaque membre de l'équipe devra être capable de travailler sur n'importe quelle partie du projet. La programmation se fera en binômes (deux par machine) afin de produire du code rigoureux et d'aider à faire progresser les membres plus faibles en technique. \\
+
+La revue de code sera effectuée régulièrement	par les binômes sur le code des autres binôme, afin d'assurer le respect des conventions de codes fixées par le responsable technique et de faciliter l'intégration avec leur propre code.
+
+\subsection{Étapes du développement}
 	\begin{description}
 	    \item [Étape 1 :] État de l'art
 		    \begin{description}

@@ -143,12 +143,12 @@
             \ifx \@author \@empty
                 \relax
             \else
-                Auteur: \@author\\
+                Auteur(s): \@author\\
             \fi
             \ifx \@relecteur \@empty
                 \relax
             \else
-                Relecteur: \@relecteur\\
+                Relecteur(s): \@relecteur\\
             \fi
             \ifx \@signataire \@empty    
                 \relax
