@@ -4,6 +4,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
 
+
 \usepackage{multirow}
 
 \logo{../../res/logo_univ.png}
@@ -12,11 +13,12 @@
 \projet{M1SSI}
 \projdesc{Projet de génération d'OTP}
 \filiere{M1SSI}
-\version{1.1}
+\version{2.0}
 \relecteur{\bsc{Zigh} Benjamin}
 \signataire{\bsc{Bardet} Magali}
-\date{Décembre 2013}
+\date{Janvier 2014}
 
+\histentry{2.0}{16/01/2014}{Version pour la revue de lancement.}
 \histentry{1.1}{20/12/2013}{Version relue et corrigée.}
 \histentry{1.0}{18/12/2013}{Version initiale.}
 
@@ -83,8 +85,22 @@
 		& R\_18 & Un membre se retrouve privé de ses outils de travail \\ \cline{2-3}
 		& R\_19 & Problème avec le git \\ \hline
 \end{tabular}
-
 \newpage
+
+\subsection{Criticité}
+	\begin{center}
+	\begin{tabular}{  c  p{2cm} | p{1.5cm} | p{1.5cm} | p{1.5cm} | p{1.5cm} |}
+	  \cline{3-6}
+	   & \multicolumn{1}{c |}{} & \multicolumn{4}{ c |}{Probabilité} \\ \cline{3 - 6}
+	   & & \cellcolor{lightgray} très faible & \cellcolor{lightgray} faible & \cellcolor{lightgray} moyenne & \cellcolor{lightgray} forte \\ \hline
+	   \multicolumn{1}{| c |}{\multirow{4}{*}{Impact}} & \cellcolor{lightgray} Acceptable &\cellcolor{green} &\cellcolor{green} &\cellcolor{green} &\cellcolor{green} \\ \cline{2-6}
+	   \multicolumn{1}{| c |}{} & \cellcolor{lightgray} Préoccupant &\cellcolor{green} &\cellcolor{green} &\cellcolor{green} & \cellcolor{red}\\ \cline{2-6}
+	   \multicolumn{1}{| c |}{} & \cellcolor{lightgray} Important &\cellcolor{green} &\cellcolor{green} &\cellcolor{red} & \cellcolor{red} \\ \cline{2-6}
+	   \multicolumn{1}{| c |}{} & \cellcolor{lightgray} Critique &\cellcolor{green} &\cellcolor{red} &\cellcolor{red} &\cellcolor{red} \\ \hline
+	\end{tabular}
+	\end{center}
+
+
 %------------------------------------------------------------------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \section{Gestion des risques les plus importants}
@@ -92,200 +108,121 @@
 \subsection{Top 5}
 
 \subsubsection{Risque 5 :}
-	\begin{tabular}{| p{5cm} | p{9cm} |}
+	\begin{tabular}{| p{5cm} | p{2.5cm} | p{6.5cm} |} 
 		\hline
-		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_08} \\ \hline
-		\cellcolor{lightgray}Évènement/situation redouté(e) & Retard d'une partie de l'équipe sur la compréhension théorique ou les compétences techniques. \\ \hline
-		\cellcolor{lightgray}Point dur associé & Formation / suivi des équipes. \\ \hline
-		\cellcolor{lightgray}Impact & Préoccupant. \\ \hline
-		\cellcolor{lightgray}Probabilité & Forte. \\ \hline
-		\cellcolor{lightgray}Plan de réduction de risque & Suivi régulier des équipes par le responsable technique et le chef de projet. \\ \hline
-		\cellcolor{lightgray}Plan d'action & Consultation d'un responsable technique. Si aucune amélioration, re-manier l'équipe concernée (ajout d'une personne ayant suffisamment avancé 	dans son travail, le remplacement ne semblant pas être une bonne solution). \\ \hline	
-		\cellcolor{lightgray}Statut/Date/Responsable & Créé le 29/11/13 par Adrien \bsc{Smondack}. \\ \hline
+		\multicolumn{3}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_08} \\ \hline
+		\cellcolor{lightgray}Évènement/situation redouté(e) & \multicolumn{2}{p{9cm}|}{Retard d'une partie de l'équipe sur la compréhension théorique ou les compétences techniques.} \\ \hline
+		\cellcolor{lightgray}Point dur associé & \multicolumn{2}{p{9cm}|}{Formation / suivi des équipes.} \\ \hline
+		\cellcolor{lightgray}Impact & \multicolumn{2}{p{9cm}|}{Préoccupant.} \\ \hline
+		\cellcolor{lightgray}Probabilité & \multicolumn{2}{p{9cm}|}{Forte.} \\ \hline
+		\cellcolor{lightgray}Critique & \multicolumn{2}{p{9cm}|}{\cellcolor{red} Oui}\\ \hline
+		\cellcolor{lightgray}Plan de réduction de risque & \multicolumn{2}{p{9cm}|}{Suivi régulier des équipes par le responsable technique et le chef de projet.} \\ \hline
+		\cellcolor{lightgray}Plan d'action & Acteur : & Responsable technique, chef de projet \\ \cline{2-3}
+		\cellcolor{lightgray}		   & Déclenchement : & Demande de la part d'une équipe \\ \cline{2-3}
+		\cellcolor{lightgray}		   & But : & Rétablir la compéhension technique \\ \cline{2-3}
+		\cellcolor{lightgray}		   & Action : & Consultation du responsable technique. Remaniement de l'équipe si pas d'amélioration. \\ \hline
+		\cellcolor{lightgray}Statut/Date/Responsable & \multicolumn{2}{p{9cm} |} {Créé le 29/11/13 par Adrien \bsc{Smondack}.} \\ \hline
 	\end{tabular}
 
 \subsubsection{Risque 4 :}
-	\begin{tabular}{| p{5cm} | p{9cm} |}
+	\begin{tabular}{| p{5cm} | p{2.5cm} | p{6.5cm} |}
 		\hline
-		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_11} \\ \hline
-		\cellcolor{lightgray}Évènement/situation redouté(e) & Appréhension des nouvelles technologies plus longue que prévu. \\ \hline
-		\cellcolor{lightgray}Point dur associé & Emploi de technologies spécifiques (Android, Java Card). \\ \hline
-		\cellcolor{lightgray}Impact & Préoccupant. \\ \hline
-		\cellcolor{lightgray}Probabilité & Forte. \\ \hline
-		\cellcolor{lightgray}Plan de réduction de risque & Suivi régulier des équipes par le responsable technique et le chef de projet. Rédaction de rapports explicatifs quant à la technologie étudiée (généralités, fonctionnalités nécessaires et/ou utiles pour le projet, particularités...). \\ \hline	
-		\cellcolor{lightgray}Plan d'action & Ajout d'une personne à l'équipe concernée pour combler les lacunes, un remplacement est envisageable. \\ \hline	
-		\cellcolor{lightgray}Statut/Date/Responsable & Créé le 29/11/13 par Adrien \bsc{Smondack}. \\ \hline
+		\multicolumn{3}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_11} \\ \hline
+		\cellcolor{lightgray}Évènement/situation redouté(e) & \multicolumn{2}{p{9cm}|}{Appréhension des nouvelles technologies plus longue que prévu.} \\ \hline
+		\cellcolor{lightgray}Point dur associé & \multicolumn{2}{p{9cm}|}{Emploi de technologies spécifiques (Android, Java Card).} \\ \hline
+		\cellcolor{lightgray}Impact & \multicolumn{2}{p{9cm}|}{Préoccupant.} \\ \hline
+		\cellcolor{lightgray}Probabilité & \multicolumn{2}{p{9cm}|}{Forte.} \\ \hline
+		\cellcolor{lightgray}Critique & \multicolumn{2}{p{9cm}|}{\cellcolor{red} Oui}\\ \hline
+		\cellcolor{lightgray}Plan de réduction de risque & \multicolumn{2}{p{9cm}|}{Suivi régulier des équipes par le responsable technique et le chef de projet. 
+		Rédaction de rapports explicatifs quant à la technologie étudiée (généralités, fonctionnalités nécessaires et/ou utiles pour le projet, particularités...).} \\ \hline	
+		\cellcolor{lightgray}Plan d'action & Acteur : & Chef de projet \\ \cline{2-3}
+		\cellcolor{lightgray}		   & Déclenchement : & Demande de la part d'une équipe \\ \cline{2-3}
+		\cellcolor{lightgray}		   & But : & Accélérer l'apprentissage de l'équipe \\ \cline{2-3}
+		\cellcolor{lightgray}		   & Action : & Ajout d'une personne à l'équipe. Un remplacement est envisageable. \\ \hline
+		\cellcolor{lightgray}Statut/Date/Responsable & \multicolumn{2}{p{9cm}|}{Créé le 29/11/13 par Adrien \bsc{Smondack}.} \\ \hline
 	\end{tabular}
 
 \subsubsection{Risque 3}
-	\begin{tabular}{| p{5cm} | p{9cm} |}
+	\begin{tabular}{| p{5cm} | p{2.5cm} | p{6.5cm} |}
 		\hline
-		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_03} \\ \hline
-		\cellcolor{lightgray}Évènement/situation redouté(e) & Faille de sécurité découverte après test. \\ \hline
-		\cellcolor{lightgray}Point dur associé & Démonstration de la sécurité des systèmes implémentés. \\ \hline
-		\cellcolor{lightgray}Impact & Important. \\ \hline
-		\cellcolor{lightgray}Probabilité & Moyenne. \\ \hline
-		\cellcolor{lightgray}Plan de réduction de risque & Suivi ($\Rightarrow$ tests) régulier des fonctionnalités du produit. \\ \hline
-		\cellcolor{lightgray}Plan d'action & Renvoie d'un rapport d'erreur détaillé à l'équipe ayant développé le sujet du test pour que celle-ci puisse la corriger dans les plus brefs 	délais. Si le temps manque, focaliser autant d'équipiers que nécessaire sur le problème. \\ \hline
-		\cellcolor{lightgray}Statut/Date/Responsable & Créé le 29/11/13 par Adrien \bsc{Smondack}. \\ \hline
+		\multicolumn{3}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_03} \\ \hline
+		\cellcolor{lightgray}Évènement/situation redouté(e) & \multicolumn{2}{p{9cm}|}{Faille de sécurité découverte après test.} \\ \hline
+		\cellcolor{lightgray}Point dur associé & \multicolumn{2}{p{9cm}|}{Démonstration de la sécurité des systèmes implémentés.} \\ \hline
+		\cellcolor{lightgray}Impact & \multicolumn{2}{p{9cm}|}{Important.} \\ \hline
+		\cellcolor{lightgray}Probabilité & \multicolumn{2}{p{9cm}|}{Moyenne.} \\ \hline
+		\cellcolor{lightgray}Critique & \multicolumn{2}{p{9cm}|}{\cellcolor{red} Oui}\\ \hline
+		\cellcolor{lightgray}Plan de réduction de risque & \multicolumn{2}{p{9cm}|}{Suivi ($\Rightarrow$ tests) régulier des fonctionnalités du produit.} \\ \hline
+		\cellcolor{lightgray}Plan d'action & Acteur : & Équipe de développement \\ \cline{2-3}
+		\cellcolor{lightgray}		   & Déclenchement : & Faille détéctée \\ \cline{2-3}
+		\cellcolor{lightgray}		   & But : & Réparer la faille de sécurité \\ \cline{2-3}
+		\cellcolor{lightgray}		   & Action : & Déclencher une procédure identique à celle lancée en cas de test échoué. 
+								Si le temps manque, focaliser autant d'équipiers que nécessaire sur le problème.\\ \hline
+		\cellcolor{lightgray}Statut/Date/Responsable & \multicolumn{2}{p{9cm}|}{Créé le 29/11/13 par Adrien \bsc{Smondack}.} \\ \hline
 	\end{tabular}
 
 \subsubsection{Risque 2}
-	\begin{tabular}{| p{5cm} | p{9cm} |}
+	\begin{tabular}{| p{5cm} | p{2.5cm} | p{6.5cm} |}
 		\hline
-		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_15} \\ \hline
-		\cellcolor{lightgray}Évènement/situation redouté(e) & Phase de développement plus longue que prévu. \\ \hline
-		\cellcolor{lightgray}Point dur associé & Gestion globale du projet (documentation). \\ \hline
-		\cellcolor{lightgray}Impact & Important. \\ \hline
-		\cellcolor{lightgray}Probabilité & Forte. \\ \hline
-		\cellcolor{lightgray}Plan de réduction de risque & Suivi régulier des équipes par le responsable technique et le chef de projet. \\ \hline
-		\cellcolor{lightgray}Plan d'action & Réunion d'équipe pour analyser et adapter les démarches en vue d'accélérer la productivité. \\ \hline
-		\cellcolor{lightgray}Statut/Date/Responsable & Créé le 29/11/13 par Adrien \bsc{Smondack}. \\ \hline
+		\multicolumn{3}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_15} \\ \hline
+		\cellcolor{lightgray}Évènement/situation redouté(e) & \multicolumn{2}{p{9cm}|}{Phase de développement plus longue que prévu.} \\ \hline
+		\cellcolor{lightgray}Point dur associé & \multicolumn{2}{p{9cm}|}{Gestion globale du projet (documentation).} \\ \hline
+		\cellcolor{lightgray}Impact & \multicolumn{2}{p{9cm}|}{Important.} \\ \hline
+		\cellcolor{lightgray}Probabilité & \multicolumn{2}{p{9cm}|}{Forte.} \\ \hline
+		\cellcolor{lightgray}Critique & \multicolumn{2}{p{9cm}|}{\cellcolor{red} Oui}\\ \hline
+		\cellcolor{lightgray}Plan de réduction de risque & \multicolumn{2}{p{9cm}|}{Suivi régulier des équipes par le responsable technique et le chef de projet.} \\ \hline
+		\cellcolor{lightgray}Plan d'action & Acteur : & Chef de projet \\ \cline{2-3}
+		\cellcolor{lightgray}		   & Déclenchement : & Date de fin de tache prévue dépasse celle du planning \\ \cline{2-3}
+		\cellcolor{lightgray}		   & But : & Éviter la propagation du retard.\\ \cline{2-3}
+		\cellcolor{lightgray}		   & Action : & Réunion d'équipe pour analyser et adapter les démarches en vue d'accélérer la productivité.
+								Éventuellement : Remaniement du planning en vue de réagencer les tâches\\ \hline
+		\cellcolor{lightgray}Statut/Date/Responsable & \multicolumn{2}{p{9cm}|}{Créé le 29/11/13 par Adrien \bsc{Smondack}.} \\ \hline
 	\end{tabular}
 
 \subsubsection{Risque 1}
-	\begin{tabular}{| p{5cm} | p{9cm} |}
+	\begin{tabular}{| p{5cm} | p{2.5cm} | p{6.5cm} |}
 		\hline
-		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_04} \\ \hline
-		\cellcolor{lightgray}Évènement/situation redouté(e) & Impondérables (surcharge de travail). \\ \hline
-		\cellcolor{lightgray}Point dur associé & Planifier l'évolution du développement du projet. \\ \hline
-		\cellcolor{lightgray}Impact & Important. \\ \hline
-		\cellcolor{lightgray}Probabilité & Forte. \\ \hline
-		\cellcolor{lightgray}Plan de réduction de risque & Raccourcir les délais afin de garder un peu d'avance. \\ \hline
-		\cellcolor{lightgray}Plan d'action & Augmentation du rythme de travail. Mise en commun des ressources et des compétences de toute l'équipe. Prolonger les délais n'est pas envisageable. \\ \hline
-		\cellcolor{lightgray}Statut/Date/Responsable & Créé le 29/11/13 par Adrien \bsc{Smondack}. \\ \hline
+		\multicolumn{3}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_04} \\ \hline
+		\cellcolor{lightgray}Évènement/situation redouté(e) & \multicolumn{2}{p{9cm}|}{Impondérables (surcharge de travail).} \\ \hline
+		\cellcolor{lightgray}Point dur associé & \multicolumn{2}{p{9cm}|}{Planifier l'évolution du développement du projet.} \\ \hline
+		\cellcolor{lightgray}Impact & \multicolumn{2}{p{9cm}|}{Important.} \\ \hline
+		\cellcolor{lightgray}Probabilité & \multicolumn{2}{p{9cm}|}{Forte.} \\ \hline
+		\cellcolor{lightgray}Critique & \multicolumn{2}{p{9cm}|}{\cellcolor{red} Oui}\\ \hline
+		\cellcolor{lightgray}Plan de réduction de risque & \multicolumn{2}{p{9cm}|}{Raccourcir les délais afin de garder un peu d'avance.} \\ \hline
+		\cellcolor{lightgray}Plan d'action & Acteur : & Chef de projet \\ \cline{2-3}
+		\cellcolor{lightgray}		   & Déclenchement : & - \\ \cline{2-3}
+		\cellcolor{lightgray}		   & But : & Tenir les délais annoncés.\\ \cline{2-3}
+		\cellcolor{lightgray}		   & Action : & Augmentation du rythme de travail. Mise en commun des ressources et des compétences de toute l'équipe. 
+								Prolonger les délais n'est pas envisageable.\\ \hline
+		\cellcolor{lightgray}Statut/Date/Responsable & \multicolumn{2}{p{9cm}|}{Créé le 29/11/13 par Adrien \bsc{Smondack}.} \\ \hline
 	\end{tabular}
 
 \newpage
 %------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \subsection{Les autres risques}
-
-\paragraph{}
-	\begin{tabular}{| p{5cm} | p{9cm} |}
-		\hline
-		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_01} \\ \hline
-		\cellcolor{lightgray}Évènement/situation redouté(e) & Le développement effectué ne correspond pas aux RFC. \\ \hline
-		\cellcolor{lightgray}Point dur associé & Étude des RFC décrivant les systèmes / État de l'art. \\ \hline
-		\cellcolor{lightgray}Impact & Important. \\ \hline
-		\cellcolor{lightgray}Probabilité & Faible. \\ \hline
-	\end{tabular} \\
-\paragraph{}
-	\begin{tabular}{| p{5cm} | p{9cm} |}
-		\hline
-		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_02} \\ \hline
-		\cellcolor{lightgray}Évènement/situation redouté(e) & État de l'art pas assez exhaustif. \\ \hline
-		\cellcolor{lightgray}Point dur associé & Étude des RFC décrivant les systèmes / État de l'art. \\ \hline
-		\cellcolor{lightgray}Impact & Important. \\ \hline
-		\cellcolor{lightgray}Probabilité & Faible. \\ \hline
-	\end{tabular} \\
-\paragraph{}
-	\begin{tabular}{| p{5cm} | p{9cm} |}
-		\hline
-		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_05} \\ \hline
-		\cellcolor{lightgray}Évènement/situation redouté(e) & Le client change ses objectifs. \\ \hline
-		\cellcolor{lightgray}Point dur associé & Communication régulière avec le client. \\ \hline
-		\cellcolor{lightgray}Impact & Important. \\ \hline
-		\cellcolor{lightgray}Probabilité & Faible. \\ \hline
-	\end{tabular} \\
-\paragraph{}
-	\begin{tabular}{| p{5cm} | p{9cm} |}
-		\hline
-		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_06} \\ \hline
-		\cellcolor{lightgray}Évènement/situation redouté(e) & Passer à côté d'une demande du client. \\ \hline
-		\cellcolor{lightgray}Point dur associé & Communication régulière avec le client. \\ \hline
-		\cellcolor{lightgray}Impact & Préoccupant. \\ \hline 
-		\cellcolor{lightgray}Probabilité & Faible. \\ \hline
-	\end{tabular} \\
-\paragraph{}
-	\begin{tabular}{| p{5cm} | p{9cm} |}
-		\hline
-		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_07} \\ \hline
-		\cellcolor{lightgray}Évènement/situation redouté(e) & Les clients font faillite. \\ \hline
-		\cellcolor{lightgray}Point dur associé & Communication régulière avec le client. \\ \hline
-		\cellcolor{lightgray}Impact & Critique. \\ \hline
-		\cellcolor{lightgray}Probabilité & (Très) Faible. \\ \hline
-	\end{tabular} \\
-\paragraph{}
-	\begin{tabular}{| p{5cm} | p{9cm} |}
-		\hline
-		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_09} \\ \hline
-		\cellcolor{lightgray}Évènement/situation redouté(e) & Spécification incomplète. \\ \hline
-		\cellcolor{lightgray}Point dur associé & Surveiller l'évolution des spécifications. \\ \hline
-		\cellcolor{lightgray}Impact & Préoccupant. \\ \hline
-		\cellcolor{lightgray}Probabilité & Moyenne. \\ \hline
-	\end{tabular} \\
-\paragraph{}
-	\begin{tabular}{| p{5cm} | p{9cm} |}
-		\hline
-		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_10} \\ \hline
-		\cellcolor{lightgray}Évènement/situation redouté(e) & Spécification trop exigeantes (Problème pour atteindre la performance désirée). \\ \hline
-		\cellcolor{lightgray}Point dur associé & Surveiller l'évolution des spécifications. \\ \hline
-		\cellcolor{lightgray}Impact & Préoccupant. \\ \hline
-		\cellcolor{lightgray}Probabilité & Moyenne. \\ \hline
-	\end{tabular} \\
-\paragraph{}
-	\begin{tabular}{| p{5cm} | p{9cm} |}
-		\hline
-		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_12} \\ \hline
-		\cellcolor{lightgray}Évènement/situation redouté(e) & Chef de projet incompétent. \\ \hline
-		\cellcolor{lightgray}Point dur associé & Communication au sein de l'équipe. \\ \hline
-		\cellcolor{lightgray}Impact & Acceptable. \\ \hline
-		\cellcolor{lightgray}Probabilité & Moyenne. \\ \hline
-	\end{tabular} \\
-\paragraph{}
-	\begin{tabular}{| p{5cm} | p{9cm} |}
-		\hline
-		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_13} \\ \hline
-		\cellcolor{lightgray}Évènement/situation redouté(e) & Conflit au sein de l'équipe. \\ \hline
-		\cellcolor{lightgray}Point dur associé & Communication au sein de l'équipe. \\ \hline
-		\cellcolor{lightgray}Impact & Préoccupant. \\ \hline
-		\cellcolor{lightgray}Probabilité & Faible. \\ \hline
-	\end{tabular} \\
-\paragraph{}
-	\begin{tabular}{| p{5cm} | p{9cm} |}
-		\hline
-		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_14} \\ \hline
-		\cellcolor{lightgray}Évènement/situation redouté(e) & Départ d'une ou plusieurs personnes clé du projet. \\ \hline
-		\cellcolor{lightgray}Point dur associé & Mutualisation des connaissances et des compétences. \\ \hline
-		\cellcolor{lightgray}Impact & Important. \\ \hline
-		\cellcolor{lightgray}Probabilité & Faible. \\ \hline
-	\end{tabular} \\
-\paragraph{}
-	\begin{tabular}{| p{5cm} | p{9cm} |}
-		\hline
-		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_16} \\ \hline
-		\cellcolor{lightgray}Évènement/situation redouté(e) & Le développement effectué ne correspond pas à la demande du client. \\ \hline
-		\cellcolor{lightgray}Point dur associé & Gestion globale du projet (documentation). \\ \hline
-		\cellcolor{lightgray}Impact & Critique. \\ \hline
-		\cellcolor{lightgray}Probabilité & Faible. \\ \hline
-	\end{tabular} \\
-\paragraph{}
-	\begin{tabular}{| p{5cm} | p{9cm} |}
-		\hline
-		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_17} \\ \hline
-		\cellcolor{lightgray}Évènement/situation redouté(e) & Sous estimation des efforts nécessaires à la réalisation du projet. \\ \hline
-		\cellcolor{lightgray}Point dur associé & Gestion globale du projet (documentation). \\ \hline
-		\cellcolor{lightgray}Impact & Important. \\ \hline
-		\cellcolor{lightgray}Probabilité & Faible. \\ \hline
-	\end{tabular} \\
-\paragraph{}
-	\begin{tabular}{| p{5cm} | p{9cm} |}
-		\hline
-		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_18} \\ \hline
-		\cellcolor{lightgray}Évènement/situation redouté(e) & Un membre se retrouve privé de ses outils de travail. \\ \hline
-		\cellcolor{lightgray}Point dur associé & Veiller aux besoins techniques des membres de l'équipe. \\ \hline
-		\cellcolor{lightgray}Impact & Acceptable. \\ \hline
-		\cellcolor{lightgray}Probabilité & Faible. \\ \hline
-	\end{tabular} \\
-\paragraph{}
-	\begin{tabular}{| p{5cm} | p{9cm} |}
-		\hline
-		\multicolumn{2}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_19} \\ \hline
-		\cellcolor{lightgray}Évènement/situation redouté(e) & Problème avec le git. \\ \hline
-		\cellcolor{lightgray}Point dur associé & Veiller aux besoins techniques des membres de l'équipe. \\ \hline
-		\cellcolor{lightgray}Impact & Préoccupant. \\ \hline
-		\cellcolor{lightgray}Probabilité & (Très) Faible. \\ \hline
-	\end{tabular} \\
+\begin{flushleft}
+ 
+\begin{tabular}{| p{1.4cm} | p{4cm} | p{4cm} | p{1.7cm} | p{1.6cm} | p{1.2cm} |}
+  \hline
+  \cellcolor{gray}Identifiant & \cellcolor{lightgray}Évènement/situation redouté(e) & \cellcolor{lightgray}Point dur associé 
+  & \cellcolor{lightgray}Impact & \cellcolor{lightgray}Probabilité & \cellcolor{lightgray}Critique \\ \hline
+  
+  R\_01 & Le développement effectué ne correspond pas aux RFC. & Étude des RFC décrivant les systèmes / État de l'art & Important & Faible & \cellcolor{green} Non \\ \hline
+  R\_02 & État de l'art pas assez exhaustif. & Étude des RFC décrivant les systèmes / État de l'art. & Important & Faible. & \cellcolor{green} Non \\ \hline
+  R\_05 & Le client change ses objectifs. & Communication régulière avec le client. & Important & Faible & \cellcolor{green} Non\\ \hline
+  R\_06 & Passer à côté d'une demande du client. & Communication régulière avec le client. & Préoccupant & Faible & \cellcolor{green} Non \\ \hline
+  R\_07 & Les clients font faillite. & Communication régulière avec le client. & Critique & (Très) Faible & \cellcolor{green} Non\\ \hline
+  R\_09 & Spécification incomplète. & Surveiller l'évolution des spécifications. & Préoccupant & Moyenne & \cellcolor{green} Non\\ \hline
+  R\_10 & Spécification trop exigeantes (Problème pour atteindre la performance désirée). & Surveiller l'évolution des spécifications. 
+	& Préoccupant & Moyenne & \cellcolor{green} Non\\ \hline
+  R\_12 & Chef de projet incompétent. & Communication au sein de l'équipe. & Acceptable & Moyenne & \cellcolor{green} Non\\ \hline
+  R\_13 & Conflit au sein de l'équipe. & Communication au sein de l'équipe. & Préoccupant & Faible & \cellcolor{green} Non\\ \hline
+  R\_14 & Départ d'une ou plusieurs personnes clé du projet. & Mutualisation des connaissances et des compétences. & Important & Faible & \cellcolor{green} Non\\ \hline
+  R\_16 & Le développement effectué ne correspond pas à la demande du client. & Gestion globale du projet (documentation). & Critique & Faible & \cellcolor{red} Oui\\ \hline
+  R\_17 & Sous estimation des efforts nécessaires à la réalisation du projet. & Gestion globale du projet (documentation). & Important & Faible & \cellcolor{green} Non\\ \hline
+  R\_18 & Un membre se retrouve privé de ses outils de travail. & Veiller aux besoins techniques des membres de l'équipe. & Acceptable & Faible & \cellcolor{green} Non\\ \hline
+  R\_19 & Problème avec le git. & Veiller aux besoins techniques des membres de l'équipe. & Préoccupant & (Très) Faible & \cellcolor{green} Non\\ \hline
+\end{tabular}
+\end{flushleft}
 
 %-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------------------------------------------------------------------
