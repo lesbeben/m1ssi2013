@@ -10,10 +10,10 @@
 \projet{M1SSI}
 \projdesc{Projet de génération d'OTP}
 \filiere{M1SSI}
-\version{1.2}
+\version{2.0}
 \relecteur{Gaëtan \bsc{Ferry}}
 \signataire{Magali \bsc{Bardet}}
-\date{Janvier 2013}
+\date{Janvier 2014}
 
 \histentry{2.0}{16/01/2014}{Version pour la revue de lancement.}
 \histentry{1.2}{06/01/2014}{Version Finale.}
@@ -87,15 +87,16 @@
 	Nous avons comparé les différentes méthodes de développement vues en cours afin d'employer la mieux adaptée à notre projet. Parmi les méthodologies Agiles, qui nous étaient imposées, deux ont retenu notre attention: Scrum et eXtreme Programming (XP). En effet, ces deux méthodes sont bien adaptées à des équipes de taille réduite comme la notre. Nous avons donc comparé point par point les différents aspects de Scrum et XP.	
 \\
 
-		Les deux ont l'avantage de bien s'adapter à des effectifs réduits comme le notre. XP est de plus pensé spécifiquement pour les projets de taille réduite. XP est plus orienté technique, avec des pratiques de codes établies tandis que Scrum met plus l'accent sur la gestion de projet pure et favorise la communication au sein de l'équipe.\\
+		Comme mentionné précédemment, les deux ont l'avantage de bien s'adapter à des effectifs réduits comme le notre. XP est de plus pensé spécifiquement pour les projets de taille réduite. XP est plus orienté technique, avec des pratiques de codes établies tandis que Scrum met plus l'accent sur la gestion de projet pure et favorise la communication au sein de l'équipe.\\
 		
 		
-		Les différents comparatif que nous avons pu étudier montrent que XP est généralement plus rapide mais plus couteux que Scrum. XP centre sa dynamique autour du client, tandis que Scrum favorise l'indépendance des équipes de développement.
+		Les différents comparatifs \footnote{\href{http://agile-only.com/master-thesis/software-dm/agile-s-dm/c-of-am}{http://agile-only.com/master-thesis/software-dm/agile-s-dm/c-of-am}}\footnote{\href{http://www.exa.unicen.edu.ar/catedras/agilem/comp.pdf}{http://www.exa.unicen.edu.ar/catedras/agilem/comp.pdf}} que nous avons pu étudier montrent que XP est généralement plus rapide mais plus couteux que Scrum. XP centre sa dynamique autour du client, tandis que Scrum favorise l'indépendance des équipes de développement.\\
+		
 	
 	Au final, de nombreux critères nous ont orienté dans notre choix mais aucun n'a été plus important que la sécurité. Il s'agit en effet de l'objectif principal à atteindre pour un projet comme le notre et nous avons donc décidé de baser le choix de notre méthodologie dessus.
 \\
 		
-	Nous avons donc opté pour XP comme base,car cela semblait le plus cohérent pour un projet orienté sécurité, mais nous avons prévu d'adapter la méthode au contraintes de notre projet. En effet, les méthodes Agiles ne sont pas au point pour ce qui est des projets de sécurité informatique et les témoignages que nous avons pu recueillir préviennent que l'attachement à une méthode particulière peut se révéler contre-productif. 
+	Nous avons donc opté pour XP comme base,car cela semblait le plus cohérent pour un projet orienté sécurité, mais nous avons prévu d'adapter la méthode au contraintes de notre projet. En effet, les méthodes Agiles ne sont pas au point pour ce qui est des projets de sécurité informatique et les témoignages\footnote{\href{http://www.tripwire.com/state-of-security/security-data-protection/the-security-implications-of-agile-development/}{http://www.tripwire.com/state-of-security/security-data-protection/the-security-implications-of-agile-development/}} que nous avons pu recueillir préviennent que l'attachement à une méthode particulière peut se révéler contre-productif. 
 \\
 
 
@@ -108,13 +109,14 @@ Il y a de nombreux principes qui composent l'eXtreme Programming, nous décriron
 
 	\subsubsection{Test Driven Development}
 	
-Cette méthodologie liée à XP implique la création systématique de tests unitaires, automatisés si possible, pour chaque fonctionnalité. Le développement vient après la création des tests et se déroule en gardant la satisfaction du test comme priorité en continu.
+Cette méthodologie liée à XP implique la création systématique de tests unitaires, automatisés si possible, pour chaque fonctionnalité. Le développement des composants vient après la création des tests et se déroule en gardant la satisfaction du test comme priorité en continu.\\
 
-Les développeurs doivent donc faire en sorte de satisfaire les exigences de qualité, tout en gardant leur code le plus simple possible, selon la philosophie K.I.S.S. (Keep It Simple and Stupid).
+
+Les développeurs doivent donc faire en sorte de satisfaire les exigences de qualité, tout en gardant leur code le plus simple possible, selon la philosophie K.I.S.S. \footnote{\href{http://en.wikipedia.org/wiki/KISS\_principle}{http://en.wikipedia.org/wiki/KISS\_principle}}.
 	 
 	 \subsubsection{Intégration Continue et Refactoring}
 	 
-Selon les principes d'intégration continue, on interface les composants entre eux au fur et à mesure du développement, afin de faciliter la livraison. Le refactoring  consiste à revoir régulièrement le code sans changer les fonctionnalités ou le comportement, ceci afin de produire du code facilement reprenable.
+Selon les principes d'intégration continue, on interface les composants entre eux au fur et à mesure du développement, afin de faciliter la livraison. Le refactoring  consiste à revoir régulièrement le code sans changer les fonctionnalités ou le comportement, ceci afin de produire du code facilement maintenable.
 
 \subsubsection{Appropriation collective du code et programmation en binôme}
 
