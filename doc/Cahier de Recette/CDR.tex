@@ -7,12 +7,12 @@
 
 \logo{../../res/logo_univ.png}
 \title{Cahier de recettes}
-\author{\bsc{Ferry} Gaetan, \bsc{Hardouin} Claire}
+\author{Gaetan \bsc{Ferry}, Claire \bsc{Hardouin}}
 \projet{M1SSI}
 \projdesc{Projet de génération d'OTP}
 \filiere{M1SSI}
 \version{2.0}
-\relecteur{\bsc{??} ??}
+\relecteur{Maxime \bsc{Michotte}}
 \signataire{\bsc{Bardet} Magali}
 \date{Janvier 2014}
 
@@ -41,7 +41,7 @@
   Les objets à tester sont le token et le vérifieur, et plus précisément leurs composantes logicielles. L'ensemble des tests sera réalisé dans un contexte \og{}en 
   production\fg{} ou en simulant celui-ci.
   
-  Dans l'éventualité o\`u des tests seraient à effectuer sur des composantes Android, ceux-ci seraient effectués sur un terminal mobile Samsung Galaxy ACE.
+  Dans l'éventualité où des tests seraient à effectuer sur des composantes Android, ceux-ci seraient effectués sur un terminal mobile Samsung Galaxy ACE.
   
   \section{Documents applicables et de références.}
   \begin{tabular}{p{1,5cm}>{\raggedright\arraybackslash}p{13cm}}
@@ -72,9 +72,9 @@
   \end{tabular}
   
   \section{Environnement de test}
-  L'ensemble des tests sera réalisé sur le site de l'Université de Rouen, antenne du madrillet.
+  L'ensemble des tests sera réalisé sur le site de l'Université de Rouen, antenne du Madrillet.
   Pour les tests, nous utiliserons des machines munies d'architectures grand public. Pour assurer le maximum de compatibilité, des systèmes 32 et 64 bits seront utilisés 
-  indépendamment. Les tests Android seront réalisés sur un terminal mobile muni d'un processeur mono-cœur ARM v6 cadencé à 832MHz, disposant de 278 Mo de mémoire et tournant sur un 
+  indépendamment. Les tests sur Android seront réalisés sur un terminal mobile muni d'un processeur mono-cœur ARM v6 cadencé à 832MHz, disposant de 278 Mo de mémoire et tournant sur un 
   système d'exploitation Android 2.3.6.
   
   Dans l'ensemble, les tests seront effectués sur des configurations modestes afin d'assurer la performance sur la plupart des machines actuelles et futures.
@@ -82,28 +82,28 @@
   Les données utilisées pour les tests seront une succession de valeurs de mots de passe jetable successivement correctes, erronées et incohérentes.
   
   \section{Responsabilités}
-  La création des procédures de test est laissée aux soins des responsables qualité de l'équipe. Ces procédures seront exécutés conformément au fontionnement d'eXtreme Programing. A savoir : les tests sont exécutés tout au long du développement par les équipes. Chaque équipe travailant au développement d'un composant est chargé de tester celui-ci continuellement et de publier les résultats de ceux-ci.
+  La création des procédures de test est laissée aux soins des responsables qualité de l'équipe. Ces procédures seront exécutés conformément au fonctionnement d'eXtreme Programming. A savoir : les tests sont exécutés tout au long du développement par les équipes. Chaque équipe travaillant au développement d'un composant est chargé de tester celui-ci continuellement et de publier les résultats de ceux-ci.
   
-  Afin d'assurer l'appropriation collective du code source, toute l'équipe peut signaler une anomalie revélée au cours du développement : soit elle est résolu par le même acteur, soit l'acteur transmet les résultats 
+  Afin d'assurer l'appropriation collective du code source, toute l'équipe peut signaler une anomalie révélée au cours du développement : soit elle est résolue par le même acteur, soit l'acteur transmet les résultats 
 des tests à une autre équipe afin que celle-ci travaille à la réparation de l'anomalie.
   
-  A tous moment une équipe peut reporter des anomalies dans la procédure de test. Dans ce cas, les responsables techniques travaillerons à améliorer la procédure incriminée et difuseront les mises à jour à l'ensemble de l'équipe.
+  \`A tout moment une équipe peut reporter des anomalies dans une procédure de test. Dans ce cas, les responsables techniques travailleront à améliorer la procédure incriminée et diffuseront les mises à jour à l'ensemble de l'équipe.
   
   \section{Stratégie de test}
   Les procédures de tests seront effectués avant le début de la réalisation de chaque composante (token, client, serveur). Toute composante testée qui serait non conforme ferait l'objet d'un 
   rapport d'erreur avant la reprise de son développement.
   
-  Les tests seront toujours tous appliqués tout au long du développement des composants afin de suivre la politique de développement guidés par les tests.
+  Les tests seront toujours tous appliqués tout au long du développement des composants afin de suivre la politique de développement guidés par les tests (Test Driven Development).
     
   Les tests pourront généralement être exécutés indépendamment sur le token et le vérifieur. Les dépendances entre tests seront précisées dans la suite de ce document.
   
-  Les tests de la mémoire utilisée seront réalisé afin d'assurer que la mémoire ne soit pas saturée.
+  Les tests de la mémoire utilisée seront réalisés afin d'assurer que la mémoire ne soit pas saturée.
   
-  Les tests de temps assureront une réactivitée minimum de l'application.
+  Les tests de temps assureront une réactivité minimum de l'application.
   
-  Les attaques permettront de mettre en évidences d'évetuelles failles de sécurité et ainsi de les corriger.
+  Les attaques permettront de mettre en évidences d'éventuelles failles de sécurité et ainsi de les corriger.
   
-  Les tests finaux viseront à relever les éventuelles mises en défault du système par utilisation brutal. C'est à dire à tester la possibilité de mise à mal du système par une utilisation inapropriée ou volontairement abusive.
+  Les tests finaux viseront à relever les éventuelles mises en défaut du système par utilisation brutale. C'est à dire à tester la possibilité de mise à mal du système par une utilisation inappropriée ou volontairement abusive.
   
   \section{Gestion des anomalies}
   Lorsque des anomalies sont détectées lors des tests, voici la procédure qui devrait être suivie :
@@ -247,12 +247,12 @@ des tests à une autre équipe afin que celle-ci travaille à la réparation de 
       EP\_03 & Utilisation d'un logiciel \og{}die hard\fg{} pour vérifier l'aléatoirité des mots de passe. &  
       & Ce test, nécessitant l'utilisation d'un \og{}die hard\fg{}, requiert une étude préalable et ne peut être détaillé.\\ \hline
       EP\_04 & Tester des OTP jusqu'à réussite de l'attaque ou rejet par l'application. & Procédure N° 7 & \\ \hline
-      EP\_05 & Rejouer 2 fois le mêm OTP & Procédure N° 5 & \\ \hline
+      EP\_05 & Rejouer 2 fois le même OTP & Procédure N° 5 & \\ \hline
       EQ\_01 & Mesurer le temps de génération d'un OTP. & Procédure N° 1 & \\ \hline
-      EQ\_02 & Mesurer le temps d'exécutiondu serveur. & Procédure N° 2 & \\ \hline
-      EQ\_03 & Effectuer 100 000 demandes simultannées. & Procédure N° 3 & \\ \hline
+      EQ\_02 & Mesurer le temps d'exécution du serveur. & Procédure N° 2 & \\ \hline
+      EQ\_03 & Effectuer 100 000 demandes simultanées. & Procédure N° 3 & \\ \hline
       EQ\_04 & Vérifier qu'il y a connexion avec un OTP valide et qu'on est rejeté avec un OTP invalide. & Procédure N° 2, 5 & \\ \hline
-      EQ\_05 & Vérifier qu'il n'y a pas plus de 10Ko de mémoire utilisé en plus après la génération. & Procédure N° 4 & \\ \hline
+      EQ\_05 & Vérifier qu'il n'y a pas plus de 10Ko de mémoire utilisés en plus après la génération. & Procédure N° 4 & \\ \hline
     \end{tabular}  
   \end{center}
 \end{document}
