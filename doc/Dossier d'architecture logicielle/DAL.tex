@@ -9,12 +9,12 @@
 
 \logo{../../res/logo_univ.png}
 \title{Architecture Logicielle}
-\author{\bsc{Picard} Damien}
+\author{Damien \bsc{Picard}, Tayewo John Yves \bsc{Adegoloye}}
 \projet{M1SSI}
 \projdesc{Projet de génération d'OTP}
 \filiere{M1SSI}
 \version{2.0}
-\relecteur{\bsc{Adegoloye} Tayewo John Yves}
+\relecteur{Adrien \bsc{Smondack}}
 \signataire{\bsc{Bardet} Magali}
 \date{Janvier 2014}
 
@@ -153,7 +153,7 @@ Ce document a pour but de préciser les détails techniques du logiciel final.
     \subsubsection{Langages de programmation}
         Les langages utilisés pour créer des tokens seront: le C pour GNU/Linux,
     et Java pour Android. Dans le cas de JavaCard (optionnel) il n'y a pas besoin
-    de tokens puisque c'est la carte qui fourni ce service
+    de tokens puisque c'est la carte qui fournit ce service
 
     \subsubsection{Procédés de développement}
     \begin{enumerate}
@@ -321,15 +321,15 @@ Le langage C a été choisi pour 2 raisons:
 
 %-------------------------------------------------------------------------------
 \subsubsection{Le langage Java}
-    Le langage java sera utilisé sur les plateformes android
-    et javacard, car bien qu'il soit possible de programmer en C
-    sur android, ce n'est pas recommandé par \verb?Google?
+    Le langage Java sera utilisé sur les plateformes Android
+    et Javacard, car bien qu'il soit possible de programmer en C
+    sur Android, ce n'est pas recommandé par \verb?Google?
     \footnote{\href{https://developer.android.com/tools/sdk/ndk/index.html}{Android NDK}}.
         
 \section{Fonctionnement dynamique}
 \subsection{Association/Partage du secret}
 \subsubsection{Principe}
-Le token et le serveur se mettent d'accord sur un secret partagé gr\^ace à l'utilisateur.
+Le token et le serveur se mettent d'accord sur un secret partagé grâce à l'utilisateur.
 
 \subsubsection{Flux réseau}
 Lors de l'association le client et le serveur échange le secret qui permet
