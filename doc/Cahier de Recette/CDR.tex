@@ -7,15 +7,16 @@
 
 \logo{../../res/logo_univ.png}
 \title{Cahier de recettes}
-\author{\bsc{Ferry} Gaetan}
+\author{\bsc{Ferry} Gaetan, \bsc{Hardouin} Claire}
 \projet{M1SSI}
 \projdesc{Projet de génération d'OTP}
 \filiere{M1SSI}
 \version{1.1}
-\relecteur{\bsc{Hardouin} Claire}
+\relecteur{\bsc{??} ??}
 \signataire{\bsc{Bardet} Magali}
-\date{Décembre 2013}
+\date{Janvier 2014}
 
+\histentry{2.0}{16/01/2014}{Version pour la revue de lancement.}
 \histentry{1.1}{15/12/2013}{Version relue et corrigée.}
 \histentry{1.0}{29/11/2013}{Version initiale.}
 
@@ -81,16 +82,28 @@
   Les données utilisées pour les tests seront une succession de valeurs de mots de passe jetable successivement correctes, erronées et incohérentes.
   
   \section{Responsabilités}
-  La réalisation des tests ainsi que leur ex\'ecution seront entrepris par le responsable qualité et son assistant. Les données de test pourront être fournies par ces 
-  mêmes personnes.
+  La création des procédures de test est laissée aux soins des responsables qualité de l'équipe. Ces procédures seront exécutés conformément au fontionnement d'eXtreme Programing. A savoir : les tests sont exécutés tout au long du développement par les équipes. Chaque équipe travailant au développement d'un composant est chargé de tester celui-ci continuellement et de publier les résultats de ceux-ci.
+  
+  Afin d'assurer l'appropriation collective du code source, toute l'équipe peut signaler une anomalie revélée au cours du développement : soit elle est résolu par le même acteur, soit l'acteur transmet les résultats 
+des tests à une autre équipe afin que celle-ci travaille à la réparation de l'anomalie.
+  
+  A tous moment une équipe peut reporter des anomalies dans la procédure de test. Dans ce cas, les responsables techniques travaillerons à améliorer la procédure incriminée et difuseront les mises à jour à l'ensemble de l'équipe.
   
   \section{Stratégie de test}
-  Les tests seront effectués après la réalisation de chaque composante (token, client, serveur). Toute composante testée qui serait non conforme ferait l'objet d'un 
-  rapport d'erreur et serait renvoyée au stade de développement.
-  Les tests seront toujours tous appliqués sur les éléments sur lesquels ils sont applicables sauf dans les cas ou un résultat négatif empêcherait de poursuivre les 
-  procédures.
+  Les procédures de tests seront effectués avant le début de la réalisation de chaque composante (token, client, serveur). Toute composante testée qui serait non conforme ferait l'objet d'un 
+  rapport d'erreur avant la reprise de son développement.
   
+  Les tests seront toujours tous appliqués tout au long du développement des composants afin de suivre la politique de développement guidés par les tests.
+    
   Les tests pourront généralement être exécutés indépendamment sur le token et le vérifieur. Les dépendances entre tests seront précisées dans la suite de ce document.
+  
+  Les tests de la mémoire utilisée seront réalisé afin d'assurer que la mémoire ne soit pas saturée.
+  
+  Les tests de temps assureront une réactivitée minimum de l'application.
+  
+  Les attaques permettront de mettre en évidences d'évetuelles failles de sécurité et ainsi de les corriger.
+  
+  Les tests finaux viseront à relever les éventuelles mises en défault du système par utilisation brutal. C'est à dire à tester la possibilité de mise à mal du système par une utilisation inapropriée ou volontairement abusive.
   
   \section{Gestion des anomalies}
   Lorsque des anomalies sont détectées lors des tests, voici la procédure qui devrait être suivie :
@@ -99,8 +112,12 @@
    identifiant unique sera donné au mémo de test.
    \item Ajout d'une entrée au journal de test précisant la date du test, la référence du mémo, la référence de l'objet testé ainsi que la référence de l'exigence de 
    qualité contrariée.
-   \item Diffusion de la note à l'équipe de développement. Cette dernière devra établir une contre-note portant le même identifiant et précisant les raisons supposées 
-   de l'anomalie ainsi que les contremesures mises en place. 
+   \item Diffusion de la note à l'équipe de développement.
+   \item Une personne est désigné pour corriger l'anomalie.
+   \item La personne vérifie la porté de l'anomalie, puis la corrige.
+   \item Une deuxième personne vérifie que l'anomalie est bien corrigée.
+   \item Une fois le feu vert donné, établir une contre-note portant le même identifiant et précisant les raisons supposées 
+   de l'anomalie ainsi que les contremesures mises en place.
   \end{itemize}
 \newpage
   \section{Procédures de test}  
@@ -109,14 +126,14 @@
     \vfill
     \begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
       \hline
-      \multicolumn{3}{|l|}{Objet testé : Token} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
+      \multicolumn{3}{|l|}{Objet testé : Token} & \multicolumn{2}{c|}{Version : 1.1}\\ \hline
       \multicolumn{5}{|l|}{Objectif de test : Valider le temps de génération d'un OTP}\\ \hline
       \multicolumn{3}{|l|}{Procédure n° 1} & \multicolumn{2}{p{3cm}|}{Pré-requis : aucun}\\ \hline
       \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
       \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
-      1 & Demander un OTP & Un OTP est retourné & EP\_01 & OK\\
+      1 & Demander un OTP au token & Un OTP est retourné & EP\_01 & OK\\
       2 & Mesurer le temps de génération & Temps < 1s & EQ\_01 & OK\\
-      3 & Répéter 100 fois 2 & Temps toujours < 1s & EQ\_01 & OK\\ \hline
+      3 & Répéter 100 fois 1) et 2) & Temps toujours < 1s pour chaque itération & EQ\_01 & OK\\ \hline
     \end{tabular}
     \vfill
     %---------------------------------------Test N° 2------------------------------------------------------------------------------
@@ -124,7 +141,7 @@
     \begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
       \hline
       \multicolumn{3}{|l|}{Objet testé : Serveur} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
-      \multicolumn{5}{|l|}{Objectif de test : Tester le temps de réponse du serveur}\\ \hline
+      \multicolumn{5}{|l|}{Objectif de test : Mesurer le temps de réponse du serveur}\\ \hline
       \multicolumn{3}{|l|}{Procédure n° 2} & \multicolumn{2}{p{3cm}|}{Pré-requis : EP\_01}\\ \hline
       \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
       \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
@@ -137,28 +154,29 @@
     
     \begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
       \hline
-      \multicolumn{3}{|l|}{Objet testé : Serveur} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
+      \multicolumn{3}{|l|}{Objet testé : Serveur} & \multicolumn{2}{c|}{Version : 1.1}\\ \hline
       \multicolumn{5}{|l|}{Objectif de test : Tester la résistance du serveur à la charge}\\ \hline
       \multicolumn{3}{|l|}{Procédure n° 3} & \multicolumn{2}{p{3cm}|}{Pré-requis : test 2, EP\_01}\\ \hline
       \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
       \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
       1 & Pinger le serveur & Récupérer le temps t de communication avec le serveur & - & - \\
       2 & Générer 100 000 valeurs aléatoires au format d'un OTP & - & - & -\\
-      3 & Pour chaque valeur démarrer un client pré-associés et tenter l'authentification & Pour chaque client temps < 2t + 1s & EQ\_03 & OK\\ \hline
+      3 & Pour chaque valeur démarrer un client pré-associés & - & - & -\\ \hline
+      4 & Pour chaque client tenter l'authentification & Pour chaque client temps < 2t + 1s & EQ\_03 & OK\\ \hline
     \end{tabular}
     \vfill
     %---------------------------------------Test N° 4------------------------------------------------------------------------------
     
     \begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
       \hline
-      \multicolumn{3}{|l|}{Objet testé : Token} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
+      \multicolumn{3}{|l|}{Objet testé : Token} & \multicolumn{2}{c|}{Version : 1.1}\\ \hline
       \multicolumn{5}{|l|}{Objectif de test : Mesurer la quantité de mémoire requise.}\\ \hline
       \multicolumn{3}{|l|}{Procédure n° 4} & \multicolumn{2}{p{3cm}|}{Pré-requis : aucun}\\ \hline
       \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
       \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
       1 & Lancer un debugger & - & - & - \\
-      2 & Mesurer la charge mémoire actuelle & $m_0$ = charge mémoire & - & -\\
-      3 & Charger le générateur dans le debugger & - & - & -\\
+      2 & Charger un programme de test utilisant le générateur d'OTP dans le debugger & - & - & -\\
+      3 & Mesurer la charge mémoire actuelle & $m_0$ = charge mémoire & - & -\\
       \hline
       \multicolumn{5}{|l|}{Répéter 4 et 5 jusqu'à la fin de l'exécution du programme.}\\
       \hline
@@ -171,45 +189,46 @@
     %---------------------------------------Test N° 5------------------------------------------------------------------------------
     \begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
       \hline
-      \multicolumn{3}{|l|}{Objet testé : Serveur} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
+      \multicolumn{3}{|l|}{Objet testé : Serveur} & \multicolumn{2}{c|}{Version : 1.1}\\ \hline
       \multicolumn{5}{|l|}{Objectif de test : Mot de passe utilisable une seule fois}\\ \hline
       \multicolumn{3}{|l|}{Procédure n° 5} & \multicolumn{2}{p{3cm}|}{Pré-requis : EP\_01}\\ \hline
       \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
       \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
       1 & Générer un OTP $K$& Un OTP est généré & EP\_01 & OK \\
-      2 & Demander une authentification avec $K$ & authentifié & EQ\_04 & OK\\
-      3 & Demander une authentification avec $K$ & rejeté & EP\_02 & OK\\ \hline
+      2 & Demander une authentification serveur avec l'OTP $K$ & authentifié & EQ\_04 & OK\\
+      3 & Demander une authentification serveur avec l'OTP $K$ & échec de l'authentification & EP\_02; EP\_05 & OK\\ \hline
     \end{tabular}
     \vskip 2.5cm
     %---------------------------------------Test N° 6------------------------------------------------------------------------------
     \begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
       \hline
-      \multicolumn{3}{|l|}{Objet testé : Serveur} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
+      \multicolumn{3}{|l|}{Objet testé : Serveur} & \multicolumn{2}{c|}{Version : 1.1}\\ \hline
       \multicolumn{5}{|l|}{Objectif de test : Processus de resynchronisation}\\ \hline
       \multicolumn{3}{|l|}{Procédure n° 6} & \multicolumn{2}{p{3cm}|}{Pré-requis : EF\_04 }\\ \hline
       \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
       \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
-      1 & Générer $N$ OTP, avec $1 < N \leq{} s$, la taille de la fenêtre de resynchronisation& $N$ OTP générés & EP\_01 & OK \\
-      2 & Tenter une connexion avec le $N$\up{ième} OTP & Connexion acceptée. & EF\_05 & OK \\ \hline      
+      1 & Générer $N$ OTP, avec $1 < N \leq{} s$, s la taille de la fenêtre de resynchronisation& $N$ OTP générés & EP\_01 & OK \\
+      2 & Tenter une connexion avec le $N$\up{ième} OTP (Dernière OTP valable avant de sortir de la fenêtre) & Connexion acceptée. & EF\_05 & OK \\ \hline      
     \end{tabular} 
     \vskip 2.2cm 
      %---------------------------------------Test N° 7------------------------------------------------------------------------------
     \begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
       \hline
-      \multicolumn{3}{|l|}{Objet testé : Serveur} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
+      \multicolumn{3}{|l|}{Objet testé : Serveur} & \multicolumn{2}{c|}{Version : 1.1}\\ \hline
       \multicolumn{5}{|l|}{Objectif de test : Résistance aux attaques exhaustives}\\ \hline
       \multicolumn{3}{|l|}{Procédure n° 7} & \multicolumn{2}{p{3cm}|}{Pré-requis : EQ\_04 }\\ \hline
       \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
       \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
-      1 & Générer un OTP aléatoire $T$ & EP\_01 & OK & -\\
-      2 & Tenter une connexion avec $T$ & - & - & - \\ \hline      
+      0 & $cpt \leftarrow 0$ & - & - & -\\
+      1 & Générer un OTP aléatoire $T$ & 1 OTP généré & EP\_01 & OK\\
+      2 & Tenter une connexion avec $T$ & Authentifié & EQ\_04 & OK \\ \hline      
       \multicolumn{5}{|l|}{Répéter 1 et 2 jusqu'à la connexion ou le rejet}\\
       \hline
       3 & si accepté $cpt \leftarrow cpt + 1$ & & & \\
       \hline
-      \multicolumn{5}{|l|}{Répéter 1 - 3 $N$ fois.}\\
+      \multicolumn{5}{|l|}{Répéter 1 à 3 : $N$ fois.}\\
       \hline
-      4 & Calculer $P = \frac{cpt}{N}$ & $P < 100000$ & EP\_04 & OK \\ \hline 
+      4 & Calculer $P = \frac{cpt}{N}$ & $P < \frac{1}{100000}$ & EP\_04 & OK \\ \hline 
     \end{tabular}  
   \end{center}
   
@@ -220,20 +239,20 @@
       Id Exigence STB & Méthode de vérification & Procédure utilisée & Commentaire\\ \hline
       EF\_02 & Associer un token au serveur. & 
       & Le test de cette exigence dépend de l'implémentation de la méthode d'OTP. Elle sera détaillée dans une prochaine version.\\ \hline
-      EF\_03 & & Procédure N° 1, 5 & \\ \hline
-      EF\_04 & & Procédure N° 2 & \\ \hline
-      EF\_05 & & Procédure N° 6 & \\ \hline
-      EP\_01 & & Procédure N° 1, 5 & \\ \hline
-      EP\_02 & & Procédure N° 5 & \\ \hline
+      EF\_03 & Demander un OTP au token et vérifier la validité de cet OTP & Procédure N° 1, 5 & \\ \hline
+      EF\_04 & Vérifier qu'il y a connexion avec un OTP valide et qu'on est rejeté avec un OTP invalide. & Procédure N° 2 & \\ \hline
+      EF\_05 & Vérifier que les OTP de la fenêtre de resynchronistation sont accepter. & Procédure N° 6 & \\ \hline
+      EP\_01 & Demander un OTP au token et vérifier la validité de cet OTP & Procédure N° 1, 5 & \\ \hline
+      EP\_02 & Tester deux fois le même OTP & Procédure N° 5 & \\ \hline
       EP\_03 & Utilisation d'un logiciel \og{}die hard\fg{} pour vérifier l'aléatoirité des mots de passe. &  
       & Ce test, nécessitant l'utilisation d'un \og{}die hard\fg{}, requiert une étude préalable et ne peut être détaillé.\\ \hline
-      EP\_04 & & Procédure N° 7 & \\ \hline
-      EP\_05 & & Procédure N° 5 & \\ \hline
-      EQ\_01 & & Procédure N° 1 & \\ \hline
-      EQ\_02 & & Procédure N° 2 & \\ \hline
-      EQ\_03 & & Procédure N° 3 & \\ \hline
-      EQ\_04 & & Procédure N° 2, 5 & \\ \hline
-      EQ\_05 & & Procédure N° 4 & \\ \hline
+      EP\_04 & Tester des OTP jusqu'à réussite de l'attaque ou rejet par l'application. & Procédure N° 7 & \\ \hline
+      EP\_05 & Rejouer 2 fois le mêm OTP & Procédure N° 5 & \\ \hline
+      EQ\_01 & Mesurer le temps de génération d'un OTP. & Procédure N° 1 & \\ \hline
+      EQ\_02 & Mesurer le temps d'exécutiondu serveur. & Procédure N° 2 & \\ \hline
+      EQ\_03 & Effectuer 100 000 demandes simultannées. & Procédure N° 3 & \\ \hline
+      EQ\_04 & Vérifier qu'il y a connexion avec un OTP valide et qu'on est rejeté avec un OTP invalide. & Procédure N° 2, 5 & \\ \hline
+      EQ\_05 & Vérifier qu'il n'y a pas plus de 10Ko de mémoire utilisé en plus après la génération. & Procédure N° 4 & \\ \hline
     \end{tabular}  
   \end{center}
 \end{document}
