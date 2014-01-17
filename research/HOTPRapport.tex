@@ -333,18 +333,23 @@ dans un domaine professionnel.
 	  \begin{figure}[h!]
 	    \centerline{\includegraphics[scale=0.5]{linOTP.png}}
 	  \end{figure}
-  \end{itemize}
-    
-  \subsection{Cas d'utilisation envisagés}
-  Pas trouvé
+  \end{itemize}  
   
+  \subsection{Perenité du système}
+    Comme nous avons pu le voir, le système HOTP ne possède pas de faille de sécurité référencée. De plus, le système n'est pas affécté par les faiblesses des fonctions de 
+    hachage, notamment au niveau des collisions. Ainsi, il est fortement envisageable que la fonction HMAC\_SHA\_1 puisse être utilisée pour générer des OTP pour une durée
+    encore importante sans compromettre sa sécurité.
+    
+    De plus, si la fonction HMAC\_SHA\_1 se trouve cassée dans le futur, il suffirait de la remplacer par une nouvelle version reposant sur une fonction de hachage plus 
+    forte telle que keccak ou whirlpool. Ce qui ne nécessiterais que peut de mises à jour.
+    
+    On peut donc considérer ce système de calcul d'OTP comme pérènne.
+    
 \section{Conclusion}
 La conclusion
   \subsection{Utilisation dans le cadre du projet}
   Reprendre les éléments de l'analyse telles que le performances du sytème le niveau de sécurité et autre afin de définir si, et dans quels contextes, le système devrait
   \^etre utlisé dans le cadre du projet.
-  
-  \subsection{Perenité du système}
-  A voir, pas forcément utile. Se référer aux résultats de la réunion du 19 novembre.
+
     
 \end{document}
