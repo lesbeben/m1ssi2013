@@ -301,10 +301,14 @@ lesquelles un attaquant récupère le mot de passe durant une communication clie
     qui agissant comme un sel rend la recherche de collision bien moins aisée.
     
     \subsubsection{Failles connues}
-    Tout est dans le titre.
+    Le protocole HOTP ne possède aucunes failles connues mis à part les failles héritées de OTP.
+    En particulier il est sensible aux \og race attacks \fg{} et aux attaques de type \og man in the middle \fg{} qui sont aussi valables sur une  authentification faible, 
     
     \subsubsection{Précautions et préconisation}
-    Tout est dans le titre.
+    Il est conseillé de choisir une longueur d'OTP entre 6 et 8 charactères afin que le mot de passe soit à la fois facilement utilisable et sécurisé.
+    Un tunnel SSH est fortement recommandé afin d'éviter les attaques par \og race attacks \fg{} et \og man in the middle \fg{}.
+    La taille de la fenêtre de resynchronisation devrait être fixé entre 3 et 5 afin de pouvoir à la fois être pratique pour l'utilisateur et assez résistant
+    à une attaque par brute force.
     
 \section{Utilisations}
 Les utilisations pour l'implantations du protocole HOTP sont variées, on peut très bien s'en servir à des fins personnelles, pour sécuriser ses données ou 
@@ -319,7 +323,7 @@ dans un domaine professionnel.
 	    \caption{Google Authenticator}
 	  \end{figure}  
   \end{itemize}
-    
+  \newpage
   OATH (Initiative for Open Authentication) Toolkit
   \begin{itemize}
     \item OATH Toolkit fournit une suite de composant pour la construction de systèmes d'authentification par mots de passe jetable. 
@@ -344,12 +348,5 @@ dans un domaine professionnel.
     forte telle que keccak ou whirlpool. Ce qui ne nécessiterais que peut de mises à jour.
     
     On peut donc considérer ce système de calcul d'OTP comme pérènne.
-    
-\section{Conclusion}
-La conclusion
-  \subsection{Utilisation dans le cadre du projet}
-  Reprendre les éléments de l'analyse telles que le performances du sytème le niveau de sécurité et autre afin de définir si, et dans quels contextes, le système devrait
-  \^etre utlisé dans le cadre du projet.
-
     
 \end{document}
