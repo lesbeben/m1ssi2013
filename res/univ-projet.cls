@@ -31,6 +31,7 @@
     \relecteur{}
     \logo{}
     \signataire{}
+    \projdesc{}
     \def \@history {} % Initialise l'historique a vide.
 \makeatother
 
@@ -82,25 +83,23 @@
 	\noindent
 \begin{tabular}{|p{3.5cm}| p{1cm} | p{3cm} | p{.5cm} | p{7cm}|} 
 \hline
-\multicolumn{2}{|>{\color{white}\columncolor{blue}}l|}{\bfseries{ Nom}} & \multicolumn{3}{>{\color{white}\columncolor{blue}}l|}{\bfseries{#1}}\\
+\multicolumn{2}{|>{\color{white}\columncolor{blue}}l|}{\bfseries{ }} & \multicolumn{3}{>{\color{white}\columncolor{blue}}l|}{\bfseries{#1}}\\
 \hline
-\multicolumn{2}{|l|}{\bfseries{\bfseries{Acteurs concernés}}} & \multicolumn{3}{m{10.5cm}|}{#2}\\
+\multicolumn{2}{|l|}{\bfseries{\bfseries{Acteurs concern\'{e}s}}} & \multicolumn{3}{m{10.5cm}|}{#2}\\
 \hline
 \multicolumn{2}{|l|}{\bfseries{\bfseries{Description}}} & \multicolumn{3}{m{10.5cm}|}{#3}\\
 \hline
-\multicolumn{2}{|l|}{\bfseries{\bfseries{Préconditions}}} & \multicolumn{3}{m{10.5cm}|}{#4}\\
+\multicolumn{2}{|l|}{\bfseries{\bfseries{Pr\'{e}conditions}}} & \multicolumn{3}{m{10.5cm}|}{#4}\\
 \hline
-\multicolumn{2}{|l|}{\bfseries{\bfseries{Evénements déclenchants}}} & \multicolumn{3}{m{10.5cm}|}{#5}\\
+\multicolumn{2}{|l|}{\bfseries{\bfseries{Ev\`{e}nements d\'{e}clenchants}}} & \multicolumn{3}{m{10.5cm}|}{#5}\\
 \hline
-\multicolumn{2}{|l|}{\bfseries{\bfseries{Conditions d'arrêt}}} & \multicolumn{3}{m{10.5cm}|}{#6}\\
+\multicolumn{2}{|l|}{\bfseries{\bfseries{Conditions d'arr\^{e}t}}} & \multicolumn{3}{m{10.5cm}|}{#6}\\
 \hline
-\multicolumn{5}{|>{\columncolor[gray]{.7}}l|}{\bfseries{\bfseries{Description du flot d'événements principal:}}}\\
+\multicolumn{5}{|>{\columncolor[gray]{.7}}l|}{\bfseries{\bfseries{Description du flot d'\'{e}v\`{e}nements principal:}}}\\
 \hline
-\multicolumn{3}{|>{\columncolor[gray]{.7}}c|}{\bfseries{\bfseries{Acteur(s)}}} & \multicolumn{2}{>{\columncolor[gray]{.7}}c|}{\bfseries{\bfseries{Système}}}\\
+\multicolumn{5}{|l|}{\bfseries{\bfseries{\includegraphics[scale=0.4]{#7}}}}\\
 \hline
-\multicolumn{3}{|p{7.5cm}|}{#7} & \multicolumn{2}{p{7.5cm}|}{#8}\\
-\hline
-\bfseries{Flots d'exceptions:} & \multicolumn{4}{|p{11.5cm}|}{#9}\\
+\bfseries{Flots d'exceptions:} & \multicolumn{4}{|p{11.5cm}|}{#8}\\
 \hline
 \end{tabular}
 \\
@@ -115,29 +114,60 @@
         \else
             \includegraphics[width=0.33\textwidth]{\@logo}
         \fi
-        \parbox[b][4em][b]{0.66\textwidth}{
-            \flushright
-            {\Huge {\bfseries \@projet}}\\
-            {\Large \@projdesc} 
-        }
+        \ifx \@projet \@empty
+            \relax
+        \else
+            \ifx \@projdesc \@empty
+            \parbox[b][4em][b]{0.66\textwidth}{
+                    \flushright
+                    {\Huge {\bfseries \@projet}}
+                }
+            \else
+                \parbox[b][4em][b]{0.66\textwidth}{
+                    \flushright
+                    {\Huge {\bfseries \@projet}}
+                    \newline {\Large \@projdesc} 
+                }
+            \fi
+        \fi
         
         ~\vfill
         \begin{center}
-            {\huge \textbf{\@title} {\Large \@version}}\\
+            \ifx \@title \@empty
+                \relax
+            \else
+                {\huge \textbf{\@title} {\Large \@version}}\\
+            \fi
             {\@date}\\
             \vspace{2em}
-            Auteur: \@author\\
-            Relecteur: \@relecteur\\
-            Approuv\'e par: \@signataire\\
+            \ifx \@author \@empty
+                \relax
+            \else
+                Auteur(s): \@author\\
+            \fi
+            \ifx \@relecteur \@empty
+                \relax
+            \else
+                Relecteur(s): \@relecteur\\
+            \fi
+            \ifx \@signataire \@empty    
+                \relax
+            \else
+                Approuv\'e par: \@signataire\\
+            \fi
             \vspace{5em}
-            \begin{tabular}[t]{|c|c|p{10cm}|}
-                \hline
-                \rowcolor{gray} \textcolor{white} {\bfseries Version} & \textcolor{white} {\bfseries Date} & \textcolor{white} {\bfseries Changelog} \\
-                \hline
-                \@history
-                &&\\
-                \hline 
-            \end{tabular}
+            \ifx \@history \@empty
+                \relax
+            \else
+                \begin{tabular}[t]{|c|c|p{10cm}|}
+                    \hline
+                    \rowcolor{gray} \textcolor{white} {\bfseries Version} & \textcolor{white} {\bfseries Date} & \textcolor{white} {\bfseries Changelog} \\
+                    \hline
+                    \@history
+                    &&\\
+                    \hline 
+                \end{tabular}
+            \fi
         \end{center}
         \vfill
     \end{titlepage}

@@ -1,0 +1,86 @@
+\documentclass{"../../res/univ-projet"}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage{colortbl}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+
+\logo{../../res/logo_univ.png}
+\title{Terminologie et sigles}
+\author{\bsc{Michotte} Maxime}
+\projet{M1SSI}
+\projdesc{Projet de génération d'OTP}
+\filiere{M1SSI}
+\version{1.0}
+\relecteur{\bsc{Zigh} Benjamin}
+\signataire{\bsc{Bardet} Magali}
+\date{Décembre 2013}
+
+\histentry{1.0}{15/12/2013}{Version relue et corrigée}
+\histentry{0.1}{02/12/2013}{Premier jet}
+
+
+\begin{document}
+\maketitle
+%-------------------------------------------------------------------------------
+%-------------------------------------------------------------------------------    
+\section{Glossaire}
+\begin{description}
+	\item[État de l'art]
+  	Dresser un état de l'art dans un domaine consiste à rechercher toutes 
+  	les informations existantes concernant ce domaine et à en faire une synthèse.
+	\\
+	\item[RFC]
+  	Les RFC (Request For Comments) sont un ensemble de documents qui font 
+  	référence auprès de la Communauté Internet et qui décrivent, 
+  	spécifient, aident à l'implémentation, standardisent et débattent de 
+  	la majorité des normes, standards, technologies et protocoles liés à 
+  	Internet et aux réseaux en général.
+	\\
+	\item[Utilisateur]
+  	L'utilisateur est une personne physique qui dans notre cas souhaite utiliser 
+  	une authentification utilisant les OTP.
+	\\
+	\item[Mot de passe]
+  	Le mot de passe est une méthode parmi d'autres pour effectuer une
+  	authentification, c'est-à-dire vérifier qu'une personne correspond bien à 
+  	l'identité déclarée. Il s'agit d'une preuve que l'on possède et que 
+  	l'on transmet au service chargé d'autoriser l'accès. Le mot de passe doit être 
+  	tenu secret pour éviter qu'un tiers non autorisé puisse accéder à 
+  	la ressource ou au service.  
+  	\\
+	\item[OTP]
+  	Un Mot de passe unique ou OTP (One-time password) est un mot de passe qui 
+  	n'est valable que pour une session ou une transaction.
+	\\
+	\item[Token]
+  	Un token désigne dans notre projet un élément logiciel ou matériel 
+  	tiers servant à la génération d'un OTP.
+  	\\
+	\item[Serveur]
+  	Un serveur est un dispositif informatique matériel ou logiciel qui offre 
+  	des services, à différents clients. Pour notre cas celui-ci permettra 
+  	l'association d'un token, la vérification de l'OTP généré par 
+  	le token, et l'éventuelle re-synchronisation du token.
+ 	\\ 
+	\item[Client]
+  	Un client est le logiciel qui envoie des demandes à un serveur.Pour notre 
+  	cas celui-ci permettra de communiquer au serveur les OTP générés 
+  	par le token.
+   	\\ 
+    \item[Seed] Variable utilisée pour initialiser une séquence aléatoire.
+    \\
+    \item[Vérifieur] Un vérifieur est une entité qui pour un mécanisme 
+    d'authentification de type défi/réponse propose un défi au prouveur et pour une authentification simple vérifie la validité du mot de passe fourni; dans notre
+    cas il s'agit du serveur d'authentification.
+    \\
+    \item[Prouveur] Un prouveur est une entité qui pour un mécanisme 
+    d'authentification de type défi/réponse assure au vérifieur qu'il est bien celui qu'il
+    prétend être en répondant au défi via la détention d'un secret; dans notre cas,
+    il s'agit du client.
+\end{description}
+
+%-------------------------------------------------------------------------------
+\end{document}
