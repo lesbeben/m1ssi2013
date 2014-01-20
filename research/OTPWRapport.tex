@@ -118,13 +118,13 @@
                     au suffixe correspondant à ce numéro noté dans une variante de base-64.
             \end{itemize}
     \end{itemize}
-    Sur le site de M.Kuhn on peut voir qu'il ne stock que les 72 premiers octets des hachés.\\
+    Sur le site de M.Kuhn on peut voir qu'il ne stock que les 72 premiers bits des hachés.\\
     Je pense que c'est une aberration, avec les machines actuelles qui font office de serveur
-    on peut se permettre de stocker la totalité des hachés, si nous ne prenons que 72 octets
+    on peut se permettre de stocker la totalité des hachés, si nous ne prenons que 72 bits
     cela revient à réduire le nombre d'étape pour obtenir une collision.
     
     De plus on voit apparaître le nombre de caractères pour un suffixe. C'est le seul endroit
-    sur le site où il est fait mention de ce paramêtre. Peut-on le modifier ?\\
+    sur le site où il est fait mention de ce paramètre. Peut-on le modifier ?\\
     L'utilisation d'un codage en base 64 est il réellement plus efficace que de stocker
     des valeurs hexadécimale pour des hachés ?
 
@@ -195,12 +195,24 @@
 
         Tout ceci en admettant que les OTP soient constitués de strictement moins
     de 17 caractères. De facto la meilleur attaque revient à trouver une collision.
+    
+        Cependant l'implémentation de M.Kuhn diffère en 2 points majeurs. les caractères des mots
+    de passes sont codés sur 6 bits. Et les suffixe sont d'une taille prédéterminée.
+    
+        Pour le premier point cela transforme le $2^{8\times 17}$ en $2^{6\times 17}$ ce qui réduit
+    la complexité des attaques exhaustive. Le second point n'intervient que si l'on connaît un OTP.
+    En effet en aillant un OTP on obtient le préfixe, il suffit ensuite de rechercher sur les suffixes.
+    Ce qui donne $2^{6\times 8}$ opérations pour trouver un suffixe, soit $O(2^48)$
+    
 
 \subsubsection{Attaques par collisions}
         Étant donné que les OTP son re-hachés par le serveur le système est potentiellement sensible
     aux collisions. La fonction de hachage utilisée étant RIPEMD-160 à ce jour aucune méthode rapide
-    n'a été identifiée pour trouver des collisions. Donc les probabilités de trouver des collisions
-    suivent le paradoxe des anniversaire soit 50\% de chance en $2^80$.
+    n'a été identifiée pour trouver des collisions. Donc il faut $O(2^80)$ étapes pour trouver une 
+    collisions.
+    
+        Là encore l'implémentation semble souffrir d'un défaut car seul les 72 premiers bits des hachés
+    sont stockés. Ce qui permet des collisions en $O(2^36)$ ce qui est plutôt faiblard.
 
 \subsubsection{Failles connues} 
     % FIXME: Race for the last key
@@ -212,14 +224,6 @@
     le code de fin de chaîne pour valider l'entrée et se connecter à la place de l'utilisateur.
     Pour palier à cela si deux tentatives de login ont lieu en même temps la seconde se verra demandé
     non plus un mais 3 suffixes.
-
-    % Réflexion personnelle, pas forcément pertinent.
-        L'implémentation de M.Kuhn présente un autre ``défaut'', les suffixes sont toujours de taille fixe.
-    8 caractères en base 64. Ce qui veut dire que si on voit passer un OTP en clair on peut donc déterminer le
-    préfixe en supprimant les 8 derniers caractères. Donc l'attaque exhaustive passe de $(2^8)^i$ où $i$ est
-    la taille maximale de chaine que l'on veut tester à $(2^6)^8$ soit $2^48$ cela reste énorme surtout
-    face au trois essais proposés mais constitue un amoindrissement considérable de la sécurité à mon sens
-    la où l'on pouvait aisément rendre les tailles de suffixes non prédictibles.
 
 \subsubsection{Précautions et préconisation}
         Les OTP étant transmis en clair avec quelques OTP on peut déterminer assez
@@ -272,6 +276,7 @@
     De plus comme les listes ne sont générées qu'une fois par le serveur le problème de la puissance de calcul se pose moins.
 
         Le fait que ce protocole date de 2003 et n'ai jamais été soumis à l'IETF pour une RFC joue sûrement dans la présence
-    de ces ``problèmes''.
+    de ces ``problèmes''. Ces défauts rendent le protocole plus vulnérable qu'il ne devrait l'être. Ce qui fait que je ne recommande
+    pas sont implémentation et encore mois son utilisation en dehors du cadre de SSH qui garanti un tunnel sécurisé
 
 \end{document}
