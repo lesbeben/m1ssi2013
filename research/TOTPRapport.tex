@@ -178,8 +178,19 @@ Analysons maintenant cette méthode et sa sécurité.
 Tout comme HOTP, les utilisations pour l'implantation du protocole TOTP sont variées, on peut très bien s'en servir à des fins personnelles, pour sécuriser ses données ou 
 dans un domaine professionnel.
   \subsection{Cas concrets d'utilisation}
-   Le protocole TOTP est présent sur différentes plateformes tel Google, Amazon, DropBox, GitHub, LinOTP, multiOTP et bien d'autres.
-   Il existe donc plusieurs outils permettant l'utilisation de cette technologie:
+  \begin{description}
+   \item \textbf{Utilisation côté serveur}
+   \begin{description}
+    \item - Google avec son Google Autentificator
+    \item - Amazon supporte également TOTP qui peut être utilisé avec les clients suivants: AWS (Multi-Factor Authentication) Amazon Virtual MFA ou le Google Authenticator.
+    \item - DropBox
+    \item - LastPass
+    \item - GitHub
+    \item - LinOTP
+    \item - multiOTP
+   \end{description}
+
+   \item \textbf{Utilisation côté client}
    \begin{description}
     \item - Google Authenticator est un logiciel open-source qui est basé sur une authentification en deux étapes. Celui-ci est implémenté sur différentes plateformes 
 	  mobiles comme iOS, Android, Blackberry, et il est aussi adaptable sur les modules PAM
@@ -192,14 +203,10 @@ dans un domaine professionnel.
     \item - Microsoft's Authenticator est un logiciel pour les Windows Phone
     \item - Red Hat's FreeOT est un logiciel pour Android et iOS.
    \end{description}
+  \end{description}
   
 \section{Conclusion}
-La conclusion
-  \subsection{Utilisation dans le cadre du projet}
-  Reprendre les éléments de l'analyse telles que le performances du sytème le niveau de sécurité et autre afin de définir si, et dans quels contextes, le système devrait
-  \^etre utlisé dans le cadre du projet.
-  
-  \subsection{Perenité du système}
-  A voir, pas forcément utile. Se référer aux résultats de la réunion du 19 novembre.
+  \subsection{Pérénité du système}
+   La périnité du système TOTP est au moins aussi importante que celle de HOTP.
     
 \end{document}
