@@ -179,13 +179,25 @@ Analysons maintenant cette méthode et sa sécurité.
     Tout est dans le titre.
     
 \section{Utilisations}
-On présente ici les possibles utilisation du système.
+Tout comme HOTP, les utilisations pour l'implantation du protocole TOTP sont variées, on peut très bien s'en servir à des fins personnelles, pour sécuriser ses données ou 
+dans un domaine professionnel.
   \subsection{Cas concrets d'utilisation}
-  Tout est dans le titre.
+   Le protocole TOTP est présent sur différentes plateformes tel Google, Amazon, DropBox, GitHub, LinOTP, multiOTP et bien d'autres.
+   Il existe donc plusieurs outils permettant l'utilisation de cette technologie:
+   \begin{description}
+    \item - Google Authenticator est un logiciel open-source qui est basé sur une authentification en deux étapes. Celui-ci est implémenté sur différentes plateformes 
+	  mobiles comme iOS, Android, Blackberry, et il est aussi adaptable sur les modules PAM
+	  \begin{figure}[h!]
+	    \centerline{\includegraphics[scale=0.45]{imgHOTP/GoogleAuthenticator_2.jpg}}
+	    \caption{Google Authenticator}
+	  \end{figure}  
+    \item - OATH Toolkit OATH Toolkit fournit une suite de composant pour la construction de systèmes d'authentification par mots de passe jetable. 
+	  Les composant comprennent une librairie de programmation en C, un outil en lignes de commandes pour la génération et la validation d'OTP, et un PAM.
+    \item - Microsoft's Authenticator est un logiciel pour les Windows Phone
+    \item - Red Hat's FreeOT est un logiciel pour Android et iOS.
+   \end{description}
   
-  \subsection{Cas d'utilisation envisagés}
-  Cas possibles d'utilisation non encore exploité (On peut toujours r\^ever)
-  
+
 \section{Conclusion}
 La conclusion
   \subsection{Utilisation dans le cadre du projet}
