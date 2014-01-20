@@ -98,7 +98,7 @@ d'origine\fg{} et $X$ un quantum de temps arbitraire.
   \label{OTP:syncSec}
     De m\^eme que pour le système \og{}HOTP\fg{}, il est possible que le serveur et le client perdent leur synchronisation temporelle. Il suffit pour cela que soit 
     l'horloge du client soit celle du serveur soit plus rapide que son homologue. Bien que l'utilisation de plus en plus répandue des serveur de synchronisation 
-    temporelle mondiaux tendent à réduire les possibilités de décalage des horloge, ce cas reste à envisager. C'est pourquoi on retrouve les fonction \og{}resynchro 
+    temporelle mondiaux tende à réduire les possibilités de décalage des horloge, ce cas reste à envisager. C'est pourquoi on retrouve les fonction \og{}resynchro 
     possible\fg{} et $resynchro$, chargées d'assurer la cohérence des vérification d'OTP en cas de désynchronisation d'horloge. Les descriptions de ces fonctions sont 
     données dans les algorithme \ref{TOTP:isSynch} et \ref{TOTP:synch}.
     \begin{algorithm}
@@ -160,31 +160,24 @@ Analysons maintenant cette méthode et sa sécurité.
   ce qui est considérable pour un décalage d'horloge. Bien entendu, il faut que les horloges du client et du serveur est été synchronisées une première fois lors de 
   la première connexion ou lors de l'inscription de l'utilisateur sur le service.
   
-  \subsection{Inconvenients et limites}
-  Tous est dans le titre. Merci d`\^etre exhaustif.
-  
   \subsection{Considérations de sécurité}
-  Le clou du spectacle.
-    \subsubsection{Attaques exhaustives}
-    Analyse de la résistance aux attaques exhaustives. Un calcul et / ou démonstration seront certainement bien vus par votre chargé de mission 
-    \og{}Coordination Recherche\fg{} ainsi que par les clients. N'ayez pas peur tous va bien se passer.
-    
-    \subsubsection{Attaques par collisions}
-    Cette partie n'est pas forcement necessaire. Se référer au résultats de la réunion du 19 Novembre.
-    
-    \subsubsection{Failles connues}
-    Tout est dans le titre.
-    
+  La sécurité du protocole TOTP est directement hérité de celle de son parent HOTP. Ainsi, les probabilités de réussite des attaques exhaustives et les sensibilités au attaques 
+  par collision sont strictement identique modulo les valeurs choisies pour les tailles de fenetre de resynchronisation et de nombre de tentatives authorisées.
+  
     \subsubsection{Précautions et préconisation}
-    Tout est dans le titre.
+    En général, les précautions à prendre lors de l'utilisation de TOTP sont les meme que celles à prendre pour HOTP. Cependant, la taille de la fenetre de resynchronisation
+    doit etre revue. En effet, lors de l'utilisation de TOTP, il est possible que soit le client soit décalé temporellement par rapport au serveur soit le contraire. De ce fait
+    lors de la resynchronisation, le serveur doit confronter l'OTP non seulement avec les prochaines valeurs possibles mais aussi avec les précédentes. Aussi, pour éviter qu'un
+    utilisateur puisse se connecter plusieurs fois avec le meme mot de passe, il est necessaire de conserver une liste des derniers OTP utilisés. Lors de la resynchronisation, 
+    les valeurs de l'OTP donné seront confronté avec celles de la liste pour valider l'utilisation unique. La liste devra retenir au moins autant de mots de passes utilisés que 
+    la taille de la fenetre de resynchronisation vers l'arrière + 1.
+    
+    Au final, il sera raisonnable de fixer la taille de la fenetre afin de permettre la validation à deux fenetres vers l'arrière pour trois vers l'avant.
     
 \section{Utilisations}
 On présente ici les possibles utilisation du système.
   \subsection{Cas concrets d'utilisation}
   Tout est dans le titre.
-  
-  \subsection{Cas d'utilisation envisagés}
-  Cas possibles d'utilisation non encore exploité (On peut toujours r\^ever)
   
 \section{Conclusion}
 La conclusion
