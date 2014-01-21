@@ -13,3 +13,6 @@
 *.nav
 *.out
 *.toc
+
+# Backup créées par kile.
+*.backup
