@@ -96,11 +96,12 @@
     
         La liste retournée à l'utilisateur contient tout les suffixes encodés dans une
     base 64 modifiée. Cette base 64 est dite modifiée car elle remplace les caractères
-     \verb?01l? par \verb?:=%? pour éviter les confusions \verb?0O? et \verb?1Il?
+     \verb?0?,\verb?1? et \verb?l? respectivement par \verb?:?, \verb?=?, \verb?%?
+     pour éviter les confusions entre \verb?0? et \verb?O? et \verb?1?, \verb?I? et \verb?l?
 
     La fonction $initialiserGen()$ est une fonction qui permet d'initialiser
     la variable $SEED$ avec une valeur aléatoire. Pour ce faire elle hache la sortie
-    de plusieurs commande shell, des logs. Le but est d'obtenir une valeur aléatoire
+    de plusieurs commande shell et des logs. Le but est d'obtenir une valeur aléatoire
     unique. La liste des suffixes est alors totalement imprévisible, ainsi si l'on rentre
     deux fois le même préfixe les listes seront différentes.
 
@@ -120,7 +121,7 @@
             Ces lignes contiennent:
             \begin{itemize}
                 \item Un numéro d'OTP.
-                \item Le haché \verb?RipeMD-160? du préfixe concaténé
+                \item Les 72 premiers bits du haché \verb?RipeMD-160? du préfixe concaténé
                     au suffixe correspondant à ce numéro noté dans une variante de base-64.
             \end{itemize}
     \end{itemize}
@@ -190,15 +191,14 @@
     de taille pour le préfixe. On peut supposer raisonnable de limiter les
     OTP à des chaînes de strictement moins de 17 caractère.
     Cette ensemble compte donc $\sum_{i=0}^{16}(2^8)^i$ éléments.
-    On peut compter  $2^{8\times 17} - 1$ soit $2^136 -1$ autrement dit
-    $87112285931760246646623899502532662132735$ possibilités. Avec $10^10$ tentatives
-    par seconde on en arrive à $5\times 10^23$ années pour tous les énumérer.
+    On peut compter  $2^{8\times 17} - 1$ soit $2^{136} -1$ autrement dit
+    $87112285931760246646623899502532662132735$ possibilités. Avec $10^{10}$ tentatives
+    par seconde on en arrive à $5\times 10^{23}$ années pour tous les énumérer.
 
         Le réglage par défaut de l'implémentation d'OTPW est de 3 essais par tentative de login
     si la troisième échoue l'utilisateur devra recommencer le processus d'authentification
-    et le challenge sera différent. ce qui fait que par attaque exhaustive on arrive à
-    une probabilité pour 100\% de réussite à
-    \[\frac{3}{2^{136}}\]
+    et le challenge sera différent. Ce qui fait que pour chaque OTP l'attaquant à $\frac{3}{2^{136}}$
+    chances de s'authentifier
 
         Tout ceci en admettant que les OTP soient constitués de strictement moins
     de 17 caractères. De facto la meilleur attaque revient à trouver une collision.
@@ -209,14 +209,14 @@
         Pour le premier point cela transforme le $2^{8\times 17}$ en $2^{6\times 17}$ ce qui réduit
     la complexité des attaques exhaustive. Le second point n'intervient que si l'on connaît un OTP.
     En effet en aillant un OTP on obtient le préfixe, il suffit ensuite de rechercher sur les suffixes.
-    Ce qui donne $2^{6\times 8}$ opérations pour trouver un suffixe, soit $O(2^48)$. Ce qui risque à terme
+    Ce qui donne $2^{6\times 8}$ opérations pour trouver un suffixe, soit $O(2^{48})$. Ce qui risque à terme
     d'être trop peu. Surtout si l'attaquant connais le haché.
 
 \subsubsection{Attaques par collisions}
     Les collisions recherchées ici sont des collisions fortes. Un OTP bien précis est demandé à
     chaque fois. Et seul les 72 premiers bits du hachés sont à prendre en compte les attaques ont
-    donc lieu en $O(2^72)$ étapes. Cela reste considérable mais ils pourrait être interessant de 
-    considérer la totalité du haché cela passerait la complexité a $O(2^160)$.
+    donc lieu en $O(2^{72})$ étapes. Cela reste considérable mais ils pourrait être intéressant de 
+    considérer la totalité du haché cela passerait la complexité a $O(2^{160})$.
     
 \subsubsection{Failles connues} 
     % FIXME: Race for the last key
@@ -232,14 +232,13 @@
         Les OTP étant transmis en clair avec quelques OTP on peut déterminer assez
     aisément le préfixe et la longueur des suffixes. Cela réduit énormément la
     difficulté d'une attaque exhaustive (puisqu'une partie de chaque OTP est déjà identifiée).
-    Il faut donc s'assurer que les suffixes soient assez longs, que le nombre de tentatives accepté
-    soit assez faible et de ne pas renvoyer le même challenge en cas d'échec d'authentification.
-
+    Il faut donc s'assurer que que le nombre de tentatives accepté soit assez faible et de ne 
+    pas renvoyer le même challenge en cas d'échec d'authentification.
 
         La solution préconisée est d'utiliser en plus un canal sécurisé, pour avoir une 
     identification point à point du serveur et du client ce qui est le cas par défaut avec
-    SSH. Avec ce genre de tunnel on évite aussi de donner des informations sur la longueur du préfixe
-    et des suffixes, ce qui permettrait de déduire le préfixe. % Et c'est aussi la seule façon de me convaincre de l'utiliser.
+    SSH. Avec ce genre de tunnel on évite aussi de donner des informations sur la longueur des
+    OTP, ce qui permettrait de déduire le préfixe.
 
         Il est aussi recommandé de faire attention aux permissions du fichier \verb?~/.otpw? car
     il est potentiellement lisible par n'importe qui. Typiquement un \verb?chmod 600? fera l'affaire
@@ -247,8 +246,15 @@
 
 \section{Utilisations}
 \subsection{Cas concrets d'utilisation}
-        Il existe déjà une implémentation qui fourni un module pour s'authentifier avec SSH, et un module
-    PAM pour s'authentifier pour a peu près n'importe quoi sous Linux.
+        Il existe déjà une implémentation qui fourni un module pour s'authentifier avec SSH, 
+    et un module PAM pour gérer l'authentification auprès de nombreux services sous linux:
+    \begin{itemize}
+     \item Login session unix.
+     \item SSH via PAM.
+     \item Apache propose un module d'authentification via PAM.
+     \item Telnet permet de s'authentifier via PAM.
+    \end{itemize}
+
 
 \subsection{Cas d'utilisation envisagés}
         PAM couvre déjà un large choix de services. Certains préfèrent tout de même utiliser une implémentation
@@ -264,11 +270,13 @@
 
 \subsection{Conclusion de l'équipe}
         Nous pensons que ce protocole contient de très bonnes idées comme le fait de devoir posséder le préfixe et
-    le suffixe pour pouvoir former un OTP et ne pas nécessiter d'accès root pour lire la liste des hachés.
-    Cependant un certain nombre de points dérangent, ne pas pouvoir choisir la taille de ses suffixes lors de la 
-    génération d'une liste, ne stocker qu'une partie des hachés, ajoutons a cela que la liste des hachés est stockée 
-    dans le répertoire répertoire de l'utilisateur et potentiellement lisible par tous. Si un attaquant récupère
-    cette liste il peut faire ses tests de collisions sans tenter de s'authentifier.
+    le suffixe pour pouvoir former un OTP, ne pas nécessiter d'accès root pour lire la liste des hachés (pas de
+    programmes SETUID), token sans calcul.
+    
+        Cependant un certain nombre de points dérangent, ne pas pouvoir choisir
+    la taille de ses suffixes lors de la génération d'une liste, ne stocker qu'une partie des hachés, ajoutons a 
+    cela que la liste des hachés est stockée dans le répertoire de l'utilisateur et potentiellement lisible par tous.
+    Si un attaquant récupère cette liste il peut faire ses tests de collisions sans tenter de s'authentifier.
 
         Le choix de ne stocker qu'une partie des hachés semble constituer un affaiblissement de la sécurité puisqu'on facilite
     les collisions. Et ne pas pouvoir choisir la taille de ses suffixe facilite beaucoup trop les attaques exhaustives
@@ -280,7 +288,15 @@
     plage de sélection plus large pour les suffixes et de pouvoir faire varier leur taille d'une liste à l'autre.
     De plus comme les listes ne sont générées qu'une fois par le serveur le problème de la puissance de calcul se pose moins.
 
-        La présence de ces \og problèmes \fg{} joue sûrement dans le fait que ce protocole date de 2003 et qu'il n'ait jamais été soumis à l'IETF pour une RFC. Ces défauts rendent le protocole plus vulnérable qu'il ne devrait l'être. Ce qui fait que nous ne recommandons
-    pas son implémentation et encore moins son utilisation en dehors du cadre de SSH qui garantit un tunnel sécurisé.
+        La présence de ces \og problèmes \fg{} joue sûrement dans le fait que ce protocole date de 2003 et qu'il n'ait jamais
+    été soumis à l'IETF pour une RFC. Ces défauts rendent le protocole plus vulnérable qu'il ne devrait l'être. Ce qui fait
+    que nous ne recommandons pas son utilisation en dehors d'un tunnel sécurisé.
 
+\subsection{Pérennité}
+    La pérennité de ce système repose sur la pérennité de sa fonction de hachage. Si jamais cette
+    fonction venait à s'avérer faillible elle peut facilement être remplacée par une fonction plus
+    puissante.
+        Notons quand même que des protocoles plus récents permette une authentification aussi sûre
+    et ne nécessitent pas de 
+    
 \end{document}
