@@ -47,6 +47,352 @@ Nous allons donc commencer cet article par une présentation du protocole OTP du
 de ses protocoles dérivés.
 \setcounter{section}{0}
 \part{Protocole OTP}
+%------------------------------------------------------------------------------
+\section{Prérequis}
+  Le système OTP repose principalement sur l'utilisation de fonctions de 
+  hachage, les algorithmes les plus courants seront présentés dans ce 
+  document.
+
+  OTP est une évolution de S/KEY (système publié par Bellcore), qui est 
+  lui-même un système OTP dont la description complète est disponible
+  dans la RFC 1760 (datant de 1995).
+
+%------------------------------------------------------------------------------
+\section{Généralités}
+  Le système OTP (One-Time Password) est un standard décrivant des protocoles 
+destinés à la mise en service d'un système d'authentification par mot de passe 
+jetable. Ce standard date de 1998.
+
+  Ce système propose une solution de prévention des attaques dites \emph{par 
+rejeu} (c'est à dire récupérer les login et mot de passe d'une personne pour un 
+usage ultérieur). Tous au long de ce document, nous considérerons plusieurs 
+entités :
+
+  \begin{description}
+    \item[L'utilisateur :] le sujet de l'authentification en vue d'une 
+    connection au serveur;
+    \item[Le client :] un logiciel doté d'une interface utilisateur ou un site 
+    web permettant une authentification auprès d'un serveur adapté;
+    \item[Le serveur :] l'entité qui permet d'authentifier un utilisateur,
+    contient une base de données contenant des informations sur l'utilisateur 
+    (login, dernier mot de 
+    passe utilisé, ...) et dispose d'une routine permettant de vérifier 
+    l'authenticité de celui-ci avec le mot de passe jetable qu'il lui a fournit;
+    \item[Le token :] élément physique ou logiciel permettant de générer un mot 
+    de passe jetable pour un utilisateur;
+    \item[Un attaquant :] hacker, malware, etc... Une entité cherchant à 
+    usurper 
+    l'identité de l'utilisateur vis à vis du serveur en récupérant ses informations 
+    de connection. Ou son accès au service sans ces informations\\
+  \end{description}
+
+  Le principe est simple :
+
+  \begin{itemize}
+    \item Un utilisateur souhaitant se connecter sur un service via un client
+    employant le système OTP dispose d'un token lui permettant de générer un 
+    mot de passe jetable 
+    (qu'on appellera par la suite otp) que l'interface lui demande;
+    \item Le token exécute une série de calculs sur une clé secrète et en tire 
+    un otp qu'il communique à l'utilisateur;
+    \item l'utilisateur renseigne son login et l'otp au client;
+    \item Le client envoie une requ\^ete au serveur et lui fournit l'otp; 
+    \item Le serveur vérifie le mot de passe en appliquant la fonction de 
+    hachage sur celui-ci. Si le résultat correspond au dernier otp utilisé par cet 
+    utilisateur, celui-ci est authentifié. Et conserve cet OTP comme dernier
+    utilisé\\
+  \end{itemize}
+
+  Le mot de passe étant à usage unique, il ne pourra pas servir à un attaquant 
+l'ayant récupéré en écoutant les communications entre le client et le serveur.
+
+  Les principaux avantages sont les suivants :
+
+  \begin{itemize}
+    \item Le secret secret n'est jamais transmis entre le client et le serveur.
+    \item La sécurité des mots de passe générés repose sur la non-réversibilité 
+    de la fonction de hachage utilisée. Ainsi, il est \^extrèmement difficile (voir 
+    impossible) de prédire les prochains mot de passe générés.\\
+  \end{itemize}
+
+  Le système OTP fournit ainsi un protection affirmée contre tout type 
+  d'attaque contre le vol d'identifiants.
+  En revanche elle ne protège pas le client des attaques telles 
+  que le vol de session\footnote{Vol de cookies.} et l'espionnage.
+
+%------------------------------------------------------------------------------
+\section{Approfondissement}
+  Nous étudirons ici plus en détails  les propriétés du système OTP.
+
+  \subsection{Generation et partage d'un secret}
+    Le secret ici est la clé utilisée par le token pour calculer un otp, il 
+s'agit d'une phrase de passe généralement fournit en clair par l'utilisateur 
+sous forme de données textuelles. 
+
+    À aucun moment cette clé ne doit traverser le réseau, que ce soit lors 
+d'une authentification ou d'un changement de clé.
+
+    Ce qui résout la question du partage de la clé. Seul le token connait la 
+clé permettant de générer les mots de passe, il est donc impossible à un attaquant 
+de la récupérer pour générer lui même les mot de passe (à moins de récupérer 
+le token lui-même).
+
+  \subsection{Génération d'un mot de passe jetable}
+
+    La génération d'un otp se déroule en trois étapes :
+    \begin{description}
+      \item [phase initiale :] combinaison des entrée;
+      \item [phase de calcul :] application de la fonction de hachage un 
+      certain nombre de fois;
+      \item [phase de conversion :] une fonction renvoyant les 64 bits de l'otp 
+      sous forme lisible.\\
+    \end{description}
+
+    Voyons ces trois étapes en détails.
+
+    \subsubsection{Phase initiale}
+      Chaque otp est calculé à partir du \emph{challenge}.
+
+      Le serveur fournit en clair une graine que l'on concatène à la clé. Un 
+utilisateur peut donc utiliser la même clé depuis plusieurs machines, le serveur 
+enverra des graines différentes. La graine ne doit contenir que des caractères 
+alphanumériques et la longueur doit être inférieure à 16. C'est une chaîne de 
+caratères sans espace et contenant de préférence des caractères issus du code 
+ISO-646. Elle n'est pas sensible à la casse, et on se conformera à la convertir 
+en minuscule avant tout calcul.
+
+      La clé et la graine forment ensemble le challenge. La syntaxe du challenge
+doit être standard de façon à ce que les générateurs automatisés puissent les 
+reconnaitre et en extraire des informations. La syntaxe standard prend la forme 
+suivante:
+      \begin{center}
+          \emph{otp-<algorithmID> <séquence d'entier> <graine>}\\
+      \end{center}
+
+      Les trois segments sont séparés par une combinaison de caractères 
+d'espacement (espace et/ou tabulation) et doit se terminer de même ou par un 
+retour chariot. 
+
+      La chaîne "otp" au début doit être en minuscule.
+
+      L'ID de l'algorithme est sensible à la casse, ceux pré-existant sont en 
+      minuscule. Voici ceux utilisés le plus couramment :
+      \begin{description}
+          \item [MD4] id : md4
+          \item [MD5] id : md5
+          \item [SHA1] id : sha1 
+      \end{description}
+      Tout algorithme supplémentaire peut être reconnu en définissant un 
+identifiant court.
+
+      La graine suit les mêmes contraintes qu'auparavant : insensible à la 
+    casse, convertit en minuscule avant usage.
+
+      Voici un exemple de challenge :
+      \begin{center}
+          \emph{otp-md5 487 dog2 }\\ 
+      \end{center}
+
+      Le challenge est passé à la fonction de hachage puis dans une fonction
+      de réduction pour arriver à une taille de 64 bits. Par la suite,
+      on notera ce résultat \emph{S}.
+
+    \subsubsection{Phase de calcul}
+      Une série d'otp est produite par application successive de la fonction de 
+hachage (un nombre \emph{N} de fois spécifié par l'utilisateur) sur S. Le 
+résultat sera le 1\textsuperscript{ier} otp communiqué à l'utilisateur. Le 
+suivant sera le résultat de \emph{N-1} occurrences de la fonction de hachage 
+sur 
+S. 
+
+      Un espion interceptant la transmission d'un otp ne pourra pas déterminer 
+le prochain (l'occurence \emph{N-2}) car cela impliquerait qu'il ait inversé la 
+fonction de hachage. Or c'est sur la non-réversibilité de la fonction de 
+hachage 
+choisie que repose la sécurité des otp générés.\\
+
+
+
+    \subsubsection{Phase de conversion}
+        L'otp généré, fait 64 bit de long. Tout serveur doit être en mesure 
+d'accepter un otp sous la forme de 6 mots de 1 à 4 lettres appartenant à la 
+norme ISO-646, chaque mots étant choisit dans un dictionnaire de 2048 mots. On compte 
+11 
+bits par mots, pour un total de 66 bits (\emph{à quoi servent les 2 bits 
+supplémentaires?} voir page 5).
+
+        La présentation de l'otp sous la forme de 6 mots doit se faire comme 
+suit : en majuscules, et séparés avec un espace. Toutefois, tout serveur 
+supportant ce format doit accepter sans vérifier la casse ni les séparateurs. 
+Le 
+premier exemple ci-dessous illustre un sortie de générateur conforme et 
+acceptable en entrée. Le second est uniquement acceptable en entrée :
+        \begin{center}
+            OUST COAT FOAL MUG BEAK TOTE\\
+            oust coat foal mug beak tote
+        \end{center}
+
+        L'interopérabilité implique que les serveurs et le générateurs 
+emploient 
+tous le même dictionnaire. On utilise couramment celui fournit dans la RFC 1760 
+(fournit en index D).
+
+        Il est possible de fournir une sortie de généateur en hexadecimal. Le 
+serveur doit accepter l'hexa-décimal en entrée (sans tenir compte de la casse). 
+Les chiffres/lettres peuvent être séparés par des espaces qui seront ignorés 
+par 
+le serveur. Voici quelque exemples:
+        \begin{itemize}
+            \item 3503785b369cda8b              0x3503785b369cda8b
+            \item e5cc a1b8 7c13 096b           0xe5cca1b87c13096b
+            \item C7 48 90 F4 27 7B A1 CF       0xc74890f4277ba1cf
+            \item 47 9 A68 28 4C 9D 0 1BC       0x479a68284c9d01bc
+        \end{itemize}
+
+        En plus du format 6 mots et hexadécimal, le serveur devrait accepter 
+l'encodage décrit dans l'index B. Le répertoire de mot du dictionnaire standard ne doit 
+cependant pas \^etre altéré ou oubli\'e. Afin d'\'eviter toute ambiguïté avec 
+l'hexadécimal, on \'evitera les lettre de A à F. Le mots du nouveau dictionnaire sont 
+sensibles à la casse et la casse doit être conservé.\\
+
+        Au final, le serveur doit accepter :
+        \begin{itemize}
+            \item le format 6 mots basé dur les dictionnaire de la RFC1760 et de 
+            l'annexe D;
+            \item l'hexadécimal;
+            \item éventuellement le format 6 mots basé sur le dictionnaire alternatif 
+            (annexe B).
+        \end{itemize}
+  
+  \subsection{Soumission et protocole de vérification}
+        Voici ce qui est dit dans la RFC 2289:
+    une fois l'OTP transmis au serveur il décodé en une clé de 64 bits puis haché.
+    Si ce haché correspond à l'OTP précédent il est donc valide.
+    L'utilisateur est authentifié et l'OTP prends la place du précédent.
+    
+        Seulement un OTP est constitué de 64 bits. selon les fonction un haché
+    d'OTP fait entre 128 et 160 bits. Donc un haché ne pourra jamais correspondre
+    à un OTP. La RFC 2289 n'est pas précise sur ce point.
+  
+  \subsection{Synchronisation}
+    Ce système fonctionnant sur un modèle défi réponse il est impossible de perdre
+    la synchronisation. À chaque fois le serveur demande un OTP bien précis dans la séquence.
+  
+  \subsection{Reinitialisation}
+    Le système étant limité en nombre d'utilisation (génération du $n^{i\grave{e}me}$ 
+    hachés lors de l'initialisation) il est nécessaire de réinitialiser le système
+    une fois cette limite atteinte sous peine de ne plus pouvoir s'authentifier.
+    
+    Lors de la ré-initialisation le paramètre seed est renouvelé ce qui permet à
+    l'utilisateur de garder la même clé secrète. Soit l'utilisateur spécifie la valeur
+    pour seed et le nombre d'OTP à générer soit il utilise la valeur aléatoire suggérée.
+    
+    La RFC 2289 préconise de permetrre à un utilisateur de réinitialiser son système
+    à distance sans révéler sa phrase de passe secrète. Ceci n'intervient pas dans
+    une implémentation où seul le haché précédent est stocké.
+
+%------------------------------------------------------------------------------
+\section{Analyse générale et sécurité}
+    \subsection{Avantages et intér\^ets}
+    Les avantages fournits par le système OTP sont ceux fournits par tous les
+    systèmes d'authentification à mot de passe jetable. Ce mode de connexion 
+    offre donc une résistance aux attaques par rejeu.
+    
+    Il permet ainsi de s'assurer que la réutilisation de mot de passe par un
+    attaquant qui les aurait récupérés lors d'une authentification n'est pas 
+    possible.
+    
+    Ce système peut, de plus, être utilisé conjointement avec un système 
+    classique d'authentification par login / mot de passe. On met ainsi en 
+    place un système d'authentification dit forte assurant un niveau de 
+    sécurité plus important bien que restant moins élevé que les systèmes
+    d'authentification cryptographique.
+  
+  \subsection{Inconvenients et limites}
+  Le protocole d'OTP étudié ici est le premier né des systèmes 
+  d'authentification à mot de passe jetable. Ainsi, bien que posant les bases
+  de la méthode, il souffre de certains inconvénients d'utilisation. Ces 
+  dèrniers n'engendre pas de problèmes de sécurité mais empêche toute 
+  utilisation confortable du système.
+  
+  Parmis ces soucis de confort, le plus remarquable est sans doute le fait
+  qu'il n'y a qu'un nombre fixé de connections possibles pour une 
+  initialisation donnée. En effet, si lors de l'association du client avec 
+  le serveur le nombre de hachés successif calculés est fixé à 100, seuls 
+  99 connections seront possibles successivement. Une fois cette limite 
+  atteinte il sera nécessaire de changer la graine de génération et donc
+  de réinitialiser le protocole.
+  
+  Un autre point important est relatif aux performances de la méthode. En effet
+  lorsque le token calcul l'OTP, il doit hacher successivement plusieurs 
+  valeurs jusqu'a atteindre le numéro de mot de passe demandé. Or le coup en 
+  calcule peut être important pour les premiers OTP demandés.
+  
+  \subsection{Considérations de sécurité}
+    \subsubsection{Attaques exhaustives}
+    Les attaques par recherche exhaustives sur le système OTP peuvent être 
+    éxecutées dans deux buts différents. L'attaquant peut soit rechercher à
+    trouver la clef secrète de l'utilisateur soit à trouver la valeur de l'OTP
+    actuellement demandé.
+    
+    Dans le premier cas, l'attaquant demande une authentification et récupère 
+    le challenge de connexion. Il devra alors calculer la valeur du $N^{ième}$ 
+    haché pour toute les valeurs de clef secrète possible. La résistance aux
+    attaques sur ce point dépend donc de la clef de l'utilisateur. Cependant, 
+    la longueur de cette clef est limitée inférieurement à 10 caractères. Si
+    l'on considère que la clef est codée en ascii 8bits, on obtient donc une 
+    taille minimum de clef de $2^{80}$ bits. Au vues du coup nécessaire au 
+    calcul d'un OTP, cette valeur semble raisonnable. De plus, la longueur de 
+    la clef peut êotre étendue jusqu'a plus de 60 caractères augmentant encore
+    la résistance.
+    
+    Dans le second cas, l'attaquant demande un authentification et tente 
+    ensuite de trouver la valeur à entrer pour s'authentifier. La méthode est
+    simple puisqu'il suffit d'énumérer les valeurs possibles pour un OTP. Dans
+    notre cas, l'OTP étant codé sur 64 bits l'attaque s'éxecutera en $2^{64}$ 
+    opérations. Si l'on considère qu'il est possible d'effectuer $10^9$ 
+    tentatives par seconde, alors cette attaque réussit en 58 ans. Le mot de 
+    passe étant jetable, ce temps est plus qu'acceptable.
+    
+    \subsubsection{Attaques par collisions}
+        Les collisions recherchées dans cette section sont des collisions dîtes fortes.
+    puisqu'il faut trouver un OTP aillant une empreinte bien précise.
+    
+        Il y a deux façon de voir l'attaque, soit on cherche une collision direct sur
+    le prochain OTP au quel cas on applique une fois la fonction de hachage sur $n$ clefs.
+    Comme on considère des hachés de 128 à 160 bits cela fait des attaques entre $O(2^128)$
+    et $O(2^160)$ ce qui n'est pas envisageable. en cas de réussite cette attaque permet 
+    d'obtenir un seul identifiant et donc une seule session.
+    
+        Soit on génère une suite d'OTP a partir d'une clé choisie jusqu'a trouver
+    une collision avec le prochain OTP. les complexité restent les même mais ce type
+    d'attaque permettrait d'obtenir plusieurs identifiant et donc plusieurs sessions.
+    
+    \subsubsection{Failles connues}
+      Outre les attaques actives de type espionnage et brute force le système ne possède pas de failles connues.
+    
+    \subsubsection{Précautions et préconisation}
+    La clé doit contenir au moins 10 caractères pour réduire les risques de la 
+retrouver par la méthode de recherche exhaustive ou par attaque du dictionnaire. 
+Cependant toute implémentation du système OTP doit supporter des clés d'au 
+moins 10 à 63 caractères.
+
+    Afin d'assurer l'interchangeabilité des générateurs d'otp, chacun doit 
+supporter des clés de 10 à 63 caractères, des clés plus longues sont 
+envisageables (mais attention à la compatibilité avec des générateurs plus 
+restreints).
+  
+%------------------------------------------------------------------------------
+\section{Utilisations}
+  Le protocole ne trouve plus d'utilisation actuellement du fait qu'il existe des protocoles remplissant
+  les mêmes fonctions tout en étant plus simple et plus performant on peut citer par exemple HOTP ou TOTP, cependant
+  cette méthode pourrait quand même être utilisée en remplacement.
+  
+%------------------------------------------------------------------------------
+\section{Conclusion}
+  \subsection{Perenité du système}
+    le système est obslète car il a été remplacé par des protocoles plus simple et plus performant.
+
 \setcounter{section}{0}
 \part{Protocole HOTP}
 \section{Pré-requis}
