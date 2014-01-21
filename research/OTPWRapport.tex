@@ -191,7 +191,8 @@
     OTP à des chaînes de strictement moins de 17 caractère.
     Cette ensemble compte donc $\sum_{i=0}^{16}(2^8)^i$ éléments.
     On peut compter  $2^{8\times 17} - 1$ soit $2^136 -1$ autrement dit
-    $87112285931760246646623899502532662132735$ possibilités.
+    $87112285931760246646623899502532662132735$ possibilités. Avec $10^10$ tentatives
+    par seconde on en arrive à $5\times 10^23$ années pour tous les énumérer.
 
         Le réglage par défaut de l'implémentation d'OTPW est de 3 essais par tentative de login
     si la troisième échoue l'utilisateur devra recommencer le processus d'authentification
@@ -208,18 +209,15 @@
         Pour le premier point cela transforme le $2^{8\times 17}$ en $2^{6\times 17}$ ce qui réduit
     la complexité des attaques exhaustive. Le second point n'intervient que si l'on connaît un OTP.
     En effet en aillant un OTP on obtient le préfixe, il suffit ensuite de rechercher sur les suffixes.
-    Ce qui donne $2^{6\times 8}$ opérations pour trouver un suffixe, soit $O(2^48)$
-    
+    Ce qui donne $2^{6\times 8}$ opérations pour trouver un suffixe, soit $O(2^48)$. Ce qui risque à terme
+    d'être trop peu. Surtout si l'attaquant connais le haché.
 
 \subsubsection{Attaques par collisions}
-        Étant donné que les OTP son ré-hachés par le serveur le système est potentiellement sensible
-    aux collisions. La fonction de hachage utilisée étant RipeMD-160, aucune méthode rapide
-    n'a été identifiée pour trouver des collisions à ce jour. Il faut donc $O(2^80)$ étapes pour trouver une 
-    collision.
+    Les collisions recherchées ici sont des collisions fortes. Un OTP bien précis est demandé à
+    chaque fois. Et seul les 72 premiers bits du hachés sont à prendre en compte les attaques ont
+    donc lieu en $O(2^72)$ étapes. Cela reste considérable mais ils pourrait être interessant de 
+    considérer la totalité du haché cela passerait la complexité a $O(2^160)$.
     
-        Là encore l'implémentation semble souffrir d'un défaut car seul les 72 premiers bits des hachés
-    sont stockés. Ce qui permet des collisions en $O(2^36)$ soit une perte de sécurité importante. 
-
 \subsubsection{Failles connues} 
     % FIXME: Race for the last key
     %        Principe de la connexion parallèle qui arrive a prendre la place d'une machine
