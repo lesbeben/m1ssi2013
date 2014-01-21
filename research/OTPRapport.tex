@@ -19,7 +19,8 @@
 
 \begin{abstract}
   Ce document présente une analyse du système d'OTP général. Toutes les 
-informations présentées et analysées proviennent de la RFC 2289. Le but de cet 
+informations présentées et analysées proviennent de la RFC 2289 qui est une mise à jour
+de la RFC 1938. Le but de cet 
 article est de déterminer dans quelles condition le système OTP est utilisable, 
 sous quelles conditions et avec quelles garanties de sécurité.
   
@@ -33,11 +34,12 @@ comparatif entre les systèmes d'OTP majeurs.
 %------------------------------------------------------------------------------
 \section{Prérequis}
   Le système OTP repose principalement sur l'utilisation de fonctions de 
-hachage, les algorithmes les plus courants seront présentés dans ce document.
+  hachage, les algorithmes les plus courants seront présentés dans ce 
+  document.
 
-  OPT est une évolution de S/KEY (système publié par Bellcore), qui est lui-même 
-un système OTP dont la description complète est disponible dans la RFC 1760 
-(datant de 1995).
+  OTP est une évolution de S/KEY (système publié par Bellcore), qui est 
+  lui-même un système OTP dont la description complète est disponible
+  dans la RFC 1760 (datant de 1995).
 
 %------------------------------------------------------------------------------
 \section{Généralités}
@@ -52,33 +54,37 @@ entités :
 
   \begin{description}
     \item[L'utilisateur :] le sujet de l'authentification en vue d'une 
-connection au serveur;
+    connection au serveur;
     \item[Le client :] un logiciel doté d'une interface utilisateur ou un site 
-web requierant une authentification;
-    \item[Le serveur :] l'entité à laquelle on veut accéder, contient une base 
-de données contenant des informations sur l'utilisateur (login, dernier mot de 
-passe utilisé, ...) et dispose d'une routine permettant de vérifier 
-l'authenticité de celui-ci avec le mot de passe jetable qu'il lui a fournit;
+    web permettant une authentification auprès d'un serveur adapté;
+    \item[Le serveur :] l'entité qui permet d'authentifier un utilisateur,
+    contient une base de données contenant des informations sur l'utilisateur 
+    (login, dernier mot de 
+    passe utilisé, ...) et dispose d'une routine permettant de vérifier 
+    l'authenticité de celui-ci avec le mot de passe jetable qu'il lui a fournit;
     \item[Le token :] élément physique ou logiciel permettant de générer un mot 
-de passe jetable;
-    \item[Un attaquant :] hacker, malware, etc... Une entité cherchant à usurper 
-l'identité de l'utilisateur vis à vis du serveur en récupérant ses informations 
-de connection.\\
+    de passe jetable pour un utilisateur;
+    \item[Un attaquant :] hacker, malware, etc... Une entité cherchant à 
+    usurper 
+    l'identité de l'utilisateur vis à vis du serveur en récupérant ses informations 
+    de connection. Ou son accès au service sans ces informations\\
   \end{description}
 
   Le principe est simple :
 
   \begin{itemize}
-    \item Un utilisateur souhaitant se connecter sur un client employant le 
-système OTP dispose d'un token lui permettant de générer un mot de passe jetable 
-(qu'on appellera par la suite otp) que l'interface lui demande;
-    \item Le token éxecute une série de calculs sur une clé secrète et en tire 
-un otp qu'il communique à l'utilisateur;
+    \item Un utilisateur souhaitant se connecter sur un service via un client
+    employant le système OTP dispose d'un token lui permettant de générer un 
+    mot de passe jetable 
+    (qu'on appellera par la suite otp) que l'interface lui demande;
+    \item Le token exécute une série de calculs sur une clé secrète et en tire 
+    un otp qu'il communique à l'utilisateur;
     \item l'utilisateur renseigne son login et l'otp au client;
     \item Le client envoie une requ\^ete au serveur et lui fournit l'otp; 
     \item Le serveur vérifie le mot de passe en appliquant la fonction de 
-hachage sur celui-ci. Si le résultat correspond au dernier otp utilisé par cet 
-utilisateur, celui-ci est authentifié.\\
+    hachage sur celui-ci. Si le résultat correspond au dernier otp utilisé par cet 
+    utilisateur, celui-ci est authentifié. Et conserve cet OTP comme dernier
+    utilisé\\
   \end{itemize}
 
   Le mot de passe étant à usage unique, il ne pourra pas servir à un attaquant 
@@ -87,16 +93,16 @@ l'ayant récupéré en écoutant les communications entre le client et le serveu
   Les principaux avantages sont les suivants :
 
   \begin{itemize}
-    \item Tout d'abord, aucun secret n'a besoin d'être partagé entre le client 
-et le serveur;
+    \item Le secret secret n'est jamais transmis entre le client et le serveur.
     \item La sécurité des mots de passe générés repose sur la non-réversibilité 
-de la fonction de hachage utilisée. Ainsi, il est \^extrèmement difficile (voir 
-impossible) de prédire les prochains mot de passe générés.\\
+    de la fonction de hachage utilisée. Ainsi, il est \^extrèmement difficile (voir 
+    impossible) de prédire les prochains mot de passe générés.\\
   \end{itemize}
 
-  Le système OTP fournit ainsi un protection affirmée contre tout type d'attaque 
-passive. En revanche elle ne protège pas le client des attaques actives telles 
-que l'usurpation d'identité et l'espionnage.
+  Le système OTP fournit ainsi un protection affirmée contre tout type 
+  d'attaque contre le vol d'identifiants.
+  En revanche elle ne protège pas le client des attaques telles 
+  que le vol de session\footnote{Vol de cookies.} et l'espionnage.
 
 %------------------------------------------------------------------------------
 \section{Approfondissement}
@@ -105,25 +111,25 @@ que l'usurpation d'identité et l'espionnage.
   \subsection{Generation et partage d'un secret}
     Le secret ici est la clé utilisée par le token pour calculer un otp, il 
 s'agit d'une phrase de passe généralement fournit en clair par l'utilisateur 
-sous forme de donnes textuelles. 
+sous forme de données textuelles. 
 
-    À aucun moment cette clé ne doit traverser le réseau, que ce soit lors d'une 
-authentification ou d'un changement de clé.
+    À aucun moment cette clé ne doit traverser le réseau, que ce soit lors 
+d'une authentification ou d'un changement de clé.
 
-    Ce qui résout la question du partage de la clé. Seul le token connait la clé 
-permettant de générer les mots de passe, il est donc impossible à un attaquant 
-de la récupérer pour générer elle même les mot de passe (à moins de récupérer le 
-token lui-même).
-  
+    Ce qui résout la question du partage de la clé. Seul le token connait la 
+clé permettant de générer les mots de passe, il est donc impossible à un attaquant 
+de la récupérer pour générer lui même les mot de passe (à moins de récupérer 
+le token lui-même).
+
   \subsection{Génération d'un mot de passe jetable}
 
     La génération d'un otp se déroule en trois étapes :
     \begin{description}
-      \item [phase initiale :] combination des entrée;
-      \item [phase de calcul :] application de la fonction de hachage un certain 
-nombre de fois;
+      \item [phase initiale :] combinaison des entrée;
+      \item [phase de calcul :] application de la fonction de hachage un 
+      certain nombre de fois;
       \item [phase de conversion :] une fonction renvoyant les 64 bits de l'otp 
-sous forme lisible.\\
+      sous forme lisible.\\
     \end{description}
 
     Voyons ces trois étapes en détails.
@@ -139,7 +145,7 @@ caratères sans espace et contenant de préférence des caractères issus du cod
 ISO-646. Elle n'est pas sensible à la casse, et on se conformera à la convertir 
 en minuscule avant tout calcul.
 
-      La clé et la graine forment ensemble le challenge. La syntaxe du challenge 
+      La clé et la graine forment ensemble le challenge. La syntaxe du challenge
 doit être standard de façon à ce que les générateurs automatisés puissent les 
 reconnaitre et en extraire des informations. La syntaxe standard prend la forme 
 suivante:
@@ -154,7 +160,7 @@ retour chariot.
       La chaîne "otp" au début doit être en minuscule.
 
       L'ID de l'algorithme est sensible à la casse, ceux pré-existant sont en 
-minuscule. Voici ceux utilisés le plus couramment :
+      minuscule. Voici ceux utilisés le plus couramment :
       \begin{description}
           \item [MD4] id : md4
           \item [MD5] id : md5
@@ -163,29 +169,30 @@ minuscule. Voici ceux utilisés le plus couramment :
       Tout algorithme supplémentaire peut être reconnu en définissant un 
 identifiant court.
 
-      La graine suis les mêmes contraintes qu'auparavant : insensible à la 
-casse, convertit en minuscule avant usage.
+      La graine suit les mêmes contraintes qu'auparavant : insensible à la 
+    casse, convertit en minuscule avant usage.
 
       Voici un exemple de challenge :
       \begin{center}
-          \emph{otp-md5 487 dog2 }\\    ATTENTION GROS DOUTE : LE CHALLENGE 
-C'EST TT CA OU JUSTE LA SEQ D'ENTIERS + LA GRAINE ? 
-<-----------------------------------
+          \emph{otp-md5 487 dog2 }\\ 
       \end{center}
 
-      Le challenge est passé à la fonction de hachage afin de le réduire à une 
-taille de 64 bits. Par la suite, on notera ce résultat \emph{S}.
+      Le challenge est passé à la fonction de hachage puis dans une fonction
+      de réduction pour arriver à une taille de 64 bits. Par la suite,
+      on notera ce résultat \emph{S}.
 
     \subsubsection{Phase de calcul}
       Une série d'otp est produite par application successive de la fonction de 
 hachage (un nombre \emph{N} de fois spécifié par l'utilisateur) sur S. Le 
 résultat sera le 1\textsuperscript{ier} otp communiqué à l'utilisateur. Le 
-suivant sera le résultat de \emph{N-1} occurrences de la fonction de hachage sur 
+suivant sera le résultat de \emph{N-1} occurrences de la fonction de hachage 
+sur 
 S. 
 
       Un espion interceptant la transmission d'un otp ne pourra pas déterminer 
 le prochain (l'occurence \emph{N-2}) car cela impliquerait qu'il ait inversé la 
-fonction de hachage. Or c'est sur la non-réversibilité de la fonction de hachage 
+fonction de hachage. Or c'est sur la non-réversibilité de la fonction de 
+hachage 
 choisie que repose la sécurité des otp générés.\\
 
 
@@ -193,13 +200,15 @@ choisie que repose la sécurité des otp générés.\\
     \subsubsection{Phase de conversion}
         L'otp généré, fait 64 bit de long. Tout serveur doit être en mesure 
 d'accepter un otp sous la forme de 6 mots de 1 à 4 lettres appartenant à la 
-norme ISO-646, chaque mots étant choisit dans un dico de 2048 mots. On compte 11 
+norme ISO-646, chaque mots étant choisit dans un dictionnaire de 2048 mots. On compte 
+11 
 bits par mots, pour un total de 66 bits (\emph{à quoi servent les 2 bits 
 supplémentaires?} voir page 5).
 
         La présentation de l'otp sous la forme de 6 mots doit se faire comme 
 suit : en majuscules, et séparés avec un espace. Toutefois, tout serveur 
-supportant ce format doit accepter sans vérifier la casse ni les séparateurs. Le 
+supportant ce format doit accepter sans vérifier la casse ni les séparateurs. 
+Le 
 premier exemple ci-dessous illustre un sortie de générateur conforme et 
 acceptable en entrée. Le second est uniquement acceptable en entrée :
         \begin{center}
@@ -207,13 +216,15 @@ acceptable en entrée. Le second est uniquement acceptable en entrée :
             oust coat foal mug beak tote
         \end{center}
 
-        L'interopérabilité implique que les serveurs et le générateurs emploient 
+        L'interopérabilité implique que les serveurs et le générateurs 
+emploient 
 tous le même dictionnaire. On utilise couramment celui fournit dans la RFC 1760 
 (fournit en index D).
 
-        Il est possible de fournir un sortie de généateur en hexadecimal. Le 
+        Il est possible de fournir une sortie de généateur en hexadecimal. Le 
 serveur doit accepter l'hexa-décimal en entrée (sans tenir compte de la casse). 
-Les chiffres/lettres peuvent être séparés par des espaces qui seront ignorés par 
+Les chiffres/lettres peuvent être séparés par des espaces qui seront ignorés 
+par 
 le serveur. Voici quelque exemples:
         \begin{itemize}
             \item 3503785b369cda8b              0x3503785b369cda8b
@@ -223,31 +234,31 @@ le serveur. Voici quelque exemples:
         \end{itemize}
 
         En plus du format 6 mots et hexadécimal, le serveur devrait accepter 
-l'encodage décrit dans l'index B. Le répertoire de mot du dico standard ne doit 
+l'encodage décrit dans l'index B. Le répertoire de mot du dictionnaire standard ne doit 
 cependant pas \^etre altéré ou oubli\'e. Afin d'\'eviter toute ambiguïté avec 
-l'hexadécimal, on \'evitera les lettre de A à F. Le mots du nouveau dico sont 
+l'hexadécimal, on \'evitera les lettre de A à F. Le mots du nouveau dictionnaire sont 
 sensibles à la casse et la casse doit être conservé.\\
 
         Au final, le serveur doit accepter :
         \begin{itemize}
-            \item le format 6 mots basé dur les dico de la RFC1760 et de l'index 
-D;
+            \item le format 6 mots basé dur les dictionnaire de la RFC1760 et de 
+            l'annexe D;
             \item l'hexadécimal;
-            \item éventuellement le format 6 mots basé sur le dico alternatif 
-(index B).
+            \item éventuellement le format 6 mots basé sur le dictionnaire alternatif 
+            (annexe B).
         \end{itemize}
   
   \subsection{Soumission et protocole de vérification}
     Tout est dans le titre. Comment le mot de passe est-il soumis et quelles 
 sont les étapes suivies par le serveur pour déterminer la validité de celui-ci.
-  
+
   \subsection{Synchronisation}
-    Token et verificateurs peuvent ils perdre leur synchronisation. Comment ce 
-problème est-il évité? Comment la synchronisation est elle rétablie?
-  
+    Il est impossible de perdre la synchronisation. si ce cas survient c'est que 
+    le serveur a validé un OTP qui n'était pas celui attendu.
+    
   \subsection{Reinitialisation}
-    Ne concerne a priori pas tous les systèmes. Expliquer les procédures a 
-utiliser pour reinitialiser le secret et autres.
+    Le système étant limité en nombre d'utilisation (génération du $n^{i\grave{e}me}$ 
+    hachés lors de l'initialisation)
 
 %------------------------------------------------------------------------------
 \section{Analyse générale et sécurité}
@@ -263,8 +274,10 @@ utiliser pour reinitialiser le secret et autres.
     Trier tt ça :
 
     La clé doit contenir au moins 10 caractères pour réduire les risques de la 
-retrouver par la méthode de recherche exhaustive ou par attaque du dictionnaire. 
-Cependant toute implémentation du système OTP doit supporter des clés d'au moins 
+retrouver par la méthode de recherche exhaustive ou par attaque du 
+dictionnaire. 
+Cependant toute implémentation du système OTP doit supporter des clés d'au 
+moins 
 10 à 63 caractères.
 
     Afin d'assurer l'interchangeabilité des générateurs d'otp, chacun doit 
@@ -279,7 +292,8 @@ démonstration seront certainement bien vus par votre chargé de mission
 peur tous va bien se passer.
     
     \subsubsection{Attaques par collisions}
-      Cette partie n'est pas forcement nécessaire. Se référer au résultats de la 
+      Cette partie n'est pas forcement nécessaire. Se référer au résultats de 
+la 
 réunion du 19 Novembre.
     
     \subsubsection{Failles connues}
@@ -301,7 +315,8 @@ réunion du 19 Novembre.
 \section{Conclusion}
   La conclusion
   \subsection{Utilisation dans le cadre du projet}
-    Reprendre les éléments de l'analyse telles que le performances du système le 
+    Reprendre les éléments de l'analyse telles que le performances du système 
+le 
 niveau de sécurité et autre afin de définir si, et dans quels contextes, le 
 système devrait\^etre utlisé dans le cadre du projet.
   
