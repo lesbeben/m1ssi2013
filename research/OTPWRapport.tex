@@ -34,31 +34,37 @@
 \newpage
 
 \section{Pré-requis}
+        Le générateur d'OTP repose sur la fonction de hachage RipeMD-160. Tant pour
+    la génération de hachés et la vérification par comparaison de hachés
+    que pour générer de l'entropie.
+
         Ce protocole requiert pour pouvoir fonctionner de pouvoir stocker
     sur le serveur un fichier contenant la liste de vérification des OTP (environ 
     4ko pour 300 OTP) dans le dossier de l'utilisateur sous le nom \verb?.otpw?
-    ainsi que la liste des OTP pour l'utilisateur. Habituellement
-    c'est une feuille de papier qui est utilisée pour remplir ce rôle.
-
-        Le générateur d'OTP repose sur la fonction de hachage RipeMD-160.
+    
+        L'utilisateur quant à lui est supposé pouvoir garder une liste de chaînes
+    de caractères nécessaire à la création des OTP. Cette liste est habituellement
+    imprimée sur une feuille de papier.
 
 \section{Généralités}
         Ce protocole fonctionne grâce à deux listes numérotées, une permettant 
     de former les OTP. Et une permettant de vérifier les OTP. Afin d'initialiser
     ces listes l'utilisateur doit entrer un mot de passe que l'on appellera plus
-    tard le préfixe. Le serveur va générer deux listes: une qu'il va donner à
-    l'utilisateur que l'on appellera liste de suffixes, et une qu'il va garder
-    et qui permettra de vérifier les OTP.
+    tard le préfixe. 
+    
+        Le serveur va générer deux listes: une qu'il va donner à l'utilisateur que
+    l'on appellera liste de suffixes, et une qu'il va garder et qui permettra de
+    vérifier les OTP.
 
         Ces OTP sont construits en concaténant le préfixe avec l'un des suffixes.
-    Le serveur va hacher l'OTP avec la fonction
-    RipeMD-160 et comparer ce haché et avec celui de sa liste afin de vérifier sa validité.
+    Le serveur va hacher l'OTP avec la fonction RipeMD-160 ce haché et le comparer
+    avec celui de sa liste afin de vérifier sa validité.
 
         Quand un utilisateur veut s'authentifier le client demande un challenge 
     au serveur. Ce challenge est un numéro permettant d'identifier un suffixe sur
     la liste. L'utilisateur devra rentrer son login ainsi que l'OTP généré avec
-    ce suffixe. Le serveur authentifiera l'utilisateur si l'OTP correspond bien a celui ayant le même numéro
-    dans sa liste. Si l'utilisateur est authentifié
+    ce suffixe. Le serveur authentifiera l'utilisateur si l'OTP correspond bien 
+    a celui ayant le même numéro dans sa liste. Si l'utilisateur est authentifié
     alors il rayera de sa liste le haché de l'OTP.
 
 \section{Approfondissement}
@@ -80,7 +86,7 @@
                 \STATE{$suffix \leftarrow hash[0..71]$}
                 \STATE{$OTPHash$ $\leftarrow$ RipeMD-160($prefix + suffix$)}
                 \STATE{donner suffix à l'utilisateur}
-                \STATE{stocker OTPHash}
+                \STATE{stocker les 72 premiers bit de OTPHash}
                 \STATE{$SEED \leftarrow$ RipeMD-160($SEED + hash[72..160]$)}
             \ENDFOR
         \end{algorithmic}
@@ -150,7 +156,7 @@
             \STATE{$hash$ $\leftarrow$ RipeMD-160($OTP$)}
             \IF{match($hash$, $expected$)}
                 \STATE{authentifier l'utilisateur}
-                \STATE{rayer l'OTP $num$ de la liste}
+                \STATE{remplacer l'OTP $num$ par des '-' dans la liste}
             \ELSE
                 \STATE{refuser l'authentification}
             \ENDIF
@@ -260,9 +266,11 @@
 
 \subsection{Conclusion de l'équipe}
         Nous pensons que ce protocole contient de très bonnes idées comme le fait de devoir posséder le préfixe et
-    le suffixe pour pouvoir former un OTP. Cependant un certain nombre de points dérangent, ne pas pouvoir choisir la
-    taille de ses suffixes lors de la génération d'une liste, ne stocker qu'une partie des hachés, l'encodage en base 64 
-    trafiqué bien que effectivement les \verb?l1I? ainsi que les \verb?0O? soient parfois difficile à distinguer. 
+    le suffixe pour pouvoir former un OTP et ne pas nécessiter d'accès root pour lire la liste des hachés.
+    Cependant un certain nombre de points dérangent, ne pas pouvoir choisir la taille de ses suffixes lors de la 
+    génération d'une liste, ne stocker qu'une partie des hachés, ajoutons a cela que la liste des hachés est stockée 
+    dans le répertoire répertoire de l'utilisateur et potentiellement lisible par tous. Si un attaquant récupère
+    cette liste il peut faire ses tests de collisions sans tenter de s'authentifier.
 
         Le choix de ne stocker qu'une partie des hachés semble constituer un affaiblissement de la sécurité puisqu'on facilite
     les collisions. Et ne pas pouvoir choisir la taille de ses suffixe facilite beaucoup trop les attaques exhaustives
