@@ -152,7 +152,7 @@ suivante:
       \begin{center}
           \emph{otp-<algorithmID> <séquence d'entier> <graine>}\\
       \end{center}
-      
+
       Les trois segments sont séparés par une combinaison de caractères 
 d'espacement (espace et/ou tabulation) et doit se terminer de même ou par un 
 retour chariot. 
@@ -249,16 +249,31 @@ sensibles à la casse et la casse doit être conservé.\\
         \end{itemize}
   
   \subsection{Soumission et protocole de vérification}
-    Tout est dans le titre. Comment le mot de passe est-il soumis et quelles 
-sont les étapes suivies par le serveur pour déterminer la validité de celui-ci.
-
-  \subsection{Synchronisation}
-    Il est impossible de perdre la synchronisation. si ce cas survient c'est que 
-    le serveur a validé un OTP qui n'était pas celui attendu.
+        Voici ce qui est dit dans la RFC 2289:
+    une fois l'OTP transmis au serveur il décodé en une clé de 64 bits puis haché.
+    Si ce haché correspond à l'OTP précédent il est donc valide.
+    L'utilisateur est authentifié et l'OTP prends la place du précédent.
     
+        Seulement un OTP est constitué de 64 bits. selon les fonction un haché
+    d'OTP fait entre 128 et 160 bits. Donc un haché ne pourra jamais correspondre
+    à un OTP. La RFC 2289 n'est pas précise sur ce point.
+  
+  \subsection{Synchronisation}
+    Ce système fonctionnant sur un modèle défi réponse il est impossible de perdre
+    la synchronisation. À chaque fois le serveur demande un OTP bien précis dans la séquence.
+  
   \subsection{Reinitialisation}
     Le système étant limité en nombre d'utilisation (génération du $n^{i\grave{e}me}$ 
-    hachés lors de l'initialisation)
+    hachés lors de l'initialisation) il est nécessaire de réinitialiser le système
+    une fois cette limite atteinte sous peine de ne plus pouvoir s'authentifier.
+    
+    Lors de la ré-initialisation le paramètre seed est renouvelé ce qui permet à
+    l'utilisateur de garder la même clé secrète. Soit l'utilisateur spécifie la valeur
+    pour seed et le nombre d'OTP à générer soit il utilise la valeur aléatoire suggérée.
+    
+    La RFC 2289 préconise de permetrre à un utilisateur de réinitialiser son système
+    à distance sans révéler sa phrase de passe secrète. Ceci n'intervient pas dans
+    une implémentation où seul le haché précédent est stocké.
 
 %------------------------------------------------------------------------------
 \section{Analyse générale et sécurité}
@@ -271,20 +286,6 @@ sont les étapes suivies par le serveur pour déterminer la validité de celui-c
     Tous est dans le titre. Merci d`\^etre exhaustif.
   
   \subsection{Considérations de sécurité}
-    Trier tt ça :
-
-    La clé doit contenir au moins 10 caractères pour réduire les risques de la 
-retrouver par la méthode de recherche exhaustive ou par attaque du 
-dictionnaire. 
-Cependant toute implémentation du système OTP doit supporter des clés d'au 
-moins 
-10 à 63 caractères.
-
-    Afin d'assurer l'interchangeabilité des générateurs d'otp, chacun doit 
-supporter des clés de 10 à 63 caractères, des clés plus longues sont 
-envisageables (mais attention à la compatibilité avec des générateurs plus 
-restreints).
-
     \subsubsection{Attaques exhaustives}
       Analyse de la résistance aux attaques exhaustives. Un calcul et / ou 
 démonstration seront certainement bien vus par votre chargé de mission 
@@ -292,15 +293,32 @@ démonstration seront certainement bien vus par votre chargé de mission
 peur tous va bien se passer.
     
     \subsubsection{Attaques par collisions}
-      Cette partie n'est pas forcement nécessaire. Se référer au résultats de 
-la 
-réunion du 19 Novembre.
+        Les collisions recherchées dans cette section sont des collisions dîtes fortes.
+    puisqu'il faut trouver un OTP aillant une empreinte bien précise.
+    
+        Il y a deux façon de voir l'attaque, soit on cherche une collision direct sur
+    le prochain OTP au quel cas on applique une fois la fonction de hachage sur $n$ clefs.
+    Comme on considère des hachés de 128 à 160 bits cela fait des attaques entre $O(2^128)$
+    et $O(2^160)$ ce qui n'est pas envisageable. en cas de réussite cette attaque permet 
+    d'obtenir un seul identifiant et donc une seule session.
+    
+        Soit on génère une suite d'OTP a partir d'une clé choisie jusqu'a trouver
+    une collision avec le prochain OTP. les complexité restent les même mais ce type
+    d'attaque permettrait d'obtenir plusieurs identifiant et donc plusieurs sessions.
     
     \subsubsection{Failles connues}
       Tout est dans le titre.
     
     \subsubsection{Précautions et préconisation}
-      Tout est dans le titre.
+    La clé doit contenir au moins 10 caractères pour réduire les risques de la 
+retrouver par la méthode de recherche exhaustive ou par attaque du dictionnaire. 
+Cependant toute implémentation du système OTP doit supporter des clés d'au 
+moins 10 à 63 caractères.
+
+    Afin d'assurer l'interchangeabilité des générateurs d'otp, chacun doit 
+supporter des clés de 10 à 63 caractères, des clés plus longues sont 
+envisageables (mais attention à la compatibilité avec des générateurs plus 
+restreints).
   
 %------------------------------------------------------------------------------
 \section{Utilisations}
