@@ -109,24 +109,24 @@ l'ayant récupéré en écoutant les communications entre le client et le serveu
   Les principaux avantages sont les suivants :
 
   \begin{itemize}
-    \item Le secret secret n'est jamais transmis entre le client et le serveur.
+    \item Le secret n'est jamais transmis entre le client et le serveur.
     \item La sécurité des mots de passe générés repose sur la non-réversibilité 
     de la fonction de hachage utilisée. Ainsi, il est \^extrèmement difficile (voir 
-    impossible) de prédire les prochains mot de passe générés.\\
+    impossible) de prédire les prochains mots de passe générés.\\
   \end{itemize}
 
   Le système OTP fournit ainsi un protection affirmée contre tout type 
   d'attaque contre le vol d'identifiants.
   En revanche elle ne protège pas le client des attaques telles 
-  que le vol de session\footnote{Vol de cookies.} et l'espionnage.
+  que le vol de sessions\footnote{Vol de cookies.} et l'espionnage.
 
 %------------------------------------------------------------------------------
 \section{Approfondissement}
-  Nous étudirons ici plus en détails  les propriétés du système OTP.
+  Nous étudirons ici plus en détails les propriétés du système OTP.
 
   \subsection{Generation et partage d'un secret}
     Le secret ici est la clé utilisée par le token pour calculer un otp, il 
-s'agit d'une phrase de passe généralement fournit en clair par l'utilisateur 
+s'agit d'une phrase de passe généralement fourni en clair par l'utilisateur 
 sous forme de données textuelles. 
 
     À aucun moment cette clé ne doit traverser le réseau, que ce soit lors 
@@ -134,14 +134,14 @@ d'une authentification ou d'un changement de clé.
 
     Ce qui résout la question du partage de la clé. Seul le token connait la 
 clé permettant de générer les mots de passe, il est donc impossible à un attaquant 
-de la récupérer pour générer lui même les mot de passe (à moins de récupérer 
+de la récupérer pour générer lui même les mots de passe (à moins de récupérer 
 le token lui-même).
 
   \subsection{Génération d'un mot de passe jetable}
 
     La génération d'un otp se déroule en trois étapes :
     \begin{description}
-      \item [phase initiale :] combinaison des entrée;
+      \item [phase initiale :] combinaison des entrées;
       \item [phase de calcul :] application de la fonction de hachage un 
       certain nombre de fois;
       \item [phase de conversion :] une fonction renvoyant les 64 bits de l'otp 
@@ -202,14 +202,12 @@ identifiant court.
 hachage (un nombre \emph{N} de fois spécifié par l'utilisateur) sur S. Le 
 résultat sera le 1\textsuperscript{ier} otp communiqué à l'utilisateur. Le 
 suivant sera le résultat de \emph{N-1} occurrences de la fonction de hachage 
-sur 
-S. 
+sur S. 
 
       Un espion interceptant la transmission d'un otp ne pourra pas déterminer 
 le prochain (l'occurence \emph{N-2}) car cela impliquerait qu'il ait inversé la 
 fonction de hachage. Or c'est sur la non-réversibilité de la fonction de 
-hachage 
-choisie que repose la sécurité des otp générés.\\
+hachage choisie que repose la sécurité des otp générés.\\
 
 
 
@@ -217,9 +215,8 @@ choisie que repose la sécurité des otp générés.\\
         L'otp généré, fait 64 bit de long. Tout serveur doit être en mesure 
 d'accepter un otp sous la forme de 6 mots de 1 à 4 lettres appartenant à la 
 norme ISO-646, chaque mots étant choisit dans un dictionnaire de 2048 mots. On compte 
-11 
-bits par mots, pour un total de 66 bits (\emph{à quoi servent les 2 bits 
-supplémentaires?} voir page 5).
+11 bits par mots, pour un total de 66 bits les bits 65 et 66 sont utilisés pour représenter 
+une somme de contrôle permettant de valider l'intégrité de l'OTP donné.
 
         La présentation de l'otp sous la forme de 6 mots doit se faire comme 
 suit : en majuscules, et séparés avec un espace. Toutefois, tout serveur 
@@ -233,15 +230,13 @@ acceptable en entrée. Le second est uniquement acceptable en entrée :
         \end{center}
 
         L'interopérabilité implique que les serveurs et le générateurs 
-emploient 
-tous le même dictionnaire. On utilise couramment celui fournit dans la RFC 1760 
+emploient tous le même dictionnaire. On utilise couramment celui fournit dans la RFC 1760 
 (fournit en index D).
 
         Il est possible de fournir une sortie de généateur en hexadecimal. Le 
 serveur doit accepter l'hexa-décimal en entrée (sans tenir compte de la casse). 
 Les chiffres/lettres peuvent être séparés par des espaces qui seront ignorés 
-par 
-le serveur. Voici quelque exemples:
+par le serveur. Voici quelque exemples:
         \begin{itemize}
             \item 3503785b369cda8b              0x3503785b369cda8b
             \item e5cc a1b8 7c13 096b           0xe5cca1b87c13096b
