@@ -277,20 +277,66 @@ sensibles à la casse et la casse doit être conservé.\\
 
 %------------------------------------------------------------------------------
 \section{Analyse générale et sécurité}
-  Partie cruciale du rapport. Merci de me la faire au petits oignons.
-
-  \subsection{Avantages et intér\^ets}
-    Tout est dans le titre. Merci d'\^etre exhaustif.
+    \subsection{Avantages et intér\^ets}
+    Les avantages fournits par le système OTP sont ceux fournits par tous les
+    systèmes d'authentification à mot de passe jetable. Ce mode de connexion 
+    offre donc une résistance aux attaques par rejeu.
+    
+    Il permet ainsi de s'assurer que la réutilisation de mot de passe par un
+    attaquant qui les aurait récupérés lors d'une authentification n'est pas 
+    possible.
+    
+    Ce système peut, de plus, être utilisé conjointement avec un système 
+    classique d'authentification par login / mot de passe. On met ainsi en 
+    place un système d'authentification dit forte assurant un niveau de 
+    sécurité plus important bien que restant moins élevé que les systèmes
+    d'authentification cryptographique.
   
   \subsection{Inconvenients et limites}
-    Tous est dans le titre. Merci d`\^etre exhaustif.
+  Le protocole d'OTP étudié ici est le premier né des systèmes 
+  d'authentification à mot de passe jetable. Ainsi, bien que posant les bases
+  de la méthode, il souffre de certains inconvénients d'utilisation. Ces 
+  dèrniers n'engendre pas de problèmes de sécurité mais empêche toute 
+  utilisation confortable du système.
+  
+  Parmis ces soucis de confort, le plus remarquable est sans doute le fait
+  qu'il n'y a qu'un nombre fixé de connections possibles pour une 
+  initialisation donnée. En effet, si lors de l'association du client avec 
+  le serveur le nombre de hachés successif calculés est fixé à 100, seuls 
+  99 connections seront possibles successivement. Une fois cette limite 
+  atteinte il sera nécessaire de changer la graine de génération et donc
+  de réinitialiser le protocole.
+  
+  Un autre point important est relatif aux performances de la méthode. En effet
+  lorsque le token calcul l'OTP, il doit hacher successivement plusieurs 
+  valeurs jusqu'a atteindre le numéro de mot de passe demandé. Or le coup en 
+  calcule peut être important pour les premiers OTP demandés.
   
   \subsection{Considérations de sécurité}
     \subsubsection{Attaques exhaustives}
-      Analyse de la résistance aux attaques exhaustives. Un calcul et / ou 
-démonstration seront certainement bien vus par votre chargé de mission 
-      \og{}Coordination Recherche\fg{} ainsi que par les clients. N'ayez pas 
-peur tous va bien se passer.
+    Les attaques par recherche exhaustives sur le système OTP peuvent être 
+    éxecutées dans deux buts différents. L'attaquant peut soit rechercher à
+    trouver la clef secrète de l'utilisateur soit à trouver la valeur de l'OTP
+    actuellement demandé.
+    
+    Dans le premier cas, l'attaquant demande une authentification et récupère 
+    le challenge de connexion. Il devra alors calculer la valeur du $N^{ième}$ 
+    haché pour toute les valeurs de clef secrète possible. La résistance aux
+    attaques sur ce point dépend donc de la clef de l'utilisateur. Cependant, 
+    la longueur de cette clef est limitée inférieurement à 10 caractères. Si
+    l'on considère que la clef est codée en ascii 8bits, on obtient donc une 
+    taille minimum de clef de $2^{80}$ bits. Au vues du coup nécessaire au 
+    calcul d'un OTP, cette valeur semble raisonnable. De plus, la longueur de 
+    la clef peut êotre étendue jusqu'a plus de 60 caractères augmentant encore
+    la résistance.
+    
+    Dans le second cas, l'attaquant demande un authentification et tente 
+    ensuite de trouver la valeur à entrer pour s'authentifier. La méthode est
+    simple puisqu'il suffit d'énumérer les valeurs possibles pour un OTP. Dans
+    notre cas, l'OTP étant codé sur 64 bits l'attaque s'éxecutera en $2^{64}$ 
+    opérations. Si l'on considère qu'il est possible d'effectuer $10^9$ 
+    tentatives par seconde, alors cette attaque réussit en 58 ans. Le mot de 
+    passe étant jetable, ce temps est plus qu'acceptable.
     
     \subsubsection{Attaques par collisions}
         Les collisions recherchées dans cette section sont des collisions dîtes fortes.
@@ -322,13 +368,10 @@ restreints).
   
 %------------------------------------------------------------------------------
 \section{Utilisations}
-  On présente ici les possibles utilisation du système.
-  \subsection{Cas concrets d'utilisation}
-    Tout est dans le titre.
+  Le protocole ne trouve plus d'utilisation actuellement du fait qu'il existe des protocoles remplissant
+  les mêmes fonctions tout en étant plus simple et plus performant on peut citer par exemple HOTP ou TOTP, cependant
+  cette méthode pourrait quand même être utilisée en remplacement.
   
-  \subsection{Cas d'utilisation envisagés}
-    Cas possibles d'utilisation non encore exploité (On peut toujours r\^ever)
-
 %------------------------------------------------------------------------------
 \section{Conclusion}
   La conclusion
