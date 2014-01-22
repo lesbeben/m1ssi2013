@@ -45,8 +45,8 @@ ou déduire les futurs OTP; deuxièmement un OTP n'est valide que pour une uniqu
 attaques par rejeu.\\
 Nous allons donc commencer cet article par une présentation du protocole OTP qui sert de base pour tout les autres protocoles, et dont l'appréhension est donc nécessaire pour la compréhension
 de ses protocoles dérivés.
-\setcounter{section}{0}
 \part{Protocole OTP}
+\setcounter{section}{0}
 %------------------------------------------------------------------------------
 \section{Pré-requis}
   Le système OTP repose principalement sur l'utilisation de fonctions de 
@@ -390,8 +390,8 @@ restreints).
   \subsection{Pérennité du système}
     Le système est obsolète car il a été remplacé par des protocoles plus simples et plus performants.
 
-\setcounter{section}{0}
 \part{Protocole HOTP}
+\setcounter{section}{0}
 \section{Pré-requis}
 Le système d'OTP \og{}HOTP\fg{} est un système d'authentification par mot de passe jetable qui étend le système le système OTP définit dans la RFC 2289. Le système OTP 
 est étudié plus haut.
@@ -712,9 +712,9 @@ dans un domaine professionnel.
     
     On peut donc considérer ce système de calcul d'OTP comme pérenne.
     
-\setcounter{section}{0}
 \part{Protocole TOTP}
 
+\setcounter{section}{0}
 \section{Pré-requis}
 Le système d'authentification par mot de passe jetable \og{}TOTP\fg est une extension du système \og{}HOTP\fg{}, par conséquent, il repose sur les mêmes concepts. Ces 
 derniers ayant déjà été donnés dans le document relatif à \og{}HOTP\fg{}, nous ne les détaillerons pas de nouveau ici.
@@ -898,8 +898,8 @@ dans un domaine professionnel.
   \subsection{Pérénité du système}
    La pérennité du système TOTP est au moins aussi importante que celle de HOTP.
 
-\setcounter{section}{0}
 \part{Protocole OTPW}
+\setcounter{section}{0}
 \section{Pré-requis}
         Le générateur d'OTP repose sur la fonction de hachage RipeMD-160. Tant pour
     la génération de hachés et la vérification par comparaison de hachés
@@ -1166,23 +1166,29 @@ dans un domaine professionnel.
         Notons quand même que des protocoles plus récents permette une authentification aussi sûre
     et ne nécessitent pas d'intervention manuelle pour réinitialiser le système.
 
-\setcounter{section}{0}
 \part{Conclusion}
-  
+\setcounter{section}{0}
+Nous avons dans ce document étudié quatre méthodes d'authentification par mot de passe jetable. Le but de cette étude 
+étant de déterminer quelles méthodes seront implémentées au cours de notre projet, on se propose ici de faire une 
+comparaison des trois protocoles.
 
-idéé:
+Du point de vue de la résistances aux attaques, les quatre méthodes sont globalement équivalente. En effet, si les 
+précautions présentées dans chaque parties sont respéctées lors de l'implantation, tous les protocoles offrent une
+résistance aux attaques exhaustives et par collisions suffisantes. De la même manière, aucunes des méthodes étudiées 
+ne comportes de failles de sécurités notables, toujours dans le cas ou les préconisations sont respectées.
 
--Les mécanismes d'authentification par mots de passe jetables (OTP) constituent une bonne solution générale.
--OTP -> 2 critères non prédictible valide que pour une unique session.
+Ainsi, les seuls critères de séléctions applicables sont la simplisité d'utilisation et les performances de la méthode
+en termes de calculs. Sur ce point, l'OTP standard est mis directement hors course. En effet, la nécessité de 
+réinitialisation du système périodique combiné au temps de calcul d'un mot de passe et à la taille potentielle de 
+128 bits pour le passe font que cette méthode est inconfortable à utiliser.
 
--Nous préconisons l'implantation de HOTP / TOTP du fait que ces protocoles se rapproche au plus près de ce qu'on peut
-attendre d'un système cryptographique. 
-  +meilleure attaque étant la force brute
-  +le fait que l'algorithme de hachage soit 'cassé' ne remet pas en cause le système lui même
-  +il est parmi les m\'ethodes d'OTP les plus utilis\'ees. Ainsi, des \emph{tokens} bas\'es sur cette m\'ethode 
-  seront compatibles avec un grand nombre de services d'authentification existants.
-  +deux système qu'on peut considérer comme pérenne.
-  
+La méthode OTPW souffre elle aussi du problème de réinitialisation. Cependant, la non nécessité de calcul de la part du 
+token et le gain en performance engendré font que cette méthode reste utilisable. Elle fera donc partie des méthodes
+implantées au côtés de HOTP et TOTP. Ces deux protocoles sont en effets ceux qui sont les plus interressantes de l'ensemble.
+Elles offrent un bon compromis entre performance et simplicité d'utilisation ainsi qu'une pérénnité importante. Ce sont 
+d'ailleurs les méthodes aillant le plus d'utilisation concrêtes et aussi les plus récentes.
+
+Au final, les méthodes implémentées seront donc les méthodes OTPW, HOTP et TOTP.
   
 \end{document}
  

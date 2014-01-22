@@ -327,7 +327,7 @@ sensibles à la casse et la casse doit être conservé.\\
     l'on considère que la clef est codée en ascii 8bits, on obtient donc une 
     taille minimum de clef de $2^{80}$ bits. Au vues du coup nécessaire au 
     calcul d'un OTP, cette valeur semble raisonnable. De plus, la longueur de 
-    la clef peut êotre étendue jusqu'a plus de 60 caractères augmentant encore
+    la clef peut être étendue jusqu'a plus de 60 caractères augmentant encore
     la résistance.
     
     Dans le second cas, l'attaquant demande un authentification et tente 
@@ -380,6 +380,20 @@ restreints).
 le 
 niveau de sécurité et autre afin de définir si, et dans quels contextes, le 
 système devrait\^etre utlisé dans le cadre du projet.
+
+    \subsection{Incohérence au niveau de la RFC}
+        Comme dit précédemment la RFC 2289 n'est pas précise sur la vérification
+    des OTP. En effet il y est dit qu'un OTP est valide si son haché est identique
+    à l'OTP précédent. Or ceci est impossible puisqu'un OTP est supposé de taille 64 bits
+    et un haché d'une taille d'au moins 128 bits.
+    
+        Pour palier à ce problème deux solutions sont envisageable. Soit
+    le serveur connait le secret et doit lui aussi re-générer toute la séquence 
+    des OTP. Cette solution implique une perte de temps importante.
+    
+        Soit les OTP sont assimilés à des hachés et sont donc de la taille de ces derniers.
+    Cela revient à ne pas utiliser la fonction de réduction. Ce qui implique des mots de passe
+    à 20 caractères. Ce qui est considérable.
   
   \subsection{Perenité du système}
     A voir, pas forcément utile. Se référer aux résultats de la réunion du 19 
