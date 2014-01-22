@@ -10,7 +10,7 @@
 \graphicspath{{imgHOTP/}}
 
 \title{Authentification à base d'OTP}
-\author{D.\bsc{Picard}, A.\bsc{Smondack}, C.\bsc{Hardouin}, J.\bsc{Tayewo}, B.\bsc{Zigh}, G.\bsc{Ferry}, M.\bsc{Michotte} }
+\author{D.\bsc{Picard}, A.\bsc{Smondack}, C.\bsc{Hardouin}, Y.\bsc{Adegoloye}, B.\bsc{Zigh}, G.\bsc{Ferry}, M.\bsc{Michotte} }
 
 \projet{One Time Project}
 \projdesc{\'Etude des syst\`emes de mots de passe jetables}
@@ -526,17 +526,17 @@ lesquelles un attaquant récupère le mot de passe durant une communication clie
       \STATE $K \leftarrow$ clef secrète de l'utilisateur
       \STATE $OTP_1 \leftarrow HOTP_K(C)$
       \WHILE{$attentNB < MAX\_ATTENT$}
-	\STATE $OTP_2 \leftarrow$ récupérer\_OTP
-	\STATE $attentNB \leftarrow attentNB + 1$
-	\IF{$OTP_1 = OTP_2$}
-	  \STATE $C \leftarrow C + 1$
-	  \STATE accepter l'utilisateur
-	\ELSE
-	  \IF{resynchro possible}
-	    \STATE $resynchro$
-	    \STATE accepter l'utilisateur
-	  \ENDIF
-	\ENDIF
+        \STATE $OTP_2 \leftarrow$ récupérer\_OTP
+        \STATE $attentNB \leftarrow attentNB + 1$
+        \IF{$OTP_1 = OTP_2$}
+          \STATE $C \leftarrow C + 1$
+          \STATE accepter l'utilisateur
+        \ELSE
+          \IF{resynchro possible}
+            \STATE $resynchro$
+            \STATE accepter l'utilisateur
+          \ENDIF
+        \ENDIF
       \ENDWHILE
       \STATE $verouiller$
       \STATE $prevenir$
@@ -544,7 +544,7 @@ lesquelles un attaquant récupère le mot de passe durant une communication clie
   \end{algorithm}
   
   Dans cet algorithme, la variable $attentNB$ représente le nombre de tentatives d'OTP déjà effectuées par l'utilisateur. Elle permet de contrôler le nombre maximal de mots 
-  de passes entrés entre deux authentification réussies dans le but d'éviter les attaque par \emph{brute force}.
+  de passes entrés entre deux authentifications réussies dans le but d'éviter les attaque par \emph{brute force}.
   L'algorithme nécessite aussi de connaitre la clef secrète et le compteur de synchronisation liés à l'utilisateur. Le mode de récupération de ces informations n'est pas 
   détaillé dans cet algorithme puisqu'il est complètement indépendant de la méthode HOTP. Dans la majorité des cas, ces informations seront stockées dans une base de 
   données et la récupération se résumera donc à une requête sur cette dernière. Il n'est pas possible de se passer de ces deux informations puisque le serveur 
@@ -579,10 +579,10 @@ lesquelles un attaquant récupère le mot de passe durant une communication clie
       \REQUIRE $C$ la valeur du compteur de synchronisation pour le token
       \STATE $MAX\_FWD \leftarrow a$ //$MAX\_FWD$ contient le nombre maximal de valeurs a vérifier
       \FOR{$i$ de $1$ à $MAX\_FWD$}
-	\STATE $OTP2 \leftarrow HOTP_K(C + i)$
-	\IF{$OTP = OTP2$}
-	  \RETURN vrai
-	\ENDIF
+        \STATE $OTP2 \leftarrow HOTP_K(C + i)$
+        \IF{$OTP = OTP2$}
+          \RETURN vrai
+        \ENDIF
       \ENDFOR
       \RETURN faux
     \end{algorithmic}
@@ -598,11 +598,11 @@ lesquelles un attaquant récupère le mot de passe durant une communication clie
       \REQUIRE $C$ la valeur du compteur de synchronisation pour le token
       \STATE $MAX\_FWD \leftarrow a$ //$MAX\_FWD$ contient le nombre maximal de valeurs a vérifier
       \FOR{$i$ de $1$ à $MAX\_FWD$}
-	\STATE $OTP2 \leftarrow HOTP_K(C + i)$
-	\IF{$OTP = OTP2$}
-	  \STATE $C \leftarrow C + i + 1$
-	  \STATE accepter l'utilisateur
-	\ENDIF
+        \STATE $OTP2 \leftarrow HOTP_K(C + i)$
+        \IF{$OTP = OTP2$}
+          \STATE $C \leftarrow C + i + 1$
+          \STATE accepter l'utilisateur
+        \ENDIF
       \ENDFOR
       \STATE rejeter l'utilisateur
     \end{algorithmic}
@@ -678,26 +678,26 @@ dans un domaine professionnel.
   Google Authenticator
   \begin{itemize}
     \item Google Authenticator est un logiciel open-source qui est basé sur une authentification en deux étapes. Celui-ci est implémenté sur différentes plateformes 
-	  mobiles comme iOS, Android, Blackberry, et il est aussi adaptable sur les modules PAM
-	  \begin{figure}[h!]
-	    \centerline{\includegraphics[scale=0.45]{GoogleAuthenticator_2.jpg}}
-	    \caption{Google Authenticator}
-	  \end{figure}  
+          mobiles comme iOS, Android, Blackberry, et il est aussi adaptable sur les modules PAM
+          \begin{figure}[h!]
+            \centerline{\includegraphics[scale=0.45]{GoogleAuthenticator_2.jpg}}
+            \caption{Google Authenticator}
+          \end{figure}  
   \end{itemize}
   \newpage
   OATH (Initiative for Open Authentication) Toolkit
   \begin{itemize}
     \item OATH Toolkit fournit une suite de composant pour la construction de systèmes d'authentification par mots de passe jetable. 
-	  Les composant comprennent une librairie de programmation en C, un outil en lignes de commandes pour la génération et la validation d'OTP, et un PAM.
+          Les composant comprennent une librairie de programmation en C, un outil en lignes de commandes pour la génération et la validation d'OTP, et un PAM.
   \end{itemize}
   
   LinOTP
   \begin{itemize}
     \item LinOTP est une solution basée Linux pour gérer des systèmes d'authentifications à deux facteurs avec mots de passe jetables.
-	  Il est implémenté comme un service web basé sur le framework python. C'est le seul serveur d'authentification open-source certifié par OATH.
-	  \begin{figure}[h!]
-	    \centerline{\includegraphics[scale=0.4]{linOTP.png}}
-	  \end{figure}
+          Il est implémenté comme un service web basé sur le framework python. C'est le seul serveur d'authentification open-source certifié par OATH.
+          \begin{figure}[h!]
+            \centerline{\includegraphics[scale=0.4]{linOTP.png}}
+          \end{figure}
   \end{itemize}  
   
   \subsection{Pérennité du système}
@@ -736,13 +736,13 @@ d'origine\fg{} et $X$ un quantum de temps arbitraire.
       \label{TOTP:gene}
    
       \begin{algorithmic}
-	\REQUIRE $K$ une clef secrète
-	\STATE $T \leftarrow \lfloor{}\frac{curTime - T_0}{X}\rfloor{}$
-	\STATE $HVal \leftarrow HMAC(K, C)$
-	\STATE $HVal \leftarrow tronc(HVal)$
-	\STATE $HVal \leftarrow binToDec(HVal)$
-	\newline
-	\RETURN $HVal \bmod 10^L$ // L : longueur souhaitée de l'OTP
+        \REQUIRE $K$ une clef secrète
+        \STATE $T \leftarrow \lfloor{}\frac{curTime - T_0}{X}\rfloor{}$
+        \STATE $HVal \leftarrow HMAC(K, C)$
+        \STATE $HVal \leftarrow tronc(HVal)$
+        \STATE $HVal \leftarrow binToDec(HVal)$
+        \newline
+        \RETURN $HVal \bmod 10^L$ // L : longueur souhaitée de l'OTP
       \end{algorithmic}
     \end{algorithm}
     
@@ -757,24 +757,24 @@ d'origine\fg{} et $X$ un quantum de temps arbitraire.
       \label{TOTP:verif}
       
       \begin{algorithmic}
-	\STATE $attentNB \leftarrow 0$
-	\STATE $T \leftarrow \lfloor{}\frac{curTime - T_0 + \Delta_t}{X}\rfloor{}$
-	\STATE $K \leftarrow$ clef secrète de l'utilisateur
-	\STATE $OTP_1 \leftarrow TOTP_K(C)$
-	\WHILE{$attentNB < MAX\_ATTENT$}
-	  \STATE $OTP_2 \leftarrow$ récupérer\_OTP
-	  \STATE $attentNB \leftarrow attentNB + 1$
-	  \IF{$OTP_1 = OTP_2$}
-	    \STATE accepter l'utilisateur
-	  \ELSE
-	    \IF{resynchro possible}
-	      \STATE $resynchro$
-	      \STATE accepter l'utilisateur
-	    \ENDIF
-	  \ENDIF
-	\ENDWHILE
-	\STATE $verouiller$
-	\STATE $prevenir$
+        \STATE $attentNB \leftarrow 0$
+        \STATE $T \leftarrow \lfloor{}\frac{curTime - T_0 + \Delta_t}{X}\rfloor{}$
+        \STATE $K \leftarrow$ clef secrète de l'utilisateur
+        \STATE $OTP_1 \leftarrow TOTP_K(C)$
+        \WHILE{$attentNB < MAX\_ATTENT$}
+          \STATE $OTP_2 \leftarrow$ récupérer\_OTP
+          \STATE $attentNB \leftarrow attentNB + 1$
+          \IF{$OTP_1 = OTP_2$}
+            \STATE accepter l'utilisateur
+          \ELSE
+            \IF{resynchro possible}
+              \STATE $resynchro$
+              \STATE accepter l'utilisateur
+            \ENDIF
+          \ENDIF
+        \ENDWHILE
+        \STATE $verouiller$
+        \STATE $prevenir$
       \end{algorithmic}
     \end{algorithm}
     Ainsi, on retrouve bien le schéma général de vérification vu précédemment, utilisant la valeur $T$ décrite plus haut au lieu de celle du compteur de synchronisation.
@@ -793,18 +793,18 @@ d'origine\fg{} et $X$ un quantum de temps arbitraire.
       \label{TOTP:isSynch}
       
       \begin{algorithmic}
-	\REQUIRE $OTP$ la valeur de l'OTP fournie par l'utilisateur
-	\REQUIRE $K$ la clef secrète de l'utilisation
-	\STATE $T \leftarrow \lfloor{}\frac{curTime - T_0 + \Delta_t}{X}\rfloor{}$
-	\STATE $MAX\_BWD \leftarrow b$ //$MAX\_BWD$ contient le nombre maximal de valeurs a vérifier vers l'arrière
-	\STATE $MAX\_FWD \leftarrow a$ //$MAX\_FWD$ contient le nombre maximal de valeurs a vérifier vers l'avant
-	\FOR{$i$ de $-MAX\_BWD$ à $MAX\_FWD$}
-	  \STATE $OTP2 \leftarrow HOTP_K(T + i)$
-	  \IF{$OTP = OTP2 AND not\_used(OTP)$}
-	    \RETURN vrai
-	  \ENDIF
-	\ENDFOR
-	\RETURN faux
+        \REQUIRE $OTP$ la valeur de l'OTP fournie par l'utilisateur
+        \REQUIRE $K$ la clef secrète de l'utilisation
+        \STATE $T \leftarrow \lfloor{}\frac{curTime - T_0 + \Delta_t}{X}\rfloor{}$
+        \STATE $MAX\_BWD \leftarrow b$ //$MAX\_BWD$ contient le nombre maximal de valeurs a vérifier vers l'arrière
+        \STATE $MAX\_FWD \leftarrow a$ //$MAX\_FWD$ contient le nombre maximal de valeurs a vérifier vers l'avant
+        \FOR{$i$ de $-MAX\_BWD$ à $MAX\_FWD$}
+          \STATE $OTP2 \leftarrow HOTP_K(T + i)$
+          \IF{$OTP = OTP2 AND not\_used(OTP)$}
+            \RETURN vrai
+          \ENDIF
+        \ENDFOR
+        \RETURN faux
       \end{algorithmic}
     \end{algorithm}
     
@@ -813,19 +813,19 @@ d'origine\fg{} et $X$ un quantum de temps arbitraire.
       \label{TOTP:synch}
       
       \begin{algorithmic}
-	\REQUIRE $OTP$ la valeur de l'OTP fournie par l'utilisateur
-	\REQUIRE $K$ la clef secrète de l'utilisation
-	\STATE $T \leftarrow \lfloor{}\frac{curTime - T_0 + \Delta_t}{X}\rfloor{}$
-	\STATE $MAX\_BWD \leftarrow b$ //$MAX\_BWD$ contient le nombre maximal de valeurs a vérifier vers l'arrière
-	\STATE $MAX\_FWD \leftarrow a$ //$MAX\_FWD$ contient le nombre maximal de valeurs a vérifier vers l'avant
-	\FOR{$i$ de $-MAX\_BWD$ à $MAX\_FWD$}
-	  \STATE $OTP2 \leftarrow HOTP_K(T + i)$
-	  \IF{$OTP = OTP2 AND not\_used(OTP)$}
-	    \STATE $\Delta_t \leftarrow \Delta_t + i * X$
-	    \STATE accepter l'utilisateur
-	  \ENDIF
-	\ENDFOR
-	\STATE rejeter l'utilisateur
+        \REQUIRE $OTP$ la valeur de l'OTP fournie par l'utilisateur
+        \REQUIRE $K$ la clef secrète de l'utilisation
+        \STATE $T \leftarrow \lfloor{}\frac{curTime - T_0 + \Delta_t}{X}\rfloor{}$
+        \STATE $MAX\_BWD \leftarrow b$ //$MAX\_BWD$ contient le nombre maximal de valeurs a vérifier vers l'arrière
+        \STATE $MAX\_FWD \leftarrow a$ //$MAX\_FWD$ contient le nombre maximal de valeurs a vérifier vers l'avant
+        \FOR{$i$ de $-MAX\_BWD$ à $MAX\_FWD$}
+          \STATE $OTP2 \leftarrow HOTP_K(T + i)$
+          \IF{$OTP = OTP2 AND not\_used(OTP)$}
+            \STATE $\Delta_t \leftarrow \Delta_t + i * X$
+            \STATE accepter l'utilisateur
+          \ENDIF
+        \ENDFOR
+        \STATE rejeter l'utilisateur
       \end{algorithmic}
     \end{algorithm}
     
@@ -880,13 +880,13 @@ dans un domaine professionnel.
    \item \textbf{Utilisation côté client}
    \begin{description}
     \item - Google Authenticator est un logiciel open-source qui est basé sur une authentification en deux étapes. Celui-ci est implémenté sur différentes plateformes 
-	  mobiles comme iOS, Android, Blackberry, et il est aussi adaptable sur les modules PAM
-	  \begin{figure}[h!]
-	    \centerline{\includegraphics[scale=0.45]{imgHOTP/GoogleAuthenticator_2.jpg}}
-	    \caption{Google Authenticator}
-	  \end{figure}  
+          mobiles comme iOS, Android, Blackberry, et il est aussi adaptable sur les modules PAM
+          \begin{figure}[h!]
+            \centerline{\includegraphics[scale=0.45]{imgHOTP/GoogleAuthenticator_2.jpg}}
+            \caption{Google Authenticator}
+          \end{figure}  
     \item - OATH Toolkit OATH Toolkit fournit une suite de composant pour la construction de systèmes d'authentification par mots de passe jetable. 
-	  Les composant comprennent une librairie de programmation en C, un outil en lignes de commandes pour la génération et la validation d'OTP, et un PAM.
+          Les composant comprennent une librairie de programmation en C, un outil en lignes de commandes pour la génération et la validation d'OTP, et un PAM.
     \item - Microsoft's Authenticator est un logiciel pour les Windows Phone
     \item - Red Hat's FreeOT est un logiciel pour Android et iOS.
    \end{description}
@@ -1183,4 +1183,3 @@ attendre d'un système cryptographique.
   
   
 \end{document}
- 

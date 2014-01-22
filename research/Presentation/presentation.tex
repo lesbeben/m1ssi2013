@@ -1,0 +1,130 @@
+\documentclass{beamer}
+\usetheme{Boadilla}
+\usepackage{color} 
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage{dsfont}
+\usepackage{graphicx}
+            
+
+\title{\'Etude du syst\`eme d'OTP}
+
+\author{D.\bsc{Picard}, A.\bsc{Smondack}, C.\bsc{Hardouin}, Y.\bsc{Adegoloye}, B.\bsc{Zigh}, G.\bsc{Ferry}, M.\bsc{Michotte}} 
+\institute{Université de Rouen}
+\date{22 Janvier 2014} 
+
+\AtBeginSection[] 
+{ 
+\begin{frame}  
+\frametitle{Plan} 
+\tableofcontents[currentsection,hideothersubsections]
+\end{frame}
+} 
+
+
+\begin{document}
+
+\begin{frame} 
+\titlepage
+\end{frame}
+
+
+\section{Introduction}
+\begin{frame}
+\frametitle{Qu'est-ce qu'un OTP ?}
+\begin{block}{Définition}
+    Un OTP est un mot de passe jetable, c'est à dire qu'il satisfait les deux 
+  critères suivants:
+  \begin{itemize}
+    \item Il n'est pas prédictible
+    \item Il n'est valide que pour une unique session.
+  \end{itemize}
+\end{block}
+
+\begin{block}{Utilité}
+  \begin{itemize}
+    \item Permettre une authentification forte.
+    \item Éviter les attaques par rejeu.
+  \end{itemize}
+\end{block}
+\end{frame}
+
+\section{Présentation des Protocoles}
+\subsection{OTP}
+\begin{frame}
+\frametitle{OTP}
+\begin{block}{Principe}
+\begin{itemize}
+ \item Le client calcule n hachés successifs à partir d'une clé secrète.
+ \item Le système est initialisé avec le $n^{ième}$ haché de la séquence.
+ \item L'utilisateur s'authentifie avec le haché précédent, et ainsi de suite.
+\end{itemize}
+\end{block}
+
+\begin{block}{Problème}
+Une ambiguïté a été relevée dans la RFC.
+\end{block}
+\end{frame}
+
+\subsection{HOTP-TOTP}
+\begin{frame}
+\frametitle{HOTP-TOTP}
+ A MEUBLER
+\end{frame}
+
+\subsection{OTPW}
+\begin{frame}
+\frametitle{OTPW}
+  \begin{block}{Principe}
+   \begin{itemize}
+    \item Génération d'OTP basé sur l'état de la machine à un instant t.
+    \item Pour se connecter il faut: une liste de suffixes et un mot de passe.
+    \item Authentification par défi/réponse.
+   \end{itemize}
+  \end{block}
+\end{frame}
+
+
+\section{Comparatif}
+\begin{frame}
+  \frametitle{Comparatif}
+  \begin{tabular}{|l|c|c|c|c|}
+ \hline
+ & OTP & HOTP & TOTP & OTPW\\
+ \hline
+ RFC (année) & & & &\\
+ \hline
+ Hachage recommandé & & & &\\
+ \hline
+ Attaque exhaustive & vOTP & & & \\
+ \hline
+ Attaque collision & & & &\\
+ \hline
+ Failles connues \footnote{Dans le cadre d'une utilisation respectant les recommandations.} & & & &\\
+ \hline
+  \end{tabular}
+\end{frame}
+
+\section{Utilisation}
+\begin{frame}
+\frametitle{Utilisation}
+\begin{itemize}
+ \item OATH / LinOTP / Google Authenticator
+ \item EAP-POTP
+\end{itemize}
+\end{frame}
+
+
+\subsection{EAP}
+  \begin{frame}
+  \frametitle{EAP}
+    \begin{block}{A quoi ça sert?}
+    zdazd
+    \end{block}
+    
+  \end{frame}
+
+
+\end{document}
