@@ -1,6 +1,7 @@
-\documentclass{article}
+\documentclass{../res/univ-projet}
 
 \usepackage[utf8]{inputenc}
+
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
 \usepackage{lmodern}
@@ -13,8 +14,18 @@
 \usepackage{algorithm}
 \usepackage{graphicx}
 
+\version{1.2}
+\projet{One Time Project}
+\projdesc{Étude des systèmes de mots de passe jetables}
+\filiere{M1SSI}
+\logo{../res/logo_univ.png}
+
 \title{EAP-POTP - The EAP Protected One-Time Password Protocol}
-\author{Claire et Yves}
+\author{Claire Hardouin et Yves Adegoloye}
+
+\histentry{1.2}{22/01/14}{Version relue}
+\histentry{1.1}{21/01/14}{Version finale}
+\histentry{1.0}{15/12/13}{Version initiale}
 
 \begin{document}
 \maketitle
@@ -27,21 +38,21 @@
 La méthode EAP-POTP, d'après la rfc 4793, décrit la connexion entre un Client ("peer") et un serveur grâce à un OTP.
 Cette méthode est indépendante de l'algorithme de génération d'un OTP.
 
-\section{Prérequis}
+\section{Pré-requis}
 On a besoin d'EAP et d'un OTP (généré par exemple par un périphérique relié à la machine).
-L'algorithme HMAC et SHA256 (par défault, d'autres version de SHA sont prise en charges) et de la fonction PBKDF2.\\
-Lalgorithme de chiffrement par défaut est AES-CBC.\\
+L'algorithme HMAC et SHA256 (par défaut, d'autres versions de SHA sont prises en charge) et de la fonction PBKDF2.\\
+L'algorithme de chiffrement par défaut est AES-CBC.\\
 
 Un secret appelé "seed" est partagé par le client et le serveur.
 
 \section{Généralités}
 Fournit une authentification unilatérale (appelée aussi authentification de l'utilisateur) ou mutuelle (authentification de l'utilisateur et du serveur) basé sur un mot de passe jetable (OTP).
-EAP-POTP est un protocol de la couche liaison de données comme PPP.
+EAP-POTP est un protocole de la couche liaison de données comme PPP.
 
 \begin{figure}[!h]
   \centering
   \includegraphics[width=400pt]{image2.png}
-  \caption{schéma du matèriel token-client-serveur}
+  \caption{schéma du matériel token-client-serveur}
   \label{fig:image}
 \end{figure}
 
@@ -62,12 +73,12 @@ EAP-POTP est un protocol de la couche liaison de données comme PPP.
 
 \begin{description}
    \item \textbf{Type de TLV :}
-\item   1 - Version TLV : Contient la version de la méthode EAP-POTP supporté.
+\item   1 - Version TLV : Contient la version de la méthode EAP-POTP supportée.
 \item   2 - Server-Info TLV : Fournit les informations de sessions et des informations sur le serveur.
 \item   3 - OTP TLV : Contient des informations sur la procédure d'authentification.
-\item   4 - NAK TLV : Indique que le client ne prend pas en charge le paquet reçut.
+\item   4 - NAK TLV : Indique que le client ne prend pas en charge le paquet reçu.
 \item   5 - New PIN TLV : Permet de demander un nouveau code PIN à l'utilisateur.
-\item   6 - Confirm TLV : Confirme l'authentification du "peer", le serveuréssaie de s'authentifié auprès du "peer".
+\item   6 - Confirm TLV : Confirme l'authentification du "peer", le serveur éssaie de s'authentifier auprès du "peer".
 \item   7 - Vendor-Specific TLV : Permet l'envoie de plusieurs TLV simultanés.
 \item   8 - Resume TLV : envoyé par le client pour tenter la reprise de session.
 \item   9 - User Identifier TLV : Donne un identifiant au détenteur du token.
@@ -95,9 +106,9 @@ Un serveur qui n'utilise pas les algorithmes par défaut (comme SHA256) doit env
 	\caption{Serveur}
 	\label{POTP:verif}
 \begin{algorithmic}
-\STATE envoi une EAP-demande avec le type de l'algorithme OTP, la plus haute et la plus basse version de la méthode EAP possible
+\STATE envoie une EAP-demande avec le type de l'algorithme OTP, la plus haute et la plus basse version de la méthode EAP possible
 \STATE l'OTP TLV contient la demande de l'OTP courant
-\STATE cette EAP-demande peut potentiellement contenir un chalenge, des information sur la politique du serveur...
+\STATE cette EAP-demande peut potentiellement contenir un chalenge, des informations sur la politique du serveur...
 \IF{Cas d'une reprise de session}
 	\STATE Server-Info TLV : renvoie l'identifiant serveur et l'identifiant session
 \ELSE
@@ -119,7 +130,7 @@ Un serveur qui n'utilise pas les algorithmes par défaut (comme SHA256) doit env
 \ELSE
 	\STATE envoi une EAP-réponse avec Version TLV : plus haute version d'EAP-POTP possible entre le client et le serveur
 	\IF{la plus haute version est la même pour le Client et le Serveur ET le serveur a envoyé Server-Info TLV dans son EAP-demande}
-		\STATE Le peer regarde s'il existe une session sauvegardé
+		\STATE Le peer regarde s'il existe une session sauvegardée
 		\IF{Si une session existe ET reprise de session possible}
 			\IF{protected mode}
 				\STATE le peer calcule les nouvelles clefs de session
@@ -127,7 +138,7 @@ Un serveur qui n'utilise pas les algorithmes par défaut (comme SHA256) doit env
 			\STATE envoie une EAP-réponse avec Resume TLV et Version TLV
 		\ENDIF
 	\ELSIF{la plus haute version est la même pour le Client et le Serveur ET le serveur a envoyé OTP TLV dans son EAP-demande}
-		\STATE le token calcul un nouvel OTP (basé sur les informations de l'EAP-demande)
+		\STATE le token calcule un nouvel OTP (basé sur les informations de l'EAP-demande)
 	\ELSIF{la plus haute version n'est pas la même pour le Client et le Serveur OU le serveur n'a pas envoyé de Version TLV}
 		\STATE le peer envoie juste Version TLV dans son EAP-réponse
 	\ENDIF
@@ -207,11 +218,11 @@ Un serveur qui n'utilise pas les algorithmes par défaut (comme SHA256) doit env
 \subsection{Reprise de session}
 La reprise de session utilise des identifiants de session et des identificateurs serveur pour permettre plusieurs authentifications à la suite.
 Pour une reprise de session le serveur renvoie des informations dans un Serveur-Info TLV qui est utilisé par le client pour reprendre la session.
-Le peer puis le serveur décide de poursuivre ou pas la session (attention : la session ne doit pas durer plus longtemps que le temps nécéssaire pour trouver l'OTP).
+Le peer puis le serveur décident de poursuivre ou pas la session (attention : la session ne doit pas durer plus longtemps que le temps nécessaire pour trouver l'OTP).
 Le wifi est particulièrement concerné par cette fonctionnalité.
 
 \subsection{Mode Protégé}
-"MAC" (algorithme MAC négocié) est l'algorithme utilisé en mode protégé pour l'authentification et la garantit d'intégrité des données.
+"MAC" (algorithme MAC négocié) est l'algorithme utilisé en mode protégé pour l'authentification et la garantie d'intégrité des données.
 Il est calculé comme suit : \\
 $mac = MAC(K_MAC, msg_hash(msg_1, msg_2, ..., msg_n))$\\
 Il est possible pour des questions d'économie d'espace de stockage de ne hacher que partiellement le message.\\
@@ -221,7 +232,7 @@ Lorsque le mode protégé est activé (en fixant le bit P dans OTP TLV), l'OTP p
 
 Pour la technologie HMAC on se réfère aux précédentes présentations.\\
 PBKDF2 = password-based key derivation functions\\
-SHA-256 = algorithme de hashage\\
+SHA-256 = algorithme de hachage\\
 $PBKDF2(otp,salt,pepper,authData,iteraction_count,Key Length) = K_MAC.K_ENC.MSK.EMSK$\\
 
 
@@ -231,7 +242,7 @@ SRK : clé de reprise de session utilisée uniquement pour la reprise de session
 MSK : clé de session maître\\
 EMSK : clé de session maître étendue\\
 salt : valeur envoyé en clair\\
-pepper : utilisation précisée par le système. Génération aléatoire d'une séquence qui ne sera pas envoyé au serveur mais dont la taille sera envoyée au serveur. Ceci ralentira le hacher, encore qu'on a une validation d'otp valide dans le temps.\\
+pepper : utilisation précisée par le système. Génération aléatoire d'une séquence qui ne sera pas envoyé au serveur mais dont la taille sera envoyée au serveur. Ceci ralentira le haché, encore qu'on a une validation d'otp valide dans le temps.\\
 
 Non envoyé en clair : OTP et pepper
 
@@ -251,23 +262,23 @@ Non envoyé en clair : OTP et pepper
   L'utilisation du poivre permet une meilleure sécurité pour un coût initial plus élevé mais égal sur le long terme.
   Il ralentit l'attaquant dans sa recherche du bon OTP.\\
   
-  Bien qu'il soit possible d'accéder à l'aplication de façon indésirable et donc de monter une attaque man-in-the-middle, cela ne compromait pas MSK et EMSK ce qui protège une session ultèrieure.
+  Bien qu'il soit possible d'accéder à l'application de façon indésirable et donc de monter une attaque man-in-the-middle, cela ne compromet pas MSK et EMSK ce qui protège une session ultérieure.
   
-  \subsection{Inconvenients et limites}
+  \subsection{Inconvénients et limites}
   Un poivre choisit par le client peut être plus simple à trouver par un attaquant, car potentiellement plus court.\\
-  L'utilisation d'un tunnel sécurisé est nécéssaire pour offrir une meilleure sécurité au système.\\
-  Beaucoup d'attaques reste possible même si on connait les moyens pour les contrer.
+  L'utilisation d'un tunnel sécurisé est nécessaire pour offrir une meilleure sécurité au système.\\
+  Beaucoup d'attaques restent possibles même si on connait les moyens pour les contrer.
 
 \subsection{Considérations de sécurité}
 
 \subsubsection{Attaques exhaustives (Brute-Force)}
-    La session doit durer moins longtemps que le temps nécéssaire à une attaque exhaustive, afin que celle-ci n'abouttisse pas.\\
-Une autre façon de se protégé contre cette attaque est de hacher un grand nombre de fois avec la fonction PBKDF2.
-On peut aussi intégrer un poivre (ou "pepper") dans le hachage (Par contre, si le poivre est partagé dans un Confirm TLV ultérieur, il doit être plus long que celui choisit initiallement et chiffré avec PBKDF2).
+    La session doit durer moins longtemps que le temps nécessaire à une attaque exhaustive, afin que celle-ci n'aboutisse pas.\\
+Une autre façon de se protéger contre cette attaque est de hacher un grand nombre de fois avec la fonction PBKDF2.
+On peut aussi intégrer un poivre (ou "pepper") dans le hachage (Par contre, si le poivre est partagé dans un Confirm TLV ultérieur, il doit être plus long que celui choisit initialement et chiffré avec PBKDF2).
 
 \subsubsection{Attaque de course (Race Attack)}
 Dans la variante de base, il est parfois possible d'écouter plusieurs OTP.
-Il faut donc empécher la création simultanée de plusieurs sessions. (Il existe d'autre façon de contrer cette attaques).
+Il faut donc empêcher la création simultanée de plusieurs sessions. (Il existe d'autre façon de contrer cette attaques).
 
 \subsubsection{hijacking taking}
 La variante de base est vulnérable au détournement de session (après authentification), mais pas la variante protégée.
@@ -284,34 +295,34 @@ Ces attaques ralentissent le serveur.
     Un ancien OTP permet de trouver certaines informations sur le PIN de l'utilisateur et représente donc toujours un risque (il faut donc s'assurer que le PIN de l'utilisateur change régulièrement).\\
 
    \textbf{ Pour la version avancée:}
-    Protection par la variante de la méthode EAP : temps limité d'une session afin d'éviter que l'attaquant (man-in-the-middle) ai le temps de trouvé l'OTP valide.\\
+    Protection par la variante de la méthode EAP : temps limité d'une session afin d'éviter que l'attaquant (man-in-the-middle) aie le temps de trouver l'OTP valide.\\
     
     \textbf{Pour la version de base:}
     Une attaque par man-in-the-middle est possible (il faut être en authentification mutuelle pour s'en protéger).
-    Détournement de session et attaques par rejeu (pour s'en protéger il faut être connécté de façon sécurisé à un serveur authentifié, en utilisant PEAPv2 par exemple).
+    Détournement de session et attaques par rejeu (pour s'en protéger il faut être connecté de façon sécurisée à un serveur authentifié, en utilisant PEAPv2 par exemple).
     Lors de la reprise de sessions (en canal sécurisé) il reste possible de trouver la combinaison identifiant de session/OTP (pour s'en protéger il faut garder une trace du nombre de tentatives infructueuses de reprises).
 
 \subsection{Précautions et préconisations}
-    Dans le cas d'une reprise de session, celle-ci doit durer moins longtemps que le temps nécéssaire pour trouver l'OPT utilisé.\\
+    Dans le cas d'une reprise de session, celle-ci doit durer moins longtemps que le temps nécessaire pour trouver l'OTP utilisé.\\
     La version de base comporte de nombreuses failles, il vaut mieux utiliser la variante protégée (protected variante).\\
-    Le poivre doit être stocké de façon sur.\\
+    Le poivre doit être stocké de façon sure.\\
     Les informations sensibles doivent être envoyées par un tunnel sécurisé.\\
     
-    Pour la variante de base, lors d'une reprise de session (dans un tunnel sécurisé) il reste une probabilité de $1/2^48$ qu'une attaque réussice en trouvant le couple identifiant de session/valeur de l'OTP. Le serveur doit donc garder une trace du nombre de tentatives de reprise de session infructueuse.\\
+    Pour la variante de base, lors d'une reprise de session (dans un tunnel sécurisé) il reste une probabilité de $1/2^48$ qu'une attaque réussisse en trouvant le couple identifiant de session/valeur de l'OTP. Le serveur doit donc garder une trace du nombre de tentatives de reprise de session infructueuses.\\
 
 \section{Conclusion}
 
   \subsection{Utilisation dans le cadre du projet}
   La réussite de l'authentification (unilatérale ou mutuelle) grâce aux mots de passes jetables de deux systèmes via le réseau.
   
-  \subsection{Perenité du système}
-  La perennité est au plus égale à celle de la fonction de hachage utilisée.
+  \subsection{Pérennité du système}
+  La pérennité est au plus égale à celle de la fonction de hachage utilisée.
 
 \section{Définitions}
 OTP-X : Désigne une méthode OTP quelconque.\\
 Code PIN : Il est composé de caractères UTF-8 (sa longueur dépend de l'application) sans caractère de fin NULL.\\
 Poivre ou pepper : Valeur inconnue des tierces personnes (secret partagé) qu'on inclut dans la fonction de hachage.\\
 PBKDF2 : password-based key derivation functions.\\
-SHA-256 : algorithme de hashage.\\
+SHA-256 : algorithme de hachage.\\
 
 \end{document}
