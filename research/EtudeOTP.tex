@@ -1172,21 +1172,21 @@ Nous avons dans ce document étudié quatre méthodes d'authentification par mot
 étant de déterminer quelles méthodes seront implémentées au cours de notre projet, on se propose ici de faire une 
 comparaison des trois protocoles.
 
-Du point de vue de la résistances aux attaques, les quatre méthodes sont globalement équivalente. En effet, si les 
-précautions présentées dans chaque parties sont respéctées lors de l'implantation, tous les protocoles offrent une
-résistance aux attaques exhaustives et par collisions suffisantes. De la même manière, aucunes des méthodes étudiées 
-ne comportes de failles de sécurités notables, toujours dans le cas ou les préconisations sont respectées.
+Du point de vue de la résistance aux attaques, les quatre méthodes sont globalement équivalentes. En effet, si les 
+précautions présentées dans chaque parties sont respectées lors de l'implantation, tous les protocoles offrent une
+résistance suffisante aux attaques exhaustives et par collisions. De la même manière, aucune des méthodes étudiées 
+ne comportent de failles de sécurités notables, toujours dans le cas ou les préconisations sont respectées.
 
-Ainsi, les seuls critères de séléctions applicables sont la simplisité d'utilisation et les performances de la méthode
+Ainsi, les seuls critères de sélections applicables sont la simplicité d'utilisation et les performances de la méthode
 en termes de calculs. Sur ce point, l'OTP standard est mis directement hors course. En effet, la nécessité de 
-réinitialisation du système périodique combiné au temps de calcul d'un mot de passe et à la taille potentielle de 
+réinitialisation du système périodique combinée au temps de calcul d'un mot de passe et à la taille potentielle de 
 128 bits pour le passe font que cette méthode est inconfortable à utiliser.
 
 La méthode OTPW souffre elle aussi du problème de réinitialisation. Cependant, la non nécessité de calcul de la part du 
 token et le gain en performance engendré font que cette méthode reste utilisable. Elle fera donc partie des méthodes
-implantées au côtés de HOTP et TOTP. Ces deux protocoles sont en effets ceux qui sont les plus interressantes de l'ensemble.
-Elles offrent un bon compromis entre performance et simplicité d'utilisation ainsi qu'une pérénnité importante. Ce sont 
-d'ailleurs les méthodes aillant le plus d'utilisation concrêtes et aussi les plus récentes.
+implantées au côtés de HOTP et TOTP. Ces deux protocoles sont en effets ceux qui sont les plus intéressants parmi l'ensemble.
+Ils offrent un bon compromis entre performance et simplicité d'utilisation ainsi qu'une pérennité importante. Ce sont 
+d'ailleurs les méthodes ayant le plus d'utilisation concrètes et aussi les plus récentes.
 
 Au final, les méthodes implémentées seront donc les méthodes OTPW, HOTP et TOTP.
   
