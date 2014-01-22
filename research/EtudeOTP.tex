@@ -23,12 +23,12 @@
 \maketitle
 
 \begin{abstract}
-Ce document présente une analyse de différents systèmes d'OTP tels \og{}OTP\fg{} lui même,\og{}HOTP\fg{}, \og{}TOTP\fg{}, \og{}POTP\fg{} 
+Ce document présente une analyse de différents systèmes d'OTP tels \og{}OTP\fg{} lui même,\og{}HOTP\fg{}, \og{}TOTP\fg{},
 et \og{}OTPW\fg{}. Toutes les informations présentées et analysées proviennent des \href{http://tools.ietf.org/html/rfc2289}{RFC2289} et 
 toutes les RFC basées sur celle-ci soit, \href{http://tools.ietf.org/html/rfc4226}{RFC4226}, \href{http://tools.ietf.org/html/rfc4256}{RFC4256}, 
-\href{http://tools.ietf.org/html/rfc6238}{RFC6238}, \href{http://tools.ietf.org/html/rfc4793}{RFC4793}, 
-ainsi que de leurs correctifs. Le but de cet article est de déterminer dans quelles conditions ces systèmes sont utilisables, sous quelles conditions 
-et avec quelles garanties de sécurité. Ce document réalise également un comparatif entre les systèmes précédemmen cités.
+\href{http://tools.ietf.org/html/rfc6238}{RFC6238}, ainsi que de leurs correctifs. Le but de cet article est de déterminer dans quelles conditions 
+ces systèmes sont utilisables, sous quelles conditions et avec quelles garanties de sécurité. Ce document réalise également un comparatif entre les 
+systèmes précédemment cités.
 \end{abstract}
 
 \newpage
@@ -43,7 +43,7 @@ des méthodes par (login,mot de passe) et de proposer cette fois une méthode d'
 Ce nouveau système fait donc intervenir les OTP. Un OTP One-Time-Password satisfait deux critères, premièrement il n'est pas prévisible ce qui veut dire qu'on ne peut pas prédire 
 ou déduire les futurs OTP; deuxièmement un OTP n'est valide que pour une unique session, ce qui veut dire qu'une fois qu'un OTP est utilisé il n'est pas réutilisable, on évite ainsi les
 attaques par rejeu.\\
-Nous allons donc commencer cet article par une présentation du protocole OTP du fait que c'est une base pour tout les autres protocoles, mais aussi que son appréhension est nécessaires pour la compréhension
+Nous allons donc commencer cet article par une présentation du protocole OTP du fait que c'est une base pour tout les autres protocoles, mais aussi que son appréhension est nécessaire pour la compréhension
 de ses protocoles dérivés.
 \setcounter{section}{0}
 \part{Protocole OTP}
@@ -1162,13 +1162,12 @@ dans un domaine professionnel.
     fonction venait à s'avérer faillible elle peut facilement être remplacée par une fonction plus
     puissante.
         Notons quand même que des protocoles plus récents permette une authentification aussi sûre
-    et ne nécessitent pas de 
-
-\setcounter{section}{0}
-\part{Protocole POTP}
+    et ne nécessitent pas d'intervention manuelle pour réinitialiser le système.
 
 \setcounter{section}{0}
 \part{Conclusion}
+  
+
 idéé:
 
 -Les mécanismes d'authentification par mots de passe jetables (OTP) constituent une bonne solution générale.
