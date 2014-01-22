@@ -9,7 +9,7 @@
 \usepackage{graphicx}
             
 
-\title{\'Etude du syst\`eme d'OTP}
+\title{Étude du système OTP}
 
 \author{D.\bsc{Picard}, A.\bsc{Smondack}, C.\bsc{Hardouin}, Y.\bsc{Adegoloye}, B.\bsc{Zigh}, G.\bsc{Ferry}, M.\bsc{Michotte}} 
 \institute{Université de Rouen}
@@ -38,7 +38,7 @@
     Un OTP est un mot de passe jetable, c'est à dire qu'il satisfait les deux 
   critères suivants:
   \begin{itemize}
-    \item Il n'est pas prédictible
+    \item Il n'est pas prédictible.
     \item Il n'est valide que pour une unique session.
   \end{itemize}
 \end{block}
@@ -71,7 +71,13 @@ Une ambiguïté a été relevée dans la RFC.
 \subsection{HOTP-TOTP}
 \begin{frame}
 \frametitle{HOTP-TOTP}
- A MEUBLER
+ \begin{block}{Principe}
+ \begin{itemize}
+ \item Utilisation d'HMAC pour générer les OTP.
+ \item Fonctionnement synchrone avec compteur de synchronisation.
+ \item TOTP utilise la date (timestamp) au lieu d'un compteur.
+ \end{itemize}
+ \end{block}
 \end{frame}
 
 \subsection{OTPW}
@@ -92,24 +98,27 @@ Une ambiguïté a été relevée dans la RFC.
   \frametitle{Comparatif}
   \begin{tabular}{|l|c|c|c|c|}
  \hline
- & OTP & HOTP & TOTP & OTPW\\
+ & OTP & HOTP & OTPW & TOTP\\
  \hline
- RFC (année) & & & &\\
+ Année & 1998 & 2005 & 2006 & 2011 \\
  \hline
- Hachage recommandé & & & &\\
+ RFC & 2289 & 4226 & NON & 6238 \\
  \hline
- Attaque exhaustive & vOTP & & & \\
+ Hachage\footnote{Recommandé par les RFC} & MD5(SHA-1) & SHA-1 & RipeMD-160 & SHA-1(SHA2)\\
  \hline
- Attaque collision & & & &\\
+ Exhaustif & $1/2^{64}$ & $9*10^{-6} $ & $1/2^{102}$ ou $1/2^{48}$ & $9*10^{-6}$\\
  \hline
- Failles connues \footnote{Dans le cadre d'une utilisation respectant les recommandations.} & & & &\\
+ Collisions & $1/2^{128}$ & NON & $1/2^{72}$ & NON\\
+ \hline
+ Failles \footnote{Dans le cadre d'une utilisation respectant les recommandations.} & Aucune & Aucune& Aucune &Aucune\\
  \hline
   \end{tabular}
 \end{frame}
 
-\section{Utilisation}
+\section{Utilisations}
+\subsection{Utilisations courantes}
 \begin{frame}
-\frametitle{Utilisation}
+\frametitle{Utilisations courantes}
 \begin{itemize}
  \item OATH / LinOTP / Google Authenticator
  \item EAP-POTP
@@ -120,11 +129,60 @@ Une ambiguïté a été relevée dans la RFC.
 \subsection{EAP}
   \begin{frame}
   \frametitle{EAP}
-    \begin{block}{A quoi ça sert?}
-    zdazd
+    \begin{block}{À quoi ça sert?}
+    bonne question!
     \end{block}
-    
+	\begin{block}{Fonctionnement}
+	Comme ça!
+	\end{block}
   \end{frame}
+  
+\subsection{EAP-POTP}
+\begin{frame}
+\frametitle{EAP-POTP: Authentification}
+\begin{block}{Fonctionnalités}
+\begin{itemize}
+\item Authentification unilatérale ou mutuelle
+\item Reprise de session
+\item Mode protégé
+
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{EAP-POTP: Reprise de session}
+\begin{block}{Résumé}
+La reprise de session permet de reprendre une session courante et donc de réduire le nombre d'opérations (par exemple, on ne recalcule pas un nouvel OTP).
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{EAP-POTP: Mode Protégé}
+
+\end{frame}
+
+\subsection{Considérations de sécurité}
+\begin{frame}
+\frametitle{Considérations de sécurité}
+\begin{block}{Bilan}
+La plupart des attaques sont évitées avec la variante protégée.
+\end{block}
+\end{frame}
+
+\section{Conclusion}
+\begin{frame}
+\frametitle{Conclusion}
+\begin{block}{Choix des implémentations}
+\begin{itemize}
+\item HOTP
+\item TOTP
+\item OTPW
+\end{itemize}
+\end{block}
+\end{frame}
+
 
 
 \end{document}

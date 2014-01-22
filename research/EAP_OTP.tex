@@ -69,7 +69,7 @@ EAP-POTP est un protocole de la couche liaison de données comme PPP.
 	bit 7... &: TLV-based EAP-POTP message \\
 \end{tabular}
 
-\subsection{Différent type TLV}
+\subsection{Différent types de TLV}
 
 \begin{description}
    \item \textbf{Type de TLV :}
@@ -92,7 +92,7 @@ EAP-POTP est un protocole de la couche liaison de données comme PPP.
 \end{description}
 
 
-\subsection{Déroullement type d'une authentification}
+\subsection{Déroulement type d'une authentification}
 
 
 
@@ -224,7 +224,7 @@ Le wifi est particulièrement concerné par cette fonctionnalité.
 \subsection{Mode Protégé}
 "MAC" (algorithme MAC négocié) est l'algorithme utilisé en mode protégé pour l'authentification et la garantie d'intégrité des données.
 Il est calculé comme suit : \\
-$mac = MAC(K_MAC, msg_hash(msg_1, msg_2, ..., msg_n))$\\
+$mac = MAC(K\_MAC, msg_hash(msg_1, msg_2, ..., msg_n))$\\
 Il est possible pour des questions d'économie d'espace de stockage de ne hacher que partiellement le message.\\
 
 
@@ -236,8 +236,8 @@ SHA-256 = algorithme de hachage\\
 $PBKDF2(otp,salt,pepper,authData,iteraction_count,Key Length) = K_MAC.K_ENC.MSK.EMSK$\\
 
 
-$K_MAC$ : clé MAC utilisée pour l'authentification et l'intégrité mutuelle\\
-$K_ENC$ : clé de cryptage utilisée pour protéger certaines données au cours de l'authentification\\
+$K\_MAC$ : clé MAC utilisée pour l'authentification et l'intégrité mutuelle\\
+$K\_ENC$ : clé de cryptage utilisée pour protéger certaines données au cours de l'authentification\\
 SRK : clé de reprise de session utilisée uniquement pour la reprise de session\\
 MSK : clé de session maître\\
 EMSK : clé de session maître étendue\\
@@ -255,7 +255,7 @@ Non envoyé en clair : OTP et pepper
 
 \section{Analyse générale et sécurité}
 
-\subsection{Avantages et intér\^ets}
+\subsection{Avantages et intérêts}
   Cette méthode inclut un grand nombre d'algorithmes OTP.
   Elle permet aussi bien une authentification mutuelle que unilatérale.
   Le mode protégé protège contre les attaques par rétrogradation de versions (version downgrade attacks) ainsi que beaucoup d'autres attaques.\\
