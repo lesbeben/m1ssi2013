@@ -16,3 +16,8 @@
 
 # Backup créées par kile.
 *.backup
+*.kate-swp
+*.swp
+
+# Créé par dolphin
+.directory
