@@ -93,7 +93,8 @@ Une ambiguïté a été relevée dans la RFC.
 \end{frame}
 
 
-\section{Comparatif}
+\section{Comparatifs}
+\subsection{Comparatif sécurité}
 \begin{frame}
   \frametitle{Comparatif}
   \begin{tabular}{|l|c|c|c|c|}
@@ -114,6 +115,21 @@ Une ambiguïté a été relevée dans la RFC.
  \hline
   \end{tabular}
 \end{frame}
+\subsection{Comparatif système}
+\begin{frame}
+\frametitle{Comparatif système}
+\begin{tabular}{|l|c|c|c|c|}
+ \hline
+ & OTP & HOTP & OTPW & TOTP\\
+ \hline
+ Synchrone & OUI/NON & OUI & NON & OUI \\
+ \hline
+ Réinitialisation & OUI & NON & OUI & NON \\
+ \hline
+ Performances & Mauvaises & Moyennes & Bonnes & Moyennes\\
+ \hline
+  \end{tabular}
+\end{frame}
 
 \section{Utilisations}
 \subsection{Utilisations courantes}
@@ -129,12 +145,17 @@ Une ambiguïté a été relevée dans la RFC.
 \subsection{EAP}
   \begin{frame}
   \frametitle{EAP}
-    \begin{block}{À quoi ça sert?}
-    bonne question!
+        \begin{block}{Extensible Authentication Protocol }
+\begin{itemize}
+\item est un framework d'authentification universelle
+\item fréquemment utilisé dans les réseaux sans fil et des connexions point-à-point.
+\item est défini par la RFC 3748.
+\end{itemize}
     \end{block}
-	\begin{block}{Fonctionnement}
-	Comme ça!
-	\end{block}
+        \begin{block}{Fonctionnement}
+EAP n'est pas un mécanisme d'authentification spécifique. Il ne définit que les formats de message.
+Extensibilité => plus
+\end{block}
   \end{frame}
   
 \subsection{EAP-POTP}
@@ -160,6 +181,13 @@ La reprise de session permet de reprendre une session courante et donc de rédui
 
 \begin{frame}
 \frametitle{EAP-POTP: Mode Protégé}
+\begin{itemize}
+\item "MAC" (algorithme MAC négocié) est l'algorithme utilisé en mode protégé pour l'authentification et la garantie d'intégrité des données.
+\item Lorsque le mode protégé est activé:\\
+PBKDF2 = password-based key derivation functions\\
+SHA-256 = algorithme de hachage\\
+PBKDF2(otp,salt,pepper,authData,iteration\_count,Key\_Length) = K\_MAC.K\_ENC.MSK.EMSK
+\end{itemize}
 
 \end{frame}
 
