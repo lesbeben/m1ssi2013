@@ -1,6 +1,7 @@
 #ifndef OTP_UTILS_H
 #define OTP_UTILS_H
 #include "secret.h"
+#include <inttypes.h>
 
 
 /** Rempli le buffer passé en paramêtre avec le HMAC du secret.
