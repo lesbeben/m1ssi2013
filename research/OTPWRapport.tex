@@ -1,0 +1,302 @@
+\documentclass{../res/univ-projet}
+
+\title{\'Etude du syst\`eme OTPW}
+\author{Damien \bsc{PICARD}}
+
+\projet{OTP}
+\projdesc{\'Etude des syst\`emes de mots de passe jetables}
+\filiere{M1SSI}
+\logo{../res/logo_univ.png}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+        Ce document présente une analyse du système OTPW. Toutes les
+    informations présentées et analysées proviennent 
+    \href{http://www.cl.cam.ac.uk/~mgk25/otpw.html}{de ce site}. Le
+    but de cet article est de déterminer dans quelle mesure le
+    système OTPW est utilisable, sous quelles conditions et avec quelles 
+    garanties de sécurité.
+    Ce document sera mis en relation avec plusieurs autres afin de réaliser un
+    comparatif entre les systèmes d'OTP majeurs.
+
+    Les algorithmes donnés sont extrapolés des descriptions textuelles.
+\end{abstract}
+\newpage
+\tableofcontents
+\newpage
+
+\section{Pré-requis}
+        Le générateur d'OTP repose sur la fonction de hachage RipeMD-160. Tant pour
+    la génération de hachés et la vérification par comparaison de hachés
+    que pour générer de l'entropie.
+
+        Ce protocole requiert pour pouvoir fonctionner de pouvoir stocker
+    sur le serveur un fichier contenant la liste de vérification des OTP (environ 
+    4ko pour 300 OTP) dans le dossier de l'utilisateur sous le nom \verb?.otpw?
+    
+        L'utilisateur quant à lui est supposé pouvoir garder une liste de chaînes
+    de caractères nécessaire à la création des OTP. Cette liste est habituellement
+    imprimée sur une feuille de papier.
+
+\section{Généralités}
+        Ce protocole fonctionne grâce à deux listes numérotées, une permettant 
+    de former les OTP. Et une permettant de vérifier les OTP. Afin d'initialiser
+    ces listes l'utilisateur doit entrer un mot de passe que l'on appellera plus
+    tard le préfixe. 
+    
+        Le serveur va générer deux listes: une qu'il va donner à l'utilisateur que
+    l'on appellera liste de suffixes, et une qu'il va garder et qui permettra de
+    vérifier les OTP.
+
+        Ces OTP sont construits en concaténant le préfixe avec l'un des suffixes.
+    Le serveur va hacher l'OTP avec la fonction RipeMD-160 ce haché et le comparer
+    avec celui de sa liste afin de vérifier sa validité.
+
+        Quand un utilisateur veut s'authentifier le client demande un challenge 
+    au serveur. Ce challenge est un numéro permettant d'identifier un suffixe sur
+    la liste. L'utilisateur devra rentrer son login ainsi que l'OTP généré avec
+    ce suffixe. Le serveur authentifiera l'utilisateur si l'OTP correspond bien 
+    a celui ayant le même numéro dans sa liste. Si l'utilisateur est authentifié
+    alors il rayera de sa liste le haché de l'OTP.
+
+\section{Approfondissement}
+\subsection{Génération et partage d'un secret}
+        La génération de secret ne se fait qu'en ayant accès au serveur. Une fois
+    connecté sur le serveur l'utilisateur doit exécuter la commande \verb?otpw-gen?.
+    Cette commande demandera à l'utilisateur de rentrer son mot de passe préfixe.
+
+        Une fois le mot de passe rentré le serveur initialisera les deux listes avec 
+    l'algorithme suivant.
+    %TODO: Envisager une version de l'algorithme permettant de varier la taille des suffixes.
+    \begin{algorithm}
+        \begin{algorithmic}
+            \REQUIRE{$nbOTP$: le nombre d'OTP a générer}
+            \REQUIRE{$prefix$: le préfixe utilisé pour générer les OTP}
+            \STATE{$SEED$ $\leftarrow$ RipeMD-160(initialiserGen())}
+            \FOR{$i = 0 \to nbOTP$}
+                \STATE{$hash$ $\leftarrow$ RipeMD-160($prefix + seed$)}
+                \STATE{$suffix \leftarrow hash[0..71]$}
+                \STATE{$OTPHash$ $\leftarrow$ RipeMD-160($prefix + suffix$)}
+                \STATE{donner suffix à l'utilisateur}
+                \STATE{stocker les 72 premiers bit de OTPHash}
+                \STATE{$SEED \leftarrow$ RipeMD-160($SEED + hash[72..160]$)}
+            \ENDFOR
+        \end{algorithmic}
+        \caption{Algorithme d'initialisation.}
+        \label{gen}
+    \end{algorithm}
+    
+        La liste retournée à l'utilisateur contient tout les suffixes encodés dans une
+    base 64 modifiée. Cette base 64 est dite modifiée car elle remplace les caractères
+     \verb?0?,\verb?1? et \verb?l? respectivement par \verb?:?, \verb?=?, \verb?%?
+     pour éviter les confusions entre \verb?0? et \verb?O? et \verb?1?, \verb?I? et \verb?l?
+
+    La fonction $initialiserGen()$ est une fonction qui permet d'initialiser
+    la variable $SEED$ avec une valeur aléatoire. Pour ce faire elle hache la sortie
+    de plusieurs commande shell et des logs. Le but est d'obtenir une valeur aléatoire
+    unique. La liste des suffixes est alors totalement imprévisible, ainsi si l'on rentre
+    deux fois le même préfixe les listes seront différentes.
+
+    La liste des hachés stockée sur le serveur n'est pas stockée en l'état. Elle respecte
+    le format suivant:
+    \begin{itemize}
+        \item une ligne contenant \verb?OTPW1?
+        \item une ligne indiquant:
+            \begin{itemize}
+                \item Le nombre total de suffixes générés.
+                \item Le nombre de digit nécessaire pour indicer les suffixes.
+                \item Le nombre de caractères en base 64 pour un haché.
+                \item Le nombres de caractères pour un suffixe.
+            \end{itemize}
+        \item Autant de lignes que de suffixes générés, les lignes des
+            suffixes déjà utilisés sont effacées avec des \verb?-?.
+            Ces lignes contiennent:
+            \begin{itemize}
+                \item Un numéro d'OTP.
+                \item Les 72 premiers bits du haché \verb?RipeMD-160? du préfixe concaténé
+                    au suffixe correspondant à ce numéro noté dans une variante de base-64.
+            \end{itemize}
+    \end{itemize}
+    Sur le site de M. Kuhn on peut voir qu'il ne stocke que les 72 premiers bits des hachés.\\
+    Nous pensons que c'est une aberration, avec les machines actuelles qui font office de serveur
+    on peut se permettre de stocker la totalité des hachés, si nous ne prenons que 72 bits
+    cela revient à réduire le nombre d'étape pour obtenir une collision.
+    
+    De plus on voit apparaître le nombre de caractères pour un suffixe. C'est le seul endroit
+    sur le site où il est fait mention de ce paramètre. Peut-on le modifier ?\\
+    L'utilisation d'un codage en base 64 est il réellement plus efficace que de stocker
+    des valeurs hexadécimale pour des hachés ?
+
+
+
+
+\subsection{Génération d'un mot de passe jetable}
+    Pour générer un OTP il suffit de concaténer le préfixe avec un des suffixes.
+
+\subsection{Soumission et protocole de vérification}
+        Le protocole pour s'identifier est un protocole type défi/réponse. Le client
+    va commencer par demander un défi au serveur. Le serveur tirera un nombre aléatoire
+    et vérifiera que cet OTP est disponible dans sa liste (i.e. qu'il n'est pas rayé.).
+    Si il est disponible alors il enverra au client ce nombre. Pour s'authentifier l'utilisateur
+    devra rentrer son login ainsi que la concaténation de son mot de passe préfixe et du suffixe
+    demandé.
+
+    \begin{algorithm}
+        \begin{algorithmic}
+            \REQUIRE{$OTP$: l'OTP à vérifier.}
+            \REQUIRE{$num$: le challenge envoyé au client.}
+            \STATE{$expected$ $\leftarrow$ getOTP($num$)}
+            \STATE{$hash$ $\leftarrow$ RipeMD-160($OTP$)}
+            \IF{match($hash$, $expected$)}
+                \STATE{authentifier l'utilisateur}
+                \STATE{remplacer l'OTP $num$ par des '-' dans la liste}
+            \ELSE
+                \STATE{refuser l'authentification}
+            \ENDIF
+        \end{algorithmic}
+        \caption{Algorithme d'authentification}
+    \end{algorithm}
+
+
+\subsection{Ré-initialisation}
+        Pour réinitialiser le système il faut repasser par l'algorithme \ref{gen}.
+
+\section{Analyse générale et sécurité}
+\subsection{Avantages et intérêts}
+        Premièrement il faut deux choses pour s'authentifier, connaître le préfixe et avoir
+    la liste des suffixes. Sans ces deux morceaux impossible de reconstituer l'OTP
+    demandé lors du login. De plus le \og token\fg{} ne requiert jamais de recalculer un
+    OTP. Une fois la liste donnée, elle est figée et il suffit de barrer les OTP utilisés au
+    fur et à mesure.
+
+\subsection{Inconvénients et limites}
+        Le plus gros problème avec ce système est qu'il est périssable: une fois tout les
+    suffixes utilisés, impossible de se reconnecter avec un OTP. Et pour pouvoir générer
+    une nouvelle liste il faut avoir un accès au serveur.
+
+\subsection{Considérations de sécurité}
+\subsubsection{Attaques exhaustives} % Cas le plus théorique avec caractères codés sur 8-bits.
+        Une attaque exhaustive sur ce genre d'OTP est extrêmement compliquée.
+    En effet la longueur de l'OTP en lui même est inconnue. Il s'agit d'une
+    concaténation d'une chaîne de caractères de taille variable et d'une chaîne
+    de caractère de longueur prédéterminée. Il n'existe a priori pas de limite
+    de taille pour le préfixe. On peut supposer raisonnable de limiter les
+    OTP à des chaînes de strictement moins de 17 caractère.
+    Cette ensemble compte donc $\sum_{i=0}^{16}(2^8)^i$ éléments.
+    On peut compter  $2^{8\times 17} - 1$ soit $2^{136} -1$ autrement dit
+    $87112285931760246646623899502532662132735$ possibilités. Avec $10^{10}$ tentatives
+    par seconde on en arrive à $5\times 10^{23}$ années pour tous les énumérer.
+
+        Le réglage par défaut de l'implémentation d'OTPW est de 3 essais par tentative de login
+    si la troisième échoue l'utilisateur devra recommencer le processus d'authentification
+    et le challenge sera différent. Ce qui fait que pour chaque OTP l'attaquant à $\frac{3}{2^{136}}$
+    chances de s'authentifier
+
+        Tout ceci en admettant que les OTP soient constitués de strictement moins
+    de 17 caractères. De facto la meilleur attaque revient à trouver une collision.
+    
+        Cependant l'implémentation de M. Kuhn diffère en 2 points majeurs. les caractères des mots
+    de passes sont codés sur 6 bits. Et les suffixes sont d'une taille prédéterminée.
+    
+        Pour le premier point cela transforme le $2^{8\times 17}$ en $2^{6\times 17}$ ce qui réduit
+    la complexité des attaques exhaustive. Le second point n'intervient que si l'on connaît un OTP.
+    En effet en aillant un OTP on obtient le préfixe, il suffit ensuite de rechercher sur les suffixes.
+    Ce qui donne $2^{6\times 8}$ opérations pour trouver un suffixe, soit $O(2^{48})$. Ce qui risque à terme
+    d'être trop peu. Surtout si l'attaquant connais le haché.
+
+\subsubsection{Attaques par collisions}
+    Les collisions recherchées ici sont des collisions fortes. Un OTP bien précis est demandé à
+    chaque fois. Et seul les 72 premiers bits du hachés sont à prendre en compte les attaques ont
+    donc lieu en $O(2^{72})$ étapes. Cela reste considérable mais ils pourrait être intéressant de 
+    considérer la totalité du haché cela passerait la complexité a $O(2^{160})$.
+    
+\subsubsection{Failles connues} 
+    % FIXME: Race for the last key
+    %        Principe de la connexion parallèle qui arrive a prendre la place d'une machine
+    %        dont la connexion est établie ?!!
+        Une des attaques envisagée par l'implémentation de base est la \og race for the last key attack.\fg{}
+    Un attaquant pourrait sur une connexion parallèle attendre la fin de la saisie et envoyer
+    le code de fin de chaîne pour valider l'entrée et se connecter à la place de l'utilisateur.
+    Pour pallier à cela si deux tentatives de login ont lieu en même temps la seconde se verra demander
+    non plus un mais 3 suffixes.
+
+\subsubsection{Précautions et préconisation}
+        Les OTP étant transmis en clair avec quelques OTP on peut déterminer assez
+    aisément le préfixe et la longueur des suffixes. Cela réduit énormément la
+    difficulté d'une attaque exhaustive (puisqu'une partie de chaque OTP est déjà identifiée).
+    Il faut donc s'assurer que que le nombre de tentatives accepté soit assez faible et de ne 
+    pas renvoyer le même challenge en cas d'échec d'authentification.
+
+        La solution préconisée est d'utiliser en plus un canal sécurisé, pour avoir une 
+    identification point à point du serveur et du client ce qui est le cas par défaut avec
+    SSH. Avec ce genre de tunnel on évite aussi de donner des informations sur la longueur des
+    OTP, ce qui permettrait de déduire le préfixe.
+
+        Il est aussi recommandé de faire attention aux permissions du fichier \verb?~/.otpw? car
+    il est potentiellement lisible par n'importe qui. Typiquement un \verb?chmod 600? fera l'affaire
+    dans le cas de SSH ou de PAM.
+
+\section{Utilisations}
+\subsection{Cas concrets d'utilisation}
+        Il existe déjà une implémentation qui fourni un module pour s'authentifier avec SSH, 
+    et un module PAM pour gérer l'authentification auprès de nombreux services sous linux:
+    \begin{itemize}
+     \item Login session unix.
+     \item SSH via PAM.
+     \item Apache propose un module d'authentification via PAM.
+     \item Telnet permet de s'authentifier via PAM.
+    \end{itemize}
+
+
+\subsection{Cas d'utilisation envisagés}
+        PAM couvre déjà un large choix de services. Certains préfèrent tout de même utiliser une implémentation
+    ne passant pas par PAM pour par exemple un login sur un site web. Auquel cas il faut réimplémenter un serveur.
+
+\section{Conclusion}
+\subsection{Utilisation dans le cadre du projet}
+        Dans le cadre du projet on peut envisager un serveur permettant une authentification type OTPW, cependant
+    assurer une compatibilité totale avec l'implémentation de Markus Kuhn semble compliqué au vu du peu de documentation
+    disponible et qu'il n'y ait pas de \og vraies\fg{} normes sur ce protocole (pas de RFC + encodage en base 64 modifié).
+    Et il est difficile de considérer une implémentation comme nouvelle si on se contente de récupérer le code source
+    de celle de M.Kuhn.
+
+\subsection{Conclusion de l'équipe}
+        Nous pensons que ce protocole contient de très bonnes idées comme le fait de devoir posséder le préfixe et
+    le suffixe pour pouvoir former un OTP, ne pas nécessiter d'accès root pour lire la liste des hachés (pas de
+    programmes SETUID), token sans calcul.
+    
+        Cependant un certain nombre de points dérangent, ne pas pouvoir choisir
+    la taille de ses suffixes lors de la génération d'une liste, ne stocker qu'une partie des hachés, ajoutons a 
+    cela que la liste des hachés est stockée dans le répertoire de l'utilisateur et potentiellement lisible par tous.
+    Si un attaquant récupère cette liste il peut faire ses tests de collisions sans tenter de s'authentifier.
+
+        Le choix de ne stocker qu'une partie des hachés semble constituer un affaiblissement de la sécurité puisqu'on facilite
+    les collisions. Et ne pas pouvoir choisir la taille de ses suffixe facilite beaucoup trop les attaques exhaustives
+    si l'attaquant a récupéré un OTP. En effet on passe d'une quinzaine de caractères et une taille variable à 8 caractères.
+    C'est un amoindrissement important!
+
+        Une modification plutôt intéressante serait d'utiliser non plus la fonction RipeMD-160 pour générer des hachés mais
+    une fonction qui génère des hachés de 256 voir 384 ou 512\footnote{\verb?SHA-2? par exemple} bits ceci afin d'avoir une
+    plage de sélection plus large pour les suffixes et de pouvoir faire varier leur taille d'une liste à l'autre.
+    De plus comme les listes ne sont générées qu'une fois par le serveur le problème de la puissance de calcul se pose moins.
+
+        La présence de ces \og problèmes \fg{} joue sûrement dans le fait que ce protocole date de 2003 et qu'il n'ait jamais
+    été soumis à l'IETF pour une RFC. Ces défauts rendent le protocole plus vulnérable qu'il ne devrait l'être. Ce qui fait
+    que nous ne recommandons pas son utilisation en dehors d'un tunnel sécurisé.
+
+\subsection{Pérennité}
+    La pérennité de ce système repose sur la pérennité de sa fonction de hachage. Si jamais cette
+    fonction venait à s'avérer faillible elle peut facilement être remplacée par une fonction plus
+    puissante.
+        Notons quand même que des protocoles plus récents permette une authentification aussi sûre
+    et ne nécessitent pas de 
+    
+\end{document}
