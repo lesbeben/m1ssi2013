@@ -13,7 +13,7 @@ typedef secret_struct * secret;
 /** Crée un "objet" secret.
  * @return L'adresse d'un nouveau secret. 
  */
-secret createSecret();
+secret createSecret(int length);
 
 /** Libères les ressources associés à un secret
  * @param[in] key le secret dont on veut libérer les ressources.
