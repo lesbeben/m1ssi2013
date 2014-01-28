@@ -46,11 +46,11 @@ int main(int argc, char * argv[]) {
 	printOK("Correct length.");
     }
 
-    printf("Testing getRepresentation.\n");
+    printf("Testing getHexRepresentation.\n");
     printf("Testing with NULL buffer and 0 length.\n");
     int length = 0;
     char *buff = NULL;
-    if (getRepresentation(s, buff, length) != NULL) {
+    if (getHexRepresentation(s, buff, length) != NULL) {
 	printKO("Wrong representation for secret.");
     } else {
 	printOK("Representation possibly right.");
@@ -58,7 +58,7 @@ int main(int argc, char * argv[]) {
     printf("Testing with non NULL buffer and 0 length.\n");
     length = 0;
     buff = (char *) 12345;
-    if (getRepresentation(s, buff, length) != NULL) {
+    if (getHexRepresentation(s, buff, length) != NULL) {
 	printKO("Wrong representation for secret.");
     } else {
 	printOK("Representation possibly right.");
@@ -66,7 +66,7 @@ int main(int argc, char * argv[]) {
     printf("Testing with NULL buffer and > 0 length.\n");
     length = 124;
     buff = NULL;
-    if (getRepresentation(s, buff, length) != NULL) {
+    if (getHexRepresentation(s, buff, length) != NULL) {
 	printKO("Wrong representation for secret.");
     } else {
 	printOK("Representation possibly right.");
@@ -74,7 +74,7 @@ int main(int argc, char * argv[]) {
     printf("Normal test.\n");
     length = (2 * s->length + 1);
     buff = (char *) malloc(length * sizeof(char));
-    if (strlen(getRepresentation(s, buff, length)) != length - 1) {
+    if (strlen(getHexRepresentation(s, buff, length)) != length - 1) {
 	printKO("Wrong representation for secret.");
     } else {
 	printOK("Representation possibly right.");
@@ -98,8 +98,8 @@ int main(int argc, char * argv[]) {
     } else {
 	printOK("Correct length.");
     }
-    printf("Testing getRepresentation\n");
-    if (strlen(getRepresentation(s, buff, length)) > 0) {
+    printf("Testing getHexRepresentation\n");
+    if (strlen(getHexRepresentation(s, buff, length)) > 0) {
 	printKO("Wrong representation for secret.");
     } else {
 	printOK("Representation possibly right.");
