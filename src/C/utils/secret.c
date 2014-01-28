@@ -1,13 +1,17 @@
-#include "secret.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
 #include <string.h>
+
+#include "secret.h"
 
 secret createSecret(int length) {
     //creation du pointeur sur le secret
-    secret res;
+    secret res = NULL;
     
     //remplissage des variables
     res->length = length;
-    res->buffer = malloc(length);
+    res->buffer = (char *) malloc(length);
     
     return res;
 }
