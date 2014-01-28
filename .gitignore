@@ -5,6 +5,12 @@
 *.o
 *.so
 
+# Bibliothèques C
+*.a
+
+# Fichiers java compilés
+*.class
+
 # Documentation/LaTeX compilée
 *.pdf
 *.dvi
@@ -14,3 +20,6 @@
 *.out
 *.toc
 *.snm
+
+# Fichiers générés par des IDE
+*.kdev4
