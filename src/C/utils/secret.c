@@ -4,6 +4,11 @@
 #include <string.h>
 #include "secret.h"
 
+/*******************************************************************************
+ *                                                                             *
+ *                            UTILITAIRES                                      *
+ *                                                                             *
+ ******************************************************************************/
 int hexCharToInt(char c) {
     if ('a' <= c && c <= 'f') {
         return c - 'a';
@@ -16,6 +21,11 @@ int hexCharToInt(char c) {
 }
 
 
+/*******************************************************************************
+ *                                                                             *
+ *                              FONCTIONS                                      *
+ *                                                                             *
+ ******************************************************************************/
 secret createSecret(int length) {
     if (length < 0) { //Précondition invalide
         return NULL;
@@ -38,7 +48,7 @@ secret hexToSecret(char * buffer) {
     for (int i = 0; i < length; i += 2) {
         tmp = hexCharToInt(buffer[i]);
         octet |= tmp;
-        octet <= 4;
+        octet <<= 4;
         tmp = hexCharToInt(buffer[i + 1]);
         octet |= tmp;
         res->buffer[i / 2] = octet;
