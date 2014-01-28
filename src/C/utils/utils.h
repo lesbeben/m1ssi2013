@@ -1,3 +1,10 @@
+/*
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ * !!!! Verifier les spécification !!!! 
+ * !!!! convert => size = 64 bits? !!!!
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+ */
+
 #ifndef OTP_UTILS_H
 #define OTP_UTILS_H
 #include "secret.h"
