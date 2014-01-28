@@ -1,16 +1,20 @@
-#include "secret.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdio.h>
 #include <string.h>
+#include "secret.h"
 
 int hexCharToInt(char c) {
     if ('a' <= c && c <= 'f') {
         return c - 'a';
     } else if ('A' <= c && c <='F') {
         return c - 'A';
-    } else if ('0' <= c && c <= '9' {
+    } else if ('0' <= c && c <= '9') {
         return c - '0';
     }
     return -1;
 }
+
 
 secret createSecret(int length) {
     if (length < 0) { //Précondition invalide
@@ -43,6 +47,7 @@ secret hexToSecret(char * buffer) {
 }
 
 int destroySecret(secret key) {
+    free(key->buffer);
     free(key);
     return 0;
 }
