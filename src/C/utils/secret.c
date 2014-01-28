@@ -2,13 +2,16 @@
 #include <string.h>
 
 secret createSecret(int length) {
-    //creation du pointeur sur le secret
-    secret res;
-    
+    if (length < 0) { //Précondition invalide
+        return NULL;
+    }
+
+    secret res = (secret) malloc(sizeof(secret_struct));
+
     //remplissage des variables
     res->length = length;
-    res->buffer = malloc(length);
-    
+    res->buffer = (char *) malloc(sizeof(char) * length);
+
     return res;
 }
 
@@ -23,15 +26,14 @@ int getLength(secret key) {
 
 char * getRepresentation(secret key, char * buffer, int length) {
     if( key == NULL ) {
-        //"key NULL"
-		return NULL;
+        // Impossible de représenter d'un secret NULL
+        return NULL;
     }
     else if( buffer == NULL ) {
-        //"buffer NULL"
-		return NULL;
+        /* Impossible de donner la représentation sans avoir de buffer
+         * à remplir.
+         */
+        return NULL;
     }
-    
-    
-    
     // TODO
 }
