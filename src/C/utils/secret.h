@@ -4,16 +4,28 @@
 /** Type décrivant un secret.
  */
 typedef struct {
-  int length;
-  char * buffer;
+    int length;
+    char * buffer;
 } secret_struct;
 
 typedef secret_struct * secret;
 
 /** Crée un "objet" secret.
+ * @param[in] length la taille du secret en octets.
+ * @pre la taille ne peut pas être négative.
+ * 
  * @return L'adresse d'un nouveau secret. 
  */
 secret createSecret(int length);
+
+/** Transforme une chaîne hexadécimale en secret.
+ * @param[in] buffer le buffer contenant la chaîne à transformer
+ * @pre buffer se termine par un NULL byte.
+ * @pre strlen(buffer) > 0
+ * 
+ * @return un secret initialisé avec le buffer; NULL en cas d'échec.
+ */
+secret hexToSecret(char * buffer);
 
 /** Libères les ressources associés à un secret
  * @param[in] key le secret dont on veut libérer les ressources.
@@ -29,7 +41,7 @@ int destroySecret(secret key);
  */
 int getLength(secret key);
 
-/** Retourne une représentation "human readable" du secret.
+/** Donne une représentation hexadécimale du secret.
  * @param[in] key le secret que l'on veut représenter.
  * @pre key != NULL
  * 
@@ -37,12 +49,12 @@ int getLength(secret key);
  * secret.
  * @pre buffer != NULL.
  * @pre taille de buffer >= length.
- * @post buffer contient une représentation .
+ * @post buffer contient une représentation du secret.
  * @post strlen(buffer) <= length.
  * 
  * @param[in] length le nombre d'octet modifiables dans le buffer.
  * @pre length > 0
- * @pre buffer doit avoir été alloué et contenir length octets.
+ * @pre length > (secret->length * 2)
  * 
  * @return l'adresse de buffer; NULL en cas d'échec.
  */
