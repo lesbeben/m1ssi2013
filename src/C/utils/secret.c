@@ -3,6 +3,9 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include "secret.h"
 
 /*******************************************************************************
@@ -34,6 +37,15 @@ secret createSecret(int length) {
     }
     /** Le secret à retourner */
     secret res = (secret) malloc(sizeof(secret_struct));
+    if (res == NULL) {
+        return NULL;
+    }
+
+    int fd = open("/dev/urandom", O_RDONLY);
+    if (fd == -1) {
+        destroySecret(res);
+        return NULL;
+    }
 
     //remplissage des variables
     res->length = length;
@@ -51,10 +63,10 @@ secret textToSecret(char * buffer) {
         return NULL;
     }
     res->length = length;
-    
+
     /** Création d'une copie du buffer dans le secret. */
     res->buffer = strndup(buffer, length);
-    
+
     return res;
 }
 

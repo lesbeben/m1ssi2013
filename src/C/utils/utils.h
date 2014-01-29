@@ -1,10 +1,3 @@
-/*
- * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- * !!!! Verifier les spécification !!!! 
- * !!!! convert => size = 64 bits? !!!!
- * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- */
-
 #ifndef OTP_UTILS_H
 #define OTP_UTILS_H
 #include "secret.h"
@@ -46,10 +39,10 @@ char* truncate(char * hash, char * buffer);
 /** Convertit un buffer en entier décimal.
  * @param[in] buffer le buffer à convertir.
  * @pre buffer != NULL
- * @pre buffer fait 64 bits.
+ * @pre buffer fait 32 bits.
  * 
  * @return l'entier correspondant à la valeur du buffer; -1 sinon.
  */
-uint64_t convert(char * buffer); 
+uint32_t convert(char * buffer); 
 
 #endif

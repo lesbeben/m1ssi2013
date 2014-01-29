@@ -8,6 +8,6 @@ char* truncate(char * hash, char * buffer) {
     // TODO
 }
 
-uint64_t convert(char * buffer) {
+uint32_t convert(char* buffer) {
     // TODO
 }
