@@ -218,7 +218,61 @@ int main(int argc, char * argv[]) {
     } else {
         printOK("NULL buffer rightly handled.");
     }
+    
+    /* Tests hotp.c*/
+    printf("Testing HOTP calculation.\n");
+    int otp;
+    if ((otp = generateHOTP(s, 2, 6)) == -1) {
+	printKO("Error while executing. -1 returned.");
+    } else {
+	if (0 > otp || otp > 999999) {
+	    printKO("Invalid length for otp 6 wanted.");
+	} else {
+	    printOK("Correct length for otp.");
+	}
+    }
+    if (generateHOTP(s, 3, 6) == otp) {
+	printKO("Two successive valus are equal. This should not happen.");
+    } else {
+	printOK("Two successive values are differents.");
+    }
 
+    if (generateHOTP(NULL, 0, 7) != -1) 
+	printKO("NULL secret not correctly handled");
+    if (generateHOTP(s, -1, 7) != -1) 
+	printKO("bad counter not correctly handled");
+    if (generateHOTP(s, 0, -1) != -1) 
+	printKO("-1 length not correctly handled");
+    if (generateHOTP(s, 0, 99) != -1) 
+	printKO("99 length not correctly handled");
+
+    /* Testing TOTP calculation. */
+    printf("Testing TOTP calculation.\n");
+    if ((otp = generateTOTP(s, 1, 6)) == -1) {
+	printKO("Error while executing. -1 returned.");
+    } else {
+	if (0 > otp || otp > 999999) {
+	    printKO("Invalid length for otp 6 wanted.");
+	} else {
+	    printOK("Correct length for otp.");
+	}
+    }
+    sleep(2);
+    if (generateTOTP(s, 1, 6) == otp) {
+	printKO("Two successive valus are equal. This should not happen.");
+    } else {
+	printOK("Two successive values are differents.");
+    }
+
+    if (generateTOTP(NULL, 0, 7) != -1) 
+	printKO("NULL secret not correctly handled");
+    if (generateTOTP(s, -1, 7) != -1) 
+	printKO("bad quantum not correctly handled");
+    if (generateTOTP(s, 0, -1) != -1) 
+	printKO("-1 length not correctly handled");
+    if (generateTOTP(s, 0, 99) != -1) 
+	printKO("99 length not correctly handled");
+    
     exit(EXIT_SUCCESS);
 }
 

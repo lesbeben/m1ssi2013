@@ -1,5 +1,5 @@
 #include "totp.h"
 
-int generateTOTP(secret key) {
+int generateTOTP(secret key, int quantum, int len) {
     // TODO
 }
