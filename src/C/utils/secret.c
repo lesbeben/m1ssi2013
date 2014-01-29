@@ -16,7 +16,7 @@
 
 /** Convertit un caractère hexadécimal en sa valeur numérique.
  * @param[in] c le caractère a convertir.
- * 
+ *
  * @return la valeur hexadécimale du caractère; -1 en cas d'erreur.
  */
 int hexCharToInt(char c) {
@@ -119,7 +119,7 @@ secret hexToSecret(char * buffer) {
      */
     for (int i = 0; i < length; i += 2) {
         hexCode = hexCharToInt(buffer[i]);
-        if (hexCode == -1) { 
+        if (hexCode == -1) {
             // Buffer contient un caractère qui n'est pas hexadécimal.
             // Auquel cas on libère les ressources
             destroySecret(res);
@@ -131,7 +131,7 @@ secret hexToSecret(char * buffer) {
         //On décale les 4 octets vers la gauche (premier caractère hexa).
         octet <<= 4;
         hexCode = hexCharToInt(buffer[i + 1]);
-        if (hexCode == -1) { 
+        if (hexCode == -1) {
             // Buffer contient un caractère qui n'est pas hexadécimal.
             // Même traitement.
             destroySecret(res);
@@ -151,7 +151,7 @@ int destroySecret(secret key) {
     }
     if (key->buffer != NULL) {
         // Mise a 0 de la mémoire pour éviter l'exploitation d'attaques.
-        memset(key->buffer, 0, key->length); 
+        memset(key->buffer, 0, key->length);
         free(key->buffer);
     }
     // Idem on met la mémoire a zéro pour éviter l'exploitation d'attaques.
@@ -208,4 +208,3 @@ char * getTextRepresentation(secret key, char* buffer, int length) {
     buffer[length] = 0;
     return buffer;
 }
-
