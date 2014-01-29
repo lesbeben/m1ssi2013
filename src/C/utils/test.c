@@ -35,6 +35,7 @@ int main(int argc, char * argv[]) {
      * Test secret.c
      */
     // Length 64
+    //Create secret & destroy
     printf("Testing createSecret and destroySecret function.\n");
     printf("Creating a secret of length 64.\n");
     secret s = createSecret(64);
@@ -48,13 +49,14 @@ int main(int argc, char * argv[]) {
     } else {
         printOK("secret size properly set.");
     }
+    //get length
     printf("Testing getLength\n");
     if (getLength(s) != 64) {
         printKO("getLength should have returned 64.");
     } else {
         printOK("Correct length.");
     }
-
+    //Get hexRepresentation
     printf("Testing getHexRepresentation.\n");
     printf("Testing with NULL buffer and 0 length.\n");
     int length = 0;
@@ -84,20 +86,35 @@ int main(int argc, char * argv[]) {
     printf("Normal test.\n");
     length = (2 * s->length + 1);
     buff = (char *) malloc(length * sizeof(char));
-    if (strlen(getHexRepresentation(s, buff, length)) >= length - 1) {
+    if (strlen(getHexRepresentation(s, buff, length)) != (2 * s->length)) {
         printKO("Wrong representation for secret.");
+        printf("Got : %s of length %d instead of %d\n",
+               buff, (int) strlen(buff), 2 * s->length);
     } else {
         printOK("Representation possibly right.");
     }
-    printf("Testing coherence between hexToSecret and getHexRepresentation.\n");
-    char *hex = "2A10F5DD4E27F20A";
+    //hextosecret
+    printf("Testing hexToSecret.\n");
+    char *hex = "2a10f5dd4e27f20a";
     secret s2 = hexToSecret(hex);
-    char rep[20];
-    getHexRepresentation(s2, rep, 20);
+    if ((s2->length) != (strlen(hex) / 2)) {
+        printKO("Inconsistant length for secret.");
+        printf("%d expected. Got %d.\n",
+               (int) strlen(hex) / 2,
+               (int) s2->length);
+    } else {
+        printOK("Right length for secret.");
+    }
+    //coherence
+    printf("Testing coherence between hexToSecret and getHexRepresentation.\n");
+    char rep[21];
+    getHexRepresentation(s2, rep, 21);
     if (strcmp(rep, hex) == 0) {
         printOK("hexToSecret coherent with getHexRepresentation.");
     } else {
         printKO("hexToSecret not coherent with getHexRepresentation.");
+        printf("%s waited.\n", hex);
+        printf("got %s\n", rep);
     }
 
     printOK("Right for length 64.");
