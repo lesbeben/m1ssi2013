@@ -74,7 +74,7 @@ int getLength(secret key);
  * 
  * @param[in] length le nombre d'octet modifiables dans le buffer.
  * @pre length > 0
- * @pre length > (secret->length * 2)
+ * @pre length > (key->length * 2)
  * 
  * @return l'adresse de buffer; NULL en cas d'échec.
  */
@@ -93,7 +93,7 @@ char * getHexRepresentation(secret key, char * buffer, int length);
  * 
  * @param[in] length le nombre d'octet modifiables dans le buffer.
  * @pre length > 0
- * @pre length > secret->length
+ * @pre length > key->length
  * 
  * @return l'adresse de buffer; NULL en cas d'échec.
  */

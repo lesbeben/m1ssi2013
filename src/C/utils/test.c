@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <inttypes.h>
+#include <unistd.h>
 
 #include "hotp.h"
 #include "totp.h"
@@ -37,12 +38,19 @@ int main(int argc, char * argv[]) {
     printf("Testing createSecret and destroySecret function.\n");
     printf("Creating a secret of length 64.\n");
     secret s = createSecret(64);
-    if (s == NULL || s->length != 64) {
+    if (s == NULL) {
+        printKO("secret shouldn't be NULL when size is 64.");
+    } else {
+        printOK("secret successfuly allocated.");
+    }
+    if ( s->length != 64) {
         printKO("Incorrect size of secret.");
+    } else {
+        printOK("secret size properly set.");
     }
     printf("Testing getLength\n");
     if (getLength(s) != 64) {
-        printKO("Incorrect length for secret.");
+        printKO("getLength should have returned 64.");
     } else {
         printOK("Correct length.");
     }
@@ -52,30 +60,31 @@ int main(int argc, char * argv[]) {
     int length = 0;
     char *buff = NULL;
     if (getHexRepresentation(s, buff, length) != NULL) {
-        printKO("Wrong representation for secret.");
+        printKO("getHexRepresentation should have returned NULL.");
     } else {
-        printOK("Representation possibly right.");
+        printOK("getHexRepresentation returned NULL.");
     }
     printf("Testing with non NULL buffer and 0 length.\n");
     length = 0;
     buff = (char *) 12345;
     if (getHexRepresentation(s, buff, length) != NULL) {
-        printKO("Wrong representation for secret.");
+        printKO("getHexRepresentation should have returned NULL.");
     } else {
-        printOK("Representation possibly right.");
+        printOK("getHexRepresentation returned NULL.");
     }
     printf("Testing with NULL buffer and > 0 length.\n");
     length = 124;
     buff = NULL;
     if (getHexRepresentation(s, buff, length) != NULL) {
-        printKO("Wrong representation for secret.");
+        printKO("getHexRepresentation should have returned NULL.");
     } else {
-        printOK("Representation possibly right.");
+        printOK("getHexRepresentation have returned NULL.");
     }
+
     printf("Normal test.\n");
     length = (2 * s->length + 1);
     buff = (char *) malloc(length * sizeof(char));
-    if (strlen(getHexRepresentation(s, buff, length)) != length - 1) {
+    if (strlen(getHexRepresentation(s, buff, length)) >= length - 1) {
         printKO("Wrong representation for secret.");
     } else {
         printOK("Representation possibly right.");
@@ -84,9 +93,12 @@ int main(int argc, char * argv[]) {
     printf("Destroying secret.\n");
     if (destroySecret(s) == -1) {
         printKO("Error while destroying. -1 returned.");
+    } else {
+        printOK("Secret successfuly destroyed");
     }
-    printOK("Passed. Trying for length -1.");
+    printOK("Passed.");
 
+    printf("Trying for length -1.\n");
     // Length -1
     s = createSecret(-1);
     if (s != NULL) {
@@ -100,15 +112,17 @@ int main(int argc, char * argv[]) {
         printOK("Correct length.");
     }
     printf("Testing getHexRepresentation\n");
-    if (strlen(getHexRepresentation(s, buff, length)) > 0) {
-        printKO("Wrong representation for secret.");
+    if (getHexRepresentation(s, buff, length) != NULL) {
+        printKO("getHexRepresentation should return NULL when key is NULL");
     } else {
-        printOK("Representation possibly right.");
+        printOK("getHexRepresentation has returned NULL");
     }
     printOK("Right for length -1.");
     printf("Destroying secret.\n");
     if (destroySecret(s) == -1) {
-        printKO("Error while destroying. -1 returned.");
+        printOK("destroySecret has returned -1.");
+    } else {
+        printKO("destroySecret should have returned -1.");
     }
     printOK("Passed.");
     free(buff);
@@ -205,13 +219,13 @@ int main(int argc, char * argv[]) {
         printOK("NULL buffer rightly handled.");
     }
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 void textcolor(int attr, int fg, int bg) {
     char command[13];
     /* Command is the control command to the terminal */
-    sprintf(command, "%c[%d;%d;%dm", 0x1B, attr, fg + 30, bg + 40);
+    snprintf(command, 13, "%c[%d;%d;%dm", 0x1B, attr, fg + 30, bg + 40);
     printf("%s", command);
 }
 

@@ -1,3 +1,4 @@
+#define _XOPEN_SOURCE 700
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -69,7 +70,6 @@ secret hexToSecret(char * buffer) {
     char octet = 0;
     /** Le code hexadécimal correspondant à deux caractères du buffer.*/
     int hexCode;
-    
     /* On parcours le buffer deux caractères par caractères que l'on stockera
      * dans un octet (ici un char) puisque 2 caractères héxadécimaux tiennent
      * sur un octet.
@@ -141,6 +141,21 @@ char * getHexRepresentation(secret key, char * buffer, int length) {
 }
 
 char * getTextRepresentation(secret key, char* buffer, int length) {
-
+    if( key == NULL ) {
+        return NULL;
+    }
+    else if(buffer == NULL) {
+        return NULL;
+    } else if (length <= 0) {
+        return NULL;
+    } else if (!(length > key->length)) {
+        return NULL;
+    }
+    /* Fin des tests de préconditions */
+    // Remplissage du buffer avec key->buffer.
+    strncpy(buffer, key->buffer, length - 1);
+    // Ajout du NULL-Byte.
+    buffer[length - 1] = 0;
+    return buffer;
 }
 
