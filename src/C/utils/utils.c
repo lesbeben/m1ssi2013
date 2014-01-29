@@ -9,5 +9,8 @@ char* truncate(char * hash, char * buffer) {
 }
 
 uint32_t convert(char* buffer) {
-    // TODO
+    if(buffer == NULL) {
+        // buffer null
+        return NULL;
+	return (int) buffer;
 }
