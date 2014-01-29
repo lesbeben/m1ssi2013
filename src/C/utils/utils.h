@@ -43,6 +43,6 @@ char* truncate(char * hash, char * buffer);
  * 
  * @return l'entier correspondant à la valeur du buffer; -1 sinon.
  */
-uint32_t convert(char * buffer); 
+int32_t convert(char* buffer); 
 
 #endif

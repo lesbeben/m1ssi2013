@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 project (OTP)
 
-add_definitions(--std=c99)
+add_definitions(--std=c99 -Wall -Werror)
 
 # Les deux libs statiques à générer
 add_library(hotp hotp.c hotp.h utils.c utils.h secret.h)

@@ -10,10 +10,15 @@
 
 /*******************************************************************************
  *                                                                             *
- *                            UTILITAIRES                                      *
+ *                               UTILITAIRES                                   *
  *                                                                             *
  ******************************************************************************/
 
+/** Convertit un caractère hexadécimal en sa valeur numérique.
+ * @param[in] c le caractère a convertir.
+ * 
+ * @return la valeur hexadécimale du caractère; -1 en cas d'erreur.
+ */
 int hexCharToInt(char c) {
     if ('a' <= c && c <= 'f') {
         return c - 'a';
@@ -41,15 +46,34 @@ secret createSecret(int length) {
         return NULL;
     }
 
+    //remplissage des variables
+    res->length = length;
+    res->buffer = (char *) malloc(sizeof(char) * length);
+
+    if (res->buffer == NULL) {
+        destroySecret(res);
+        return NULL;
+    }
+
+    /** Descripteur de fichier sur /dev/urandom */
     int fd = open("/dev/urandom", O_RDONLY);
     if (fd == -1) {
         destroySecret(res);
         return NULL;
     }
 
-    //remplissage des variables
-    res->length = length;
-    res->buffer = (char *) malloc(sizeof(char) * length);
+    /** Code de retour d'appels système */
+    int ret = read(fd,res->buffer, res->length);
+    if (ret != res->length) {
+        destroySecret(res);
+        return NULL;
+    }
+
+    ret = close(fd);
+    if (ret == -1) {
+        destroySecret(res);
+        return NULL;
+    }
 
     return res;
 }
@@ -74,11 +98,18 @@ secret hexToSecret(char * buffer) {
     /** Le nombre de caractères dans le buffer */
     int length = strlen(buffer);
     /** Le secret à retourner initialisés avec les données du buffer.*/
-    secret res = createSecret(length / 2);
+    secret res = (secret) malloc(sizeof(secret_struct));
     if (res == NULL) {
         return NULL;
     }
-    
+
+    res->length = length / 2;
+    res->buffer = (char *) malloc(sizeof(char) * res->length);
+    if (res->buffer == NULL) {
+        destroySecret(res);
+        return NULL;
+    }
+
     char octet = 0;
     /** Le code hexadécimal correspondant à deux caractères du buffer.*/
     int hexCode;
@@ -149,6 +180,13 @@ char * getHexRepresentation(secret key, char * buffer, int length) {
     } else if (!(length > (key->length * 2))) {
         return NULL;
     }
+    for (int i = 0; i < key->length; i++) {
+        // Remplissage du buffer avec les caractères hexadécimaux.
+        if (snprintf(buffer, length, "%s%x", buffer, key->buffer[i]) < 0) {
+            return NULL;
+        }
+    }
+    buffer[key->length * 2] = 0;
     return buffer;
 }
 
@@ -165,9 +203,9 @@ char * getTextRepresentation(secret key, char* buffer, int length) {
     }
     /* Fin des tests de préconditions */
     // Remplissage du buffer avec key->buffer.
-    strncpy(buffer, key->buffer, length - 1);
+    strncpy(buffer, key->buffer, length);
     // Ajout du NULL-Byte.
-    buffer[length - 1] = 0;
+    buffer[length] = 0;
     return buffer;
 }
 
