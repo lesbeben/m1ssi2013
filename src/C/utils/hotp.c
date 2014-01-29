@@ -2,4 +2,5 @@
 
 int generateHOTP(secret key, unsigned long counter, int len) {
     // TODO
+    return -1;
 }

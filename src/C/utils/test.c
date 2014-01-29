@@ -142,8 +142,10 @@ int main(int argc, char * argv[]) {
         printKO("Error while calculating HMAC -1 returned.");
     } else {
         printf("Testing length.\n");
+        char bidon;
         for (int i = 0; i < 20; i++) {
-            buff[i];
+            bidon = buff[i];
+            bidon++;
         }
         printOK("Length >= 160 bits.");
     }
