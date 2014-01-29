@@ -169,8 +169,10 @@ int main(int argc, char * argv[]) {
     printf("Testing with -1 as count.\n");
     if (HMAC_SHA1(-1, s, buff1) == NULL) printOK("Passed.");
     else printKO("Failed.");
+    printf("NULL as secret.\n");
     if (HMAC_SHA1(0, NULL, buff1) == NULL) printOK("Passed.");
     else printKO("Failed.");
+    printf("Testing with NULL as buffer.\n");
     if (HMAC_SHA1(0, s, NULL) == NULL) printOK("Passed.");
     else printKO("Failed.");
 
@@ -274,7 +276,8 @@ int main(int argc, char * argv[]) {
 	printKO("-1 length not correctly handled");
     if (generateTOTP(s, 0, 99) != -1) 
 	printKO("99 length not correctly handled");
-    
+
+    destroySecret(s);
     exit(EXIT_SUCCESS);
 }
 
