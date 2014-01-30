@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include "hotp.h"
 
-int generateHOTP(secret key, unsigned long counter, int len) {
+int generateHOTP(secret key, long counter, int len) {
     // Vérification de préconditions
-    if (!((key != NULL) && (counter > 0) && (len >= 6 && len <= 8))) {
+    if ((key == NULL) || (counter < 0) || (len > 8) || (len < 6)) {
         return -1;
     }
 

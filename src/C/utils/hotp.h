@@ -14,6 +14,6 @@
  * @pre len <= 8
  * @return l'entier correspondant à l'OTP; -1 en cas d'échec
  */
-int generateHOTP(secret key, unsigned long counter, int len);
+int generateHOTP(secret key, long counter, int len);
 
 #endif //TOTP_H
