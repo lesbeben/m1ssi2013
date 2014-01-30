@@ -101,7 +101,7 @@ secret hexToSecret(char * buffer) {
         return NULL;
     }
 
-    res->length = length / 2 + (length % 2);
+    res->length = length / 2 + (length & 1);
     res->buffer = (char *) malloc(sizeof(char) * res->length);
     if (res->buffer == NULL) {
         destroySecret(res);
@@ -112,7 +112,7 @@ secret hexToSecret(char * buffer) {
      * de longueur paire équivalent a celle contenue dans buffer
      */
     char * tmp;
-    if (length % 2 != 0) {
+    if ((length & 1) != 0) {
         length++;
         tmp = malloc(sizeof(char) * (length));
         snprintf(tmp, length + 1, "0%s", buffer);
@@ -166,11 +166,11 @@ char * getHexRepresentation(secret key, char * buffer, int length) {
     }
     for (int i = 0; i < key->length; i++) {
         // Remplissage du buffer avec les caractères hexadécimaux.
-        if (snprintf(buffer, length, "%s%x", buffer, key->buffer[i]) < 0) {
-            return NULL;
-        }
+        if (snprintf(buffer + (2 * i), length, "%02x",
+            (unsigned int) (unsigned char) (key->buffer[i])) < 0);
     }
-    buffer[key->length * 2] = 0;
+    buffer[(key->length * 2)] = 0;
+    printf("%s", buffer);
     return buffer;
 }
 
