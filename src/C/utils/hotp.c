@@ -1,6 +1,7 @@
 #include <math.h>
 #include <openssl/sha.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "hotp.h"
 
 int generateHOTP(secret key, unsigned long counter, int len) {
@@ -9,17 +10,16 @@ int generateHOTP(secret key, unsigned long counter, int len) {
         return -1;
     }
     //Allocation des buffers
-    char * buffer = (char*) malloc(sizeof(char) * SHA_DIGEST_LENGTH);
-    char * buffer2 = (char*) malloc(sizeof(char) * SHA_DIGEST_LENGTH);
-    int32_t buffer3;
+    char * hmacResultBuffer = (char*) malloc(sizeof(char) * SHA_DIGEST_LENGTH);
     //Etape 1 HMAC
-    HMAC_SHA1(counter, key, buffer);
-    //Etape 2 troncature
-    truncate(buffer, buffer2);
-    //Etape 3 conversion
-    buffer3 = convert(buffer2);
-    //Etape 4 Human writable buffer modulo 10^len
-    free(buffer);
-    free(buffer2);
-    return (int)((int)buffer3 % ((int)(pow(10,len - 1))));
+    HMAC_SHA1(counter, key, hmacResultBuffer);
+    for (int i = 0; i < SHA_DIGEST_LENGTH; i++)  {
+        printf("%02x", (unsigned char) (unsigned int) hmacResultBuffer[i]);
+    }
+    printf("\n");
+    // Étape 2 extraction de l'OTP depuis le résultat de hmac.
+    int32_t fullLengthOtp = extractOTP(hmacResultBuffer);
+    printf("%d", fullLengthOtp);
+    //Etape 3 Human writable buffer modulo 10^len
+    return fullLengthOtp % (int) pow(10,len - 1);
 }

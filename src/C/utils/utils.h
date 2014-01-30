@@ -22,7 +22,7 @@
  */
 char* HMAC_SHA1(unsigned long count, secret key, char * buffer);
 
-/** Tronque un haché pour n'en retenir que 64 bits.
+/** Tronque un haché pour n'en retenir que 64 bits. DÉPRÉCIÉE
  * @param[in] hash le haché a tronquer.
  * @pre hash != NULL
  * @pre hash fait 160 bits.
@@ -36,13 +36,24 @@ char* HMAC_SHA1(unsigned long count, secret key, char * buffer);
  */
 char* truncate(char * hash, char * buffer);
 
-/** Convertit un buffer en entier décimal.
+/** Convertit un buffer en entier décimal. DÉPRÉCIÉE
  * @param[in] buffer le buffer à convertir.
  * @pre buffer != NULL
  * @pre buffer fait 32 bits.
  *
  * @return l'entier correspondant à la valeur du buffer; -1 sinon.
  */
-int32_t convert(char* buffer);
+uint32_t convert(char* buffer);
+
+/** Extrait un OTP d'un haché HMAC pour les générateur basés sur cette fonction.
+ * Cette fonction à pour but de remplacer truncate et convert. Plus KISS, pas
+ * de buffer de passage.
+ * @param[in] hash le haché duquel il faut extraire l'OTP.
+ * @pre hash != NULL.
+ * @pre hash est un haché de HMAC_SHA1.
+ *
+ * @return un OTP à partir d'un haché; -1 en cas d'erreur.
+ */
+int32_t extractOTP(char* hash);
 
 #endif
