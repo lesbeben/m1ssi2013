@@ -1,5 +1,9 @@
 package utils;
 
+import java.io.ByteArrayInputStream;
+import java.io.DataInput;
+import java.io.DataInputStream;
+import java.io.IOException;
 import java.security.MessageDigest;
 
 public final class Utils {
@@ -25,18 +29,19 @@ public final class Utils {
 	 * @return la conversion en décimal
 	 */
 	public static int convert(byte[] bytes) {
-		if (bytes == null)
-			return -1;
+		 if (bytes == null)
+		 return -1;
 
-		if (bytes.length != 4)
-			return 0;
-
-		int value = 0;
-		for (int i = 0; i < 4; i++) {
-			int shift = (4 - 1 - i) * 8;
-			value += (bytes[i] & 0x000000FF) << shift;
+		DataInput input = new DataInputStream(
+		new ByteArrayInputStream(bytes, 0, bytes.length));
+		int val;
+		try {
+			val = input.readInt();
+		} catch (IOException e) {
+			throw new IllegalStateException(e);
 		}
-		return value;
+
+		return val;
 
 	}
 	
