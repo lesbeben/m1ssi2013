@@ -59,8 +59,14 @@ char* HMAC_SHA1(unsigned long count, secret key, char * buffer) {
 }
 
 char* truncate(char * hash, char * buffer) {
-    // TODO
-    return NULL;
+    /*
+    if ((hash != NULL) && (buffer != NULL)) {
+        char* tmp = (char*) malloc(sizeof(char));
+        tmp = hash[19];
+    } else {
+        */
+        return NULL;
+    //}
 }
 
 int32_t convert(char* buffer) {

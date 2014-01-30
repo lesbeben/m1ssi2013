@@ -9,4 +9,4 @@ add_library(totp totp.c totp.h utils.c utils.h secret.h)
 
 # Création des tests
 add_executable(test test.c utils.c utils.h secret.c secret.h)
-target_link_libraries(test hotp totp crypto)
+target_link_libraries(test hotp totp crypto m)
