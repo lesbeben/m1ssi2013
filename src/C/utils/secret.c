@@ -13,23 +13,21 @@
  *                               UTILITAIRES                                   *
  *                                                                             *
  ******************************************************************************/
-
-/** Convertit un caractère hexadécimal en sa valeur numérique.
- * @param[in] c le caractère a convertir.
- *
- * @return la valeur hexadécimale du caractère; -1 en cas d'erreur.
- */
-int hexCharToInt(char c) {
+int getHexInt(char c) {
     if ('a' <= c && c <= 'f') {
-        return c - 'a';
-    } else if ('A' <= c && c <='F') {
-        return c - 'A';
+        return c - 'a' + 10;
+    } else if ('A' <= c && c <= 'F') {
+        return c - 'A' + 10;
     } else if ('0' <= c && c <= '9') {
         return c - '0';
     }
     return -1;
 }
 
+int getHexCode(char * string) {
+    int hexCode = (getHexInt(string[0]) << 4) | getHexInt(string[1]);
+    return hexCode;
+}
 
 /*******************************************************************************
  *                                                                             *
@@ -103,44 +101,30 @@ secret hexToSecret(char * buffer) {
         return NULL;
     }
 
-    res->length = length / 2;
+    res->length = length / 2 + (length & 1);
     res->buffer = (char *) malloc(sizeof(char) * res->length);
     if (res->buffer == NULL) {
         destroySecret(res);
         return NULL;
     }
 
-    char octet = 0;
-    /** Le code hexadécimal correspondant à deux caractères du buffer.*/
-    int hexCode;
-    /* On parcours le buffer deux caractères par caractères que l'on stockera
-     * dans un octet (ici un char) puisque 2 caractères héxadécimaux tiennent
-     * sur un octet.
+    /** Un pointeur temporaire sur un buffer contenant une chaîne héxadécimale
+     * de longueur paire équivalent a celle contenue dans buffer
      */
-    for (int i = 0; i < length; i += 2) {
-        hexCode = hexCharToInt(buffer[i]);
-        if (hexCode == -1) {
-            // Buffer contient un caractère qui n'est pas hexadécimal.
-            // Auquel cas on libère les ressources
-            destroySecret(res);
-            // Et on indique qu'il y a eu une erreur.
-            return NULL;
-        }
-        //On masque pour ne prendre que les 4 premiers octets.
-        octet |= (hexCode & 0x0F);
-        //On décale les 4 octets vers la gauche (premier caractère hexa).
-        octet <<= 4;
-        hexCode = hexCharToInt(buffer[i + 1]);
-        if (hexCode == -1) {
-            // Buffer contient un caractère qui n'est pas hexadécimal.
-            // Même traitement.
-            destroySecret(res);
-            return NULL;
-        }
-        // Re masquage
-        octet |= (hexCode & 0x0F);
-        // On rentre le second caractère hexa.
-        res->buffer[i / 2] = octet;
+    char * tmp;
+    if ((length & 1) != 0) {
+        length++;
+        tmp = malloc(sizeof(char) * (length));
+        snprintf(tmp, length + 1, "0%s", buffer);
+    } else {
+        tmp = buffer;
+    }
+    // On parcourt le buffer et on rempli le secret.
+    for (int i = 0; i < res->length; i++) {
+        res->buffer[i] = getHexCode(tmp + 2*i);
+    }
+    if (tmp != buffer) {
+        free(tmp);
     }
     return res;
 }
@@ -182,11 +166,11 @@ char * getHexRepresentation(secret key, char * buffer, int length) {
     }
     for (int i = 0; i < key->length; i++) {
         // Remplissage du buffer avec les caractères hexadécimaux.
-        if (snprintf(buffer, length, "%s%x", buffer, key->buffer[i]) < 0) {
-            return NULL;
-        }
+        if (snprintf(buffer + (2 * i), length, "%02x",
+            (unsigned int) (unsigned char) (key->buffer[i])) < 0);
     }
-    buffer[key->length * 2] = 0;
+    buffer[(key->length * 2)] = 0;
+    printf("%s", buffer);
     return buffer;
 }
 
