@@ -5,7 +5,7 @@
 
 int generateHOTP(secret key, unsigned long counter, int len) {
     // Vérification de préconditions
-    if (!((key != NULL) && (counter > 0) && (len > 0 && len <= 10))) {
+    if (!((key != NULL) && (counter > 0) && (len >= 6 && len <= 8))) {
         return -1;
     }
     //Allocation des buffers
