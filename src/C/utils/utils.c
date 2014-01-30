@@ -59,14 +59,20 @@ char* HMAC_SHA1(unsigned long count, secret key, char * buffer) {
 }
 
 char* truncate(char * hash, char * buffer) {
-    /*
-    if ((hash != NULL) && (buffer != NULL)) {
-        char* tmp = (char*) malloc(sizeof(char));
-        tmp = hash[19];
-    } else {
-        */
+
+    if (!((hash != NULL) && (buffer != NULL))) {
         return NULL;
-    //}
+    }
+    char offset;
+    offset = hash[19] & 0xF0;
+    offset >>= 4;
+
+    // int32_t == 4 octets, on prends donc les 4 octets en partant
+    // de hash + offset.
+    int32_t res = (int32_t) *(hash + offset);
+    res &= 0x7FFFFFFF;
+    buffer = memcpy(buffer, &res, 4 * sizeof(char));
+    return buffer;
 }
 
 int32_t convert(char* buffer) {

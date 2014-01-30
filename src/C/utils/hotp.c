@@ -21,5 +21,5 @@ int generateHOTP(secret key, unsigned long counter, int len) {
     //Etape 4 Human writable buffer modulo 10^len
     free(buffer);
     free(buffer2);
-    return (int)((int)buffer3 % (int)(pow(10,len)));
+    return (int)((int)buffer3 % ((int)(pow(10,len - 1))));
 }
