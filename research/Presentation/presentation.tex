@@ -13,7 +13,7 @@
 
 \author{D.\bsc{Picard}, A.\bsc{Smondack}, C.\bsc{Hardouin}, Y.\bsc{Adegoloye}, B.\bsc{Zigh}, G.\bsc{Ferry}, M.\bsc{Michotte}} 
 \institute{Université de Rouen}
-\date{22 Janvier 2014} 
+\date{23 Janvier 2014} 
 
 \AtBeginSection[] 
 { 
@@ -58,7 +58,7 @@
 \begin{block}{Principe}
 \begin{itemize}
  \item Le client calcule n hachés successifs à partir d'une clé secrète.
- \item Le système est initialisé avec le $n^{ième}$ haché de la séquence.
+ \item Le système est initialisé avec le $n^{i\grave{e}me}$ haché de la séquence.
  \item L'utilisateur s'authentifie avec le haché précédent, et ainsi de suite.
 \end{itemize}
 \end{block}
@@ -96,7 +96,7 @@ Une ambiguïté a été relevée dans la RFC.
 \section{Comparatifs}
 \subsection{Comparatif sécurité}
 \begin{frame}
-  \frametitle{Comparatif}
+  \frametitle{Comparatif sécurité}
   \begin{tabular}{|l|c|c|c|c|}
  \hline
  & OTP & HOTP & OTPW & TOTP\\
@@ -154,7 +154,7 @@ Une ambiguïté a été relevée dans la RFC.
     \end{block}
         \begin{block}{Fonctionnement}
 EAP n'est pas un mécanisme d'authentification spécifique. Il ne définit que les formats de message.
-Extensibilité => plus
+Extensibilité => plusieurs méthodes: \\ EAP (EAP-MD5, EAP-POTP,EAP-GTC, EAP-TLS ou EAP-TTLS,EAP-SIM, EAP-AKA)
 \end{block}
   \end{frame}
   

@@ -452,7 +452,7 @@ lesquelles un attaquant récupère le mot de passe durant une communication clie
      $K_i = h(K_M || i)$ 
     \end{center}
     \hfill{},avec h une fonction de hachage.\newline
-    Cette clef constitue un secret unique et robuste si l'on respecte les conditions suivante :
+    Cette clef constitue un secret unique et robuste si l'on respecte les conditions suivantes :
     \begin{itemize}
      \item La fonction $h$ est une fonction de hachage non inversible (md5, SHA\_1...).
      \item Le secret $K_M$ est inviolable.
@@ -527,9 +527,9 @@ lesquelles un attaquant récupère le mot de passe durant une communication clie
       \STATE $C \leftarrow$ compteur de synchronisation de l'utilisateur
       \STATE $K \leftarrow$ clef secrète de l'utilisateur
       \STATE $OTP_1 \leftarrow HOTP_K(C)$
-      \WHILE{$attentNB < MAX\_ATTENT$}
+      \WHILE{$attemptNB < MAX\_ATTEMPT$}
         \STATE $OTP_2 \leftarrow$ récupérer\_OTP
-        \STATE $attentNB \leftarrow attentNB + 1$
+        \STATE $attemptNB \leftarrow attemptNB + 1$
         \IF{$OTP_1 = OTP_2$}
           \STATE $C \leftarrow C + 1$
           \STATE accepter l'utilisateur
