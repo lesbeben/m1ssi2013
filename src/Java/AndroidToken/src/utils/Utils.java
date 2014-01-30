@@ -25,8 +25,19 @@ public final class Utils {
 	 * @return la conversion en décimal
 	 */
 	public static int convert(byte[] bytes) {
-		//TODO corp absent
-		return 0;
+		if (bytes == null)
+			return -1;
+
+		if (bytes.length != 4)
+			return 0;
+
+		int value = 0;
+		for (int i = 0; i < 4; i++) {
+			int shift = (4 - 1 - i) * 8;
+			value += (bytes[i] & 0x000000FF) << shift;
+		}
+		return value;
+
 	}
 	
 	/**
