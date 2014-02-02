@@ -32,10 +32,10 @@ public final class Utils {
 	 * @return la conversion en décimal
 	 */
 	public static int convert(byte[] bytes) {
-		DataInput input = new DataInputStream(new ByteArrayInputStream(bytes,
-				0, bytes.length));
 		int val;
 		try {
+			DataInput input = new DataInputStream(new ByteArrayInputStream(
+					bytes, 0, bytes.length));
 			val = input.readInt();
 		} catch (IOException e) {
 			throw new IllegalArgumentException(e);
