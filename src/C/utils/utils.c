@@ -95,10 +95,7 @@ int32_t extractOTP(char* hash) {
     // haché. On va pour cela utiliser le type int32_t qui compte 4 octets et
     // initialisé ses octets avec la valeur contenu dans le haché a partir de
     // l'offset.
-    int32_t fullLengthOTP;
-    memcpy(&fullLengthOTP, hash + offset, sizeof(int32_t));
-    fullLengthOTP &= 0x7FFFFFFF;
-
     // Ce masque permet de ne pas tenir compte du signe de l'entier.
+    int32_t fullLengthOTP = *((uint32_t *) hash +offset) & 0x7FFFFFFF;
     return fullLengthOTP;
 }
