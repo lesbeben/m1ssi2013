@@ -1,5 +1,7 @@
 # Fichiers temporaires
 *~
+*.back*
+#.*#
 
 # Binaires compilés
 *.o
@@ -21,5 +23,9 @@
 *.toc
 *.snm
 
+# Fichiers cmakefiles
+*CMakeFiles*
+
 # Fichiers générés par des IDE
 *.kdev4
+*.metadata*

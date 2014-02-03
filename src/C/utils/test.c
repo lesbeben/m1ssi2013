@@ -271,8 +271,6 @@ int main(int argc, char * argv[]) {
 
     if (generateHOTP(NULL, 0, 7) != -1)
         printKO("NULL secret not correctly handled");
-    if (generateHOTP(s, -1, 7) != -1)
-        printKO("bad counter not correctly handled");
     if (generateHOTP(s, 0, -1) != -1)
         printKO("-1 length not correctly handled");
     if (generateHOTP(s, 0, 99) != -1)

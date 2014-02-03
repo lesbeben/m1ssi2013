@@ -71,8 +71,7 @@ int32_t extractOTP(char* hash) {
     // l'offset.
     int32_t fullLengthOTP;
     memcpy(&fullLengthOTP, hash + offset, sizeof(int32_t));
-    fullLengthOTP &= 0x7FFFFFFF;
-
+    
     // Ce masque permet de ne pas tenir compte du signe de l'entier.
-    return fullLengthOTP;
+    return fullLengthOTP  & 0x7FFFFFFF;
 }
