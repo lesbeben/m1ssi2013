@@ -21,13 +21,13 @@ public class TOTP extends OTPGenerator {
 	/**
 	 * La valeur de la clef pour ce générateur.
 	 */
-	private byte[] key;
+	private ISecret key;
 	
 	/**
 	 * Instancie un générateur d'OTP TOTP.
 	 * @param key La clef secrete pour la generation.
 	 */
-	public TOTP(byte[] key) {
+	public TOTP(ISecret key) {
 		//TODO Constructeur
 	}
 	
@@ -45,7 +45,7 @@ public class TOTP extends OTPGenerator {
 	/**
 	 * Le compteur est fixé sur le temps. Cette méthode n'execute rien.
 	 */
-	protected void setCount() {
-		// TODO Auto-generated method stub		
+	protected void increaseCount() {
+		// Rien
 	}	
 }
