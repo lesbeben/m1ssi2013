@@ -7,6 +7,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include "secret.h"
+#include "macros.h"
 
 /*******************************************************************************
  *                                                                             *
@@ -101,7 +102,7 @@ secret hexToSecret(char * buffer) {
         return NULL;
     }
 
-    res->length = length / 2 + (length & 1);
+    res->length = length / 2 + (IS_ODD(length)) ? 1 : 0;
     res->buffer = (char *) malloc(sizeof(char) * res->length);
     if (res->buffer == NULL) {
         destroySecret(res);
@@ -112,7 +113,7 @@ secret hexToSecret(char * buffer) {
      * de longueur paire équivalent a celle contenue dans buffer
      */
     char * tmp;
-    if ((length & 1) != 0) {
+    if (IS_ODD(length)) {
         length++;
         tmp = malloc(sizeof(char) * (length));
         snprintf(tmp, length + 1, "0%s", buffer);
