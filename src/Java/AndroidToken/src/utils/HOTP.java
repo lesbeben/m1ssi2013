@@ -15,14 +15,14 @@ public class HOTP extends OTPGenerator {
 	/**
 	 * La valeur de la clef pour ce générateur.
 	 */
-	private byte[] key;
+	private ISecret key;
 	
 	/**
 	 * 
 	 * @param count La valeur du compteur pour le generateur.
 	 * @param key La clef secrete pour la generation.
 	 */
-	public HOTP(long count, byte[] key) {
+	public HOTP(long count, ISecret key) {
 		//TODO Constructeur
 	}
 	
@@ -33,7 +33,7 @@ public class HOTP extends OTPGenerator {
 	}
 
 	@Override
-	protected void setCount() {
+	protected void increaseCount() {
 		// TODO Auto-generated method stub
 		
 	}	

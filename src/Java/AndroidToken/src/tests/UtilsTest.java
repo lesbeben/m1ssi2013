@@ -44,5 +44,29 @@ public class UtilsTest {
 		assertArrayEquals("Different values for same counter", res1, res2);
 		assertFalse("Successive values are equals", res1.equals(res3));
 	}
+	
+	@Test
+	public void testHmacSha1Bad() {
+		int count = 0;
+		ISecret key = new Secret();
+		try {
+			Utils.hmacSha1(key, 0);
+		} catch (IllegalArgumentException e) {
+			count++; 
+		}
+		key.setSecret("ba22ef522cb9a0");
+		try {
+			Utils.hmacSha1(null, 0);
+		} catch (IllegalArgumentException e) {
+			count++; 
+		}
+		try {
+			Utils.hmacSha1(key, -2);
+		} catch (IllegalArgumentException e) {
+			count++; 
+		}
+		
+		assertEquals("Bad param not correctly handled", 3, count);		
+	}
 
 }

@@ -19,7 +19,7 @@ public abstract class OTPGenerator implements IOTP {
 	/**
 	 * Fixe la valeur du compteur du générateur d'OTP.
 	 */
-	protected abstract void setCount();
+	protected abstract void increaseCount();
 
 	
 }
