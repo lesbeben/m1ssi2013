@@ -26,18 +26,35 @@ public class TOTP extends OTPGenerator {
 	/**
 	 * Instancie un générateur d'OTP TOTP.
 	 * @param key La clef secrete pour la generation.
+     * @param digits Le nombre de chiffres composant les OTP générés.
 	 */
-	public TOTP(ISecret key) {
-		//TODO Constructeur
+	public TOTP(ISecret key, int digits) {
+		super(digits);
+        if (key == null) {
+            throw new IllegalArgumentException("key");
+        }
+        this.key = key;
 	}
-	
+
+    /**
+     * Le constructeur par défaut, avec OTP de longueur minimale.
+     * @param key La clef secrete pour la generation.
+     */
+    public TOTP(ISecret key) {
+        super();
+        if (key == null) {
+            throw new IllegalArgumentException("key");
+        }
+        this.key = key;
+    }
+
 	@Override
 	/**
 	 * Renvoie la valeur du compteur de temps.
 	 * @return time / TIME_QUANTUM
 	 */
 	protected long getCount() {
-		// TODO Auto-generated method stub
+        
 		return 0;
 	}
 
@@ -47,5 +64,10 @@ public class TOTP extends OTPGenerator {
 	 */
 	protected void increaseCount() {
 		// Rien
-	}	
+	}
+
+    @Override
+    protected ISecret getKey() {
+        return key;
+    }
 }

@@ -2,6 +2,8 @@ package utils;
 
 public class Secret implements ISecret {
 
+
+
 	@Override
 	public void setSecret(byte[] secret) {
 		// TODO Auto-generated method stub
