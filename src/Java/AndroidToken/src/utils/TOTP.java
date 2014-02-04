@@ -18,6 +18,13 @@ public class TOTP extends OTPGenerator {
 	 * est valide.
 	 */
 	public static final int DEFAULT_QUANTUM = 30;
+	
+	/**.
+	 * La valeur qui permet la conversion 
+	 * de millisecondes à secondes
+	 */
+	public static final int TO_SEC = 1000;
+	
 	/**
 	 * La valeur du quantum de temps. A savoir 
 	 * le temps durant lequel un otp
@@ -66,10 +73,10 @@ public class TOTP extends OTPGenerator {
 	/**
 	 * Renvoie la valeur du compteur de temps.
 	 * @return getTime() / timeQuantum
-	 */
-	protected long getCount() {
+	 */ 
+	public long getCount() {
 		Date d = new Date();
-		count = (long) d.getTime() / timeQuantum;
+		count = (long) d.getTime() / (timeQuantum * TO_SEC);
 		return count;
 	}
 
@@ -77,12 +84,12 @@ public class TOTP extends OTPGenerator {
 	/**
 	 * Le compteur est fixé sur le temps. Cette méthode n'execute rien.
 	 */
-	protected void increaseCount() {
+	public void increaseCount() {
 		// Rien
 	}
 
     @Override
-    protected ISecret getKey() {
+    public ISecret getKey() {
         return key;
     }
 }
