@@ -2,42 +2,51 @@ package utils;
 
 public class Secret implements ISecret {
 
+	private byte[] sec;	//secret
+	private int length;
+	private String hexRepresentation;
 
 
 	@Override
 	public void setSecret(byte[] secret) {
-		// TODO Auto-generated method stub
+		this.sec = secret;
 
 	}
 
 	@Override
 	public void setSecret(int length) {
-		// TODO Auto-generated method stub
+		if (length < 0) {
+			throw new IllegalArgumentException();
+		}
+		this.length = length;
 
 	}
 
 	@Override
 	public void setSecret(String hexRepresentation) {
-		// TODO Auto-generated method stub
+		if (hexRepresentation == null) {
+			throw new IllegalArgumentException();
+		}
+		this.hexRepresentation = hexRepresentation;
 
 	}
 
 	@Override
 	public int getLength() {
-		// TODO Auto-generated method stub
-		return 0;
+		//TODO test getSecret != null
+		
+		return length;
 	}
 
 	@Override
 	public byte[] getSecret() {
-		// TODO Auto-generated method stub
-		return null;
+		return sec;
 	}
 
 	@Override
 	public String getHexRepresentation() {
-		// TODO Auto-generated method stub
-		return null;
+		//TODO test getSecret != null
+		return hexRepresentation;
 	}
 
 }
