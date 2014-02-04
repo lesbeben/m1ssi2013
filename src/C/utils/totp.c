@@ -14,7 +14,7 @@ int generateTOTP(secret key, int quantum, int len) {
     // On définit le compteur comme étant la première milliseconde dans
     // la fenêtre définit par le quantum.
     long counter = time(NULL);
-    counter -= counter % quantum;
+    counter = counter / quantum;
     
     //Allocation des buffers
     char hmacResultBuffer[HMAC_SHA1_LENGTH];
