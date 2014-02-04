@@ -65,10 +65,9 @@ public class TOTP extends OTPGenerator {
 	@Override
 	/**
 	 * Renvoie la valeur du compteur de temps.
-	 * @return time / TIME_QUANTUM
+	 * @return getTime() / timeQuantum
 	 */
 	protected long getCount() {
-		//TODO
 		Date d = new Date();
 		count = (long) d.getTime() / timeQuantum;
 		return count;
