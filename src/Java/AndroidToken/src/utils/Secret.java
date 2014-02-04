@@ -3,14 +3,13 @@ package utils;
 public class Secret implements ISecret {
 
 	private byte[] sec;	//secret
-	private int length;
-	private String hexRepresentation;
+	private int length; //taille en octet
 
 
 	@Override
 	public void setSecret(byte[] secret) {
 		this.sec = secret;
-
+		this.length = secret.length;
 	}
 
 	@Override
@@ -18,6 +17,7 @@ public class Secret implements ISecret {
 		if (length < 0) {
 			throw new IllegalArgumentException();
 		}
+		//aléa
 		this.length = length;
 
 	}
@@ -27,8 +27,9 @@ public class Secret implements ISecret {
 		if (hexRepresentation == null) {
 			throw new IllegalArgumentException();
 		}
-		this.hexRepresentation = hexRepresentation;
-
+		
+		this.length = hexRepresentation.length * 2;
+		this.sec = hexToBinary(hexRepresentation);
 	}
 
 	@Override
