@@ -16,45 +16,19 @@ char* HMAC_SHA1(unsigned long count, secret key, char * buffer) {
     }
 
     // Copie du buffer pour les opérations XOR
-    char * cpbuffer = (char*) malloc(sizeof(char) * (key->length));
-    char * cp2buffer = (char*) malloc(sizeof(char) * (key->length));
-    unsigned char hash[SHA_DIGEST_LENGTH];
-    int bSize = key->length + 10;
-
-    // XOR BIT A BIT K et IPAD
+    unsigned char xorSecretIpad[key->length + sizeof(unsigned long)];
+    unsigned char xorSecretOpad[key->length + SHA_DIGEST_LENGTH];
+    
+    // XOR BIT A BIT K et IPAD, K et OPAD.
     for (int i = 0; i < key->length; i++) {
-        cpbuffer[i] = key->buffer[i] ^ IPAD;
+        xorSecretIpad[i] = key->buffer[i] ^ IPAD;
+        xorSecretOpad[i] = key->buffer[i] ^ OPAD;
     }
-    // Allocation d'un nouveau buffer pour concatenation
-    char* tmp = (char *) malloc(sizeof(char) * bSize);
-
-    // snprintf renvoie le nombre de caractères écrits dans le buffer.
-    int ret = snprintf(tmp, bSize, "%s%ld", cpbuffer, count);
-
-    // SHA1
-    SHA1((unsigned char*)tmp, ret, hash);
-
-    //Redefinition de la taille du buffer de passage
-    bSize = key->length + SHA_DIGEST_LENGTH;
-
-    //XOR BIT A BIT K et OPAD
-    for (int i = 0; i < key->length; i++) {
-        cp2buffer[i] = key->buffer[i] ^ OPAD;
-    }
-
-    //Allocation nouveau buffer pour concatenation
-    char* tmp2= (char *) malloc(sizeof(char) * bSize);
-    ret = snprintf(tmp2, bSize, "%s%ld", hash, count);
-    SHA1((unsigned char*)tmp2, ret, hash);
-
-    strncpy(buffer, (const char*)hash, SHA_DIGEST_LENGTH);
-
-    //Libération ressources mémoire.
-    free(tmp);
-    free(tmp2);
-    free(cpbuffer);
-    free(cp2buffer);
-
+    //On concatène count à notre xor bit à bit entre k et ipad
+    memcpy(xorSecretIpad + key->length, &count, sizeof(unsigned long));
+    SHA1(xorSecretIpad, key->length + sizeof(unsigned long),
+         xorSecretOpad + key->length);
+    SHA1(xorSecretOpad, key->length + SHA_DIGEST_LENGTH, (unsigned char*) buffer);
     return buffer;
 }
 
@@ -95,7 +69,9 @@ int32_t extractOTP(char* hash) {
     // haché. On va pour cela utiliser le type int32_t qui compte 4 octets et
     // initialisé ses octets avec la valeur contenu dans le haché a partir de
     // l'offset.
+    int32_t fullLengthOTP;
+    memcpy(&fullLengthOTP, hash + offset, sizeof(int32_t));
+    
     // Ce masque permet de ne pas tenir compte du signe de l'entier.
-    int32_t fullLengthOTP = *((uint32_t *) hash +offset) & 0x7FFFFFFF;
-    return fullLengthOTP;
+    return fullLengthOTP  & 0x7FFFFFFF;
 }
