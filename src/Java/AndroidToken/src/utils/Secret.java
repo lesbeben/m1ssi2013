@@ -17,7 +17,7 @@ public class Secret implements ISecret {
 		if (length < 0) {
 			throw new IllegalArgumentException();
 		}
-		//aléa
+		// TODO aléatoire
 		this.length = length;
 
 	}
@@ -28,13 +28,25 @@ public class Secret implements ISecret {
 			throw new IllegalArgumentException();
 		}
 		
-		this.length = hexRepresentation.length * 2;
-		this.sec = hexToBinary(hexRepresentation);
+		//modifie la longueur en fonction du parametre
+		this.length = hexRepresentation.length() * 2;
+		
+		//modifie le secret
+		try {
+			Integer val = Integer.valueOf(hexRepresentation, 16); //met en decimal
+			String chiffreBin = Integer.toBinaryString(val.intValue());	//met en binaire
+			
+			this.sec = chiffreBin.getBytes(); //stocke dans sec (secret)
+		} catch(NumberFormatException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	@Override
 	public int getLength() {
-		//TODO test getSecret != null
+		if(sec == null) {
+			throw new IllegalAccessError();
+		}
 		
 		return length;
 	}
@@ -46,8 +58,12 @@ public class Secret implements ISecret {
 
 	@Override
 	public String getHexRepresentation() {
-		//TODO test getSecret != null
-		return hexRepresentation;
+		if(sec == null) {
+			throw new IllegalAccessError();
+		}
+		
+		String str = new String(sec);
+		return Integer.toString(Integer.parseInt(str, 16));
 	}
 
 }
