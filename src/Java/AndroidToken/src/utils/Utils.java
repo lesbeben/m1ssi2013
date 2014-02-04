@@ -4,7 +4,9 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInput;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public final class Utils {
 	private Utils() {
@@ -58,7 +60,46 @@ public final class Utils {
 	 * @returnLa valeur de hmac_sha1(key, count)
 	 */
 	public static byte[] hmacSha1(ISecret key, long count) {
-		// TODO corps absent
-		return new byte[0];
+		byte[] key2Byte = key.getSecret();
+		
+		// permet de recuperer le generateur SHA-1
+		MessageDigest sha1 = null;
+		try {
+			sha1 = MessageDigest.getInstance("SHA1");
+		} catch (NoSuchAlgorithmException e) {
+			throw new java.lang.AssertionError(
+					".hmacSHA1(): SHA-1 algorithm not found!");
+		}
+
+		// hash la clé si necessaire si sa taille > 64 voir RFC2104
+		if (key2Byte.length > 64) {
+			sha1.update(key2Byte);
+			key2Byte = sha1.digest();
+			sha1.reset();
+		}
+
+		// complète la clé si nécessaire (taille < 64 ) voir RFC2104
+		byte block[] = new byte[64];
+		for (int i = 0; i < key2Byte.length; ++i)
+			block[i] = key2Byte[i];
+		for (int i = key2Byte.length; i < block.length; ++i)
+			block[i] = 0;
+
+		// PREMIER-HASH = SHA-1(KEY ^ IPAD + MESSAGE)), IPAD = 64 bytes de 0x36.
+		for (int i = 0; i < 64; ++i)
+			block[i] ^= 0x36;
+		sha1.update(block);
+		sha1.update(ByteBuffer.allocate(8).putLong(count).array());
+		byte[] hash = sha1.digest();
+		sha1.reset();
+
+		// DEUXIEME-HASH = SHA-1(KEY ^ OPAD + PREMIER_HASH), OPAD = 64 bytes de 0x5c.
+		for (int i = 0; i < 64; ++i)
+			block[i] ^= (0x36 ^ 0x5c);
+		sha1.update(block);
+		sha1.update(hash);
+		hash = sha1.digest();
+
+		return hash;
 	}
 }
