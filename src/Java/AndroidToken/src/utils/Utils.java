@@ -31,6 +31,7 @@ public final class Utils {
 	/**
 	 * Retourne la valeure décimal conrespondant à la conversion du binaire
 	 * vers le décimal.
+	 * 
 	 * @pre bytes != null
 	 * @param bytes
 	 *            une chaine de d'octet non null
@@ -51,17 +52,24 @@ public final class Utils {
 
 	/**
 	 * Calcul la valeure de HMAC SHA1.
+	 * 
 	 * @pre key != null
 	 * @pre key.getSecret != null
 	 * @pre count >= 0
 	 * 
-	 * @param key la clef secrete
-	 * @param count le conteur pour le calcul
+	 * @param key
+	 *            la clef secrete
+	 * @param count
+	 *            le conteur pour le calcul
 	 * @returnLa valeur de hmac_sha1(key, count)
 	 */
 	public static byte[] hmacSha1(ISecret key, long count) {
+		if (key == null) {
+			throw new IllegalArgumentException();
+		}
+
 		byte[] key2Byte = key.getSecret();
-		
+
 		// permet de recuperer le generateur SHA-1
 		MessageDigest sha1 = null;
 		try {
@@ -93,7 +101,8 @@ public final class Utils {
 		byte[] hash = sha1.digest();
 		sha1.reset();
 
-		// DEUXIEME-HASH = SHA-1(KEY ^ OPAD + PREMIER_HASH), OPAD = 64 bytes de 0x5c.
+		// DEUXIEME-HASH = SHA-1(KEY ^ OPAD + PREMIER_HASH), OPAD = 64 bytes de
+		// 0x5c.
 		for (int i = 0; i < 64; ++i)
 			block[i] ^= (0x36 ^ 0x5c);
 		sha1.update(block);
