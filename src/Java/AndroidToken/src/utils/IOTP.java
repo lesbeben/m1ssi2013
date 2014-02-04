@@ -2,7 +2,6 @@ package utils;
 
 /**
  * Définit un type pour la génération de mots de passes jetables.
- * 
  * @author celtic
  */
 public interface IOTP {	

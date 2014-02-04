@@ -2,6 +2,8 @@ package utils;
 /**
  * Une classe abstraite pour les générateurs d'OTP.
  *
+ * @post c1 = getCount(), o1 = generer(), c2 = getCount(), o2 = generer 
+ * 				c1 != c2 => o1 != o2 
  * @author celtic
  */
 public abstract class OTPGenerator implements IOTP {
@@ -9,8 +11,8 @@ public abstract class OTPGenerator implements IOTP {
     /**
      * Les nombres minimum et maximum de chiffres composant les OTP générés.
      */
-    private static final int MIN_DIGITS = 6;
-    private static final int MAX_DIGITS = 8;
+    public static final int MIN_DIGITS = 6;
+    public static final int MAX_DIGITS = 8;
 
     /**
      * Le nombre de chiffre composant les OTP générés.
@@ -36,6 +38,9 @@ public abstract class OTPGenerator implements IOTP {
     }
 
     @Override
+    /**
+     * Deux valeurs successvies doivent être différentes.
+     */
 	public int generer() {
         byte[] hs = Utils.hmacSha1(getKey(), getCount());
         byte[] sBits = Utils.truncate(hs);
@@ -56,18 +61,18 @@ public abstract class OTPGenerator implements IOTP {
 	 * Retourne la valeur du compteur actuel du générateur d'OTP. 
 	 * @return La valeur du compteur.
 	 */
-	protected abstract long getCount();
+	public abstract long getCount();
 	
 	/**
 	 * Fixe la valeur du compteur du générateur d'OTP.
 	 */
-	protected abstract void increaseCount();
+	public abstract void increaseCount();
 
     /**
      * Retourne la valeur de la clé secrète du générateur.
      * @return la clé secrète
      */
-    protected abstract ISecret getKey();
+    public abstract ISecret getKey();
 
 	
 }
