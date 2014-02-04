@@ -2,17 +2,22 @@ package utils;
 
 public class Secret implements ISecret {
 
+    byte[] secret;
+
 
 
 	@Override
 	public void setSecret(byte[] secret) {
-		// TODO Auto-generated method stub
+        if (secret.length == 0) {
+            throw new IllegalArgumentException("secret");
+        }
+        this.secret = secret;
 
 	}
 
 	@Override
 	public void setSecret(int length) {
-		// TODO Auto-generated method stub
+		//On prend une lib particulière?
 
 	}
 
@@ -24,20 +29,21 @@ public class Secret implements ISecret {
 
 	@Override
 	public int getLength() {
-		// TODO Auto-generated method stub
-		return 0;
+		return secret.length;
 	}
 
 	@Override
 	public byte[] getSecret() {
-		// TODO Auto-generated method stub
-		return null;
+		return secret;
 	}
 
 	@Override
 	public String getHexRepresentation() {
-		// TODO Auto-generated method stub
-		return null;
+        StringBuffer sb = new StringBuffer();
+        for (byte b : secret) {
+            sb.append(String.format("%02X", b));
+        }
+		return sb.toString();
 	}
 
 }

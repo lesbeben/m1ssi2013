@@ -54,8 +54,8 @@ public class TOTP extends OTPGenerator {
 	 * @return time / TIME_QUANTUM
 	 */
 	protected long getCount() {
-        
-		return 0;
+        long epoch = System.currentTimeMillis()/1000;
+		return epoch;
 	}
 
 	@Override
@@ -68,6 +68,8 @@ public class TOTP extends OTPGenerator {
 
     @Override
     protected ISecret getKey() {
+
+
         return key;
     }
 }

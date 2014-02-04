@@ -12,14 +12,14 @@ public interface ISecret {
 	
 	/**
 	 * Initialise le secret avec la valeur correspondant a secret.
-	 * 
+	 * @pre secret.length > 0
 	 * @post getSecret = secret
 	 * @param secret La valeur en octet du secret.
 	 */
 	void setSecret(byte[] secret);
 	/**
-	 * Initialise le secret avec une valeur aléatoire de logueure length.
-	 * @pre length >= 0 
+	 * Initialise le secret avec une valeur aléatoire de longueur length.
+	 * @pre length > 0
 	 * @post getLength = length
 	 * @param length la longueure du secret souhaité.
 	 */
@@ -33,13 +33,13 @@ public interface ISecret {
 	void setSecret(String hexRepresentation);
 	
 	/**
-	 * La longueure du secret courant en octet.
+	 * La longueur du secret courant en octet.
 	 * @pre getSecret != null
 	 * @return La longueure du secret.
 	 */
 	int getLength();	
 	/**
-	 * La valeure du secret courant en tableau d'octet.
+	 * La valeur du secret courant en tableau d'octet.
 	 * @return Un tableau d'octet contenant la valeur du secret.
 	 */
 	byte[] getSecret();
