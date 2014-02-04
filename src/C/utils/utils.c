@@ -26,8 +26,11 @@ char* HMAC_SHA1(unsigned long count, secret key, char * buffer) {
     }
     //On concatène count à notre xor bit à bit entre k et ipad
     memcpy(xorSecretIpad + key->length, &count, sizeof(unsigned long));
+    // On hache le tout et on le mets à la suite du xor bit à bit de
+    // la clé et de opad.
     SHA1(xorSecretIpad, key->length + sizeof(unsigned long),
          xorSecretOpad + key->length);
+    // On hache une dernière fois et on rempli buffer avec ce haché.
     SHA1(xorSecretOpad, key->length + SHA_DIGEST_LENGTH, (unsigned char*) buffer);
     return buffer;
 }

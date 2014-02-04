@@ -102,7 +102,7 @@ secret hexToSecret(char * buffer) {
         return NULL;
     }
 
-    res->length = length / 2 + (IS_ODD(length)) ? 1 : 0;
+    res->length = length / 2 + ((IS_ODD(length)) ? 1 : 0);
     res->buffer = (char *) malloc(sizeof(char) * res->length);
     if (res->buffer == NULL) {
         destroySecret(res);

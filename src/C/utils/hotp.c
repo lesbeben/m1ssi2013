@@ -11,16 +11,18 @@ int generateHOTP(secret key, long counter, int len) {
     }
 
     //Allocation des buffers
-    char * hmacResultBuffer = (char*) malloc(sizeof(char) * SHA_DIGEST_LENGTH);
+    char hmacResultBuffer[HMAC_SHA1_LENGTH];
 
     //Etape 1 HMAC
-    HMAC_SHA1(counter, key, hmacResultBuffer);
+    if (HMAC_SHA1(counter, key, hmacResultBuffer) == NULL) {
+        return -1;
+    }
 
     // Étape 2 extraction de l'OTP depuis le résultat de hmac.
     int32_t fullLengthOtp = extractOTP(hmacResultBuffer);
-
-    // Libération des ressources inutiles
-    free(hmacResultBuffer);
+    if (fullLengthOtp == -1) {
+        return -1;
+    }
 
     //Etape 3 Human writable buffer modulo 10^len
     return fullLengthOtp % (int) pow(10,len - 1);
