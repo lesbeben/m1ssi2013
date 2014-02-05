@@ -2,33 +2,53 @@ package utils;
 
 public class Secret implements ISecret {
 
-    byte[] secret;
+    private byte[] secret;
 
 
 
 	@Override
 	public void setSecret(byte[] secret) {
-        if (secret.length == 0) {
+        if (secret == null) {
             throw new IllegalArgumentException("secret");
         }
         this.secret = secret;
-
 	}
 
 	@Override
 	public void setSecret(int length) {
-		//On prend une lib particulière?
+		if (length < 0) {
+			throw new IllegalArgumentException();
+		}
+
 
 	}
 
 	@Override
 	public void setSecret(String hexRepresentation) {
-		// TODO Auto-generated method stub
-
+        //TODO Ca marche ce truc?
+		if (hexRepresentation == null) {
+			throw new IllegalArgumentException();
+		}
+		
+		//modifie la longueur en fonction du parametre
+		this.length = hexRepresentation.length() * 2;
+		
+		//modifie le secret
+		try {
+			Integer val = Integer.valueOf(hexRepresentation, 16); //met en decimal
+			String chiffreBin = Integer.toBinaryString(val.intValue());	//met en binaire
+			
+			this.sec = chiffreBin.getBytes(); //stocke dans sec (secret)
+		} catch(NumberFormatException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	@Override
 	public int getLength() {
+        if (secret == null) {
+            throw new IllegalStateException("secret");
+        }
 		return secret.length;
 	}
 

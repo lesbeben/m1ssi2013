@@ -3,6 +3,8 @@
 #include "secret.h"
 #include <inttypes.h>
 
+#define HMAC_SHA1_LENGTH 20
+
 
 /** Rempli le buffer passé en paramêtre avec le HMAC du secret.
  * @param[in] count le compteur passé à hmac pour générer un OTP.

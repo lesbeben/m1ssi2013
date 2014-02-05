@@ -46,12 +46,12 @@ public class HOTP extends OTPGenerator {
     }
 	
 	@Override
-	protected long getCount() {
+	public long getCount() {
 		return count;
 	}
 
 	@Override
-	protected void increaseCount() {
+	public void increaseCount() {
 		if (count == Long.MAX_VALUE) {
             throw new IllegalStateException("Le compteur a atteint son maximum");
         }
@@ -59,7 +59,7 @@ public class HOTP extends OTPGenerator {
 	}
 
     @Override
-    protected ISecret getKey() {
+	public ISecret getKey() {
         return key;
     }
 }
