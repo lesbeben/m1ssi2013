@@ -171,7 +171,6 @@ char * getHexRepresentation(secret key, char * buffer, int length) {
             (unsigned int) (unsigned char) (key->buffer[i])) < 0);
     }
     buffer[(key->length * 2)] = 0;
-    printf("%s", buffer);
     return buffer;
 }
 
