@@ -22,7 +22,6 @@ public class Secret implements ISecret {
 			throw new IllegalArgumentException();
 		}
 		
-		//TODO
 		SecureRandom random = new SecureRandom();
 		byte bytes[] = new byte[length];
 		random.nextBytes(bytes);
