@@ -1,37 +1,57 @@
 #define _XOPEN_SOURCE 700
+#define _BSD_SOURCE
 #include <string.h>
 #include <openssl/sha.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "utils.h"
+#include <endian.h>
 
 #define IPAD 0x36
 #define OPAD 0x5c
+#define HMAC_KEY_LENGTH 64
 
 
-char* HMAC_SHA1(unsigned long count, secret key, char * buffer) {
+char* HMAC_SHA1(uint64_t count, secret key, char* buffer) {
     // Vérification de préconditions
     if (!((key != NULL) && (count != -1) && (buffer != NULL))) {
         return NULL;
     }
 
+    //Buffer de gestion du secret.
+    unsigned char * temporarySecret;
+    if (key->length == 64) {
+        temporarySecret = (unsigned char *)key->buffer;
+    } else {
+        temporarySecret = malloc(HMAC_KEY_LENGTH * sizeof(char));
+        memset(temporarySecret, 0, HMAC_KEY_LENGTH);
+        if (key->length > 64) {
+            SHA1((unsigned char *)key->buffer, key->length, temporarySecret);
+        } else {
+            memcpy(temporarySecret, key->buffer, key->length);
+        }
+    }
+
     // Copie du buffer pour les opérations XOR
-    unsigned char xorSecretIpad[key->length + sizeof(unsigned long)];
-    unsigned char xorSecretOpad[key->length + SHA_DIGEST_LENGTH];
-    
+    unsigned char xorSecretIpad[HMAC_KEY_LENGTH + sizeof(uint64_t)];
+    unsigned char xorSecretOpad[HMAC_KEY_LENGTH + SHA_DIGEST_LENGTH];
+
+    //On passe le compteur en représentation réseau.
+    uint64_t tmpCounter = htole64(count);
+
     // XOR BIT A BIT K et IPAD, K et OPAD.
-    for (int i = 0; i < key->length; i++) {
-        xorSecretIpad[i] = key->buffer[i] ^ IPAD;
-        xorSecretOpad[i] = key->buffer[i] ^ OPAD;
+    for (int i = 0; i < HMAC_KEY_LENGTH; i++) {
+        xorSecretIpad[i] = temporarySecret[i] ^ IPAD;
+        xorSecretOpad[i] = temporarySecret[i] ^ OPAD;
     }
     //On concatène count à notre xor bit à bit entre k et ipad
-    memcpy(xorSecretIpad + key->length, &count, sizeof(unsigned long));
+    memcpy(xorSecretIpad + HMAC_KEY_LENGTH, &tmpCounter, sizeof(uint64_t));
     // On hache le tout et on le mets à la suite du xor bit à bit de
     // la clé et de opad.
-    SHA1(xorSecretIpad, key->length + sizeof(unsigned long),
-         xorSecretOpad + key->length);
+    SHA1(xorSecretIpad, HMAC_KEY_LENGTH + sizeof(uint64_t),
+         xorSecretOpad + HMAC_KEY_LENGTH);
     // On hache une dernière fois et on rempli buffer avec ce haché.
-    SHA1(xorSecretOpad, key->length + SHA_DIGEST_LENGTH, (unsigned char*) buffer);
+    SHA1(xorSecretOpad, HMAC_KEY_LENGTH + SHA_DIGEST_LENGTH, (unsigned char*) buffer);
     return buffer;
 }
 
@@ -74,7 +94,7 @@ int32_t extractOTP(char* hash) {
     // l'offset.
     int32_t fullLengthOTP;
     memcpy(&fullLengthOTP, hash + offset, sizeof(int32_t));
-    
+
     // Ce masque permet de ne pas tenir compte du signe de l'entier.
     return fullLengthOTP  & 0x7FFFFFFF;
 }
