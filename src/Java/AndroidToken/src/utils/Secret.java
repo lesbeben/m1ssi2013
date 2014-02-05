@@ -1,5 +1,9 @@
 package utils;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
+
+
 public class Secret implements ISecret {
 
     private byte[] secret;
@@ -19,8 +23,11 @@ public class Secret implements ISecret {
 		if (length < 0) {
 			throw new IllegalArgumentException();
 		}
-
-
+		
+		SecureRandom random = new SecureRandom();
+		byte bytes[] = new byte[length];
+		random.nextBytes(bytes);
+		this.secret = bytes;
 	}
 
 	@Override
@@ -29,15 +36,8 @@ public class Secret implements ISecret {
 		if (hexRepresentation == null) {
 			throw new IllegalArgumentException();
 		}
-		//modifie le secret
-		try {
-			Integer val = Integer.valueOf(hexRepresentation, 16); //met en decimal
-			String chiffreBin = Integer.toBinaryString(val.intValue());	//met en binaire
-			
-			this.secret = chiffreBin.getBytes(); //stocke dans sec (secret)
-		} catch(NumberFormatException ex) {
-			ex.printStackTrace();
-		}
+		//conversion en byte[] et stocke dans secret
+		 this.secret = new BigInteger(hexRepresentation,16).toByteArray();
 	}
 
 	@Override

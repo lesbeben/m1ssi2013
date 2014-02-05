@@ -7,7 +7,6 @@ import org.junit.Test;
 import utils.HOTP;
 import utils.IOTP;
 import utils.ISecret;
-import utils.OTPGenerator;
 import utils.Secret;
 
 public class HOTPTest {
@@ -37,7 +36,19 @@ public class HOTPTest {
 				((HOTP) gene).getKey().getHexRepresentation()
 		);
 	}
-
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testBadHOTP() {
+		ISecret key = new Secret();
+		key.setSecret("aabbccddeeff");
+		
+		@SuppressWarnings("unused")
+		IOTP otp = new HOTP(-1, key, 7);
+		otp = new HOTP(1, null, 7);
+		otp = new HOTP(1, key, 3);
+		otp = new HOTP(null);
+	}
+	
 	@Test
 	public void testGenerer() {
 		ISecret key = new Secret();
