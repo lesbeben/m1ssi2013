@@ -101,10 +101,12 @@ public final class Utils {
 		byte[] hash = sha1.digest();
 		sha1.reset();
 
+
+
 		// DEUXIEME-HASH = SHA-1(KEY ^ OPAD + PREMIER_HASH), OPAD = 64 bytes de
 		// 0x5c.
 		for (int i = 0; i < 64; ++i)
-			block[i] ^=  0x5c;
+			block[i] ^=  (0x36 ^ 0x5c);
 		sha1.update(block);
 		sha1.update(hash);
 		hash = sha1.digest();
