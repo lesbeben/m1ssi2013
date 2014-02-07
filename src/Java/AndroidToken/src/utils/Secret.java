@@ -1,7 +1,8 @@
+package utils;
+
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
-package utils;
 
 public class Secret implements ISecret {
 
@@ -35,7 +36,6 @@ public class Secret implements ISecret {
 		if (hexRepresentation == null) {
 			throw new IllegalArgumentException();
 		}
-		
 		//conversion en byte[] et stocke dans secret
 		 this.secret = new BigInteger(hexRepresentation,16).toByteArray();
 	}

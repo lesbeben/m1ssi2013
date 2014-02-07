@@ -14,7 +14,7 @@ public final class Utils {
 	}
 
 	/**
-	 * Retourne la toncature de bytes selon l'algo donné dans la rfc 4226.
+	 * Retourne la troncature de bytes selon l'algo donné dans la rfc 4226.
 	 * 
 	 * @param bytes
 	 *            Une chaine d'octet de longueure 160 bits
@@ -34,7 +34,7 @@ public final class Utils {
 	}
 
 	/**
-	 * Retourne la valeure décimal conrespondant à la conversion du binaire
+	 * Retourne la valeure décimale conrespondant à la conversion du binaire
 	 * vers le décimal.
 	 * 
 	 * @pre bytes != null
@@ -56,7 +56,7 @@ public final class Utils {
 	}
 
 	/**
-	 * Calcul la valeure de HMAC SHA1.
+	 * Calcul la valeur de HMAC SHA1.
 	 * 
 	 * @pre key != null
 	 * @pre key.getSecret != null
@@ -84,14 +84,14 @@ public final class Utils {
 					".hmacSHA1(): SHA-1 algorithm not found!");
 		}
 
-		// hash la cl� si necessaire si sa taille > 64 voir RFC2104
+		// hash la clé si necessaire si sa taille > 64 voir RFC2104
 		if (key2Byte.length > 64) {
 			sha1.update(key2Byte);
 			key2Byte = sha1.digest();
 			sha1.reset();
 		}
 
-		// compl�te la cl� si n�cessaire (taille < 64 ) voir RFC2104
+		// complète la clé si nécessaire (taille < 64 ) voir RFC2104
 		byte block[] = new byte[64];
 		for (int i = 0; i < key2Byte.length; ++i)
 			block[i] = key2Byte[i];
@@ -106,10 +106,12 @@ public final class Utils {
 		byte[] hash = sha1.digest();
 		sha1.reset();
 
+
+
 		// DEUXIEME-HASH = SHA-1(KEY ^ OPAD + PREMIER_HASH), OPAD = 64 bytes de
 		// 0x5c.
 		for (int i = 0; i < 64; ++i)
-			block[i] ^= (0x36 ^ 0x5c);
+			block[i] ^=  (0x36 ^ 0x5c);
 		sha1.update(block);
 		sha1.update(hash);
 		hash = sha1.digest();

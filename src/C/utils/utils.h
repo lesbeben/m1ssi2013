@@ -22,7 +22,7 @@
  *
  * @return l'adresse de buffer en cas de succès; NULL sinon.
  */
-char* HMAC_SHA1(unsigned long count, secret key, char * buffer);
+char* HMAC_SHA1(uint64_t count, secret key, char * buffer);
 
 /** Tronque un haché pour n'en retenir que 64 bits. DÉPRÉCIÉE
  * @param[in] hash le haché a tronquer.
