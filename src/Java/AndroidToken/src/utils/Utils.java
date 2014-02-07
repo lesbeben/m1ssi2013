@@ -24,8 +24,13 @@ public final class Utils {
 		if (bytes == null) {
 			throw new IllegalArgumentException();
 		}
-		// TODO Corp bidon pour faire plaisir a Eclipse.
-		return new byte[0];
+        // rfc 4226
+		int offset = bytes[bytes.length - 1] & 0xf;
+		int binary = ((bytes[offset] & 0x7f) << 24)
+				| ((bytes[offset + 1] & 0xff) << 16)
+				| ((bytes[offset + 2] & 0xff) << 8)
+				| (bytes[offset + 3] & 0xff);
+		return ByteBuffer.allocate(8).putInt(binary).array();
 	}
 
 	/**
