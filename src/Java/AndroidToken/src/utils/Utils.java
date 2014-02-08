@@ -43,6 +43,9 @@ public final class Utils {
 	 * @return la conversion en décimal
 	 */
 	public static int convert(byte[] bytes) {
+		if (bytes == null) {
+			throw new IllegalArgumentException();
+		}
 		int val;
 		try {
 			DataInput input = new DataInputStream(new ByteArrayInputStream(
@@ -69,7 +72,7 @@ public final class Utils {
 	 * @returnLa valeur de hmac_sha1(key, count)
 	 */
 	public static byte[] hmacSha1(ISecret key, long count) {
-		if (key == null) {
+		if (key == null || key.getSecret() == null || count < 0) {
 			throw new IllegalArgumentException();
 		}
 

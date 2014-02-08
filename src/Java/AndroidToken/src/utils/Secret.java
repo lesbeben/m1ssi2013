@@ -7,7 +7,8 @@ import java.security.SecureRandom;
 public class Secret implements ISecret {
 
     private byte[] secret;
-
+    
+    private static final int HEX_BASE = 16;
 
 
 	@Override
@@ -25,7 +26,7 @@ public class Secret implements ISecret {
 		}
 		
 		SecureRandom random = new SecureRandom();
-		byte bytes[] = new byte[length];
+		byte[] bytes = new byte[length];
 		random.nextBytes(bytes);
 		this.secret = bytes;
 	}
@@ -37,7 +38,8 @@ public class Secret implements ISecret {
 			throw new IllegalArgumentException();
 		}
 		//conversion en byte[] et stocke dans secret
-		 this.secret = new BigInteger(hexRepresentation,16).toByteArray();
+		 this.secret = 
+				 new BigInteger(hexRepresentation, HEX_BASE).toByteArray();
 	}
 
 	@Override
