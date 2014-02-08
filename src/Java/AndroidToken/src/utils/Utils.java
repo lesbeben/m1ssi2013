@@ -30,7 +30,7 @@ public final class Utils {
 				| ((bytes[offset + 1] & 0xff) << 16)
 				| ((bytes[offset + 2] & 0xff) << 8)
 				| (bytes[offset + 3] & 0xff);
-		return ByteBuffer.allocate(8).putInt(binary).array();
+		return ByteBuffer.allocate(4).putInt(binary).array();
 	}
 
 	/**
