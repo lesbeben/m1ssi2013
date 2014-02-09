@@ -36,8 +36,9 @@ public class UtilsTest {
 	
 	@Test
 	public void testConvert() {
-		byte[] test = new byte[] {0, 0, 0, 10};
-		assertEquals("Bad conversion.", Utils.convert(test), 10);
+		//6253 : 0001 1000 0110 1101
+		byte[] test = new byte[] {0, 0, 24, 109};
+		assertEquals("Bad conversion.", Utils.convert(test), 6253);
 		test = new byte[] {0, 0, 0, 0};
 		assertEquals("Bad conversion.", Utils.convert(test), 0);
 	}

@@ -53,8 +53,8 @@ public class HOTPTest {
 	public void testGenerer() {
 		ISecret key = new Secret();
 		key.setSecret("AABBCCDDEEFF");
-		IOTP gene = new HOTP(10, key, 7);
-		IOTP gene2 = new HOTP(10, key, 7);
+		IOTP gene = new HOTP(0, key, 6);
+		IOTP gene2 = new HOTP(0, key, 6);
 		int otp1a = gene.generer();
 		int otp1b = gene2.generer();
 		int otp2 = gene.generer();
@@ -68,7 +68,7 @@ public class HOTPTest {
 			  + otp1a + " vs " + otp1b, 
 			  otp1a, otp1b
 		);
-		assertTrue("Wrong length for OTP", otp2 < (10 ^ 7));
+		assertTrue("Wrong length for OTP", otp2 < (Math.pow(10, 7)));
 		
 	}
 
