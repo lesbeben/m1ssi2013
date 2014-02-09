@@ -12,11 +12,15 @@ public class UtilsTest {
 	@Test
 	public void testTruncate() {
 		byte[] test = new byte[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 
-								  10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+								  10, 9, 8, 7, 6, 5, 4, 3, 2, 4};
 		byte[] res = Utils.truncate(test);
 		assertTrue(
 				"Mauvaise taille de troncature. Expected 32 got " 
 			  +	(res.length * 8), res.length == 4
+		);
+		assertArrayEquals(
+				"Wrong output for truncation", 
+				new byte[] {5, 6, 7, 8}, res
 		);
 	}
 	
@@ -24,12 +28,18 @@ public class UtilsTest {
 	public void testTruncateBad() {
 		Utils.truncate(null);
 	}
-
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testTruncateBad2() {
+		Utils.truncate(new byte[] {});
+	}
+	
 	@Test
 	public void testConvert() {
 		byte[] test = new byte[] {0, 0, 0, 10};
-		int res = Utils.convert(test);
-		assertEquals("Bas conversion.", res, 10);
+		assertEquals("Bad conversion.", Utils.convert(test), 10);
+		test = new byte[] {0, 0, 0, 0};
+		assertEquals("Bad conversion.", Utils.convert(test), 0);
 	}
 
 	@Test(expected = IllegalArgumentException.class)

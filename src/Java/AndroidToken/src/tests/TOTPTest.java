@@ -2,13 +2,10 @@ package tests;
 
 import static org.junit.Assert.*;
 
-import java.security.SecureRandom;
-import java.security.SecureRandomSpi;
 import java.util.Date;
 
 import org.junit.Test;
 
-import utils.HOTP;
 import utils.IOTP;
 import utils.ISecret;
 import utils.Secret;

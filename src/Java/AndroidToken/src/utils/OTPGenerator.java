@@ -17,7 +17,7 @@ public abstract class OTPGenerator implements IOTP {
     /**
      * Le nombre de chiffre composant les OTP générés.
      */
-    protected int digits;
+    private int digits;
 
     /**
      * Le constructeur OTPGenerator.

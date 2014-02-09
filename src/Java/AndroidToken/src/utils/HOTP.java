@@ -33,7 +33,8 @@ public class HOTP extends OTPGenerator {
 	}
 
     /**
-     * Le constructeur par défaut avec compteur à 0 et les OTP de longueur minimale.
+     * Le constructeur par défaut avec compteur à 0 et les OTP de longueur 
+     * minimale.
      * @param key La clef secrete pour la generation.
      */
     public HOTP(ISecret key) {
@@ -53,9 +54,11 @@ public class HOTP extends OTPGenerator {
 	@Override
 	public void increaseCount() {
 		if (count == Long.MAX_VALUE) {
-            throw new IllegalStateException("Le compteur a atteint son maximum");
+            throw new IllegalStateException(
+            		"Le compteur a atteint son maximum"
+            );
         }
-		count++;
+		this.count = this.count + 1;
 	}
 
     @Override
