@@ -1,6 +1,7 @@
 package utils;
 
 import java.io.ByteArrayInputStream;
+import java.nio.ByteBuffer;
 import java.io.DataInput;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -54,15 +55,9 @@ public final class Utils {
 			throw new IllegalArgumentException();
 		}
 		int val;
-		//byte[] newBytes = toLittleEndian(bytes);
-		try {
-			DataInput input = new DataInputStream(new ByteArrayInputStream(
-					bytes, 0, bytes.length));
-			val = input.readInt();
-		} catch (IOException e) {
-			throw new IllegalArgumentException(e);
-		}
-
+        ByteBuffer bb = ByteBuffer.wrap(bytes);
+        bb.order(ByteOrder.LITTLE_ENDIAN);
+        val = bb.getInt();
 		return val;
 	}
 
