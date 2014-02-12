@@ -15,7 +15,6 @@
  *                                                                             *
  ******************************************************************************/
 
-//! @cond
 int getHexInt(char c) {
     if ('a' <= c && c <= 'f') {
         return c - 'a' + 10;
@@ -31,7 +30,6 @@ int getHexCode(char * string) {
     int hexCode = (getHexInt(string[0]) << 4) | getHexInt(string[1]);
     return hexCode;
 }
-//! @endcond
 
 /*******************************************************************************
  *                                                                             *

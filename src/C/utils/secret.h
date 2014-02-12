@@ -26,9 +26,9 @@ secret createSecret(int length);
  * @pre buffer[strlen(buffer) - 1] == 0.
  * @pre strlen(buffer) > 0
  * @pre pour 0 <= i < strlen(buffer):
- *      '0' <= buffer[i] <= '9'
- *   || 'a' <= buffer[i] <= 'f'
- *   || 'A' <= buffer[i] <= 'F'
+ * @pre     '0' <= buffer[i] <= '9'
+ * @pre  || 'a' <= buffer[i] <= 'f'
+ * @pre  || 'A' <= buffer[i] <= 'F'
  *
  * @return un secret initialisé avec le buffer; NULL en cas d'échec.
  */
