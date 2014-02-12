@@ -204,63 +204,30 @@ int main(int argc, char * argv[]) {
     if (HMAC_SHA1(0, s, NULL) == NULL) printOK("Passed.");
     else printKO("Failed.");
 
-    /* truncate */
-
-    printf("Testing function truncate with bad cases.\n");
-    free(buff1);
-    buff1 = (char *) malloc (4 * sizeof(char));
-    if (truncate(NULL, buff1) == NULL) {
-        printOK("NULL hash correctly handled.");
+    char buffExtr[] = {
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+        9, 8, 7, 6, 5, 4, 3, 2, 1, 0
+    };
+    uint32_t res = extractOTP(buffExtr);
+    if (res != 291) {
+        printKO("Incorrect value for extract OTP.");
+        printf("Expected : 291; Received : %d\n", res);
     } else {
-        printKO("NULL hash not correctly handled.");
-    }
-
-    free(buff1);
-    buff1 = (char *) malloc (4 * sizeof(char));
-    if (truncate(buff, NULL) == NULL) {
-        printOK("NULL buffer correctly handled.");
-    } else {
-        printKO("NULL buffer not correctly handled.");
-    }
-
-    printf("Testing function truncate in normal circunstances.\n");
-    free(buff1);
-    buff1 = (char *) malloc (4 * sizeof(char));
-    if (truncate(buff, buff1) == NULL) {
-        printKO("Error while truncating NULL returned.");
-    } else {
-        printOK("Truncation correctly done.");
-    }
-    /* convert */
-    uint64_t val;
-    printf("Testing function convert.\n");
-    val = convert(buff1);
-    if (val == -1) {
-        printKO("Error while converting. -1 returned.");
-    } else {
-        if (val < 0 || val >= 2147483648) { // 2^31
-            printKO("Invalid output of conversion.");
-        } else {
-            printOK("Right value for conversion.");
-        }
-    }
-    printf("Testing with wrong input.\n");
-    if (convert(NULL) != -1) {
-        printKO("NULL buffer badly handled.");
-    } else {
-        printOK("NULL buffer rightly handled.");
+        printOK("Right value for extract OTP.");
     }
 
     /* Tests hotp.c*/
     printf("Testing HOTP calculation.\n");
+    s = hexToSecret("AABBCCDDEEFF");
     int otp;
-    if ((otp = generateHOTP(s, 2, 6)) == -1) {
+    if ((otp = generateHOTP(s, 0, 6)) == -1) {
         printKO("Error while executing. -1 returned.");
     } else {
         if (0 > otp || otp > 999999) {
             printKO("Invalid length for otp 6 wanted.");
         } else {
-            printOK("Correct length for otp.");
+            printOK("Correct length for otp. OTP");
+            printf("OTP : %d\n", otp);
         }
     }
     if (generateHOTP(s, 3, 6) == otp) {
