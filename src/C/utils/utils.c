@@ -55,29 +55,6 @@ char* HMAC_SHA1(uint64_t count, secret key, char* buffer) {
     return buffer;
 }
 
-char* truncate(char * hash, char * buffer) {
-
-    if (!((hash != NULL) && (buffer != NULL))) {
-        return NULL;
-    }
-    char offset;
-    offset = hash[19] & 0xF0;
-    offset >>= 4;
-
-    // int32_t == 4 octets, on prends donc les 4 octets en partant
-    // de hash + offset.
-    int32_t res = (int32_t) *(hash + offset);
-    buffer = memcpy(buffer, &res, 4 * sizeof(char));
-    return buffer;
-}
-
-uint32_t convert(char* buffer) {
-    if(buffer == NULL) {
-        return -1;
-    }
-    return (uint32_t) (*buffer) & 0x7FFFFFFF;
-}
-
 int32_t extractOTP(char* hash) {
     if (hash == NULL) { // Préconditions invalides.
         return -1;
@@ -92,7 +69,7 @@ int32_t extractOTP(char* hash) {
     // haché. On va pour cela utiliser le type int32_t qui compte 4 octets et
     // initialisé ses octets avec la valeur contenu dans le haché a partir de
     // l'offset.
-    int32_t fullLengthOTP = le32toh((int32_t *) (hash + offset));
+    int32_t fullLengthOTP = htole32(*((int32_t *) (hash + offset)));
 
     // Ce masque permet de ne pas tenir compte du signe de l'entier.
     return fullLengthOTP  & 0x7FFFFFFF;
