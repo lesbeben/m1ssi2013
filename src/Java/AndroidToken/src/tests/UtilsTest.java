@@ -38,9 +38,9 @@ public class UtilsTest {
 	public void testConvert() {
 		//6253 : 0001 1000 0110 1101
 		byte[] test = new byte[] {0, 0, 24, 109};
-		assertEquals("Bad conversion.", Utils.convert(test), 6253);
+		assertEquals("Bad conversion.", 6253, Utils.convert(test));
 		test = new byte[] {0, 0, 0, 0};
-		assertEquals("Bad conversion.", Utils.convert(test), 0);
+		assertEquals("Bad conversion.", 0, Utils.convert(test));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
