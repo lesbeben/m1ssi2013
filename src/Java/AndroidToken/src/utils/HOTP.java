@@ -60,7 +60,8 @@ public class HOTP extends OTPGenerator {
         }
 		this.count = this.count + 1;
 	}
-
+	
+	
     @Override
 	public ISecret getKey() {
         return key;

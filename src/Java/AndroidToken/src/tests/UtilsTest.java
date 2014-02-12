@@ -82,5 +82,19 @@ public class UtilsTest {
 		
 		assertEquals("Bad param not correctly handled", 3, count);		
 	}
+	
+	@Test
+	public void coherenceTest() {
+		byte[] buff = new byte[] {
+			0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+			9, 8, 7, 6, 5, 4, 3, 2, 1, 0
+		};
+		byte[] res = Utils.truncate(buff);
+		int num = Utils.convert(res);
+		assertEquals(
+				"incoherence with C version. Expected 50462976 received " + num
+				, 50462976, num
+		);
+	}
 
 }

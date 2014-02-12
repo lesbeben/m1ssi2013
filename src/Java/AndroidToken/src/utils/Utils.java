@@ -54,6 +54,7 @@ public final class Utils {
 			throw new IllegalArgumentException();
 		}
 		int val;
+		//byte[] newBytes = toLittleEndian(bytes);
 		try {
 			DataInput input = new DataInputStream(new ByteArrayInputStream(
 					bytes, 0, bytes.length));

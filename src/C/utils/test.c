@@ -209,7 +209,7 @@ int main(int argc, char * argv[]) {
         9, 8, 7, 6, 5, 4, 3, 2, 1, 0
     };
     uint32_t res = extractOTP(buffExtr);
-    if (res != 291) {
+    if (res != 50462976) {
         printKO("Incorrect value for extract OTP.");
         printf("Expected : 291; Received : %d\n", res);
     } else {

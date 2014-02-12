@@ -68,8 +68,6 @@ public class HOTPTest {
 			  + otp1a + " vs " + otp1b, 
 			  otp1a, otp1b
 		);
-		assertTrue("Wrong length for OTP", otp2 < (Math.pow(10, 7)));
-		
+		assertTrue("Wrong length for OTP", otp2 < (Math.pow(10, 7)));		
 	}
-
 }
