@@ -62,19 +62,18 @@ int getLength(secret key);
 
 /** Donne une représentation hexadécimale du secret.
  * @param[in] key le secret que l'on veut représenter.
- * @pre key != NULL
- *
  * @param[out] buffer le buffer destiné à contenir la représentation du
  * secret.
+ * @param[in] length le nombre d'octet modifiables dans le buffer.
+ *
+ * @pre key != NULL
  * @pre buffer != NULL.
  * @pre taille de buffer >= length.
+ * @pre length > 0
+ * @pre length > (key->length * 2)
  *
  * @post buffer contient une représentation du secret.
  * @post strlen(buffer) <= length.
- *
- * @param[in] length le nombre d'octet modifiables dans le buffer.
- * @pre length > 0
- * @pre length > (key->length * 2)
  *
  * @return l'adresse de buffer; NULL en cas d'échec.
  */
@@ -82,18 +81,17 @@ char * getHexRepresentation(secret key, char * buffer, int length);
 
 /** Donne une représentation hexadécimale du secret.
  * @param[in] key le secret que l'on veut représenter.
- * @pre key != NULL
- *
+ * @param[in] length le nombre d'octet modifiables dans le buffer.
  * @param[out] buffer le buffer destiné à contenir la représentation du secret.
+ *
+ * @pre key != NULL
  * @pre buffer != NULL.
  * @pre taille de buffer >= length.
+ * @pre length > 0
+ * @pre length > key->length
  *
  * @post buffer contient une représentation du secret.
  * @post strlen(buffer) <= length.
- *
- * @param[in] length le nombre d'octet modifiables dans le buffer.
- * @pre length > 0
- * @pre length > key->length
  *
  * @return l'adresse de buffer; NULL en cas d'échec.
  */

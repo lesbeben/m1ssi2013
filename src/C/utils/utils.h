@@ -8,11 +8,11 @@
 
 /** Rempli le buffer passé en paramêtre avec le HMAC du secret.
  * @param[in] count le compteur passé à hmac pour générer un OTP.
- *
  * @param[in] key la clé secrète pour générer un OTP.
- * @pre key != NULL
- *
  * @param[out] buffer le buffer qui contiendra le résultat
+ *
+ *
+ * @pre key != NULL
  * @pre buffer != NULL
  * @pre buffer fait 160 (20 * 8 * sizeof(char)) bits.
  * @post buffer contient la valeur correspondant à
