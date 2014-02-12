@@ -1,0 +1,64 @@
+\documentclass{../../res/univ-projet}
+\usepackage{graphicx}
+
+\title{Algorithmes de calcul des OTP en C}
+\author{}
+
+\projet{One Time Project}
+\projdesc{\'Etude des syst\`emes de mots de passe jetable}
+\filiere{M1SSI}
+\logo{../../res/logo_univ.png}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\begin{document}
+\maketitle
+
+\newpage
+\tableofcontents
+\newpage 
+
+\section{introduction}
+Ce document présente les différents algorithmes implantés permettant la 
+génération d'OTP dans le langage C. Nous verrons dans un premier temps 
+les outils qui ont été nécessaire pour l'implantation de nos fonctions permettant la 
+génération d'OTP basé sur les protocoles HOTP et TOTP. Nous verrons ensuite
+les fonctions de génération d'OTP pour les protocoles HOTP et TOTP.
+\section{Les outils}
+\subsection{Création du secret}
+Les protocoles TOTP et HOTP reposent sur le partage d'un secret entre le client 
+et le serveur ainsi que sur un élément de synchronisation. Nous allons donc commencer
+par voir la création de ce secret.\\
+Pour cela nous avons défini un type basé sur la structure suivante:
+\begin{verbatim}
+typedef struct {
+    int length;
+    char * buffer;
+} secret_struct;
+typedef secret_struct * secret;
+\end{verbatim}
+\begin{description}
+\item [length]: nombre d'octet du secret
+\item [buffer]: pointeur vers les octets pour représenter le secret
+\end{description}
+La création d'un secret se fait à l aide de la fonction:
+\begin{verbatim}
+secret createSecret(int length);
+\end{verbatim}
+Celle-ci renvoyant l'adresse du nouveau secret.\\
+Par opposition, il à été défini une fonction permettant de libérer les
+ressources associées à un secret soit :
+\begin{verbatim}
+int destroySecret(secret key);
+\end{verbatim}
+
+
+
+\subsection{Fonction HMAC}
+
+\subsection{Opération de réduction de taille d'OTP}
+\section{HOTP}
+\section{TOTP}
+\section{conclusion}
+\end{document}
