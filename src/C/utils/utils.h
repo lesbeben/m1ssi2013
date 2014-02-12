@@ -47,14 +47,14 @@ char* truncate(char * hash, char * buffer);
  */
 uint32_t convert(char* buffer);
 
-/** Extrait un OTP d'un haché HMAC pour les générateur basés sur cette fonction.
- * Cette fonction à pour but de remplacer truncate et convert. Plus KISS, pas
- * de buffer de passage.
+/** Extrait un entier d'un haché HMAC pour les générateur basés sur cette 
+ * fonction. Cette fonction à pour but de remplacer truncate et convert. 
+ * Plus KISS, pas de buffer de passage.
  * @param[in] hash le haché duquel il faut extraire l'OTP.
  * @pre hash != NULL.
  * @pre hash est un haché de HMAC_SHA1.
  *
- * @return un OTP à partir d'un haché; -1 en cas d'erreur.
+ * @return un entier sur 31 bits à partir d'un haché; -1 en cas d'erreur.
  */
 int32_t extractOTP(char* hash);
 
