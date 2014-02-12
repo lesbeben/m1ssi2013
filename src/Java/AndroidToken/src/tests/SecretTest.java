@@ -53,10 +53,14 @@ public class SecretTest {
 
 	@Test
 	public void testSetSecretString() {
-		String hex = "03";
+		String hex = "AABBCCDDEEFF";
 		ISecret secret = new Secret();
 		secret.setSecret(hex);
-		byte[] expected = new byte[] {3};
+		byte[] expected = 
+				new byte[] {
+					(byte) 0xAA, (byte) 0xBB, (byte) 0xCC,
+					(byte) 0xDD, (byte) 0xEE, (byte) 0xFF,
+				};
 		assertArrayEquals(
 				"Incoherent value for secret", 
 				expected, 
@@ -67,12 +71,12 @@ public class SecretTest {
 	@Test
 	public void testGetHexRepresentation() {
 		ISecret key = new Secret();
-		String hex = "2AEE217CD8";
+		String hex = "AABBCCDDEEFF";
 		key.setSecret(hex);
 		assertTrue(
-				"Wrong setSecret(String) or getHexRepresentation."
-				+ "\nIncoherent values", 
-				hex.equals(key.getHexRepresentation())
+			"Wrong setSecret(String) or getHexRepresentation."
+			+ "\nIncoherent values" + hex + " " + key.getHexRepresentation(), 
+			hex.equals(key.getHexRepresentation())
 		);
 	}
 

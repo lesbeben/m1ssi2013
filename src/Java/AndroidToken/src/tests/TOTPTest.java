@@ -2,13 +2,10 @@ package tests;
 
 import static org.junit.Assert.*;
 
-import java.security.SecureRandom;
-import java.security.SecureRandomSpi;
 import java.util.Date;
 
 import org.junit.Test;
 
-import utils.HOTP;
 import utils.IOTP;
 import utils.ISecret;
 import utils.Secret;
@@ -38,10 +35,10 @@ public class TOTPTest {
 	@Test
 	public void testTOTPISecretIntInt() {
 		ISecret key = new Secret();
-		key.setSecret("aabbccdd");
+		key.setSecret("AABBCCDD");
 		IOTP otp = new TOTP(key, 7, 10);
 		assertEquals(
-				"Wrong quantum.", "aabbccdd", 
+				"Wrong secret.", "AABBCCDD", 
 				((TOTP) otp).getKey().getHexRepresentation()
 		);
 	}
@@ -49,10 +46,10 @@ public class TOTPTest {
 	@Test
 	public void testTOTPISecret() {
 		ISecret key = new Secret();
-		key.setSecret("aabbccdd");
+		key.setSecret("AABBCCDD");
 		IOTP otp = new TOTP(key);
 		assertEquals(
-				"Wrong quantum.", "aabbccdd", 
+				"Wrong quantum.", "AABBCCDD", 
 				((TOTP) otp).getKey().getHexRepresentation()
 		);
 	}
@@ -71,9 +68,9 @@ public class TOTPTest {
 		}
 		int otp2 = gene.generer();
 		
-		assertEquals("Two successive values are equals", otp1a, otp2);
-		assertNotEquals("Same parameters give different values", otp1a, otp1b);
-		assertTrue("Wrong length for OTP", otp2 < (10 ^ 7));
+		assertNotEquals("Two successive values are equals", otp1a, otp2);
+		assertEquals("Same parameters give different values", otp1a, otp1b);
+		assertTrue("Wrong length for OTP", otp2 < Math.pow(10, 7));
 	}
 
 }

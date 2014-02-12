@@ -1,4 +1,6 @@
 package utils;
+import java.lang.Math;
+
 /**
  * Une classe abstraite pour les générateurs d'OTP.
  *
@@ -17,7 +19,7 @@ public abstract class OTPGenerator implements IOTP {
     /**
      * Le nombre de chiffre composant les OTP générés.
      */
-    protected int digits;
+    private int digits;
 
     /**
      * Le constructeur OTPGenerator.
@@ -45,7 +47,7 @@ public abstract class OTPGenerator implements IOTP {
         byte[] hs = Utils.hmacSha1(getKey(), getCount());
         byte[] sBits = Utils.truncate(hs);
         int sNum = Utils.convert(sBits);
-        int d = sNum % (10 ^ getDigits());
+        int d = sNum % (int) (Math.pow(10, getDigits()));
         increaseCount();
     	return d;
     }

@@ -1,13 +1,13 @@
 package utils;
 
-import java.math.BigInteger;
 import java.security.SecureRandom;
 
 
 public class Secret implements ISecret {
 
     private byte[] secret;
-
+    
+    private static final int HEX_BASE = 16;
 
 
 	@Override
@@ -25,7 +25,7 @@ public class Secret implements ISecret {
 		}
 		
 		SecureRandom random = new SecureRandom();
-		byte bytes[] = new byte[length];
+		byte[] bytes = new byte[length];
 		random.nextBytes(bytes);
 		this.secret = bytes;
 	}
@@ -37,7 +37,7 @@ public class Secret implements ISecret {
 			throw new IllegalArgumentException();
 		}
 		//conversion en byte[] et stocke dans secret
-		 this.secret = new BigInteger(hexRepresentation,16).toByteArray();
+		this.secret = hexStringToByteArray(hexRepresentation);
 	}
 
 	@Override
@@ -61,5 +61,15 @@ public class Secret implements ISecret {
         }
 		return sb.toString();
 	}
-
+	
+	//Outils
+	private byte[] hexStringToByteArray(String s) {
+	    int len = s.length();
+	    byte[] data = new byte[len / 2];
+	    for (int i = 0; i < len; i += 2) {
+	        data[i / 2] = (byte) ((Character.digit(s.charAt(i), HEX_BASE) << 4)
+	                             + Character.digit(s.charAt(i + 1), HEX_BASE));
+	    }
+	    return data;
+	}
 }
