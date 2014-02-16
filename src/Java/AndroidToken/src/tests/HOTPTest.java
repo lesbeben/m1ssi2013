@@ -55,10 +55,12 @@ public class HOTPTest {
 		key.setSecret("AABBCCDDEEFF");
 		IOTP gene = new HOTP(0, key, 6);
 		IOTP gene2 = new HOTP(0, key, 6);
+		IOTP gene3 = new HOTP(1, key, 6);
 		int otp1a = gene.generer();
 		int otp1b = gene2.generer();
 		int otp2 = gene.generer();
-		System.out.println(otp1a + " " + otp1b + " " + otp2);
+		int otp3 = gene3.generer();
+		System.out.println(otp1a + " " + otp1b + " " + otp2 + " " + otp3);
 		assertNotEquals(
 				"Two successive values are equals" + otp1a + "vs" + otp2, 
 				otp1a, otp2

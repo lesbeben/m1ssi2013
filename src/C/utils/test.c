@@ -204,22 +204,24 @@ int main(int argc, char * argv[]) {
     if (HMAC_SHA1(0, s, NULL) == NULL) printOK("Passed.");
     else printKO("Failed.");
 
+    //Extract OTP !
     char buffExtr[] = {
-        0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
-        9, 8, 7, 6, 5, 4, 3, 2, 1, 0
+        23, 51, 2, 43, 114, 57, 63, 71, 48, 9,
+        19, 108, 27, 56, 105, 74, 33, 22, 51,10
     };
     uint32_t res = extractOTP(buffExtr);
-    if (res != 50462976) {
+    if (res != 721564439) {
         printKO("Incorrect value for extract OTP.");
         printf("Expected : 291; Received : %d\n", res);
     } else {
         printOK("Right value for extract OTP.");
+        printf("Received : %d\n", res);
     }
 
     /* Tests hotp.c*/
     printf("Testing HOTP calculation.\n");
     s = hexToSecret("AABBCCDDEEFF");
-    int otp;
+    int otp, otp2;
     if ((otp = generateHOTP(s, 0, 6)) == -1) {
         printKO("Error while executing. -1 returned.");
     } else {
@@ -230,10 +232,11 @@ int main(int argc, char * argv[]) {
             printf("OTP : %d\n", otp);
         }
     }
-    if (generateHOTP(s, 3, 6) == otp) {
+    if ((otp2 = generateHOTP(s, 1, 6)) == otp) {
         printKO("Two successive valus are equal. This should not happen.");
     } else {
         printOK("Two successive values are differents.");
+        printf("OTP2 : %d\n", otp2);
     }
 
     if (generateHOTP(NULL, 0, 7) != -1)
