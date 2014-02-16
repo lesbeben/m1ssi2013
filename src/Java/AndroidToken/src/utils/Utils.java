@@ -1,14 +1,10 @@
 package utils;
 
-import java.io.ByteArrayInputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.io.DataInput;
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 public final class Utils {
 	
@@ -30,16 +26,16 @@ public final class Utils {
 	 * @return Une chaine de 31 bits
 	 */
 	public static byte[] truncate(byte[] bytes) {
-		if (bytes == null || bytes.length < HASH_SIZE) {
+		if (bytes == null || bytes.length != HASH_SIZE) {
 			throw new IllegalArgumentException();
 		}
-        // rfc 4226
-		int offset = bytes[bytes.length - 1] & 0xf;
-		int binary = ((bytes[offset] & 0x7f) << 24)
-				| ((bytes[offset + 1] & 0xff) << 16)
-				| ((bytes[offset + 2] & 0xff) << 8)
-				| (bytes[offset + 3] & 0xff);
-		return ByteBuffer.allocate(4).putInt(binary).array();
+        // Récupération de l'offset
+		int offset = (bytes[bytes.length - 1] & 0xf0) >> 4;
+		//Extraction de la bonne partie de la chaine
+		byte[] res =  Arrays.copyOfRange(bytes, offset, offset + 4);
+		//Effacement du bit de poids faible
+		res[3] &= 0x7F;
+		return res;
 	}
 
 	/**
@@ -52,12 +48,12 @@ public final class Utils {
 	 * @return la conversion en décimal
 	 */
 	public static int convert(byte[] bytes) {
-		if (bytes == null) {
+		if (bytes == null || bytes.length < 4) {
 			throw new IllegalArgumentException();
 		}
 		int val;
         ByteBuffer bb = ByteBuffer.wrap(bytes);
-        bb.order(ByteOrder.LITTLE_ENDIAN);
+        bb.order(ByteOrder.BIG_ENDIAN);
         val = bb.getInt();
 		return val;
 	}
@@ -112,7 +108,9 @@ public final class Utils {
 			block[i] ^= IPAD;
 		}
 		sha1.update(block);
-		sha1.update(ByteBuffer.allocate(8).putLong(count).array());
+		ByteBuffer bb = ByteBuffer.allocate(8).putLong(count);
+		bb.order(ByteOrder.LITTLE_ENDIAN);
+		sha1.update(bb.array());
 		byte[] hash = sha1.digest();
 		sha1.reset();
 

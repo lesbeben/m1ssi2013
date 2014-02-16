@@ -58,7 +58,7 @@ public class HOTP extends OTPGenerator {
             		"Le compteur a atteint son maximum"
             );
         }
-		this.count = this.count + 1;
+		count = count + 1;
 	}
 	
 	
