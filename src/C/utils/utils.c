@@ -63,14 +63,17 @@ int32_t extractOTP(char* hash) {
     // octet du haché, le masque 0xF0 sert a annuler les bits de poid faible.
     // Ensuite on décale les bits de poids fort vers les bits de poid faible
     // pour obtenir un entier sur 4 bits.
-    char offset = (hash[19] & 0xF0) >> 4;
+    char offset = (hash[19] & 0x0F);
 
     // On va ensuite prendre les 4 premiers octets à partir de offset dans le
     // haché. On va pour cela utiliser le type int32_t qui compte 4 octets et
     // initialisé ses octets avec la valeur contenu dans le haché a partir de
     // l'offset.
-    int32_t fullLengthOTP = htole32(*((int32_t *) (hash + offset)));
-
+    int32_t fullLengthOTP = 0;
+    for (int i = 0; i < 4; i++) {
+        fullLengthOTP <<= 8;
+        fullLengthOTP = fullLengthOTP | (0xFF & ((char) hash[offset + i]));
+    }
     // Ce masque permet de ne pas tenir compte du signe de l'entier.
     return fullLengthOTP  & 0x7FFFFFFF;
 }
