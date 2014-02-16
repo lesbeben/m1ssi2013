@@ -57,7 +57,7 @@ public final class Utils {
 		}
 		int val;
         ByteBuffer bb = ByteBuffer.wrap(bytes);
-        bb.order(ByteOrder.LITTLE_ENDIAN);
+        bb.order(ByteOrder.BIG_ENDIAN);
         val = bb.getInt();
 		return val;
 	}
