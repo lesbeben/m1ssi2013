@@ -27,6 +27,9 @@ int getHexInt(char c) {
 }
 
 int getHexCode(char * string) {
+    if (string == NULL) {
+        return -1;
+    }
     int hexCode = (getHexInt(string[0]) << 4) | getHexInt(string[1]);
     return hexCode;
 }
@@ -40,13 +43,13 @@ secret createSecret(int length) {
     if (length < 0) { //Précondition invalide
         return NULL;
     }
-    /** Le secret à retourner */
+    // Allocation du secret à retourner.
     secret res = (secret) malloc(sizeof(secret_struct));
     if (res == NULL) {
         return NULL;
     }
 
-    //remplissage des variables
+    // Remplissage des variables du secret.
     res->length = length;
     res->buffer = (char *) malloc(sizeof(char) * length);
 
@@ -55,20 +58,21 @@ secret createSecret(int length) {
         return NULL;
     }
 
-    /** Descripteur de fichier sur /dev/urandom */
+    // Descripteur de fichier sur /dev/urandom.
     int fd = open("/dev/urandom", O_RDONLY);
     if (fd == -1) {
         destroySecret(res);
         return NULL;
     }
 
-    /** Code de retour d'appels système */
+    // Code de retour d'appels système, nombre d'octets lus.
     int ret = read(fd,res->buffer, res->length);
     if (ret != res->length) {
         destroySecret(res);
         return NULL;
     }
 
+    // Fermeture du descripteur sur /dev/urandom.
     ret = close(fd);
     if (ret == -1) {
         destroySecret(res);
@@ -79,30 +83,43 @@ secret createSecret(int length) {
 }
 
 secret textToSecret(char * buffer) {
-    /** Le nombre de caractères du buffer */
+    if (buffer == NULL) {
+        return NULL;
+    }
+    // Le nombre de caractères du buffer
     int length = strlen(buffer);
-    /** Le secret à retourner initialisé avec le buffer */
+    if (length <= 0) {
+        return NULL;
+    }
+    // Le secret à retourner initialisé avec le buffer
     secret res = (secret) malloc(sizeof(secret_struct));
     if (res == NULL) {
         return NULL;
     }
     res->length = length;
 
-    /** Création d'une copie du buffer dans le secret. */
+    // Création d'une copie du buffer dans le secret.
     res->buffer = strndup(buffer, length);
 
     return res;
 }
 
 secret hexToSecret(char * buffer) {
-    /** Le nombre de caractères dans le buffer */
+    if (buffer == NULL) {
+        return NULL;
+    }
+    // Le nombre de caractères dans le buffer.
     int length = strlen(buffer);
-    /** Le secret à retourner initialisés avec les données du buffer.*/
+    if (length <= 0) {
+        return NULL;
+    }
+    // Le secret à retourner initialisés avec les données du buffer.
     secret res = (secret) malloc(sizeof(secret_struct));
     if (res == NULL) {
         return NULL;
     }
 
+    // Remplissage des variables du secret.
     res->length = length / 2 + ((IS_ODD(length)) ? 1 : 0);
     res->buffer = (char *) malloc(sizeof(char) * res->length);
     if (res->buffer == NULL) {
@@ -154,42 +171,33 @@ int getLength(secret key) {
 }
 
 char * getHexRepresentation(secret key, char * buffer, int length) {
-    if( key == NULL ) {
-        // Impossible de représenter d'un secret NULL
+    if((key == NULL) || (buffer == NULL) || (length <= 2 * key->length)) {
         return NULL;
     }
-    else if(buffer == NULL) {
-        // Impossible de donner la représentation sans avoir de buffer à remplir
-        return NULL;
-    } else if (length <= 0) {
-        return NULL;
-    } else if (!(length > (key->length * 2))) {
-        return NULL;
-    }
+
+    // Remplissage du buffer avec les caractères hexadécimaux.
     for (int i = 0; i < key->length; i++) {
-        // Remplissage du buffer avec les caractères hexadécimaux.
         if (snprintf(buffer + (2 * i), length, "%02x",
             (unsigned int) (unsigned char) (key->buffer[i])) < 0);
     }
+
+    // Terminaison de la chaîne de caractères dans buffer.
     buffer[(key->length * 2)] = 0;
     return buffer;
 }
 
 char * getTextRepresentation(secret key, char* buffer, int length) {
-    if( key == NULL ) {
+    if( (key == NULL) 
+        || (buffer == NULL) 
+        || (length <= 0) 
+        || (length <= key->length) ) {
         return NULL;
     }
-    else if(buffer == NULL) {
-        return NULL;
-    } else if (length <= 0) {
-        return NULL;
-    } else if (!(length > key->length)) {
-        return NULL;
-    }
-    /* Fin des tests de préconditions */
+    
     // Remplissage du buffer avec key->buffer.
     strncpy(buffer, key->buffer, length);
-    // Ajout du NULL-Byte.
+    
+    // Ajout du NULL-Byte pour terminer la chaîne de caractères.
     buffer[length] = 0;
     return buffer;
 }

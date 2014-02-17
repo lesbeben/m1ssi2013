@@ -14,7 +14,7 @@
 
 char* HMAC_SHA1(uint64_t count, secret key, char* buffer) {
     // Vérification de préconditions
-    if (!((key != NULL) && (count >= 0) && (buffer != NULL))) {
+    if ((key == NULL) || (count < 0) || (buffer == NULL)) {
         return NULL;
     }
 
