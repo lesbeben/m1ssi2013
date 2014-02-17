@@ -1,11 +1,12 @@
 package utils;
-import java.lang.Math;
 
 /**
  * Une classe abstraite pour les générateurs d'OTP.
- *
- * @post c1 = getCount(), o1 = generer(), c2 = getCount(), o2 = generer 
- * 				c1 != c2 => o1 != o2 
+ * Cette classe implémente le type ISecret définit dans l'interface IOTP.java.
+ * La taille des OTP calculés par cette classe doit être comprise entre 6 et 8
+ * caractères.
+ * 
+ * @post MIN_DIGITS <= |generer()| <= MAX_DIGITS
  * @author celtic
  */
 public abstract class OTPGenerator implements IOTP {
@@ -22,7 +23,8 @@ public abstract class OTPGenerator implements IOTP {
     private int digits;
 
     /**
-     * Le constructeur OTPGenerator.
+     * Construit un générateur d'otp.
+     * 
      * @param digits le nombre de chiffres composant les OTP générés
      */
     public OTPGenerator(int digits) {
@@ -33,16 +35,14 @@ public abstract class OTPGenerator implements IOTP {
     }
 
     /**
-     * Le constructeur par défaut pour un OTP à 6 chiffres.
+     * Le constructeur par défaut.
+     * Fixe la taille des OTP générés 6.
      */
     public OTPGenerator() {
         this.digits = MIN_DIGITS;
     }
 
     @Override
-    /**
-     * Deux valeurs successives doivent être différentes.
-     */
 	public int generer() {
         byte[] hs = Utils.hmacSha1(getKey(), getCount());
         byte[] sBits = Utils.truncate(hs);
@@ -54,6 +54,7 @@ public abstract class OTPGenerator implements IOTP {
 
     /**
      * Retourne le nombre de chiffres composant les OTP générés.
+     * 
      * @return digits Le nombre de chiffres composants les OTP générés.
      */
     protected int getDigits() {
@@ -62,17 +63,19 @@ public abstract class OTPGenerator implements IOTP {
 
 	/**
 	 * Retourne la valeur du compteur actuel du générateur d'OTP. 
+	 * 
 	 * @return La valeur du compteur.
 	 */
 	public abstract long getCount();
 	
 	/**
-	 * Fixe la valeur du compteur du générateur d'OTP.
+	 * Augmente la valeur du compteur du générateur d'un quantum.
 	 */
 	public abstract void increaseCount();
 
     /**
      * Retourne la valeur de la clé secrète du générateur.
+     * 
      * @return la clé secrète
      */
     public abstract ISecret getKey();

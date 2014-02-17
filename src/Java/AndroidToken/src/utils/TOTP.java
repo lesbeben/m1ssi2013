@@ -17,7 +17,7 @@ public class TOTP extends OTPGenerator {
 	public static final int DEFAULT_QUANTUM = 30;
 
 	/**
-	 * . La valeur qui permet la conversion de millisecondes à secondes
+	 * La valeur qui permet la conversion de millisecondes à secondes
 	 */
 	public static final int TO_SEC = 1000;
 
@@ -31,6 +31,7 @@ public class TOTP extends OTPGenerator {
 	 * La valeur du compteur pour ce générateur.
 	 */
 	private long count;
+	
 	/**
 	 * La valeur de la clef pour ce générateur.
 	 */

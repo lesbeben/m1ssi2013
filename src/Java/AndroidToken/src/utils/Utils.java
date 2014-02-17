@@ -20,10 +20,11 @@ public final class Utils {
 
 	/**
 	 * Retourne la troncature de bytes selon l'algo donné dans la rfc 4226.
+	 * Le bit de signe est éffacé pour éviter les incohérence dues au signe.
 	 * 
 	 * @param bytes
 	 *            Une chaine d'octet de longueure 160 bits
-	 * @return Une chaine de 31 bits
+	 * @return Une chaine de 32 bits avec le bit de poids fort à 0
 	 */
 	public static byte[] truncate(byte[] bytes) {
 		if (bytes == null || bytes.length != HASH_SIZE) {
