@@ -205,10 +205,12 @@ int main(int argc, char * argv[]) {
     else printKO("Failed.");
 
     //Extract OTP !
+/*
     char buffExtr[] = {
         23, 51, 2, 43, 114, 57, 63, 71, 48, 9,
         19, 108, 27, 56, 105, 74, 33, 22, 51,10
     };
+
     uint32_t res = extractOTP(buffExtr);
     if (res != 721564439) {
         printKO("Incorrect value for extract OTP.");
@@ -217,7 +219,7 @@ int main(int argc, char * argv[]) {
         printOK("Right value for extract OTP.");
         printf("Received : %d\n", res);
     }
-
+    */
     /* Tests hotp.c*/
     printf("Testing HOTP calculation.\n");
     s = hexToSecret("AABBCCDDEEFF");
@@ -248,9 +250,10 @@ int main(int argc, char * argv[]) {
 
     /* Testing TOTP calculation. */
     printf("Testing TOTP calculation.\n");
-    if ((otp = generateTOTP(s, 1, 6)) == -1) {
+    if ((otp = generateTOTP(s, 30, 6)) == -1) {
         printKO("Error while executing. -1 returned.");
     } else {
+        printf("OTP : %d\n", otp);
         if (0 > otp || otp > 999999) {
             printKO("Invalid length for otp 6 wanted.");
         } else {

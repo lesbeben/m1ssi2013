@@ -70,6 +70,8 @@ public class HOTPTest {
 			  + otp1a + " vs " + otp1b, 
 			  otp1a, otp1b
 		);
-		assertTrue("Wrong length for OTP", otp2 < (Math.pow(10, 7)));		
+		assertTrue("Wrong length for OTP", otp2 < (Math.pow(10, 7)));	
+		assertEquals("Incoherent value for first OTP", 427399, otp1a);
+		assertEquals("Incoherent value for second OTP", 156549, otp2);
 	}
 }

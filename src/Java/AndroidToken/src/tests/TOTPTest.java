@@ -58,7 +58,7 @@ public class TOTPTest {
 	public void testGenerer() {
 		ISecret key = new Secret();
 		key.setSecret("aabbccddeeff");
-		IOTP gene = new TOTP(key, 7, 1);
+		IOTP gene = new TOTP(key, 6, 30);
 		int otp1a = gene.generer();
 		int otp1b = gene.generer();
 		try {
@@ -67,7 +67,7 @@ public class TOTPTest {
 			// RIEN
 		}
 		int otp2 = gene.generer();
-		
+		System.out.println(otp1a + " " + otp1b + " " + otp2);
 		assertNotEquals("Two successive values are equals", otp1a, otp2);
 		assertEquals("Same parameters give different values", otp1a, otp1b);
 		assertTrue("Wrong length for OTP", otp2 < Math.pow(10, 7));

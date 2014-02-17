@@ -31,5 +31,5 @@ int generateTOTP(secret key, int quantum, int len) {
     }
 
     //Etape 3 Human writable buffer modulo 10^len
-    return fullLengthOtp % (int) pow(10,len - 1);
+    return fullLengthOtp % (int) pow(10,len);
 }

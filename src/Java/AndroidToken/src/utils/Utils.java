@@ -30,11 +30,12 @@ public final class Utils {
 			throw new IllegalArgumentException();
 		}
         // Récupération de l'offset
-		int offset = (bytes[bytes.length - 1] & 0xf0) >> 4;
+		int offset = (bytes[bytes.length - 1] & 0x0f);
 		//Extraction de la bonne partie de la chaine
 		byte[] res =  Arrays.copyOfRange(bytes, offset, offset + 4);
 		//Effacement du bit de poids faible
-		res[3] &= 0x7F;
+		res[0] &= 0x7F;
+		
 		return res;
 	}
 
@@ -109,7 +110,7 @@ public final class Utils {
 		}
 		sha1.update(block);
 		ByteBuffer bb = ByteBuffer.allocate(8).putLong(count);
-		bb.order(ByteOrder.LITTLE_ENDIAN);
+		bb.order(ByteOrder.BIG_ENDIAN);
 		sha1.update(bb.array());
 		byte[] hash = sha1.digest();
 		sha1.reset();
