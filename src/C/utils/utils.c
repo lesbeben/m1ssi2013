@@ -14,7 +14,7 @@
 
 char* HMAC_SHA1(uint64_t count, secret key, char* buffer) {
     // Vérification de préconditions
-    if (!((key != NULL) && (count != -1) && (buffer != NULL))) {
+    if (!((key != NULL) && (count >= 0) && (buffer != NULL))) {
         return NULL;
     }
 
@@ -37,7 +37,7 @@ char* HMAC_SHA1(uint64_t count, secret key, char* buffer) {
     unsigned char xorSecretOpad[HMAC_KEY_LENGTH + SHA_DIGEST_LENGTH];
 
     //On passe le compteur en représentation réseau.
-    uint64_t tmpCounter = htole64(count);
+    uint64_t tmpCounter = htobe64(count);
 
     // XOR BIT A BIT K et IPAD, K et OPAD.
     for (int i = 0; i < HMAC_KEY_LENGTH; i++) {
