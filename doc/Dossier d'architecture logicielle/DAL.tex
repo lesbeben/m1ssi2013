@@ -18,6 +18,7 @@
 \signataire{\bsc{Bardet} Magali}
 \date{Janvier 2014}
 
+\histentry{2.1}{18/02/2014}{Version post état de l'art}
 \histentry{2.0}{16/01/2014}{Version pour la revue de lancement}
 \histentry{1.1}{15/12/2013}{Ajout des modifications demandées par le client}
 \histentry{1.0}{01/12/2013}{Version relue et corrigée}
@@ -73,14 +74,14 @@ Ce document a pour but de préciser les détails techniques du logiciel final.
     PR-M\_001 &
     Calculateur \verb?700MHz? pour le token &
     Étant donné que le calcul de l'OTP ne prend que très peu de ressources
-            et que les plateformes sont diverses le critère des \verb?700MHz? de puissances
-            de calcul paraît un bon facteur commun.\\
+    et que les plateformes sont diverses le critère des \verb?700MHz? de puissances
+    de calcul paraît un bon facteur commun.\\
     \hline
     PR-M\_002 &
     Communication stable entre le client et le serveur &
     La communication stable entre le client et le serveur permet d'assurer que si
-            il y a un problème lors de l'authentification ce n'est pas du à une perte de
-            requête.\\
+    il y a un problème lors de l'authentification ce n'est pas du à une perte de
+    connexion lors de la requête d'authentification.\\
     \hline
 \end{tabular}
 
@@ -93,16 +94,17 @@ Ce document a pour but de préciser les détails techniques du logiciel final.
     \textcolor{white}{\bfseries Justification} \\
     \hline
     OS\_001& 
-    GNU/Linux kernel 3.x / glibc >= 2.15 pour un token, un client et un serveur&
-    À vrai dire comme la plupart des technologies employées seront libres
-    la seule chose qui justifie l'emploi de ce système d'exploitation
-    est qu'il est lui aussi libre et permet d'intégrer facilement ces technologies\\
+    GNU/Linux kernel 3.x / glibc >= 2.15, présence de /dev/random et /dev/urandom 
+    pour un module PAM&
+    Le but du projet est de développer un module PAM pour pouvoir s'authentifier
+    à l'aide de mot de passe jetable. PAM est une technologie qui n'est disponible
+    que sur certains systèmes de type UNIX.\\
     \hline
     OS\_002&
     Android 2.3.x comptabile 4.x pour un token&
     Ceci est dans le cas de l'implantation sur une plateforme type
     smartphone. Une fois de plus ce choix se justifie par
-    l'aspect libre du système.\\
+    l'aspect libre du système et le matériel disponible.\\
     \hline
 \end{tabular}
 
@@ -123,6 +125,11 @@ Ce document a pour but de préciser les détails techniques du logiciel final.
     Un moyen de stocker les informations relatives aux utilisateurs dans le serveur&
     Cela sera nécessaire pour gérer plusieurs utilisateurs ainsi que plusieurs protocoles
     OTP pour le serveur.\\
+    \hline
+    PR-L\_003 &
+    PAM > 1.0 &
+    Afin d'assurer la compatibilité entre PAM et notre module nous utiliserons
+    une version de PAM supérieure à 1.0.\\
     \hline
 \end{tabular}
 
@@ -153,23 +160,25 @@ Ce document a pour but de préciser les détails techniques du logiciel final.
     \subsubsection{Langages de programmation}
         Les langages utilisés pour créer des tokens seront: le C pour GNU/Linux,
     et Java pour Android. Dans le cas de JavaCard (optionnel) il n'y a pas besoin
-    de tokens puisque c'est la carte qui fournit ce service
+    de tokens puisque c'est la carte qui fournit ce service.
 
     \subsubsection{Procédés de développement}
     \begin{enumerate}
         \item Développer des modules réalisant chaque algorithme de génération
             d'OTP.
-        \item Développer un générateur de secrets.
+	\item Permettre une gestion de plusieurs services. C'est à dire
+	  faire en sorte que le token puisse stocker plusieurs secret
+	  pour différents services.
         \item Permettre une interaction avec l'utilisateur.
     \end{enumerate}
 
     \subsubsection{Taille et complexité}
             Taille et complexité dépendantes de l'algorithme de génération
-        de mots de passe jetables
+        de mots de passe jetables.
 
 %------------------------------------------------------------------------------
 \subsection{Générateur d'OTP}
-    Chaque algorithme étudié et implémenté (HOTP, OTPW, POTP) offrira les
+    Chaque algorithme étudié et implémenté (HOTP, TOTP) offrira les
     mêmes services, seul le fonctionnement interne du module diffèrera.
     les algorithmes seront détaillés dans les dossiers associés aux recherches sur 
     chaque algorithme.
@@ -177,19 +186,16 @@ Ce document a pour but de préciser les détails techniques du logiciel final.
         Chaque protocole choisi fera l'objet de l'implémentation d'une bibliothèque
     logicielle permettant de s'intégrer dans un serveur et un token.
     \subsubsection{Rôle}
-        Générer des mots de passe jetables permettant de s'authentifier.
+        Générer des mots de passe jetables à partir d'un secret permettant
+    de s'authentifier.
 
     \subsubsection{Services offerts}
-    \begin{description}
-        \item[initiate(user *utilisateur, char *seed):] Initialise
-            un générateur d'OTP pour l'utilisateur.
-        \item[getOTP(user *utilisateur)] Génère un OTP selon la méthode et les
-            paramètres passés.
-    \end{description}
+      Ce module n'offre qu'un unique service, générer un OTP à partir d'un secret et
+    d'un état du générateur. Pour HOTP cet état est représenté par un compteur.
 
     \subsubsection{Langages de programmation}
-        Pour créer les tokens Android nous utiliserons le langage Java.
     Pour créer les tokens GNU/Linux, nous utiliserons le langage C.
+    Pour créer les tokens Android nous utiliserons le langage Java.
     Dans le cas de JavaCard (optionnel) c'est aussi le langage Java qui sera
     utilisé.
 
@@ -205,121 +211,83 @@ Ce document a pour but de préciser les détails techniques du logiciel final.
         de petites capacités mémoire et permettre un calcul 
         en t < 1s sur \verb?700MHz?.
 
-\subsection{Client}
-    \subsubsection{Rôle}
-        Permettre une authentification sur un service en demandant à
-    l'utilisateur un mot de passe jetable.
-
-    \subsubsection{Services offerts}
-    \begin{description}
-        \item[authenticate(connection *c, req *request):] Permet
-            de s'authentifier auprès du serveur \verb?server? sur 
-            le port \verb?port?, d'après la requête \verb?request?.
-    \end{description}
-
-    \subsubsection{Dépendance}
-    \begin{itemize}
-        \item Sockets Berkeley
-    \end{itemize}
-
-    \subsubsection{Langage de programmation}
-        Comme le client n'est prévu que sur un système GNU/Linux nous n'utiliserons
-    que le langage C.
-
-    \subsubsection{Procédé de développement}
-    \begin{enumerate}
-        \item Déterminer le protocole d'échange entre le client et le
-            serveur.
-        \item Déterminer le contenu d'une requête.
-    \end{enumerate}
-
-    \subsubsection{Taille et complexité}
-        Le client ne procède qu'à l'envoi et la réception de données sur le
-        réseau, donc la taille et la complexité sont faibles.
-
-\subsection{Serveur}
-    \subsubsection{Rôle}
-    Dire si un mot de passe jetable est valide ou non pour s'authentifier sur un
-    service donné.
-
-    \subsubsection{Propriétés et attributs de caractérisation}
-    \begin{description}
-        \item[Port] Le port utilisé pour accéder au serveur
-            d'authentification.
-        \item[Adresses] L'adresse pour accéder au serveur 
-            d'authentification.
-    \end{description}
-
-    \subsubsection{Services offerts}
-    \begin{description}
-        \item[associate(user *u, char *secret):] Associe un secret à un 
-            utilisateur.
-        \item[check(user *u, char *OTP):] Vérifie que l'OTP est valide pour
-            l'utilisateur.
-        \item[lock(user *u):] Interdit la connection pour un utilisateur.
-        \item[warn(user *u):] Prévient par mail un utilisateur de son 
-            verrouillage.
-        \item[resynchronize(user *u):] Demande une resynchronisation pour
-            un utilisateur donné.
-    \end{description}
-
-    \subsubsection{Dépendances}
-    \begin{itemize}
-        \item Sockets Berkeley.
-        \item Générateurs d'OTP.
-    \end{itemize}
-
-    \subsubsection{Langage de programmation}
-        Comme le serveur n'est prévu que sur un système GNU/Linux nous n'utiliserons
-    que le langage C.
+\subsection{Vérificateur d'OTP}
+  \subsubsection{Rôle}
+    Vérifier qu'un OTP permet de s'authentifier sur un service.
     
-    \subsubsection{Procédés de développement}
-    \begin{enumerate}
-        \item Déterminer le protocole de communication entre client et serveur.
-        \item Déterminer le contenu d'une requête d'authentification
-        \item Utiliser les modules de génération d'OTP pour les vérifications de
-        validité d'OTP.
-    \end{enumerate}        
+  \subsubsection{Services offerts}
+    Ce module n'offre qu'un service, vérifier un OTP avec un secret
+    et un état. Ce module va s'appuyer sur les services offert par
+    un générateur d'OTP et vérifier que les données correspondent.
+    
+  \subsubsection{Langage de programmation}
+    Ce module n'étant utile qu'au module PAM il ne sera implémenté qu'en C.
+    
+  \subsubsection{Procédé de développement}
+  \begin{enumerate}
+   \item Développer les générateur d'OTP.
+   \item Développer une gestion des utilisateurs.
+   \item Développer la fonction de vérification.
+   \item Développer la fonction de resynchronisation.
+  \end{enumerate}
+  
+  \subsubsection{Taille et complexité}
+  La encore la taille et la complexité sont dépendantes de l'algorithme 
+  choisi. Mais on peut estimer la taille et la complexité des Vérificateurs
+  étant comme identique à celle des générateur. De plus la présence d'une fonction
+  de resynchronisation représente un  vecteur d'attaque (possibilité de synchroniser
+  sur une valeur non désirée) il faut ajouter un certain nombre de vérifications.
+  
+  
+\subsection{Le module PAM}
+\subsubsection{Rôle}
+  Ce module permettra de s'authentifier sur un système en utilisant un mot de passe
+  jetable. L'avantage de développer un module PAM est que de nombreux services existants
+  peuvent s'interfacer avec PAM: services web avec php, ssh, ... De plus il est assez
+  aisé de développer ultérieurement une application qui gère son authentification à l'aide de PAM.
+  Enfin il sera possible d'intégrer le module au sein d'une authentification existante ce qui permettra
+  de créer une authentification à plusieurs facteurs.
+  
+  
+\subsubsection{Services offert}
+  Ce module devra gérer la vérification de la validité d'un OTP pour un utilisateur donné ainsi que la
+  mise à jour des données relatives à cet utilisateur.
+  
+\subsubsection{Gestion des utilisateurs}
+  Afin de gérer les utilisateurs le module PAM créera un fichier sur le système.
+  Ce fichier contiendra une ligne par utilisateurs avec:
+  \begin{itemize}
+   \item Le login de l'utilisateur.
+   \item Le secret de l'utilisateur.
+  \end{itemize}
+  
+  Dans notre cas le secret est déterminé par le système distant. Il doit
+  cependant être possible de réinitialiser ce secret. 
+  
+\subsubsection{Langage de programmation}
+  C'est un module PAM donc le langage est imposé, nous utiliserons le C.
+  
+\subsubsection{Procédé de développement}
+  Pour la partie authentification, le module pam est complètement
+  dépendant de la vérification des OTP qui elle est dépendante de la 
+  génération d'OTP et de la gestion d'utilisateurs.
 
-    \subsubsection{Taille et complexité}
-    Probablement le composant le plus volumineux du système, puisqu'il doit être
-    en mesure de supporter plusieurs requêtes simultanées ainsi que plusieurs
-    protocoles de mots de passe jetables.
-
-\subsection{Structure user}
-\label{sub:Structure_user}
-    Cette structure a pour but de pouvoir conserver l'état d'un générateur d'OTP
-    pour un utilisateur. Elle sera stockée dans une base de données sur le
-    serveur. Cela permet de ne charger qu'un seul module de génération de mot de
-    passe en mémoire pour gérer plusieurs utilisateurs.
-    \subsubsection{Champs}
-    \label{ssub:Champs}
-        Une structure identifiant un utilisateur pour un générateur d'OTP 
-        contient les champs suivants:
-        \begin{description}
-            \item[login] le nom de l'utilisateur
-            \item[HPass] Une empreinte du mot de passe de l'utilisateur
-            \item[isLocked] indique si l'utilisateur à le droit d'essayer de
-                se connecter
-            \item[secret] Le secret permettant de générer n'importe quel OTP 
-                valide
-            \item[how] La méthode d'authentification OTP.
-            \item[otparams] Un pointeur vers une structure contenant des 
-                paramètres relatifs à la méthode de génération d'OTP
-        \end{description}
-
+  Pour la partie mise à jour de crédentiels il faut générer une clé aléatoire
+  à l'aide de /dev/random puis la dériver.
+  
+\subsubsection{Taille et complexité}
+  Cet partie correspond a la liaison des étapes précédente sa taille et
+  sa complexité sont donc assez faible.
+  
 \subsection{Justification des choix techniques}
 \subsubsection{Le langage C}
 Le langage C a été choisi pour 2 raisons:
 \begin{enumerate}
     \item Car il est supposé connu de tout les membres de l'équipe, au vu
         de l'enseignement reçu.
-    \item Car il permet de mieux maîtriser l'aspect sécurité en évitant un
-        nombre trop important de dépendances intermédiaires dont on ne peut
-        garantir la sécurité.
+    \item Les modules PAM ne peuvent être programmés qu'en C.
 \end{enumerate}
 
-%-------------------------------------------------------------------------------
 \subsubsection{Le langage Java}
     Le langage Java sera utilisé sur les plateformes Android
     et Javacard, car bien qu'il soit possible de programmer en C
