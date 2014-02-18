@@ -7,6 +7,7 @@
 
 
 /** Rempli le buffer passé en paramêtre avec le HMAC du secret.
+ * D'après l'algorithme donné par la RFC 2104
  * @param[in] count le compteur passé à hmac pour générer un OTP.
  * @param[in] key la clé secrète pour générer un OTP.
  * @param[out] buffer le buffer qui contiendra le résultat
@@ -25,12 +26,11 @@
 char* HMAC_SHA1(uint64_t count, secret key, char * buffer);
 
 /** Extrait un entier d'un haché HMAC pour les générateur basés sur cette 
- * fonction. Cette fonction à pour but de remplacer truncate et convert. 
- * Plus KISS, pas de buffer de passage.
+ * fonction. D'après la fonction de troncature de la rfc 4226.
  * @param[in] hash le haché duquel il faut extraire l'OTP.
  * @pre hash != NULL.
- * @pre hash est un haché de HMAC_SHA1.
- *
+ * @pre hash est un haché de HMAC_SHA1. sur 20 octets.
+ * 
  * @return un entier sur 31 bits à partir d'un haché; -1 en cas d'erreur.
  */
 int32_t extractOTP(char* hash);
