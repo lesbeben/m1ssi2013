@@ -3,6 +3,7 @@
 #include "secret.h"
 
 /** Génère un mot de passe à partir du secret en utilisant le temps UTC.
+ * D'après l'algorithme donné dans la rfc 6238.
  * @param[in] key le secret utilisé pour générer un OTP
  * @param[in] len la taille de l'otp désiré.
  * @param[in] quantum la taille de la fenetre de temps en millisecondes.
