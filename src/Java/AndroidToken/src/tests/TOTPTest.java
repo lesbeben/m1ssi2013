@@ -58,7 +58,7 @@ public class TOTPTest {
 	public void testGenerer() {
 		ISecret key = new Secret();
 		key.setSecret("aabbccddeeff");
-		IOTP gene = new TOTP(key, 6, 30);
+		IOTP gene = new TOTP(key, 6, 1);
 		int otp1a = gene.generer();
 		int otp1b = gene.generer();
 		try {

@@ -18,6 +18,7 @@ public class HOTP extends OTPGenerator {
 	private ISecret key;
 	
 	/**
+	 * Construit un générateur d'OTP HOTP.
 	 * 
 	 * @param count La valeur du compteur pour le generateur.
 	 * @param key La clef secrete pour la generation.
