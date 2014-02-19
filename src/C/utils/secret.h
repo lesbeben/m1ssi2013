@@ -12,13 +12,25 @@ typedef struct {
 
 typedef secret_struct * secret;
 
-/** Crée un "objet" secret.
+/** Crée un "objet" secret rempli avec des length octets pseudo aléatoire.
+ * Cette fonction se base sur le fichier /dev/urandom pour générer de 
+ * l'aléatoire ce qui est plus rapide mais moins fiable que /dev/random.
  * @param[in] length la taille du secret en octets.
  * @pre la taille ne peut pas être négative.
  *
  * @return L'adresse d'un nouveau secret.
  */
 secret createSecret(int length);
+
+/** Crée un "objet" secret rempli avec des length octets aléatoire.
+ * Cette fonction utilise le fichier /dev/random pour générer de l'aléatoire.
+ * Elle est donc plus fiable mais beaucoup plus lente que createSecret.
+ * @param[in] length la taille du secret en octets.
+ * @pre la taille ne peut pas être négative.
+ *
+ * @return L'adresse d'un nouveau secret.
+ */
+secret createRandomSecret(int length);
 
 /** Créée un secret à partir d'une chaîne de caractères héxadécimaux.
  * @param[in] buffer le pointeur sur le buffer contenant la chaîne à transformer

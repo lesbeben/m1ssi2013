@@ -82,6 +82,57 @@ secret createSecret(int length) {
     return res;
 }
 
+secret createRandomSecret(int length) {
+    if (length < 0) { //Précondition invalide
+        return NULL;
+    }
+    // Allocation du secret à retourner.
+    secret res = (secret) malloc(sizeof(secret_struct));
+    if (res == NULL) {
+        return NULL;
+    }
+
+    // Remplissage des variables du secret.
+    res->length = length;
+    res->buffer = (char *) malloc(sizeof(char) * length);
+
+    if (res->buffer == NULL) {
+        destroySecret(res);
+        return NULL;
+    }
+
+    // Descripteur de fichier sur /dev/urandom.
+    int fd = open("/dev/random", O_RDONLY);
+    if (fd == -1) {
+        destroySecret(res);
+        return NULL;
+    }
+
+    int totalRead = 0;
+    // On lit sur /dev/random jusqu'a ce qu'on ait notre compte d'octet.
+    // /dev/random est un fichier particulier qui contient des octets dépendants
+    // de l'état du système, une lecture sur ce fichier peut retourner un nombre
+    // d'octets inférieur a celui attendu il faut donc vérifier que l'on a bien
+    // le bon nombre d'octets et relancer la lecture si il n'y a pas eu d'erreur.
+    while (totalRead < res->length) {
+        int ret = read(fd, res->buffer + totalRead, res->length - totalRead);
+        if (ret != res->length) {
+            destroySecret(res);
+            return NULL;
+        }
+        totalRead += ret;
+    }
+
+    // Fermeture du descripteur sur /dev/urandom.
+    ret = close(fd);
+    if (ret == -1) {
+        destroySecret(res);
+        return NULL;
+    }
+
+    return res;
+}
+
 secret textToSecret(char * buffer) {
     if (buffer == NULL) {
         return NULL;
@@ -178,7 +229,7 @@ char * getHexRepresentation(secret key, char * buffer, int length) {
     // Remplissage du buffer avec les caractères hexadécimaux.
     for (int i = 0; i < key->length; i++) {
         if (snprintf(buffer + (2 * i), length, "%02x",
-            (unsigned int) (unsigned char) (key->buffer[i])) < 0);
+                     (unsigned int) (unsigned char) (key->buffer[i])) < 0);
     }
 
     // Terminaison de la chaîne de caractères dans buffer.
@@ -187,16 +238,16 @@ char * getHexRepresentation(secret key, char * buffer, int length) {
 }
 
 char * getTextRepresentation(secret key, char* buffer, int length) {
-    if( (key == NULL) 
-        || (buffer == NULL) 
-        || (length <= 0) 
-        || (length <= key->length) ) {
+    if( (key == NULL)
+            || (buffer == NULL)
+            || (length <= 0)
+            || (length <= key->length) ) {
         return NULL;
     }
-    
+
     // Remplissage du buffer avec key->buffer.
     strncpy(buffer, key->buffer, length);
-    
+
     // Ajout du NULL-Byte pour terminer la chaîne de caractères.
     buffer[length] = 0;
     return buffer;
