@@ -294,67 +294,22 @@ Le langage C a été choisi pour 2 raisons:
     sur Android, ce n'est pas recommandé par \verb?Google?
     \footnote{\href{https://developer.android.com/tools/sdk/ndk/index.html}{Android NDK}}.
         
-\section{Fonctionnement dynamique}
-\subsection{Association/Partage du secret}
-\subsubsection{Principe}
-Le token et le serveur se mettent d'accord sur un secret partagé grâce à l'utilisateur.
+\part*{Architecture dynamique}
 
-\subsubsection{Flux réseau}
-Lors de l'association le client et le serveur échange le secret qui permet
-de générer tout les OTP. Il est donc préférable qu'il ne tombe pas aux mains
-d'un attaquant. Pour éviter ce souci il est préconisé dans les RFC de passer
-par un tunnel sécurisé type SSL.
+\section{Demande de secret}
+\subsection{Principe}
+Le secret doit être partagé entre le système hôte et le token. Pour déterminer
+le secret il faut faire une demande au système hôte. Ce dernier possède une clé
+maîtresse qu'il dérivera pour donner une nouvelle clé à l'utilisateur. L'utilisateur
+devra entrer le secret lui même sur le token.
 
-\subsubsection{Fonctionnement}
-\begin{enumerate}
-    \item partage du secret via une saisie utilisateur.
-    \item Indiquer l'échec ou la réussite de l'opération
-\end{enumerate}
-\includegraphics[width=\textwidth]{../graphics/association.jpg}
 
-\subsection{Génération d'un mot de passe jetable}
-\subsubsection{Principe}
-Le token donne un mot de passe jetable à l'utilisateur.
-
-\subsubsection{Fonctionnement}
-\begin{enumerate}
-    \item Calcul d'un mot de passe jetable à partir du secret 
-        initial
-\end{enumerate}
-\includegraphics[width=\textwidth]{../graphics/generation.jpg}
-
-\subsection{Authentification}
-\subsubsection{Principe}
-On entre le mot de passe généré par le token dans le client qui demandera une
-vérification au serveur.
-
-\subsubsection{Flux réseau}
-Lors de cette étape il y a deux façons de procéder:
-
-    \paragraph{le défi/réponse:}
-    \begin{enumerate}
-        \item Le serveur envoie un challenge.
-        \item Le client envoie la réponse au challenge.
-        \item Le serveur confirme ou infirme l'authentification
-    \end{enumerate}
-    \paragraph{l'authentification classique:}
-    \begin{enumerate}
-        \item Le client envoie une demande d'authentification.
-        \item Le serveur confirme ou infirme l'authentification.
-    \end{enumerate}
-
-\subsubsection{Fonctionnement}
-\begin{enumerate}
-    \item L'utilisateur entre le mot de passe
-    \item Le client demande au serveur de vérifier la validité du
-        mot de passe
-    \item Le client répond:
-        \begin{description}
-            \item[OK] Si le serveur accepte le mot de passe
-            \item[KO] Si le serveur refuse le mot de passe
-        \end{description}
-\end{enumerate}
-\includegraphics[width=\textwidth]{../graphics/authentification.jpg}
+\section{Authentification}
+\subsection{Principe}
+L'utilisateur tente de s'authentifier sur un service, ce service appelle PAM. 
+PAM va charger les modules correspondant à la configuration pour le service.
+Et vérifier l'otp passé au service. Dans le cas ou le token est désynchronisé
+avec le module PAM un opération de resynchronisation à lieu.
 
 \subsection{Resynchronisation}
 \subsubsection{Principe}
@@ -364,8 +319,17 @@ mots de passe jetables générés.
 \subsubsection{Fonctionnement}
 \begin{enumerate}
     \item L'utilisateur essaie de s'authentifier.
-    \item Le serveur voit que le token de l'utilisateur est décalé.
-    \item Le serveur se décale au même niveau que le token.
+    \item L'otp fourni par l'utilisateur n'est pas valide.
+    \item Deux cas possibles:
+    \begin{itemize}
+    	\item L'otp correspond à un otp dans une fenêtre de $n$ otp.
+    		auquel cas les données de l'utilisateur dans le fichier
+    		/var/otpwd sont resynchronisées.
+    	\item L'otp ne correspond pas un de ces otp.
+    \end{itemize}
 \end{enumerate}
 \includegraphics[width=\textwidth]{../graphics/resynchronisation.jpg}
 \end{document}
+
+\subsection{Description graphique}
+% TODO mettre le graph
