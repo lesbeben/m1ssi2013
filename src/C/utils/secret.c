@@ -109,13 +109,14 @@ secret createRandomSecret(int length) {
     }
 
     int totalRead = 0;
+    int ret = 0;
     // On lit sur /dev/random jusqu'a ce qu'on ait notre compte d'octet.
     // /dev/random est un fichier particulier qui contient des octets dépendants
     // de l'état du système, une lecture sur ce fichier peut retourner un nombre
     // d'octets inférieur a celui attendu il faut donc vérifier que l'on a bien
     // le bon nombre d'octets et relancer la lecture si il n'y a pas eu d'erreur.
     while (totalRead < res->length) {
-        int ret = read(fd, res->buffer + totalRead, res->length - totalRead);
+        ret = read(fd, res->buffer + totalRead, res->length - totalRead);
         if (ret != res->length) {
             destroySecret(res);
             return NULL;
