@@ -2,22 +2,22 @@ package utils;
 /**
  * Une classe pour la gestion des clefs secrètes.
  * Elle permet de gérer de manière simple les secrets cryptographiques de 
- * longueure quelconque. 
+ * longueur quelconque.
  * Les ISecret sont initialisable avec une chaine de caractère hexadécimaux
- * ou directement une chaine d'octet.
+ * ou directement une chaine d'octets.
  * On dispose aussi d'un moyen pour générer une valeur aléatoire à partir de 
  * rien.
  * 
  * @post length(getSecret()) == this.length 
  * @post length(getHexRepresentation) == 2 * this.length 
  * @post getSecret() = hexToBinary(getHexRepresentation)
- * @author celtic
+ * @author Gaëtan Ferry
  *
  */
 public interface ISecret {
 	
 	/**
-	 * Initialise le secret avec la valeur correspondant a la chaine de bit 
+	 * Initialise le secret avec la valeur correspondant a la chaine de bits
 	 * secret.
 	 * 
 	 * @pre secret.length > 0
@@ -32,12 +32,12 @@ public interface ISecret {
 	 * 
 	 * @pre length > 0
 	 * @post getLength = length
-	 * @param length la longueure du secret souhaité.
+	 * @param length la longueur du secret souhaitée.
 	 */
 	void setSecret(int length);	
 	/**
 	 * Initialise le secret depuis une chaine hexadécimale. 
-	 * La valeur du secret sera égal à la valeur représentée par la chaine.
+	 * La valeur du secret sera égale à la valeur représentée par la chaine.
 	 * 
 	 * @pre hexRepresentation != null 
 	 * @post getHexRepresentation = hexRep
@@ -49,17 +49,17 @@ public interface ISecret {
 	 * La longueur du secret courant en octet.
 	 * 
 	 * @pre getSecret != null
-	 * @return La longueure du secret.
+	 * @return La longueur du secret.
 	 */
 	int getLength();	
 	/**
-	 * La valeur du secret courant sous la forme d'un tableau d'octet.
+	 * La valeur du secret courant sous la forme d'un tableau d'octets.
 	 * 
 	 * @return Un tableau d'octet contenant la valeur du secret.
 	 */
 	byte[] getSecret();
 	/**
-	 * Une représentation human readable du secret.
+	 * Une représentation human-readable du secret.
 	 * La représentation est donnée sous la forme d'une chaine de caractère 
 	 * héxadécimaux.
 	 * 

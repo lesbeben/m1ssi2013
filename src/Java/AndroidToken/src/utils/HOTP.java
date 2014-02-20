@@ -4,7 +4,7 @@ package utils;
  * Une classe pour l'implémentation de la génération des générateurs de mots de
  * passes jetables pour la méthode HOTP.
  * 
- * @author celtic
+ * @author Gaëtan Ferry
  */
 public class HOTP extends OTPGenerator {
 	
@@ -20,9 +20,9 @@ public class HOTP extends OTPGenerator {
 	/**
 	 * Construit un générateur d'OTP HOTP.
 	 * 
-	 * @param count La valeur du compteur pour le generateur.
-	 * @param key La clef secrete pour la generation.
-     * @param digits Le nombre de chiffre composant les OTP générés.
+	 * @param count La valeur du compteur pour le générateur.
+	 * @param key La clef secrète pour la génération.
+     * @param digits Le nombre de chiffres composant les OTP générés.
 	 */
 	public HOTP(long count, ISecret key, int digits) {
         super(digits);
@@ -36,7 +36,7 @@ public class HOTP extends OTPGenerator {
     /**
      * Le constructeur par défaut avec compteur à 0 et les OTP de longueur 
      * minimale.
-     * @param key La clef secrete pour la generation.
+     * @param key La clef secrète pour la génération.
      */
     public HOTP(ISecret key) {
         super();

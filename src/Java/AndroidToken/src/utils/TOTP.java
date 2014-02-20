@@ -6,7 +6,7 @@ import java.util.Date;
  * Une classe pour l'implémentation de la génération des générateurs de
  * mots de passes jetables pour la méthode TOTP.
  * 
- * @author celtic
+ * @author Gaëtan Ferry
  */
 public class TOTP extends OTPGenerator {
 
@@ -58,7 +58,7 @@ public class TOTP extends OTPGenerator {
 	 * Le constructeur par défaut, avec OTP de longueur minimale.
 	 * 
 	 * @param key
-	 *            La clef secrete pour la generation.
+	 *            La clef secrète pour la generation.
 	 */
 	public TOTP(ISecret key) {
 		super();
@@ -83,7 +83,7 @@ public class TOTP extends OTPGenerator {
 
 	@Override
 	/**
-	 * Le compteur est fixé sur le temps. Cette méthode n'execute rien.
+	 * Le compteur est fixé sur le temps. Cette méthode n'exécute rien.
 	 */
 	public void increaseCount() {
 		// Rien
