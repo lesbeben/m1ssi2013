@@ -2,12 +2,12 @@ package utils;
 
 /**
  * Une classe abstraite pour les générateurs d'OTP.
- * Cette classe implémente le type ISecret définit dans l'interface IOTP.java.
+ * Cette classe implémente le type ISecret défini dans l'interface IOTP.java.
  * La taille des OTP calculés par cette classe doit être comprise entre 6 et 8
  * caractères.
  * 
  * @post MIN_DIGITS <= |generer()| <= MAX_DIGITS
- * @author celtic
+ * @author Gaëtan Ferry
  */
 public abstract class OTPGenerator implements IOTP {
 
@@ -23,7 +23,7 @@ public abstract class OTPGenerator implements IOTP {
     private int digits;
 
     /**
-     * Construit un générateur d'otp.
+     * Construit un générateur d'OTP.
      * 
      * @param digits le nombre de chiffres composant les OTP générés
      */
@@ -36,7 +36,7 @@ public abstract class OTPGenerator implements IOTP {
 
     /**
      * Le constructeur par défaut.
-     * Fixe la taille des OTP générés 6.
+     * Fixe la taille des OTP générés à 6.
      */
     public OTPGenerator() {
         this.digits = MIN_DIGITS;

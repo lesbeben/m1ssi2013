@@ -20,10 +20,10 @@ public final class Utils {
 
 	/**
 	 * Retourne la troncature de bytes selon l'algo donné dans la rfc 4226.
-	 * Le bit de signe est éffacé pour éviter les incohérence dues au signe.
+	 * Le bit de signe est éffacé pour éviter les incohérences dues au signe.
 	 * 
 	 * @param bytes
-	 *            Une chaine d'octet de longueure 160 bits
+	 *            Une chaine d'octet de longueur 160 bits
 	 * @return Une chaine de 32 bits avec le bit de poids fort à 0
 	 */
 	public static byte[] truncate(byte[] bytes) {
@@ -41,12 +41,12 @@ public final class Utils {
 	}
 
 	/**
-	 * Retourne la valeure décimale conrespondant à la conversion du binaire
+	 * Retourne la valeur décimale correspondant à la conversion du binaire
 	 * vers le décimal.
 	 * 
 	 * @pre bytes != null
 	 * @param bytes
-	 *            une chaine de d'octet non null
+	 *            une chaine d'octets non null
 	 * @return la conversion en décimal
 	 */
 	public static int convert(byte[] bytes) {
@@ -61,14 +61,14 @@ public final class Utils {
 	}
 
 	/**
-	 * Calcul la valeur de HMAC SHA1.
+	 * Calcule la valeur de HMAC SHA1.
 	 * 
 	 * @pre key != null
 	 * @pre key.getSecret != null
 	 * @pre count >= 0
 	 * 
 	 * @param key
-	 *            la clef secrete
+	 *            la clef secrète
 	 * @param count
 	 *            le compteur pour le calcul
 	 * @returnLa valeur de hmac_sha1(key, count)
