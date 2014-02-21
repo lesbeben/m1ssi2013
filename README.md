@@ -6,18 +6,27 @@ Projet Annuel de Master 1 SSI: Groupe 1 (OTP)
 Liste À-FAIRE :
 ---
 
-### Première Itération ###
+### Deuxième Itération ###
+
+Le "thème" de cette itération est la gestion de comptes multiples.
+En effet le Token doit pouvoir permettre de s'authentifier
+pour différents services et le système hôte doit pouvoir
+gérer plusieurs utilisateurs.
+
 Équipe C :
-- Fichier secret.c
-- Fichier utils.c
-- Fichier TOTP.c
-- Fichier HOTP.c
+ - Rédaction des headers (Damien).
+ - Rédaction des tests (Claire, Adrien, Damien).
+ - Réfléxion format de stockage (Équipe complète)
+ - Rédaction des corps de fonctions (Équipe complète).
 
 Équipe Java:
-- Fichier OTPGenerator.java
-- Fichier HOTP.java
-- Fichier TOTP.java
-- Fichier Utils.java
+ - Voir Yves et Gaëtan !
+
+Précédemment :
+---
+
+- Bibliothèques de génération hotp + totp C: ok.
+- Classes de génération hotp + totp Java: ok.
 
 Paramètres recommandés
 ---
