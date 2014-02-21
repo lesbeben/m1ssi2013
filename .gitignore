@@ -1,9 +1,17 @@
 # Fichiers temporaires
 *~
+*.back*
+#.*#
 
 # Binaires compilés
 *.o
 *.so
+
+# Bibliothèques C
+*.a
+
+# Fichiers java compilés
+*.class
 
 # Documentation/LaTeX compilée
 *.pdf
@@ -22,3 +30,10 @@
 
 # Créé par dolphin
 .directory
+
+# Fichiers cmakefiles
+*CMakeFiles*
+
+# Fichiers générés par des IDE
+*.kdev4
+*.metadata*

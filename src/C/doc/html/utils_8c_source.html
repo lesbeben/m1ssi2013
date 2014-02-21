@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>OTP:  Fichier source de utils/utils.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">OTP
+   </div>
+   <div id="projectbrief">Étude et implémentation de protocoles de mot de passes jetable</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.6 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&#160;de&#160;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Variables&#160;globale</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('utils_8c_source.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Structures de données</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Définitions de type</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">utils.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="utils_8c.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno"><a class="line" href="utils_8c.html#a78c99ffd76a7bb3c8c74db76207e9ab4">    1</a></span>&#160;<span class="preprocessor">#define _XOPEN_SOURCE 700</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno"><a class="line" href="utils_8c.html#ad3d8a3bd0c0b677acef144f2c2ef6d73">    2</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define _BSD_SOURCE</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;string.h&gt;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;openssl/sha.h&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="utils_8h.html">utils.h</a>&quot;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;endian.h&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
+<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="utils_8c.html#ad3863db83de5c06d3f80a6cd55098ef1">   10</a></span>&#160;<span class="preprocessor">#define IPAD 0x36</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="utils_8c.html#afa18b9d89726054d7001c4872093591c">   11</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define OPAD 0x5c</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="utils_8c.html#ade452aa7427f2aed9922bcbf930ad191">   12</a></span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define HMAC_KEY_LENGTH 64</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="utils_8h.html#ae9e48aea534968bc157ae9774bbb1bb7">   15</a></span>&#160;<span class="keywordtype">char</span>* <a class="code" href="utils_8c.html#ae9e48aea534968bc157ae9774bbb1bb7">HMAC_SHA1</a>(uint64_t count, <a class="code" href="structsecret__struct.html">secret</a> key, <span class="keywordtype">char</span>* buffer) {</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="comment">// Vérification de préconditions</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keywordflow">if</span> ((key == NULL) || (count &lt; 0) || (buffer == NULL)) {</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="keywordflow">return</span> NULL;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    }</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="comment">//Buffer de gestion du secret.</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> * temporarySecret;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordflow">if</span> (key-&gt;<a class="code" href="structsecret__struct.html#a9f59b34b1f25fe00023291b678246bcc">length</a> == <a class="code" href="utils_8c.html#ade452aa7427f2aed9922bcbf930ad191">HMAC_KEY_LENGTH</a>) {</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        temporarySecret = (<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *)key-&gt;<a class="code" href="structsecret__struct.html#aff2566f4c366b48d73479bef43ee4d2e">buffer</a>;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        temporarySecret = malloc(<a class="code" href="utils_8c.html#ade452aa7427f2aed9922bcbf930ad191">HMAC_KEY_LENGTH</a> * <span class="keyword">sizeof</span>(<span class="keywordtype">char</span>));</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        memset(temporarySecret, 0, <a class="code" href="utils_8c.html#ade452aa7427f2aed9922bcbf930ad191">HMAC_KEY_LENGTH</a>);</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keywordflow">if</span> (key-&gt;<a class="code" href="structsecret__struct.html#a9f59b34b1f25fe00023291b678246bcc">length</a> &gt; 64) {</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;            SHA1((<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *)key-&gt;<a class="code" href="structsecret__struct.html#aff2566f4c366b48d73479bef43ee4d2e">buffer</a>, key-&gt;<a class="code" href="structsecret__struct.html#a9f59b34b1f25fe00023291b678246bcc">length</a>, temporarySecret);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            memcpy(temporarySecret, key-&gt;<a class="code" href="structsecret__struct.html#aff2566f4c366b48d73479bef43ee4d2e">buffer</a>, key-&gt;<a class="code" href="structsecret__struct.html#a9f59b34b1f25fe00023291b678246bcc">length</a>);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        }</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    }</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="comment">// Copie du buffer pour les opérations XOR</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> xorSecretIpad[<a class="code" href="utils_8c.html#ade452aa7427f2aed9922bcbf930ad191">HMAC_KEY_LENGTH</a> + <span class="keyword">sizeof</span>(uint64_t)];</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> xorSecretOpad[<a class="code" href="utils_8c.html#ade452aa7427f2aed9922bcbf930ad191">HMAC_KEY_LENGTH</a> + SHA_DIGEST_LENGTH];</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="comment">//On passe le compteur en représentation réseau.</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    uint64_t tmpCounter = htobe64(count);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="comment">// XOR BIT A BIT K et IPAD, K et OPAD.</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="utils_8c.html#ade452aa7427f2aed9922bcbf930ad191">HMAC_KEY_LENGTH</a>; i++) {</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        xorSecretIpad[i] = temporarySecret[i] ^ <a class="code" href="utils_8c.html#ad3863db83de5c06d3f80a6cd55098ef1">IPAD</a>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        xorSecretOpad[i] = temporarySecret[i] ^ <a class="code" href="utils_8c.html#afa18b9d89726054d7001c4872093591c">OPAD</a>;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    }</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="comment">//On concatène count à notre xor bit à bit entre k et ipad</span></div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    memcpy(xorSecretIpad + HMAC_KEY_LENGTH, &amp;tmpCounter, <span class="keyword">sizeof</span>(uint64_t));</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="comment">// On hache le tout et on le mets à la suite du xor bit à bit de</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="comment">// la clé et de opad.</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    SHA1(xorSecretIpad, HMAC_KEY_LENGTH + <span class="keyword">sizeof</span>(uint64_t),</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;         xorSecretOpad + HMAC_KEY_LENGTH);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="comment">// On hache une dernière fois et on rempli buffer avec ce haché.</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    SHA1(xorSecretOpad, HMAC_KEY_LENGTH + SHA_DIGEST_LENGTH, (<span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>*) buffer);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordflow">return</span> buffer;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="utils_8h.html#a6bd20a0a2419c2f602484a04c25f90e6">   58</a></span>&#160;int32_t <a class="code" href="utils_8c.html#a6bd20a0a2419c2f602484a04c25f90e6">extractOTP</a>(<span class="keywordtype">char</span>* hash) {</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordflow">if</span> (hash == NULL) { <span class="comment">// Préconditions invalides.</span></div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="keywordflow">return</span> -1;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    }</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="comment">// On va d&#39;abord déterminer l&#39;offset pour cela on va manipuler le dernier</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="comment">// octet du haché, le masque 0xF0 sert a annuler les bits de poid faible.</span></div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="comment">// Ensuite on décale les bits de poids fort vers les bits de poid faible</span></div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="comment">// pour obtenir un entier sur 4 bits.</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordtype">char</span> offset = (hash[19] &amp; 0x0F);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="comment">// On va ensuite prendre les 4 premiers octets à partir de offset dans le</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="comment">// haché. On va pour cela utiliser le type int32_t qui compte 4 octets et</span></div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="comment">// initialisé ses octets avec la valeur contenu dans le haché a partir de</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="comment">// l&#39;offset.</span></div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    int32_t fullLengthOTP = 0;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 4; i++) {</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        fullLengthOTP &lt;&lt;= 8;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        fullLengthOTP = fullLengthOTP | (0xFF &amp; ((char) hash[offset + i]));</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    }</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="comment">// Ce masque permet de ne pas tenir compte du signe de l&#39;entier.</span></div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordflow">return</span> fullLengthOTP  &amp; 0x7FFFFFFF;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;}</div>
+<div class="ttc" id="utils_8c_html_ade452aa7427f2aed9922bcbf930ad191"><div class="ttname"><a href="utils_8c.html#ade452aa7427f2aed9922bcbf930ad191">HMAC_KEY_LENGTH</a></div><div class="ttdeci">#define HMAC_KEY_LENGTH</div><div class="ttdef"><b>Definition:</b> <a href="utils_8c_source.html#l00012">utils.c:12</a></div></div>
+<div class="ttc" id="utils_8c_html_ad3863db83de5c06d3f80a6cd55098ef1"><div class="ttname"><a href="utils_8c.html#ad3863db83de5c06d3f80a6cd55098ef1">IPAD</a></div><div class="ttdeci">#define IPAD</div><div class="ttdef"><b>Definition:</b> <a href="utils_8c_source.html#l00010">utils.c:10</a></div></div>
+<div class="ttc" id="utils_8c_html_a6bd20a0a2419c2f602484a04c25f90e6"><div class="ttname"><a href="utils_8c.html#a6bd20a0a2419c2f602484a04c25f90e6">extractOTP</a></div><div class="ttdeci">int32_t extractOTP(char *hash)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8c_source.html#l00058">utils.c:58</a></div></div>
+<div class="ttc" id="utils_8c_html_afa18b9d89726054d7001c4872093591c"><div class="ttname"><a href="utils_8c.html#afa18b9d89726054d7001c4872093591c">OPAD</a></div><div class="ttdeci">#define OPAD</div><div class="ttdef"><b>Definition:</b> <a href="utils_8c_source.html#l00011">utils.c:11</a></div></div>
+<div class="ttc" id="structsecret__struct_html"><div class="ttname"><a href="structsecret__struct.html">secret_struct</a></div><div class="ttdef"><b>Definition:</b> <a href="secret_8h_source.html#l00006">secret.h:6</a></div></div>
+<div class="ttc" id="utils_8h_html"><div class="ttname"><a href="utils_8h.html">utils.h</a></div></div>
+<div class="ttc" id="utils_8c_html_ae9e48aea534968bc157ae9774bbb1bb7"><div class="ttname"><a href="utils_8c.html#ae9e48aea534968bc157ae9774bbb1bb7">HMAC_SHA1</a></div><div class="ttdeci">char * HMAC_SHA1(uint64_t count, secret key, char *buffer)</div><div class="ttdef"><b>Definition:</b> <a href="utils_8c_source.html#l00015">utils.c:15</a></div></div>
+<div class="ttc" id="structsecret__struct_html_aff2566f4c366b48d73479bef43ee4d2e"><div class="ttname"><a href="structsecret__struct.html#aff2566f4c366b48d73479bef43ee4d2e">secret_struct::buffer</a></div><div class="ttdeci">char * buffer</div><div class="ttdef"><b>Definition:</b> <a href="secret_8h_source.html#l00010">secret.h:10</a></div></div>
+<div class="ttc" id="structsecret__struct_html_a9f59b34b1f25fe00023291b678246bcc"><div class="ttname"><a href="structsecret__struct.html#a9f59b34b1f25fe00023291b678246bcc">secret_struct::length</a></div><div class="ttdeci">int length</div><div class="ttdef"><b>Definition:</b> <a href="secret_8h_source.html#l00008">secret.h:8</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_cbdb8362360e11eafe2fa3bc74cf0ffd.html">utils</a></li><li class="navelem"><a class="el" href="utils_8c.html">utils.c</a></li>
+    <li class="footer">Généré le Vendredi 21 Février 2014 02:00:14 pour OTP par
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
+  </ul>
+</div>
+</body>
+</html>

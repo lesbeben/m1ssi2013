@@ -133,34 +133,83 @@ La revue de code sera effectuée régulièrement	par les binômes sur le code de
 		        \item [Produit livrable :] Rapport.
 		        \item [Responsabilité :] Toute l'équipe.
             \end{description}
-	    \item [Étape 2 :] Implémentation des bibliothèques outils
+	    \item [Étape 2 :] Algorithmes de calcul des OTP en C
 		    \begin{description}
-		        \item [Objectif :] Développer la boite à outils.
-		        \item [Activité :] Communication client/serveur, fonctions de hachage, HMAC.
-		        \item [Produit livrable :] Documentation.
-		        \item [Responsabilité :] Toute l'équipe.
-		    \end{description}
-	    \item [Étape 3 :] Implémentation des modules OTP
-		    \begin{description}
-		        \item [Objectif :] Avoir des bibliothèques de calcul et de vérification d'OTP.
+		        \item [Objectif :] Développer une bibliothèque capable de générer des OTP.
 		        \item [Activité :] Suivre les algorithmes sélectionnés (conformément aux RFC).
-		        \item [Produit livrable :] Documentation.
-		        \item [Responsabilité :] Par groupes.
+		        \item [Produit livrable :] Bibliothèque C.
+		        \item [Responsabilité :] La moitiers de l'équipe.
 		    \end{description}
-	    \item [Étape 4 :] Programmer les tokens (si nécessaire, selon le protocole)
+	    \item [Étape 3 :] Algorithmes de calcul des OTP en Java
+		    \begin{description}
+		        \item [Objectif :] Développer une bibliothèque capable de générer des OTP.
+		        \item [Activité :] Suivre les algorithmes sélectionnés (conformément aux RFC).
+		        \item [Produit livrable :] Bibliothèque Java.
+		        \item [Responsabilité :] La moitiers de l'équipe.
+		    \end{description}
+	    \item [Étape 4 :] Implémentation de la gestion des utilisateurs en C
+		    \begin{description}
+		        \item [Objectif :] Pouvoir gérer des utilisateurs.
+		        \item [Activité :] Créer la possibilité d'administrer les utilisateurs.
+		        \item [Produit livrable :] Application de gestion utilisateur.
+		        \item [Responsabilité :] La moitiers de l'équipe.
+		    \end{description}
+	    \item [Étape 5 :] Implémentation de la gestion des Tokens en Java
 		    \begin{description}
 		        \item [Objectif :] Fournir un générateur d'OTP.
 		        \item [Activité :] Intégration des outils et des modules de calculs d'OTP dans une IHM.
 		        \item [Produit livrable :] Les tokens.
-		        \item [Responsabilité :]  Par groupes.
+		        \item [Responsabilité :]  La moitiers de l'équipe.
 		    \end{description}
-	    \item [Étape 5 :] Développer un serveur d'authentification et un client
+	    \item [Étape 6 :] Implémentation de la vérification des OTP en C
 		    \begin{description}
-		        \item [Objectif :] Permettre à un utilisateur de s'authentifier sur un service.
-		        \item [Activité :] Intégration des modules de vérification d'OTP.
-		        \item [Produit livrable :] Serveur d'authentification + client.
-		        \item [Responsabilité :] Par groupes.
-	        \end{description}
+		        \item [Objectif :] Permettre la vérification de la validité d'un OTP.
+		        \item [Activité :] Mettre en place l'algorithme de comparaison de l'OTP reçut avec les données stockées.
+		        \item [Produit livrable :] Module de vérification.
+		        \item [Responsabilité :] La moitiers de l'équipe.
+	            \end{description}
+	    \item [Étape 7 :] Création du GUI pour le Token android en Java
+		    \begin{description}
+		        \item [Objectif :] Fournir une interface au token.
+		        \item [Activité :] Développer le GUI pour le Token.
+		        \item [Produit livrable :] Les tokens.
+		        \item [Responsabilité :]  La moitiers de l'équipe.
+		    \end{description}
+	    \item [Étape 8 :] Déploiment du Token sur SmartPhone
+		    \begin{description}
+		        \item [Objectif :] Token utilisable sur SmartPhone.
+		        \item [Activité :] Intégrer le Token à un SmartPhone.
+		        \item [Produit livrable :] Les tokens.
+		        \item [Responsabilité :]  La moitiers de l'équipe.
+		    \end{description}
+	    \item [Étape 9 :] Implémentation de la fonction d'authentification sur PAM
+		    \begin{description}
+		        \item [Objectif :] Permettre une connexion avec un OTP.
+		        \item [Activité :] Développement d'un modul d'authentification.
+		        \item [Produit livrable :] Le modul d'authentification.
+		        \item [Responsabilité :]  La moitiers de l'équipe.
+		    \end{description}
+	    \item [Étape 10 :] Création d'utilitaire en ligne de commande
+		    \begin{description}
+		        \item [Objectif :] Effectuer des opérations en ligne de commande.
+		        \item [Activité :] Créer de nouvelles commandes.
+		        \item [Produit livrable :] L'utilitaire.
+		        \item [Responsabilité :]  La moitiers de l'équipe.
+		    \end{description}
+	    \item [Étape 11 :] Mise à jour du secret via PAM
+		    \begin{description}
+		        \item [Objectif :] Permettre la modification du secret.
+		        \item [Activité :] Développement du module PAM permettant la modification du secret.
+		        \item [Produit livrable :] Module PAM de mise à jour du secret.
+		        \item [Responsabilité :]  La moitiers de l'équipe.
+		    \end{description}
+	    \item [Étape 12 :] Tests finaux, crash-test
+		    \begin{description}
+		        \item [Objectif :] Démontrer la force du système.
+		        \item [Activité :] Tester l'application dans son ensemble et tenter des attaques sur le système.
+		        \item [Produit livrable :] Le produit final.
+		        \item [Responsabilité :]  Léquipe.
+		    \end{description}
     \end{description}
 \newpage
 %---------------------------------------------------------------------------------------------------------------------------------------------
@@ -198,16 +247,17 @@ La revue de code sera effectuée régulièrement	par les binômes sur le code de
 	Pour rappel, le projet peut être décomposé en 11 tâches distinctes :
 	\begin{itemize}
 	  \item Réalisation de l'état de l'art.
-	  \item Implémentation des outils pour le développement en C.
-	  \item Implémentation des outils pour le développement en JAVA.
-	  \item Implémentation des algorithmes pour le calcul des OTP en C.
-	  \item Implémentation des algorithmes pour le calcul des OTP en JAVA.
-	  \item Implémentation des client/serveur d'authentification en C.
-	  \item Développement des tokens en C.
-	  \item Développement des tokens en JAVA.
-	  \item Mise en relation des éléments UNIX/UNIX.
-	  \item Mise en relation des éléments ANDROID/UNIX.
-	  \item Test finaux.
+	  \item Algorithmes de calcul des OTP en C.
+	  \item Algorithmes de calcul des OTP en JAVA.
+	  \item Implémentation de la gestion des utilisateurs en C.
+	  \item Implémentation de la gestion des Tokens en Java.
+	  \item Implémentation de la vérification des OTP en C.
+	  \item Création du GUI pour le Token android en Java.
+	  \item Déploiment du Token sur SmartPhone.
+	  \item Implémentation de la fonction d'authentification sur PAM.
+	  \item Création d'utilitaire en ligne de commande.
+	  \item Mise à jour du secret via PAM.
+	  \item Test finaux, crash-test.
 	\end{itemize}
 
 
@@ -317,46 +367,91 @@ La revue de code sera effectuée régulièrement	par les binômes sur le code de
 		\item[Intervenants :] Toute l'équipe.
 	\end{description}
 	\vfill
-	\item Création des outils de développement:
+	\item Algorithmes de calcul des OTP en C et Java:
 	\begin{description}
-		\item[Objectifs :] Fournir des bibliothèques de fonctions nécessaires à la réalisation des étapes suivantes
-		\item[Prévisions :] Du 21/01/14 au 11/02/14 - État de l'art terminé.
+		\item[Objectifs :] Concevoir des outils de calcul et de vérification d'OTP.
+		\item[Prévisions :] Du 21/01/14 au 14/02/14 - État de l'art terminé.
 		\item[Objet des vérifications :] Compilation du code + Tests.
 		\item[Modalité de contrôle :] Documentation à remettre au client.
 		\item[Intervenants :] Par groupes.
 	\end{description}
 	\vfill
-	\item Implémentation des algorithmes de calcul des OTP:
+	\item Implémentation de la gestion des utilisateurs en C:
 	\begin{description}
-		\item[Objectifs :] Concevoir des outils de calcul et de vérification d'OTP.
-		\item[Prévisions :] Du 11/02/14 au 13/03/14 - Outils de développement disponibles.
+		\item[Objectifs :] Concevoir des outils de gestion des utilisateurs.
+		\item[Prévisions :] Du 15/02/14 au 07/03/14 - Algorithmes de calcul disponibles.
 		\item[Objet des vérifications :] Compilation du code + tests.
-		\item[Modalité de contrôle :] Documentation à remettre au client.
+		\item[Modalité de contrôle :] Module de gestion utilisateurs à remettre au client.
 		\item[Intervenants :] Par groupes.
 	\end{description}
 	\vfill
-	\item Création des tokens:
+	\item Implémentation de la gestion des Tokens en Java:
 	\begin{description}
 		\item[Objectifs :] Fournir des générateurs d'OTP.
-		\item[Prévisions :] Du 13/03/14 au 12/04/14 - Implémentation des algorithmes terminée.
+		\item[Prévisions :] Du 15/02/14 au 07/03/14 - Algorithmes de calcul disponibles.
 		\item[Objet des vérifications :] Retour d'un OTP respectant les spécifications.
-		\item[Modalité de contrôle :] Manuel d'utilisation à remettre au client.
+		\item[Modalité de contrôle :] Manuel d'utilisation et token à remettre au client.
 		\item[Intervenants :] Par groupes.
 	\end{description}
 	\vfill
-	\item Mise en relation des éléments:
+	\item Implémentation de la vérification des OTP en C:
 	\begin{description}
-		\item[Objectifs :] Faire fonctionner les outils développés précédemment en créant le serveur d'authentification et le client.
-		\item[Prévisions :] Du 27/04/14 au 04/05/14 - Tokens disponibles.
-		\item[Objet des vérifications :] Authentification avec succès.
-		\item[Modalité de contrôle :] Documentation à remettre au client.
+		\item[Objectifs :] Vérification de la validité d'un OTP reçut.
+		\item[Prévisions :] Du 08/03/14 au 28/03/14 - Gestion utilisateurs + Tokens disponibles.
+		\item[Objet des vérifications :] Compilation du code + tests.
+		\item[Modalité de contrôle :] Module de vérification des OTP à remettre au client.
 		\item[Intervenants :] Par groupes.
 	\end{description}
 	\vfill
-	\item Test finaux:
+	\item Création du GUI pour le Token android en Java:
+	\begin{description}
+		\item[Objectifs :] Fournir l'interface du token.
+		\item[Prévisions :] Du 08/03/14 au 28/03/14 - Gestion utilisateurs + Tokens disponibles.
+		\item[Objet des vérifications :] Compilation du code + tests.
+		\item[Modalité de contrôle :] Manuel d'utilisation et token à remettre au client.
+		\item[Intervenants :] Par groupes.
+	\end{description}
+	\vfill
+	\item Déploiment du Token sur SmartPhone:
+	\begin{description}
+		\item[Objectifs :] Token utilisable sur SmartPhone.
+		\item[Prévisions :] Du 29/03/14 au 04/04/14 - Vérification d'OTP disponible + Interface du token.
+		\item[Objet des vérifications :] Tests.
+		\item[Modalité de contrôle :] Token à remettre au client.
+		\item[Intervenants :] Par groupes.
+	\end{description}
+	\vfill
+	\item Implémentation de la fonction d'authentification sur PAM:
+	\begin{description}
+		\item[Objectifs :] Authentication à base d'OTP possible.
+		\item[Prévisions :] Du 29/03/14 au 18/04/14 - Vérification d'OTP disponible + Interface du token.
+		\item[Objet des vérifications :] Compilation du code + Tests.
+		\item[Modalité de contrôle :] Module PAM d'authentification à remettre au client.
+		\item[Intervenants :] Par groupes.
+	\end{description}
+	\vfill
+	\item Création d'utilitaire en ligne de commande:
+	\begin{description}
+		\item[Objectifs :] Lignes de commandes opérationnelles.
+		\item[Prévisions :] Du 05/04/14 au 18/04/14 - Vérification d'OTP disponible + Interface du token.
+		\item[Objet des vérifications :] Tests.
+		\item[Modalité de contrôle :] utilitaire à remettre au client.
+		\item[Intervenants :] Par groupes.
+	\end{description}
+	\vfill
+	\item Mise à jour du secret via PAM:
+	\begin{description}
+		\item[Objectifs :] Changement du secret possible.
+		\item[Prévisions :] Du 19/04/14 au 02/05/14 - Authentification + utilitaire en ligne de commande disponible.
+		\item[Objet des vérifications :] Compilation du code + Tests.
+		\item[Modalité de contrôle :] Module PAM de mise à jour du secret à remettre au client.
+		\item[Intervenants :] Par groupes.
+	\end{description}
+	\vfill
+	\item Test finaux, crash-test:
 	\begin{description}
 		\item[Objectifs :] Assurer une sécurité mi-forte (authentification à deux facteurs).
-		\item[Prévisions :] Du 04/05/14 au 10/05/14 - Authentifications possible.
+		\item[Prévisions :] Du 03/05/14 au 10/05/14 - Authentifications possibles.
 		\item[Objet des vérifications :] Résultat des tests positifs.
 		\item[Modalité de contrôle :] Rapport de tests + Rapport de projet à remettre au client.
 		\item[Intervenants :] Toute l'équipe.
