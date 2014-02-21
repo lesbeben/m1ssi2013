@@ -16,10 +16,10 @@
 \version{2.0}
 \relecteur{Adrien \bsc{Smondack}}
 \signataire{\bsc{Bardet} Magali}
-\date{Janvier 2014}
+\date{Février 2014}
 
-\histentry{2.1}{18/02/2014}{Version post état de l'art}
-\histentry{2.0}{16/01/2014}{Version pour la revue de lancement}
+\histentry{2.0}{18/02/2014}{Version post état de l'art}
+\histentry{1.2}{16/01/2014}{Version pour la revue de lancement}
 \histentry{1.1}{15/12/2013}{Ajout des modifications demandées par le client}
 \histentry{1.0}{01/12/2013}{Version relue et corrigée}
 \histentry{0.1}{21/11/2013}{Premier jet}
@@ -118,7 +118,7 @@ Ce document a pour but de préciser les détails techniques du logiciel final.
     \hline
     PR-L\_001 &
     Support de l'API POSIX pour le token, le client et le serveur &
-    Ceci va de paire avec le choix de GNU/Linux comme système d'exploitation,
+    Ceci va de pair avec le choix de GNU/Linux comme système d'exploitation,
     c'est une technologie libre et performante.\\
     \hline
     PR-L\_002 &
@@ -217,7 +217,7 @@ Ce document a pour but de préciser les détails techniques du logiciel final.
     
   \subsubsection{Services offerts}
     Ce module n'offre qu'un service, vérifier un OTP avec un secret
-    et un état. Ce module va s'appuyer sur les services offert par
+    et un état. Ce module va s'appuyer sur les services offerts par
     un générateur d'OTP et vérifier que les données correspondent.
     
   \subsubsection{Langage de programmation}
@@ -225,7 +225,7 @@ Ce document a pour but de préciser les détails techniques du logiciel final.
     
   \subsubsection{Procédé de développement}
   \begin{enumerate}
-   \item Développer les générateur d'OTP.
+   \item Développer les générateurs d'OTP.
    \item Développer une gestion des utilisateurs.
    \item Développer la fonction de vérification.
    \item Développer la fonction de resynchronisation.
@@ -234,9 +234,9 @@ Ce document a pour but de préciser les détails techniques du logiciel final.
   \subsubsection{Taille et complexité}
   La encore la taille et la complexité sont dépendantes de l'algorithme 
   choisi. Mais on peut estimer la taille et la complexité des Vérificateurs
-  étant comme identique à celle des générateur. De plus la présence d'une fonction
+  comme étant identique à celle des générateurs. De plus la présence d'une fonction
   de resynchronisation représente un  vecteur d'attaque (possibilité de synchroniser
-  sur une valeur non désirée) il faut ajouter un certain nombre de vérifications.
+  sur une valeur non désirée), il faut donc ajouter un certain nombre de vérifications.
   
   
 \subsection{Le module PAM}
@@ -268,16 +268,16 @@ Ce document a pour but de préciser les détails techniques du logiciel final.
   C'est un module PAM donc le langage est imposé, nous utiliserons le C.
   
 \subsubsection{Procédé de développement}
-  Pour la partie authentification, le module pam est complètement
+  Pour la partie authentification, le module PAM est complètement
   dépendant de la vérification des OTP qui elle est dépendante de la 
   génération d'OTP et de la gestion d'utilisateurs.
 
-  Pour la partie mise à jour de crédentiels il faut générer une clé aléatoire
+  Pour la partie mise à jour de crédentials il faut générer une clé aléatoire
   à l'aide de /dev/random puis la dériver.
   
 \subsubsection{Taille et complexité}
-  Cet partie correspond a la liaison des étapes précédente sa taille et
-  sa complexité sont donc assez faible.
+  Cette partie correspond à la liaison des étapes précédentes. Sa taille et
+  sa complexité sont donc assez faibles.
   
 \subsection{Justification des choix techniques}
 \subsubsection{Le langage C}
@@ -307,9 +307,9 @@ devra entrer le secret lui même sur le token.
 \section{Authentification}
 \subsection{Principe}
 L'utilisateur tente de s'authentifier sur un service, ce service appelle PAM. 
-PAM va charger les modules correspondant à la configuration pour le service.
-Et vérifier l'otp passé au service. Dans le cas ou le token est désynchronisé
-avec le module PAM un opération de resynchronisation à lieu.
+PAM va charger les modules correspondants à la configuration pour le service.
+Et vérifier l'OTP passé au service. Dans le cas où le token est désynchronisé
+avec le module PAM une opération de resynchronisation a lieu.
 
 \subsection{Resynchronisation}
 \subsubsection{Principe}
@@ -319,13 +319,13 @@ mots de passe jetables générés.
 \subsubsection{Fonctionnement}
 \begin{enumerate}
     \item L'utilisateur essaie de s'authentifier.
-    \item L'otp fourni par l'utilisateur n'est pas valide.
+    \item L'OTP fourni par l'utilisateur n'est pas valide.
     \item Deux cas possibles:
     \begin{itemize}
-    	\item L'otp correspond à un otp dans une fenêtre de $n$ otp.
+    	\item L'OTP correspond à un OTP dans une fenêtre de $n$ OTP.
     		auquel cas les données de l'utilisateur dans le fichier
     		/var/otpwd sont resynchronisées.
-    	\item L'otp ne correspond pas un de ces otp.
+    	\item L'OTP ne correspond pas un de ces OTP.
     \end{itemize}
 \end{enumerate}
 \includegraphics[width=\textwidth]{../graphics/resynchronisation.jpg}

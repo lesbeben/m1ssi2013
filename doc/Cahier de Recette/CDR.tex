@@ -14,10 +14,10 @@
 \version{2.0}
 \relecteur{Maxime \bsc{Michotte}}
 \signataire{\bsc{Bardet} Magali}
-\date{Janvier 2014}
+\date{Février 2014}
 
-\histentry{2.1}{20/02/2014}{Version post état de l'art.}
-\histentry{2.0}{16/01/2014}{Version pour la revue de lancement.}
+\histentry{2.0}{20/02/2014}{Version post état de l'art.}
+\histentry{1.2}{16/01/2014}{Version pour la revue de lancement.}
 \histentry{1.1}{15/12/2013}{Version relue et corrigée.}
 \histentry{1.0}{29/11/2013}{Version initiale.}
 
@@ -75,7 +75,7 @@
     {[RFC11]} & {TOTP: Time-Based One-Time Password Algorithm \href{http://tools.ietf.org/html/rfc6238}{http://tools.ietf.org/html/rfc6238}, 2011.}
     \tabularnewline
     \\
-    {[goo]} & {Google Authentificator \href{https://code.google.com/p/google-authenticator/}{https://code.google.com/p/google-authenticator/}.}
+    {[goo]} & {Google Authenticator \href{https://code.google.com/p/google-authenticator/}{https://code.google.com/p/google-authenticator/}.}
     \tabularnewline
     \\
   \end{tabular}
@@ -86,17 +86,17 @@
   indépendamment. Les tests sur Android seront réalisés sur un terminal mobile muni d'un processeur mono-cœur ARM v6 cadencé à 832MHz, disposant de 278 Mo de mémoire et tournant sur un 
   système d'exploitation Android 2.3.6.
   
-  Afin de tester le module PAM, nous le brancherons sur plusieurs application compatibles. Nous 
+  Afin de tester le module PAM, nous le brancherons sur plusieurs applications compatibles. Nous 
 utiliserons en pratique un gestionnaire de login (Slim, GDM, KDM ...) ainsi que le logiciel openSSH.
-Ces applications seront installées à la fois sur des machines personnel et sur un serveur dont les 
+Ces applications seront installées à la fois sur des machines personnelles et sur un serveur dont les 
 spécification techniques seront détaillées ultérieurement.
   
   Dans l'ensemble, les tests seront effectués sur des configurations modestes afin d'assurer la performance sur la plupart des machines actuelles et futures.
   
-  Les données utilisées pour les tests seront une succession de valeurs de mots de passe jetable successivement correctes, erronées et incohérentes.
+  Les données utilisées pour les tests seront une succession de valeurs de mots de passe jetables successivement correctes, erronées et incohérentes.
   
   \section{Responsabilités}
-  La création des procédures de test est laissée aux soins des responsables qualité de l'équipe. Ces procédures seront exécutés conformément au fonctionnement d'eXtreme Programming. A savoir : les tests sont exécutés tout au long du développement par les équipes. Chaque équipe travaillant au développement d'un composant est chargé de tester celui-ci continuellement et de publier les résultats de ceux-ci.
+  La création des procédures de test est laissée aux soins des responsables qualité de l'équipe. Ces procédures seront exécutées conformément au fonctionnement d'eXtreme Programming. A savoir : les tests sont exécutés tout au long du développement par les équipes. Chaque équipe travaillant au développement d'un composant est chargée de tester celui-ci continuellement et de publier les résultats des tests.
   
   Afin d'assurer l'appropriation collective du code source, toute l'équipe peut signaler une anomalie révélée au cours du développement : soit elle est résolue par le même acteur, soit l'acteur transmet les résultats 
 des tests à une autre équipe afin que celle-ci travaille à la réparation de l'anomalie.
@@ -127,18 +127,18 @@ des tests à une autre équipe afin que celle-ci travaille à la réparation de 
    \item Ajout d'une entrée au journal de test précisant la date du test, la référence du mémo, la référence de l'objet testé ainsi que la référence de l'exigence de 
    qualité contrariée.
    \item Diffusion de la note à l'équipe de développement.
-   \item Une personne est désigné pour corriger l'anomalie.
-   \item La personne vérifie la porté de l'anomalie, puis la corrige.
+   \item Une personne est désignée pour corriger l'anomalie.
+   \item La personne vérifie la portée de l'anomalie, puis la corrige.
    \item Une deuxième personne vérifie que l'anomalie est bien corrigée.
    \item Une fois le feu vert donné, établir une contre-note portant le même identifiant et précisant les raisons supposées 
    de l'anomalie ainsi que les contremesures mises en place.
   \end{itemize}
   
-  Dans la pratique, la gestions des anomalies sera faite à l'aide de l'outils \emph{issue tracker} de
-  l'outil d'hébergement Github. Cette outil permet la création de file de discussion associé à un bug
-  de l'application. Il laisse aussi la possibilité au collaborateurs du projet de prendre en charge 
+  Dans la pratique, la gestions des anomalies sera faite à l'aide de l'outil \emph{issue tracker} de
+  la plate-forme d'hébergement Github. Cet outil permet la création de files de discussion associées à un bug
+  de l'application. Il laisse aussi la possibilité aux collaborateurs du projet de prendre en charge 
   une \emph{issue} particulière. L'ensemble des \emph{issues} ouvertes est conservé par Github ainsi
-  que les fils de discussion associés permettant de parcourir l'historique des bugs du projet.
+  que les files de discussion associés permettant de parcourir l'historique des bugs du projet.
 
   \section{Procédures de test}  
   \begin{center}
@@ -165,7 +165,7 @@ des tests à une autre équipe afin que celle-ci travaille à la réparation de 
       \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
       \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
       1 & Ecrire un script utilisant la fonction de vérification du mot de passe & - & - & - \\ 
-      2 & Appeler le script sur un otp valide et passé l'éxecutable dans la commande time &
+      2 & Appeler le script sur un otp valide et passer l'exécutable dans la commande time &
             Temps < 2s & EQ\_02 & OK \\
       3 & Réitérer l'opération avec un otp invalide & Temps < 2s & EQ\_02 & OK \\
       \hline
@@ -244,10 +244,10 @@ des tests à une autre équipe afin que celle-ci travaille à la réparation de 
       \hline
       Id Exigence STB & Méthode de vérification & Procédure utilisée & Commentaire\\ \hline
       EF\_02 & Associer un token au serveur. & 
-      & Le test de cette exigence dépend de l'implémentation de la méthode d'OTP. Elle sera détaillée dans une prochaine version.\\ \hline
+      & Le test de cette exigence dépend de l'implémentation de la méthode d'OTP. Il sera détaillé dans une prochaine version.\\ \hline
       EF\_03 & Demander un OTP au token et vérifier la validité de cet OTP & Procédure N° 1, 5 & \\ \hline
       EF\_04 & Vérifier qu'il y a connexion avec un OTP valide et qu'on est rejeté avec un OTP invalide. & Procédure N° 2 & \\ \hline
-      EF\_05 & Vérifier que les OTP de la fenêtre de resynchronistation sont accepter. & Procédure N° 6 & \\ \hline
+      EF\_05 & Vérifier que les OTP de la fenêtre de resynchronistation sont acceptés. & Procédure N° 6 & \\ \hline
       EP\_01 & Demander un OTP au token et vérifier la validité de cet OTP & Procédure N° 1, 5 & \\ \hline
       EP\_02 & Tester deux fois le même OTP & Procédure N° 5 & \\ \hline
       EP\_03 & Utilisation d'un logiciel \og{}die hard\fg{} pour vérifier l'aléatoirité des mots de passe. &  
