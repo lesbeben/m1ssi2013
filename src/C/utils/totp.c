@@ -11,7 +11,7 @@ int generateTOTP(secret key, int quantum, int len) {
         return -1;
     }
 
-    // On définit le compteur comme étant la première milliseconde dans
+    // On définit le compteur comme étant la première seconde dans
     // la fenêtre définit par le quantum.
     long counter = time(NULL);
     counter = counter / quantum;

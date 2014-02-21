@@ -5,6 +5,9 @@
 
 #define HMAC_SHA1_LENGTH 20
 
+/** \file
+ * Fichier d'en-tête de fonctions outils pour générer des OTP avec HMAC.
+ */
 
 /** Rempli le buffer passé en paramêtre avec le HMAC du secret.
  * D'après l'algorithme donné par la RFC 2104
