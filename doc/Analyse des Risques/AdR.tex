@@ -1,9 +1,8 @@
 \documentclass{../../res/univ-projet}
 
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
-
 
 \usepackage{multirow}
 
@@ -11,219 +10,206 @@
 \title{Analyse des Risques}
 \author{Adrien \bsc{Smondack}}
 \projet{M1SSI}
-\projdesc{Projet de gÈnÈration d'OTP}
+\projdesc{Projet de g√©n√©ration d'OTP}
 \filiere{M1SSI}
-\version{2.0}
+\version{2.1}
 \relecteur{Benjamin \bsc{Zigh}}
 \signataire{\bsc{Bardet} Magali}
-\date{Janvier 2014}
+\date{F√©vrier 2014}
 
+\histentry{2.1}{21/02/2014}{Version pour le 1er audit}
 \histentry{2.0}{16/01/2014}{Version pour la revue de lancement.}
-\histentry{1.1}{20/12/2013}{Version relue et corrigÈe.}
+\histentry{1.1}{20/12/2013}{Version relue et corrig√©e.}
 \histentry{1.0}{18/12/2013}{Version initiale.}
 
 \begin{document}
 \maketitle
 
 %------------------------------------------------------------------------------------------------------------------------------------------------------------------
-%-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-\section{…valuation des risques potentiels}
-
+\section{\'Evaluation des risques potentiels}
 \subsection{Classification des points durs selon leur importance}
-
 \begin{tabular}{| p{9cm} | p{5cm} |} 
 	\hline
-	\cellcolor{gray} Description & \cellcolor{gray} Membres concernÈs \\ \hline
-	\'Etude des RFC dÈcrivant les systËmes / \'Etat de l'art & Toute l'Èquipe \\ \hline
-	DÈmonstration de la sÈcuritÈ des systËmes implÈmentÈs & Resp. qualitÈ \\ \hline
-	Planifier l'Èvolution du projet & Chef de projet \\ \hline
-	Communication rÈguliËre avec le client & MOA \\ \hline
-	Formation/suivi des Èquipes & Resp. tech./qual., Chef de projet \\ \hline
-	Surveiller l'Èvolution des spÈcifications & MOA \\ \hline
-	Emploi de technologies spÈcifiques (Android, Java Card) & Toute l'Èquipe \\ \hline
-	Communication au sein de l'Èquipe & Chef de projet \\ \hline
-	Mutualisation des connaissances et des compÈtences & Toute l'Èquipe \\ \hline
-	Gestion globale du projet (documentation) & Toute l'Èquipe\\ \hline
-	Veiller aux besoins techniques des membres de l'Èquipe & Chef de projet \\ \hline
+	\cellcolor{gray} Description & \cellcolor{gray} Membres concern√©s \\ \hline
+	\'Etude des RFC d√©crivant les syst√®mes / \'Etat de l'art & Toute l'√©quipe \\ \hline
+	D√©monstration de la s√©curit√© des syst√®mes impl√©ment√©s & Resp. qualit√© \\ \hline
+	Planifier l'√©volution du projet & Chef de projet \\ \hline
+	Communication r√©guli√®re avec le client & MOA \\ \hline
+	Formation/suivi des √©quipes & Resp. tech./qual., Chef de projet \\ \hline
+	Surveiller l'√©volution des sp√©cifications & MOA \\ \hline
+	Emploi de technologies sp√©cifiques (Android, Java Card, PAM) & Toute l'√©quipe \\ \hline
+	Communication au sein de l'√©quipe & Chef de projet \\ \hline
+	Mutualisation des connaissances et des comp√©tences & Toute l'√©quipe \\ \hline
+	Gestion globale du projet (documentation) & Toute l'√©quipe\\ \hline
+	Veiller aux besoins techniques des membres de l'√©quipe & Chef de projet \\ \hline
 \end{tabular}
-%------------------------------------------------------------------------------------------------------------------------------------------------------------------
-\subsection{Points durs \& risques associÈs}
 
-\begin{tabular}{| p{8.5cm} | p{0.8cm} | p{4.7cm} |}
+%------------------------------------------------------------------------------------------------------------------------------------------------------------------
+\subsection{Points durs \& risques associ√©s}
+\begin{tabular}{| p{8.7cm} | p{0.8cm} | p{4.5cm} |}
 	\hline
-	\cellcolor{gray} Point dur 
-		& \multicolumn{2}{p{6cm} |}{\cellcolor{gray} Risques associÈs} \\ \hline
-			\cellcolor{lightgray} & \cellcolor{lightgray} Id & \cellcolor{lightgray} Description \\ \hline
-	\multirow{2}{*}{…tude des RFC dÈcrivant les systËmes / \'Etat de l'art} 
-		& R\_01 & Le dÈveloppement effectuÈ ne correspond pas aux RFC \\ \cline{2-3}
-		& R\_02 & \'Etat de l'art pas assez exhaustif \\ \hline
-	\multirow{2}{*}{DÈmonstration de la sÈcuritÈ des systËmes implÈmentÈs}
-		& R\_03 & Faille de sÈcuritÈ dÈcouverte aprËs test \\ \hline
-	\multirow{1}{*}{Planifier l'Èvolution du dÈveloppement du projet}
-		& R\_04 & ImpondÈrables (surcharge de travail) \\ \hline
-	\multirow{3}{*}{Communication rÈguliËre avec le client}
+	\cellcolor{gray} Point dur & \multicolumn{2}{p{6cm} |}{\cellcolor{gray} Risques associ√©s} \\ \hline
+	\cellcolor{lightgray} & \cellcolor{lightgray} Id & \cellcolor{lightgray} Description \\ 	\hline
+	\multirow{2}{*}{√âtude des RFC d√©crivant les syst√®mes / √âtat de l'art} 
+		& R\_01 & Le d√©veloppement effectu√© ne correspond pas aux RFC \\ \cline{2-3}
+		& R\_02 & √âtat de l'art pas assez exhaustif \\ \hline
+	\multirow{2}{*}{D√©monstration de la s√©curit√© des syst√®mes impl√©ment√©s}
+		& R\_03 & Faille de s√©curit√© d√©couverte apr√®s test \\ \hline
+	\multirow{1}{*}{Planifier l'√©volution du d√©veloppement du projet}
+		& R\_04 & Impond√©rables (surcharge de travail) \\ \hline
+	\multirow{3}{*}{Communication r√©guli√®re avec le client}
 		& R\_05 & Le client change ses objectifs \\ \cline{2-3}
-		& R\_06 & Passer ‡ cÙtÈ d'une demande du client \\ \cline{2-3}
+		& R\_06 & Passer √† c√¥t√© d'une demande du client \\ \cline{2-3}
 		& R\_07 & Les clients font faillite \\ \hline
-	\multirow{1}{*}{Formation / suivi des Èquipes}
-		& R\_08 & Retard d'une partie de l'Èquipe sur la comprÈhension thÈorique ou les compÈtences techniques \\ \hline
-	\multirow{2}{*}{Surveiller l'Èvolution des spÈcifications}
-		& R\_09 & SpÈcification incomplËte \\ \cline{2-3}
-		& R\_10 & SpÈcification trop exigeantes (ProblËme pour atteindre la performance dÈsirÈe) \\ \hline
-	\multirow{1}{*}{Emploi de technologies spÈcifiques (Android, Java Card)}
-		& R\_11 & ApprÈhension des nouvelles technologies plus longue que prÈvu \\ \hline
-	\multirow{2}{*}{Communication au sein de l'Èquipe}
-		& R\_12 & Chef de projet incompÈtent \\ \cline{2-3}
-		& R\_13 & Conflit au sein de l'Èquipe \\ \hline
-	\multirow{1}{*}{Mutualisation des connaissances et des compÈtences}
-		& R\_14 & DÈpart d'une ou plusieurs personnes clÈ du projet \\ \hline
+	\multirow{1}{*}{Formation / suivi des √©quipes}
+		& R\_08 & Retard d'une partie de l'√©quipe sur la compr√©hension th√©orique ou les comp√©tences techniques \\ \hline
+	\multirow{2}{*}{Surveiller l'√©volution des sp√©cifications}
+		& R\_09 & Sp√©cification incompl√®te \\ \cline{2-3}
+		& R\_10 & Sp√©cification trop exigeantes (Probl√®me pour atteindre la performance d√©sir√©e) \\ \hline
+	\multirow{2}{*}{Emploi de techno. sp√©cifiques (Android, Java Card, PAM)}
+		& R\_11 & Appr√©hension des nouvelles technologies plus longue que pr√©vu \\ \cline{2-3}
+		& R\_12 & Mauvaise appr√©hension des nouvelles technologies \\ \hline
+	\multirow{2}{*}{Communication au sein de l'√©quipe}
+		& R\_13 & Chef de projet incomp√©tent \\ \cline{2-3}
+		& R\_14 & Conflit/tension au sein de l'√©quipe \\ \hline
+	\multirow{1}{*}{Mutualisation des connaissances et des comp√©tences}
+		& R\_15 & D√©part d'une ou plusieurs personnes cl√© du projet \\ \hline
 	\multirow{3}{*}{Gestion globale du projet (documentation)}
-		& R\_15 & Phase de dÈveloppement plus longue que prÈvu \\ \cline{2-3}
-		& R\_16 & Le dÈveloppement effectuÈ ne correspond pas ‡ la demande du client \\ \cline{2-3}
-		& R\_17 & Sous estimation des efforts nÈcessaires ‡ la rÈalisation du projet \\ \hline
-	\multirow{2}{*}{Veiller aux besoins techniques des membres de l'Èquipe}
-		& R\_18 & Un membre se retrouve privÈ de ses outils de travail \\ \cline{2-3}
-		& R\_19 & ProblËme avec le git \\ \hline
+		& R\_16 & Phase de d√©veloppement plus longue que pr√©vu \\ \cline{2-3}
+		& R\_17 & Le d√©veloppement effectu√© ne correspond pas √† la demande du client \\ \cline{2-3}
+		& R\_18 & Sous estimation des efforts n√©cessaires √† la r√©alisation du projet \\ \hline
+	\multirow{2}{*}{Veiller aux besoins techniques des membres de l'√©quipe}
+		& R\_19 & Un membre se retrouve priv√© de ses outils de travail \\ \cline{2-3}
+		& R\_20 & Probl√®me avec le git \\ \hline
 \end{tabular}
 \newpage
 
-\subsection{CriticitÈ}
+\subsection{Criticit√©}
 	\begin{center}
-	\begin{tabular}{  c  p{2cm} | p{1.5cm} | p{1.5cm} | p{1.5cm} | p{1.5cm} |}
-	  \cline{3-6}
-	   & \multicolumn{1}{c |}{} & \multicolumn{4}{ c |}{ProbabilitÈ} \\ \cline{3 - 6}
-	   & & \cellcolor{lightgray} trËs faible & \cellcolor{lightgray} faible & \cellcolor{lightgray} moyenne & \cellcolor{lightgray} forte \\ \hline
-	   \multicolumn{1}{| c |}{\multirow{4}{*}{Impact}} & \cellcolor{lightgray} Acceptable &\cellcolor{green} &\cellcolor{green} &\cellcolor{green} &\cellcolor{green} \\ \cline{2-6}
-	   \multicolumn{1}{| c |}{} & \cellcolor{lightgray} PrÈoccupant &\cellcolor{green} &\cellcolor{green} &\cellcolor{green} & \cellcolor{red}\\ \cline{2-6}
-	   \multicolumn{1}{| c |}{} & \cellcolor{lightgray} Important &\cellcolor{green} &\cellcolor{green} &\cellcolor{red} & \cellcolor{red} \\ \cline{2-6}
-	   \multicolumn{1}{| c |}{} & \cellcolor{lightgray} Critique &\cellcolor{green} &\cellcolor{red} &\cellcolor{red} &\cellcolor{red} \\ \hline
-	\end{tabular}
+		\begin{tabular}{  c  p{2cm} | p{1.5cm} | p{1.5cm} | p{1.5cm} | p{1.5cm} |}
+	  		\cline{3-6}
+	   		& \multicolumn{1}{c |}{} & \multicolumn{4}{ c |}{Probabilit√©} \\ \cline{3 - 6}
+	   		& & \cellcolor{lightgray} tr√®s faible & \cellcolor{lightgray} faible & \cellcolor{lightgray} moyenne & \cellcolor{lightgray} forte \\ \hline
+		   \multicolumn{1}{| c |}{\multirow{4}{*}{Impact}} & \cellcolor{lightgray} Acceptable &\cellcolor{green} &\cellcolor{green} &\cellcolor{green} &\cellcolor{green} \\ \cline{2-6}
+		   \multicolumn{1}{| c |}{} & \cellcolor{lightgray} Pr√©occupant &\cellcolor{green} &\cellcolor{green} &\cellcolor{green} & \cellcolor{red}\\ \cline{2-6}
+	   		\multicolumn{1}{| c |}{} & \cellcolor{lightgray} Important &\cellcolor{green} &\cellcolor{green} &\cellcolor{red} & \cellcolor{red} \\ \cline{2-6}
+	   		\multicolumn{1}{| c |}{} & \cellcolor{lightgray} Critique &\cellcolor{green} &\cellcolor{red} &\cellcolor{red} &\cellcolor{red} \\ \hline
+		\end{tabular}
 	\end{center}
 
-
-%------------------------------------------------------------------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \section{Gestion des risques les plus importants}
-
 \subsection{Top 5}
-
 \subsubsection{Risque 5 :}
 	\begin{tabular}{| p{5cm} | p{2.5cm} | p{6.5cm} |} 
 		\hline
 		\multicolumn{3}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_08} \\ \hline
-		\cellcolor{lightgray}…vËnement/situation redoutÈ(e) & \multicolumn{2}{p{9cm}|}{Retard d'une partie de l'Èquipe sur la comprÈhension thÈorique ou les compÈtences techniques.} \\ \hline
-		\cellcolor{lightgray}Point dur associÈ & \multicolumn{2}{p{9cm}|}{Formation / suivi des Èquipes.} \\ \hline
-		\cellcolor{lightgray}Impact & \multicolumn{2}{p{9cm}|}{PrÈoccupant.} \\ \hline
-		\cellcolor{lightgray}ProbabilitÈ & \multicolumn{2}{p{9cm}|}{Forte.} \\ \hline
-		\cellcolor{lightgray}Critique & \multicolumn{2}{p{9cm}|}{\cellcolor{red} Oui}\\ \hline
-		\cellcolor{lightgray}Plan de rÈduction de risque & \multicolumn{2}{p{9cm}|}{Suivi rÈgulier des Èquipes par le responsable technique et le chef de projet.} \\ \hline
+		\cellcolor{lightgray} √âv√®nement/situation redout√©(e) & \multicolumn{2}{p{9cm}|}{Retard d'une partie de l'√©quipe sur la compr√©hension th√©orique ou les comp√©tences techniques.} \\ \hline
+		\cellcolor{lightgray} Point dur associ√© & \multicolumn{2}{p{9cm}|}{Formation / suivi des √©quipes.} \\ \hline
+		\cellcolor{lightgray} Impact & \multicolumn{2}{p{9cm}|}{Pr√©occupant.} \\ \hline
+		\cellcolor{lightgray} Probabilit√© & \multicolumn{2}{p{9cm}|}{Forte.} \\ \hline
+		\cellcolor{lightgray} Critique & \multicolumn{2}{p{9cm}|}{\cellcolor{red} Oui}\\ \hline
+		\cellcolor{lightgray} Plan de r√©duction de risque & \multicolumn{2}{p{9cm}|}{Suivi r√©gulier des √©quipes par le responsable technique et le chef de projet.} \\ \hline
 		\cellcolor{lightgray}Plan d'action & Acteur : & Responsable technique, chef de projet \\ \cline{2-3}
-		\cellcolor{lightgray}		   & DÈclenchement : & Demande de la part d'une Èquipe \\ \cline{2-3}
-		\cellcolor{lightgray}		   & But : & RÈtablir la compÈhension technique \\ \cline{2-3}
-		\cellcolor{lightgray}		   & Action : & Consultation du responsable technique. Remaniement de l'Èquipe si pas d'amÈlioration. \\ \hline
-		\cellcolor{lightgray}Statut/Date/Responsable & \multicolumn{2}{p{9cm} |} {CrÈÈ le 29/11/13 par Adrien \bsc{Smondack}.} \\ \hline
+		\cellcolor{lightgray}	& D√©clenchement : & Demande de la part d'une √©quipe \\ \cline{2-3}
+		\cellcolor{lightgray}	& But : & R√©tablir la comp√©hension technique \\ \cline{2-3}
+		\cellcolor{lightgray}	& Action : & Consultation du responsable technique. Remaniement de l'√©quipe si pas d'am√©lioration. \\ \hline
+		\cellcolor{lightgray}Statut/Date/Responsable & \multicolumn{2}{p{9cm} |} {Cr√©√© le 29/11/13 par Adrien \bsc{Smondack}.} \\ \hline
 	\end{tabular}
 
 \subsubsection{Risque 4 :}
 	\begin{tabular}{| p{5cm} | p{2.5cm} | p{6.5cm} |}
 		\hline
 		\multicolumn{3}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_11} \\ \hline
-		\cellcolor{lightgray}…vËnement/situation redoutÈ(e) & \multicolumn{2}{p{9cm}|}{ApprÈhension des nouvelles technologies plus longue que prÈvu.} \\ \hline
-		\cellcolor{lightgray}Point dur associÈ & \multicolumn{2}{p{9cm}|}{Emploi de technologies spÈcifiques (Android, Java Card).} \\ \hline
-		\cellcolor{lightgray}Impact & \multicolumn{2}{p{9cm}|}{PrÈoccupant.} \\ \hline
-		\cellcolor{lightgray}ProbabilitÈ & \multicolumn{2}{p{9cm}|}{Forte.} \\ \hline
-		\cellcolor{lightgray}Critique & \multicolumn{2}{p{9cm}|}{\cellcolor{red} Oui}\\ \hline
-		\cellcolor{lightgray}Plan de rÈduction de risque & \multicolumn{2}{p{9cm}|}{Suivi rÈgulier des Èquipes par le responsable technique et le chef de projet. 
-		RÈdaction de rapports explicatifs quant ‡ la technologie ÈtudiÈe (gÈnÈralitÈs, fonctionnalitÈs nÈcessaires et/ou utiles pour le projet, particularitÈs...).} \\ \hline	
+		\cellcolor{lightgray}√âv√®nement/situation redout√©(e) & \multicolumn{2}{p{9cm}|}{Appr√©hension des nouvelles technologies plus longue que pr√©vu.} \\ \hline
+		\cellcolor{lightgray}Point dur associ√© & \multicolumn{2}{p{9cm}|}{Emploi de technologies sp√©cifiques (Android, Java Card, PAM).} \\ \hline
+		\cellcolor{lightgray} Impact & \multicolumn{2}{p{9cm}|}{Pr√©occupant.} \\ \hline
+		\cellcolor{lightgray} Probabilit√© & \multicolumn{2}{p{9cm}|}{Forte.} \\ \hline
+		\cellcolor{lightgray} Critique & \multicolumn{2}{p{9cm}|}{\cellcolor{red} Oui}\\ \hline
+		\cellcolor{lightgray} Plan de r√©duction de risque & \multicolumn{2}{p{9cm}|}{Suivi r√©gulier des √©quipes par le responsable technique et le chef de projet. R√©daction de rapports explicatifs quant √† la technologie √©tudi√©e (g√©n√©ralit√©s, fonctionnalit√©s n√©cessaires et/ou utiles pour le projet, particularit√©s...).} \\ \hline	
 		\cellcolor{lightgray}Plan d'action & Acteur : & Chef de projet \\ \cline{2-3}
-		\cellcolor{lightgray}		   & DÈclenchement : & Demande de la part d'une Èquipe \\ \cline{2-3}
-		\cellcolor{lightgray}		   & But : & AccÈlÈrer l'apprentissage de l'Èquipe \\ \cline{2-3}
-		\cellcolor{lightgray}		   & Action : & Ajout d'une personne ‡ l'Èquipe. Un remplacement est envisageable. \\ \hline
-		\cellcolor{lightgray}Statut/Date/Responsable & \multicolumn{2}{p{9cm}|}{CrÈÈ le 29/11/13 par Adrien \bsc{Smondack}.} \\ \hline
+		\cellcolor{lightgray}	& D√©clenchement : & Demande de la part d'une √©quipe \\ \cline{2-3}
+		\cellcolor{lightgray}	& But : & Acc√©l√©rer l'apprentissage de l'√©quipe \\ \cline{2-3}
+		\cellcolor{lightgray}	& Action : & Ajout d'une personne √† l'√©quipe. Un remplacement est envisageable. \\ \hline
+		\cellcolor{lightgray} Statut/Date/Responsable & \multicolumn{2}{p{9cm}|}{Cr√©√© le 29/11/13 par Adrien \bsc{Smondack}.} \\ \hline
 	\end{tabular}
 
 \subsubsection{Risque 3}
 	\begin{tabular}{| p{5cm} | p{2.5cm} | p{6.5cm} |}
 		\hline
 		\multicolumn{3}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_03} \\ \hline
-		\cellcolor{lightgray}…vËnement/situation redoutÈ(e) & \multicolumn{2}{p{9cm}|}{Faille de sÈcuritÈ dÈcouverte aprËs test.} \\ \hline
-		\cellcolor{lightgray}Point dur associÈ & \multicolumn{2}{p{9cm}|}{DÈmonstration de la sÈcuritÈ des systËmes implÈmentÈs.} \\ \hline
-		\cellcolor{lightgray}Impact & \multicolumn{2}{p{9cm}|}{Important.} \\ \hline
-		\cellcolor{lightgray}ProbabilitÈ & \multicolumn{2}{p{9cm}|}{Moyenne.} \\ \hline
-		\cellcolor{lightgray}Critique & \multicolumn{2}{p{9cm}|}{\cellcolor{red} Oui}\\ \hline
-		\cellcolor{lightgray}Plan de rÈduction de risque & \multicolumn{2}{p{9cm}|}{Suivi ($\Rightarrow$ tests) rÈgulier des fonctionnalitÈs du produit.} \\ \hline
-		\cellcolor{lightgray}Plan d'action & Acteur : & …quipe de dÈveloppement \\ \cline{2-3}
-		\cellcolor{lightgray}		   & DÈclenchement : & Faille dÈtectÈe \\ \cline{2-3}
-		\cellcolor{lightgray}		   & But : & RÈparer la faille de sÈcuritÈ \\ \cline{2-3}
-		\cellcolor{lightgray}		   & Action : & DÈclencher une procÈdure identique ‡ celle lancÈe en cas de test ÈchouÈ. 
-								Si le temps manque, focaliser autant d'Èquipiers que nÈcessaire sur le problËme.\\ \hline
-		\cellcolor{lightgray}Statut/Date/Responsable & \multicolumn{2}{p{9cm}|}{CrÈÈ le 29/11/13 par Adrien \bsc{Smondack}.} \\ \hline
+		\cellcolor{lightgray} √âv√®nement/situation redout√©(e) & \multicolumn{2}{p{9cm}|}{Faille de s√©curit√© d√©couverte apr√®s test.} \\ \hline
+		\cellcolor{lightgray} Point dur associ√© & \multicolumn{2}{p{9cm}|}{D√©monstration de la s√©curit√© des syst√®mes impl√©ment√©s.} \\ \hline
+		\cellcolor{lightgray} Impact & \multicolumn{2}{p{9cm}|}{Important.} \\ \hline
+		\cellcolor{lightgray} Probabilit√© & \multicolumn{2}{p{9cm}|}{Moyenne.} \\ \hline
+		\cellcolor{lightgray} Critique & \multicolumn{2}{p{9cm}|}{\cellcolor{red} Oui}\\ \hline
+		\cellcolor{lightgray} Plan de r√©duction de risque & \multicolumn{2}{p{9cm}|}{Suivi ($\Rightarrow$ tests) r√©gulier des fonctionnalit√©s du produit.} \\ \hline
+		\cellcolor{lightgray}Plan d'action & Acteur : & √âquipe de d√©veloppement \\ \cline{2-3}
+		\cellcolor{lightgray}	& D√©clenchement : & Faille d√©tect√©e \\ \cline{2-3}
+		\cellcolor{lightgray}	& But : & R√©parer la faille de s√©curit√© \\ \cline{2-3}
+		\cellcolor{lightgray}	& Action : & D√©clencher une proc√©dure identique √† celle lanc√©e en cas de test √©chou√©. Si le temps manque, focaliser autant d'√©quipiers que n√©cessaire sur le probl√®me.\\ \hline
+		\cellcolor{lightgray} Statut/Date/Responsable & \multicolumn{2}{p{9cm}|}{Cr√©√© le 29/11/13 par Adrien \bsc{Smondack}.} \\ \hline
 	\end{tabular}
 
 \subsubsection{Risque 2}
 	\begin{tabular}{| p{5cm} | p{2.5cm} | p{6.5cm} |}
 		\hline
-		\multicolumn{3}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_15} \\ \hline
-		\cellcolor{lightgray}…vËnement/situation redoutÈ(e) & \multicolumn{2}{p{9cm}|}{Phase de dÈveloppement plus longue que prÈvu.} \\ \hline
-		\cellcolor{lightgray}Point dur associÈ & \multicolumn{2}{p{9cm}|}{Gestion globale du projet (documentation).} \\ \hline
+		\multicolumn{3}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_16} \\ \hline
+		\cellcolor{lightgray}√âv√®nement/situation redout√©(e) & \multicolumn{2}{p{9cm}|}{Phase de d√©veloppement plus longue que pr√©vu.} \\ \hline
+		\cellcolor{lightgray}Point dur associ√© & \multicolumn{2}{p{9cm}|}{Gestion globale du projet (documentation).} \\ \hline
 		\cellcolor{lightgray}Impact & \multicolumn{2}{p{9cm}|}{Important.} \\ \hline
-		\cellcolor{lightgray}ProbabilitÈ & \multicolumn{2}{p{9cm}|}{Forte.} \\ \hline
+		\cellcolor{lightgray}Probabilit√© & \multicolumn{2}{p{9cm}|}{Forte.} \\ \hline
 		\cellcolor{lightgray}Critique & \multicolumn{2}{p{9cm}|}{\cellcolor{red} Oui}\\ \hline
-		\cellcolor{lightgray}Plan de rÈduction de risque & \multicolumn{2}{p{9cm}|}{Suivi rÈgulier des Èquipes par le responsable technique et le chef de projet.} \\ \hline
+		\cellcolor{lightgray}Plan de r√©duction de risque & \multicolumn{2}{p{9cm}|}{Suivi r√©gulier des √©quipes par le responsable technique et le chef de projet.} \\ \hline
 		\cellcolor{lightgray}Plan d'action & Acteur : & Chef de projet \\ \cline{2-3}
-		\cellcolor{lightgray}		   & DÈclenchement : & Date de fin de tache prÈvue dÈpasse celle du planning \\ \cline{2-3}
-		\cellcolor{lightgray}		   & But : & …viter la propagation du retard.\\ \cline{2-3}
-		\cellcolor{lightgray}		   & Action : & RÈunion d'Èquipe pour analyser et adapter les dÈmarches en vue d'accÈlÈrer la productivitÈ.
-								…ventuellement : Remaniement du planning en vue de rÈ-agencer les t‚ches\\ \hline
-		\cellcolor{lightgray}Statut/Date/Responsable & \multicolumn{2}{p{9cm}|}{CrÈÈ le 29/11/13 par Adrien \bsc{Smondack}.} \\ \hline
+		\cellcolor{lightgray}	& D√©clenchement : & Date de fin de tache pr√©vue d√©passe celle du planning \\ \cline{2-3}
+		\cellcolor{lightgray}	& But : & √âviter la propagation du retard.\\ \cline{2-3}
+		\cellcolor{lightgray} & Action : & R√©union d'√©quipe pour analyser et adapter les d√©marches en vue d'acc√©l√©rer la productivit√©. √âventuellement : Remaniement du planning en vue de r√©-agencer les t√¢ches\\ \hline
+		\cellcolor{lightgray}Statut/Date/Responsable & \multicolumn{2}{p{9cm}|}{Cr√©√© le 29/11/13 par Adrien \bsc{Smondack}.} \\ \hline
 	\end{tabular}
 
 \subsubsection{Risque 1}
 	\begin{tabular}{| p{5cm} | p{2.5cm} | p{6.5cm} |}
 		\hline
 		\multicolumn{3}{| p{14,5cm} |}{\cellcolor{gray}Identifiant : R\_04} \\ \hline
-		\cellcolor{lightgray}…vËnement/situation redoutÈ(e) & \multicolumn{2}{p{9cm}|}{ImpondÈrables (surcharge de travail).} \\ \hline
-		\cellcolor{lightgray}Point dur associÈ & \multicolumn{2}{p{9cm}|}{Planifier l'Èvolution du dÈveloppement du projet.} \\ \hline
+		\cellcolor{lightgray}√âv√®nement/situation redout√©(e) & \multicolumn{2}{p{9cm}|}{Impond√©rables (surcharge de travail).} \\ \hline
+		\cellcolor{lightgray}Point dur associ√© & \multicolumn{2}{p{9cm}|}{Planifier l'√©volution du d√©veloppement du projet.} \\ \hline
 		\cellcolor{lightgray}Impact & \multicolumn{2}{p{9cm}|}{Important.} \\ \hline
-		\cellcolor{lightgray}ProbabilitÈ & \multicolumn{2}{p{9cm}|}{Forte.} \\ \hline
+		\cellcolor{lightgray}Probabilit√© & \multicolumn{2}{p{9cm}|}{Forte.} \\ \hline
 		\cellcolor{lightgray}Critique & \multicolumn{2}{p{9cm}|}{\cellcolor{red} Oui}\\ \hline
-		\cellcolor{lightgray}Plan de rÈduction de risque & \multicolumn{2}{p{9cm}|}{Raccourcir les dÈlais afin de garder un peu d'avance.} \\ \hline
+		\cellcolor{lightgray}Plan de r√©duction de risque & \multicolumn{2}{p{9cm}|}{Raccourcir les d√©lais afin de garder un peu d'avance.} \\ \hline
 		\cellcolor{lightgray}Plan d'action & Acteur : & Chef de projet \\ \cline{2-3}
-		\cellcolor{lightgray}		   & DÈclenchement : & - \\ \cline{2-3}
-		\cellcolor{lightgray}		   & But : & Tenir les dÈlais annoncÈs.\\ \cline{2-3}
-		\cellcolor{lightgray}		   & Action : & Augmentation du rythme de travail. Mise en commun des ressources et des compÈtences de toute l'Èquipe. 
-								Prolonger les dÈlais n'est pas envisageable.\\ \hline
-		\cellcolor{lightgray}Statut/Date/Responsable & \multicolumn{2}{p{9cm}|}{CrÈÈ le 29/11/13 par Adrien \bsc{Smondack}.} \\ \hline
+		\cellcolor{lightgray} & D√©clenchement : & - \\ \cline{2-3}
+		\cellcolor{lightgray} & But : & Tenir les d√©lais annonc√©s.\\ \cline{2-3}
+		\cellcolor{lightgray} & Action : & Augmentation du rythme de travail. Mise en commun des ressources et des comp√©tences de toute l'√©quipe. Prolonger les d√©lais n'est pas envisageable.\\ \hline
+		\cellcolor{lightgray}Statut/Date/Responsable & \multicolumn{2}{p{9cm}|}{Cr√©√© le 29/11/13 par Adrien \bsc{Smondack}.} \\ \hline
 	\end{tabular}
 
 \newpage
 %------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \subsection{Les autres risques}
 \begin{flushleft}
- 
-\begin{tabular}{| p{1.4cm} | p{4cm} | p{4cm} | p{1.7cm} | p{1.6cm} | p{1.2cm} |}
-  \hline
-  \cellcolor{gray}Identifiant & \cellcolor{lightgray}…vËnement/situation redoutÈ(e) & \cellcolor{lightgray}Point dur associÈ 
-  & \cellcolor{lightgray}Impact & \cellcolor{lightgray}ProbabilitÈ & \cellcolor{lightgray}Critique \\ \hline
+	\begin{tabular}{| p{1.4cm} | p{4cm} | p{4cm} | p{1.7cm} | p{1.6cm} | p{1.2cm} |}
+  		\hline
+  		\cellcolor{gray}Identifiant & \cellcolor{lightgray}√âv√®nement/situation redout√©(e) & \cellcolor{lightgray}Point dur associ√© & \cellcolor{lightgray}Impact & \cellcolor{lightgray}Probabilit√© & \cellcolor{lightgray}Critique \\ \hline
   
-  R\_01 & Le dÈveloppement effectuÈ ne correspond pas aux RFC. & …tude des RFC dÈcrivant les systËmes / …tat de l'art & Important & Faible & \cellcolor{green} Non \\ \hline
-  R\_02 & …tat de l'art pas assez exhaustif. & …tude des RFC dÈcrivant les systËmes / …tat de l'art. & Important & Faible. & \cellcolor{green} Non \\ \hline
-  R\_05 & Le client change ses objectifs. & Communication rÈguliËre avec le client. & Important & Faible & \cellcolor{green} Non\\ \hline
-  R\_06 & Passer ‡ cÙtÈ d'une demande du client. & Communication rÈguliËre avec le client. & PrÈoccupant & Faible & \cellcolor{green} Non \\ \hline
-  R\_07 & Les clients font faillite. & Communication rÈguliËre avec le client. & Critique & (TrËs) Faible & \cellcolor{green} Non\\ \hline
-  R\_09 & SpÈcification incomplËte. & Surveiller l'Èvolution des spÈcifications. & PrÈoccupant & Moyenne & \cellcolor{green} Non\\ \hline
-  R\_10 & SpÈcification trop exigeantes (ProblËme pour atteindre la performance dÈsirÈe). & Surveiller l'Èvolution des spÈcifications. 
-	& PrÈoccupant & Moyenne & \cellcolor{green} Non\\ \hline
-  R\_12 & Chef de projet incompÈtent. & Communication au sein de l'Èquipe. & Acceptable & Moyenne & \cellcolor{green} Non\\ \hline
-  R\_13 & Conflit au sein de l'Èquipe. & Communication au sein de l'Èquipe. & PrÈoccupant & Faible & \cellcolor{green} Non\\ \hline
-  R\_14 & DÈpart d'une ou plusieurs personnes clÈ du projet. & Mutualisation des connaissances et des compÈtences. & Important & Faible & \cellcolor{green} Non\\ \hline
-  R\_16 & Le dÈveloppement effectuÈ ne correspond pas ‡ la demande du client. & Gestion globale du projet (documentation). & Critique & Faible & \cellcolor{red} Oui\\ \hline
-  R\_17 & Sous estimation des efforts nÈcessaires ‡ la rÈalisation du projet. & Gestion globale du projet (documentation). & Important & Faible & \cellcolor{green} Non\\ \hline
-  R\_18 & Un membre se retrouve privÈ de ses outils de travail. & Veiller aux besoins techniques des membres de l'Èquipe. & Acceptable & Faible & \cellcolor{green} Non\\ \hline
-  R\_19 & ProblËme avec le git. & Veiller aux besoins techniques des membres de l'Èquipe. & PrÈoccupant & (TrËs) Faible & \cellcolor{green} Non\\ \hline
-\end{tabular}
+  		R\_01 & Le d√©veloppement effectu√© ne correspond pas aux RFC. & √âtude des RFC d√©crivant les syst√®mes / √âtat de l'art & Important & Faible & \cellcolor{green} Non \\ \hline
+  		R\_02 & √âtat de l'art pas assez exhaustif. & √âtude des RFC d√©crivant les syst√®mes / √âtat de l'art. & Important & Faible. & \cellcolor{green} Non \\ \hline
+  		R\_05 & Le client change ses objectifs. & Communication r√©guli√®re avec le client. & Important & Faible & \cellcolor{green} Non\\ \hline
+  		R\_06 & Passer √† c√¥t√© d'une demande du client. & Communication r√©guli√®re avec le client. & Pr√©occupant & Faible & \cellcolor{green} Non \\ \hline
+  		R\_07 & Les clients font faillite. & Communication r√©guli√®re avec le client. & Critique & (Tr√®s) Faible & \cellcolor{green} Non\\ \hline
+  		R\_09 & Sp√©cification incompl√®te. & Surveiller l'√©volution des sp√©cifications. & Pr√©occupant & Moyenne & \cellcolor{green} Non\\ \hline
+  		R\_10 & Sp√©cification trop exigeantes (Probl√®me pour atteindre la performance d√©sir√©e). & Surveiller l'√©volution des sp√©cifications. & Pr√©occupant & Moyenne & \cellcolor{green} Non\\ \hline
+  		R\_12 & Mauvaise appr√©hension des nouvelles technologies & Emploi de technologies sp√©cifiques (Android, Java Card, PAM). & Pr√©occupant & Moyenne & \cellcolor{green} Non \\ \hline
+  		R\_13 & Chef de projet incomp√©tent. & Communication au sein de l'√©quipe. & Acceptable & Moyenne & \cellcolor{green} Non\\ \hline
+  		R\_14 & Conflit/tension au sein de l'√©quipe. & Communication au sein de l'√©quipe. & Pr√©occupant & Faible & \cellcolor{green} Non\\ \hline
+  		R\_15 & D√©part d'une ou plusieurs personnes cl√© du projet. & Mutualisation des connaissances et des comp√©tences. & Important & Faible & \cellcolor{green} Non\\ \hline
+  		R\_17 & Le d√©veloppement effectu√© ne correspond pas √† la demande du client. & Gestion globale du projet (documentation). & Critique & Faible & \cellcolor{red} Oui\\ \hline
+  		R\_18 & Sous estimation des efforts n√©cessaires √† la r√©alisation du projet. & Gestion globale du projet (documentation). & Important & Faible & \cellcolor{green} Non\\ \hline
+  		R\_19 & Un membre se retrouve priv√© de ses outils de travail. & Veiller aux besoins techniques des membres de l'√©quipe. & Acceptable & Faible & \cellcolor{green} Non\\ \hline
+  		R\_20 & Probl√®me avec le git. & Veiller aux besoins techniques des membres de l'√©quipe. & Pr√©occupant & (Tr√®s) Faible & \cellcolor{green} Non\\ \hline
+	\end{tabular}
 \end{flushleft}
 
-%-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 %------------------------------------------------------------------------------------------------------------------------------------------------------------------
 \end{document}
