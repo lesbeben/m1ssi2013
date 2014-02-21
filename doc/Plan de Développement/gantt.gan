@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="m1ssi otp" company="m1ssi" webLink="http://" view-date="2013-11-01" view-index="0" gantt-divider-location="632" resource-divider-location="667" version="2.0" locale="fr">
+<?xml version="1.0" encoding="UTF-8"?><project name="m1ssi otp" company="m1ssi" webLink="http://" view-date="2013-10-01" view-index="2" gantt-divider-location="632" resource-divider-location="667" version="2.0" locale="fr">
     <description><![CDATA[Création d'un système d'authentification par mot de passe jetable.]]></description>
     <view zooming-state="default:9" id="gantt-chart">
         <field id="tpd3" name="Nom" width="64" order="0"/>
@@ -6,9 +6,9 @@
         <field id="tpd5" name="Date de fin" width="16" order="2"/>
     </view>
     <view id="resource-table">
-        <field id="0" name="Nom" width="34" order="0"/>
-        <field id="1" name="Rôle par défaut" width="33" order="1"/>
-        <field id="tpc0" name="Responsable" width="32" order="2"/>
+        <field id="0" name="Nom" width="77" order="0"/>
+        <field id="1" name="Rôle par défaut" width="14" order="1"/>
+        <field id="tpc0" name="Responsable" width="7" order="2"/>
     </view>
     <!-- -->
     <calendars>
