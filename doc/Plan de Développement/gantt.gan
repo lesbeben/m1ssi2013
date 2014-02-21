@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="m1ssi otp" company="m1ssi" webLink="http://" view-date="2013-11-01" view-index="0" gantt-divider-location="624" resource-divider-location="396" version="2.0" locale="fr_FR">
+<?xml version="1.0" encoding="UTF-8"?><project name="m1ssi otp" company="m1ssi" webLink="http://" view-date="2013-11-01" view-index="0" gantt-divider-location="632" resource-divider-location="667" version="2.0" locale="fr">
     <description><![CDATA[Création d'un système d'authentification par mot de passe jetable.]]></description>
     <view zooming-state="default:9" id="gantt-chart">
         <field id="tpd3" name="Nom" width="64" order="0"/>
@@ -6,9 +6,9 @@
         <field id="tpd5" name="Date de fin" width="16" order="2"/>
     </view>
     <view id="resource-table">
-        <field id="0" name="Nom" width="33" order="0"/>
+        <field id="0" name="Nom" width="34" order="0"/>
         <field id="1" name="Rôle par défaut" width="33" order="1"/>
-        <field id="tpc0" name="Responsable" width="33" order="2"/>
+        <field id="tpc0" name="Responsable" width="32" order="2"/>
     </view>
     <!-- -->
     <calendars>
@@ -98,7 +98,7 @@
         </resource>
     </resources>
     <allocations>
-        <allocation task-id="0" resource-id="0" function="Default:1" responsible="true" load="100.0"/>
+        <allocation task-id="0" resource-id="0" function="Default:1" responsible="false" load="100.0"/>
         <allocation task-id="3" resource-id="0" function="Default:1" responsible="false" load="100.0"/>
         <allocation task-id="24" resource-id="0" function="Default:1" responsible="false" load="100.0"/>
         <allocation task-id="52" resource-id="0" function="Default:1" responsible="false" load="100.0"/>
@@ -120,7 +120,7 @@
         <allocation task-id="70" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
         <allocation task-id="24" resource-id="2" function="SoftwareDevelopment:2" responsible="true" load="100.0"/>
         <allocation task-id="105" resource-id="2" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
-        <allocation task-id="0" resource-id="6" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="0" resource-id="6" function="SoftwareDevelopment:4" responsible="true" load="100.0"/>
         <allocation task-id="11" resource-id="6" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
         <allocation task-id="56" resource-id="6" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
         <allocation task-id="78" resource-id="6" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
@@ -149,7 +149,6 @@
         <allocation task-id="70" resource-id="5" function="SoftwareDevelopment:3" responsible="false" load="100.0"/>
         <allocation task-id="32" resource-id="5" function="SoftwareDevelopment:3" responsible="false" load="100.0"/>
         <allocation task-id="24" resource-id="5" function="SoftwareDevelopment:3" responsible="false" load="100.0"/>
-        <allocation task-id="56" resource-id="5" function="SoftwareDevelopment:3" responsible="false" load="100.0"/>
         <allocation task-id="105" resource-id="5" function="SoftwareDevelopment:3" responsible="false" load="100.0"/>
     </allocations>
     <vacations/>
@@ -163,9 +162,9 @@
         <displaycolumn property-id="tpd9" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd8" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd0" order="-1" width="75" visible="false"/>
-        <displaycolumn property-id="tpd3" order="0" width="399" visible="true"/>
-        <displaycolumn property-id="tpd4" order="1" width="118" visible="true"/>
-        <displaycolumn property-id="tpd5" order="2" width="103" visible="true"/>
+        <displaycolumn property-id="tpd3" order="0" width="402" visible="true"/>
+        <displaycolumn property-id="tpd4" order="1" width="120" visible="true"/>
+        <displaycolumn property-id="tpd5" order="2" width="106" visible="true"/>
     </taskdisplaycolumns>
     <previous/>
     <roles roleset-name="Default"/>
