@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "users.h"
+#include "secret.h"
 
 #define SEPARATOR ":"
 #define SWAP_FILE "/tmp/otpasswd~"
@@ -37,13 +38,17 @@ otpuser* getOTPUser(char* usrname) {
         if (strcmp(usrname, token)) {
             found = 1;
             // On remplie la struture otpuser
-            strcpy(usrname, usr.username);
+            int bufferLength = strlen(token);
+            usr->username = (char *) malloc(sizeof(char) * bufferLength);
+            strcpy((usr->username), usrname);
+            token = strtok_r(NULL, ":", &saveptr);
+            usr->method = atoi(token);
+            token = strtok_r(NULL, ":", &saveptr);
+            usr->passwd->length = strlen(token);
+            usr->passwd->buffer = (char *) malloc(sizeof(char) * usr->passwd->length);
+            strcpy((usr->passwd->buffer), token);
             token = strtok_r(line, ":", &saveptr);
-            usr.method = atoi(token);
-            token = strtok_r(line, ":", &saveptr);
-            strcpy(token, usr.passwd);
-            token = strtok_r(line, ":", &saveptr);
-            usr.params.count = atoi(token);
+            usr->params.count = atoi(token);
         }
     }
     
@@ -63,7 +68,8 @@ int updateOTPUser(otpuser* user) {
 
 int DestroyOTPUser(char* usrname) {
     if (usrname == NULL) {
-        return NULL;
+        //return NULL;
+        return -1;
     }
     // Initialisation
     char line[BUFFER_SIZE];
@@ -73,12 +79,14 @@ int DestroyOTPUser(char* usrname) {
     // Descripteur de fichier sur OTPWD_PATH.
     FILE * f = fopen(OTPWD_PATH, "r");
     if (f == NULL) {
-        return NULL;
+        //return NULL;
+        return -1;
     }
     // Descripteur de fichier temporaire.
     FILE * fw = fopen(SWAP_FILE, "w");
     if (fw == NULL) {
-        return NULL;
+        //return NULL;
+        return -1;
     }
 
     // Recherche de l'utilisateur dans le fichier
