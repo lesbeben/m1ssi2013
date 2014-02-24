@@ -12,5 +12,5 @@ add_library(hotp STATIC hotp.c hotp.h utils.c utils.h secret.h)
 add_library(totp STATIC totp.c totp.h utils.c utils.h secret.h)
 
 # Création des tests
-add_executable(test test.c utils.c utils.h secret.c secret.h)
+add_executable(test test-gen.c utils.c utils.h secret.c secret.h)
 target_link_libraries(test hotp totp crypto m)
