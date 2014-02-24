@@ -2,6 +2,9 @@
 #define USERS_H
 #include "secret.h"
 
+#define TOTP_METHOD 0
+#define HOTP_METHOD 1
+
 /** Le nom du fichier où sont stockées les informations nécessaire à 
  * l'authentification de chaque utilisateurs. <br/>
  * Ce fichier contient une ligne par utilisateur avec:
@@ -58,4 +61,19 @@ otpuser * getOTPUser(char * usrname);
  * 
  * @return -1 en cas d'erreur.
  */
-int updateOTPUser(otpuser user);
+int updateOTPUser(otpuser * user);
+
+/** Libère les ressources associés à un utilisateur.
+ * 
+ * Cette fonction permet d'encapsuler le type otpuser et de proposer
+ * une libération des ressources simplifiée. Elle DOIT libérer toutes les 
+ * ressources associées à l'utilisateur dans la RAM.
+ * 
+ * @param[in] user un pointeur vers un otpuser.
+ * 
+ * @pre user != NULL
+ * 
+ * @return -1 en cas d'erreur, une valeur positive sinon.
+ * 
+ */
+int freeOTPUser(otpuser * user);
