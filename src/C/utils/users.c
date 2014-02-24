@@ -60,6 +60,38 @@ int updateOTPUser(otpuser* user) {
     return 0;
 }
 
-int freeOTPUser(otpuser* user) {
+int DestroyOTPUser(char* usrname) {
+    if (usrname == NULL) {
+        return NULL;
+    }
+    // Initialisation
+    char line[BUFFER_SIZE];
+    char *saveptr;
+    char *token;
+
+    // Descripteur de fichier sur OTPWD_PATH.
+    FILE * f = fopen(OTPWD_PATH, "r");
+    if (f == NULL) {
+        return NULL;
+    }
+    // Descripteur de fichier temporaire.
+    FILE * fw = fopen(SWAP_FILE, "w");
+    if (fw == NULL) {
+        return NULL;
+    }
+
+    // Recherche de l'utilisateur dans le fichier
+    while(fgets(line ,(BUFFER_SIZE + 1),f) != NULL){
+        token = strtok_r(line, ":", &saveptr);
+        if (!strcmp(usrname, token)) {
+            if ((fputs (line, fw)) < 0);
+       }
+    }
+    
+    fclose(f);
+    fclose(fw);
+    
+    //Faire pointer OTPWD_PATH vers SWAP_FILE
+
     return 0;
 }

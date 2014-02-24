@@ -76,6 +76,6 @@ int updateOTPUser(otpuser * user);
  * @return retourne 0, ou -1 en cas d'erreur.
  *
  */
-int freeOTPUser(otpuser * user);
+int DestroyOTPUser(char* usrname);
 
 #endif
