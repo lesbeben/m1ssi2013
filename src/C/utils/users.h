@@ -5,7 +5,7 @@
 #define TOTP_METHOD 0
 #define HOTP_METHOD 1
 
-/** Le nom du fichier où sont stockées les informations nécessaire à 
+/** Le nom du fichier où sont stockées les informations nécessaires à 
  * l'authentification de chaque utilisateurs. <br/>
  * Ce fichier contient une ligne par utilisateur avec:
  * <ul>
@@ -35,9 +35,9 @@ typedef struct {
     otpopt params; /**< Les paramètres optionels pour l'authentification. */
 } otpuser;
 
-/** Obtient les information de l'utilisateur dont le login est usrname.
+/** Obtient les informations de l'utilisateur dont le login est usrname.
  * 
- * Cette fonction doit aller lire les information dans le fichier 
+ * Cette fonction doit aller lire les informations dans le fichier 
  * correspondant à l'utilisateur pour allouer puis
  * remplir une structre et retourner un pointeur sur celle ci.<br/>
  * Si le fichier est introuvable on indiquera une erreur en retournant NULL.
@@ -50,11 +50,11 @@ typedef struct {
  */
 otpuser * getOTPUser(char * usrname);
 
-/** Enregistre les information d'un utilisateur.
+/** Enregistre les informations d'un utilisateur.
  * 
- * Cette fonction permet de mettre à jour les information d'un utilisateur dans
+ * Cette fonction permet de mettre à jour les informations d'un utilisateur dans
  * le fichier OTPWD_PATH. Si ces informations n'existent pas alors elles doivent
- * être créée.
+ * être créées.
  * 
  * @param[in] user La structure utilisateur à enregistrer.
  * @pre user.username != NULL;
@@ -63,9 +63,9 @@ otpuser * getOTPUser(char * usrname);
  */
 int updateOTPUser(otpuser * user);
 
-/** Libère les ressources associés à un utilisateur.
+/** Libère les ressources associées à un utilisateur.
  *
- * Cette fonction permet d'en-capsuler le type otpuser et de proposer
+ * Cette fonction permet d'encapsuler le type otpuser et de proposer
  * une libération des ressources simplifiée. Elle DOIT libérer toutes les 
  * ressources associées à l'utilisateur dans la RAM.
  *
