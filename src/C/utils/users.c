@@ -1,3 +1,4 @@
+#define _XOPEN_SOURCE 700
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -25,7 +26,7 @@ otpuser* getOTPUser(char* usrname) {
     }
     
     // Allocation du otpuser à retourner.
-    otpuser usr = (otpuser) malloc(sizeof(*otpuser));
+    otpuser * usr = (otpuser *) malloc(sizeof(otpuser));
     if (usr == NULL) {
         return NULL;
     }
