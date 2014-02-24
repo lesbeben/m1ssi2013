@@ -59,21 +59,23 @@ otpuser * getOTPUser(char * usrname);
  * @param[in] user La structure utilisateur à enregistrer.
  * @pre user.username != NULL;
  * 
- * @return -1 en cas d'erreur.
+ * @return -1 en cas d'erreur. 0 en cas de succès.
  */
 int updateOTPUser(otpuser * user);
 
 /** Libère les ressources associés à un utilisateur.
- * 
- * Cette fonction permet d'encapsuler le type otpuser et de proposer
+ *
+ * Cette fonction permet d'en-capsuler le type otpuser et de proposer
  * une libération des ressources simplifiée. Elle DOIT libérer toutes les 
  * ressources associées à l'utilisateur dans la RAM.
- * 
+ *
  * @param[in] user un pointeur vers un otpuser.
- * 
+ *
  * @pre user != NULL
- * 
- * @return -1 en cas d'erreur, une valeur positive sinon.
- * 
+ *
+ * @return retourne 0, ou -1 en cas d'erreur.
+ *
  */
 int freeOTPUser(otpuser * user);
+
+#endif
