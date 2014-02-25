@@ -38,17 +38,17 @@ typedef struct {
 /** Obtient les informations de l'utilisateur dont le login est usrname.
  * 
  * Cette fonction doit aller lire les informations dans le fichier 
- * correspondant à l'utilisateur pour allouer puis
- * remplir une structre et retourner un pointeur sur celle ci.<br/>
+ * correspondant à l'utilisateur puis remplir la structure passée en paramètre.
+ * 
  * Si le fichier est introuvable on indiquera une erreur en retournant NULL.
  * @param[in] usrname Le nom de l'utilisateur à rechercher.
  * 
  * @pre usrname != NULL
  * @pre usrname se termine par un NULL-byte.
  *
- * @return Un pointeur sur une structure utilisateur; NULL en cas d'erreur.
+ * @return 0 si tout s'est bien passé, -1 sinon.
  */
-otpuser * getOTPUser(char * usrname);
+int getOTPUser(char * usrname, otpuser * user);
 
 /** Enregistre les informations d'un utilisateur.
  * 
