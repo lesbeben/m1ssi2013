@@ -57,34 +57,34 @@ END_TEST
 /** Test d'obtention de données d'utilisateurs.
  */
 START_TEST (test_get_user) {
-    otpuser * user = getOTPUser(user2.username); 
-    ck_assert_msg( user != NULL,
+    otpuser user;
+    ck_assert_msg( getOTPUser(user2.username, &user) == 0,
         "Erreur lors de l'acces au deuxième utilisateur (inexistant):\n %s",
         user2.username
     );
-    ck_assert_msg( user->username != NULL, 
+    ck_assert_msg( user.username != NULL, 
         "Erreur nom d'utilisateur vide, attendu:\n %s",
         user2.username
     );
     
-    if (user->username != NULL) {
-        ck_assert_msg( strcmp(user->username, user2.username) == 0,
+    if (user.username != NULL) {
+        ck_assert_msg( strcmp(user.username, user2.username) == 0,
             "Erreur nom d'utilisateur incohérent:\n %s != %s",
-            user2.username, user->username
+            user2.username, user.username
         );
     }
     
-    ck_assert_msg( user->method != user2.method,
+    ck_assert_msg( user.method != user2.method,
         "Methode incohérente:\n %d != %d",
-        user2.method, user->method
+        user2.method, user.method
     );
     
-    if (user2.method == user->method) {
+    if (user2.method == user.method) {
         switch (user2.method) {
             case HOTP_METHOD:
-                ck_assert_msg(user2.params.count == user->params.count,
+                ck_assert_msg(user2.params.count == user.params.count,
                     "HOTP:Erreur les compteur ne sont pas cohérents:\n%d != %d",
-                    user2.params.count, user->params.count
+                    user2.params.count, user.params.count
                 );
                 break;
             case TOTP_METHOD:
@@ -93,7 +93,7 @@ START_TEST (test_get_user) {
         }
     }
 
-    ck_assert_msg(secretcmp(user->passwd, user2.passwd) == 0,
+    ck_assert_msg(secretcmp(user.passwd, user2.passwd) == 0,
         "Erreur les secrets ne coïncident pas."
     );
 }
@@ -122,11 +122,12 @@ START_TEST (test_update_user_hotp_count) {
 END_TEST
 
 START_TEST (test_destroy_user) {
+    otpuser user;
     ck_assert_msg( DestroyOTPUser(user2.username) == 0,
         "Erreur lors de la suppression d'un utilisateur: %s",
         user1.username
     );
-    ck_assert_msg(getOTPUser(user2.username) != 0,
+    ck_assert_msg(getOTPUser(user2.username, &user) != 0,
         "Erreur l'utilisateur ne devrait plus être présent dans le fichier."
     );
 }

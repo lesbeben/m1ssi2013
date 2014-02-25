@@ -10,9 +10,9 @@
 #define SWAP_FILE "/tmp/otpasswd~"
 #define BUFFER_SIZE 1024
 
-otpuser* getOTPUser(char* usrname) {
+int getOTPUser(char* usrname, otpuser * user) {
     if (usrname == NULL) {
-        return NULL;
+        return -1;
     }
     // Initialisation
     char line[BUFFER_SIZE];
@@ -23,13 +23,13 @@ otpuser* getOTPUser(char* usrname) {
     // Descripteur de fichier sur OTPWD_PATH.
     FILE * f = fopen(OTPWD_PATH, "r");
     if (f == NULL) {
-        return NULL;
+        return -1;
     }
     
     // Allocation du otpuser à retourner.
-    otpuser * usr = (otpuser *) malloc(sizeof(otpuser));
+    otpuser * usr = user;
     if (usr == NULL) {
-        return NULL;
+        return -1;
     }
     
     // Recherche de l'utilisateur dans le fichier
@@ -55,10 +55,9 @@ otpuser* getOTPUser(char* usrname) {
     fclose (f);
     
     if (found == 1) {
-        return usr;
+        return 0;
     } else {
-        free(usr);
-        return NULL;
+        return -1;
     }
 }
 
