@@ -14,6 +14,9 @@ int getOTPUser(char* usrname, otpuser * user) {
     if (usrname == NULL) {
         return -1;
     }
+    if (user == NULL) {
+        return -1;
+    }
     // Initialisation
     char line[BUFFER_SIZE];
     char *saveptr;
@@ -25,11 +28,6 @@ int getOTPUser(char* usrname, otpuser * user) {
     if (f == NULL) {
         return -1;
     }
-    // Allocation du otpuser à retourner.
-    otpuser * usr = user;
-    if (usr == NULL) {
-        return -1;
-    }
     // Recherche de l'utilisateur dans le fichier
     while(fgets(line ,(BUFFER_SIZE + 1),f) != NULL){
         token = strtok_r(line, ":", &saveptr);
@@ -37,16 +35,16 @@ int getOTPUser(char* usrname, otpuser * user) {
             found = 1;
             // On remplie la struture otpuser
             int bufferLength = strlen(token);
-            usr->username = (char *) malloc(sizeof(char) * bufferLength);
-            strcpy((usr->username), usrname);
+            user->username = (char *) malloc(sizeof(char) * bufferLength);
+            strcpy((user->username), usrname);
             token = strtok_r(NULL, ":", &saveptr);
-            usr->method = atoi(token);
+            user->method = atoi(token);
             token = strtok_r(NULL, ":", &saveptr);
-            usr->passwd->length = strlen(token);
-            usr->passwd->buffer = (char *) malloc(sizeof(char) * usr->passwd->length);
-            strcpy((usr->passwd->buffer), token);
+            user->passwd->length = strlen(token);
+            user->passwd->buffer = (char *) malloc(sizeof(char) * user->passwd->length);
+            strcpy((user->passwd->buffer), token);
             token = strtok_r(line, ":", &saveptr);
-            usr->params.count = atoi(token);
+            user->params.count = atoi(token);
         }
     }
     fclose (f);
@@ -88,7 +86,7 @@ int DestroyOTPUser(char* usrname) {
     while(fgets(line ,(BUFFER_SIZE + 1),f) != NULL){
         token = strtok_r(line, ":", &saveptr);
         if (!strcmp(usrname, token)) {
-            if ((fputs (line, fw)) < 0);
+            fputs (line, fw);
        }
     }
     
