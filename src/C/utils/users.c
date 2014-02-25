@@ -25,13 +25,11 @@ otpuser* getOTPUser(char* usrname) {
     if (f == NULL) {
         return NULL;
     }
-    
     // Allocation du otpuser à retourner.
     otpuser * usr = (otpuser *) malloc(sizeof(otpuser));
     if (usr == NULL) {
         return NULL;
     }
-    
     // Recherche de l'utilisateur dans le fichier
     while(fgets(line ,(BUFFER_SIZE + 1),f) != NULL){
         token = strtok_r(line, ":", &saveptr);
@@ -51,9 +49,7 @@ otpuser* getOTPUser(char* usrname) {
             usr->params.count = atoi(token);
         }
     }
-    
     fclose (f);
-    
     if (found == 1) {
         return usr;
     } else {
