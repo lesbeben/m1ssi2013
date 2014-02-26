@@ -33,14 +33,15 @@ int readLine(FILE *f, otpuser *user) {
     
     token = strtok_r(line, ":", &saveptr);
     int bufferLength = strlen(token);
-    user->username = (char *) malloc(sizeof(char) * bufferLength);
+    user->username = (char *) malloc(sizeof(char) * (bufferLength + 1)); 
+    // Le null-byte de fin !
     strcpy((user->username), token);
+    user->username[bufferLength] = 0; 
+    // Le voila une chaîne de caractères se finit par un \0.
     token = strtok_r(NULL, ":", &saveptr);
     user->method = atoi(token);
     token = strtok_r(NULL, ":", &saveptr);
-    user->passwd->length = strlen(token);
-    user->passwd->buffer = (char *) malloc(sizeof(char) * user->passwd->length);
-    strcpy((user->passwd->buffer), token);
+    user->passwd = hexToSecret(token);
     token = strtok_r(line, ":", &saveptr);
     user->params.count = atoi(token);
     return 1;
@@ -50,7 +51,7 @@ int readLine(FILE *f, otpuser *user) {
 int writeLine (FILE *f, otpuser *user) {
     char line[BUFFER_SIZE];
     char bufferSecret[2 * (user->passwd->length) + 1];
-    sprintf(line, "%s:%d:%s:%d",user->username, user->method, 
+    sprintf(line, "%s:%d:%s:%d\n",user->username, user->method, 
             getHexRepresentation(user->passwd, bufferSecret, 
                                  (2 * (user->passwd->length) + 1)),
             user->params.count);
@@ -123,6 +124,8 @@ int updateOTPUser(otpuser* user) {
     }
     // Initialisation
     otpuser usr;
+    usr.passwd = NULL;
+    int found = 0;
     
     // Descripteur de fichier sur OTPWD_PATH.
     FILE * f = fopen(OTPWD_PATH, "r");
@@ -150,12 +153,16 @@ int updateOTPUser(otpuser* user) {
         }
         // Recherche de l'utilisateur dans le fichier
         while(readLine(f, &usr)){
-            printf("Yolo !\n");
-            if (strcmp(user->username, usr.username)) {
+            if (!strcmp(user->username, usr.username)) {
                 writeLine (fw, user);
+                found = 1;
             } else {
                 writeLine (fw, &usr);
             }
+        }
+        
+        if (!found) {
+            writeLine(fw, user);
         }
         
         if (fclose(f) != 0) {
@@ -167,7 +174,7 @@ int updateOTPUser(otpuser* user) {
         
         switchFile (SWAP_FILE, OTPWD_PATH);
         
-
+        
     }
     
     return 0;
@@ -209,6 +216,6 @@ int DestroyOTPUser(char* usrname) {
     }
     
     switchFile (SWAP_FILE, OTPWD_PATH);
-
+    
     return 0;
 }
