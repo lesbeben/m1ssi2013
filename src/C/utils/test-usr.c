@@ -8,6 +8,7 @@
 
 otpuser user1;
 otpuser user2;
+otpuser user3;
 
 int secretcmp(secret s1, secret s2) {
     if (s1->length != s2->length) {
@@ -24,29 +25,15 @@ int secretcmp(secret s1, secret s2) {
 /** Test d'enregistrement de trois utilisateurs.
  */
 START_TEST (test_register_user) {
-    user1.username = strndup("usertest", 9);
-    user1.method = HOTP_METHOD;
-    user1.passwd = createSecret(20);
-    user1.params.count = 0;
+
     ck_assert_msg( updateOTPUser(&user1) == 0,
         "Erreur lors de l'enregistrement du premier utilisateur:\n %s", 
         user1.username
     );
-
-    user2.username = strndup("pedro", 6);
-    user2.method = HOTP_METHOD;
-    user2.passwd = createSecret(20);
-    user2.params.count = 0;
     ck_assert_msg( updateOTPUser(&user2) == 0,
         "Erreur lors de l'enregistrement du second utilisateur:\n %s", 
         user2.username
     );
-
-    otpuser user3;
-    user3.username = strndup("johndoe", 8);
-    user3.method = HOTP_METHOD;
-    user3.passwd = createSecret(20);
-    user3.params.count = 0;
     ck_assert_msg( updateOTPUser(&user3) == 0,
         "Erreur lors de l'enregistrement du troisième utilisateur:\n %s", 
         user3.username
@@ -74,7 +61,7 @@ START_TEST (test_get_user) {
         );
     }
     
-    ck_assert_msg( user.method != user2.method,
+    ck_assert_msg( user.method == user2.method,
         "Methode incohérente:\n %d != %d",
         user2.method, user.method
     );
@@ -141,26 +128,46 @@ Suite * users_suite (void) {
     TCase * tc_get = tcase_create("Lecture");
     tcase_add_test(tc_get, test_get_user);
     
-    TCase * tc_update = tcase_create("Mise à jour");
-    tcase_add_test(tc_update, test_update_user_secret);
-    tcase_add_test(tc_update, test_get_user);
-    tcase_add_test(tc_update, test_update_user_hotp_count);
-    tcase_add_test(tc_update, test_get_user);
+    TCase * tc_update_s = tcase_create("Mise à jour secret");
+    tcase_add_test(tc_update_s, test_update_user_secret);
+    tcase_add_test(tc_update_s, test_get_user);
+    TCase * tc_update_c = tcase_create("Mise à jour compteur");
+    tcase_add_test(tc_update_c, test_update_user_hotp_count);
+    tcase_add_test(tc_update_c, test_get_user);
     
     TCase * tc_destroy = tcase_create("Suppression");
     tcase_add_test(tc_destroy, test_destroy_user);
     
     suite_add_tcase(s, tc_register);
     suite_add_tcase(s, tc_get);
-    suite_add_tcase(s, tc_update);
+    suite_add_tcase(s, tc_update_s);
+    suite_add_tcase(s, tc_update_c);
     suite_add_tcase(s, tc_destroy);
     return s;
 }
 
 int main(int argc, char * argv[]) {
+    // Remplissage des variables de test.
+    user1.username = strndup("usertest", 9);
+    user1.method = HOTP_METHOD;
+    user1.passwd = createSecret(20);
+    user1.params.count = 0;
+    
+    user2.username = strndup("pedro", 6);
+    user2.method = HOTP_METHOD;
+    user2.passwd = createSecret(20);
+    user2.params.count = 0;
+    
+    user3.username = strndup("johndoe", 8);
+    user3.method = HOTP_METHOD;
+    user3.passwd = createSecret(20);
+    user3.params.count = 0;
+    
     int failed_count = 0;
     Suite * s = users_suite();
     SRunner * sr = srunner_create(s);
+//     Directive pour empécher le fork:
+//     srunner_set_fork_status(sr, CK_NOFORK);
     srunner_run_all(sr, CK_NORMAL);
     failed_count = srunner_ntests_failed(sr);
     srunner_free(sr);

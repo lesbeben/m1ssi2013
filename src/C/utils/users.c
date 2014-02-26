@@ -41,7 +41,7 @@ int readLine(FILE *f, otpuser *user) {
     user->method = atoi(token);
     token = strtok_r(NULL, ":", &saveptr);
     user->passwd = hexToSecret(token);
-    token = strtok_r(line, ":", &saveptr);
+    token = strtok_r(NULL, ":", &saveptr);
     user->params.count = atoi(token);
     return 1;
 }
@@ -81,10 +81,7 @@ int switchFile (char * from, char * to) {
  ******************************************************************************/
 
 int getOTPUser(char* usrname, otpuser * user) {
-    if (usrname == NULL) {
-        return -1;
-    }
-    if (user == NULL) {
+    if (usrname == NULL || user == NULL) {
         return -1;
     }
     
