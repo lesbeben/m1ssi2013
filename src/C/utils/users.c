@@ -206,7 +206,7 @@ int DestroyOTPUser(char* usrname) {
     if (fclose(f) != 0) {
         return -1;
     }
-    if (fclose(fw)  != 0) {
+    if (fclose(fw) != 0) {
         return -1;
     }
     
