@@ -43,7 +43,7 @@ int updateOTPUser(otpuser* user) {
     if (user == NULL) {
         return -1;
     }
-    
+
     // Création d'un buffer pour accueillir le path vers le fichier de
     // l'utilisateur.
     char path[BUFFER_SIZE];
@@ -51,11 +51,11 @@ int updateOTPUser(otpuser* user) {
         return -1;
     }
     // Pointeur sur un flux de fichier.
-    FILE * f = fopen(path, "r");
+    FILE * f = fopen(path, "w+");
     if (f == NULL) {
         return -1;
     }
-    
+
     // Creation d'un buffer pour acceuillir données de l'utilisateur.
     char line[BUFFER_SIZE];
     char bufferSecret[2 * (user->passwd->length) + 1];
@@ -63,12 +63,12 @@ int updateOTPUser(otpuser* user) {
             getHexRepresentation(user->passwd, bufferSecret, 
                                  (2 * (user->passwd->length) + 1)),
             user->params.count);
-    
+
     // Ecriture des données utilisateur dans le fichier.
     if (fputs (line, f) == EOF) {
         return -1;
     }
-    
+
     // Fermeture du fichier.
     if (fclose (f) != 0) {
         return -1;
