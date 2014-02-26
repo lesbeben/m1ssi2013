@@ -27,7 +27,6 @@ int readLine(FILE *f, otpuser *user) {
     destroySecret(user->passwd);
     
     if (fgets(line ,(BUFFER_SIZE),f) == NULL) {
-        
         return 0;
     }
     
@@ -92,6 +91,7 @@ int getOTPUser(char* usrname, otpuser * user) {
     // Initialisation
     int found = 0;
     otpuser usr;
+    usr.passwd = NULL;
     
     // Descripteur de fichier sur OTPWD_PATH.
     FILE * f = fopen(OTPWD_PATH, "r");
@@ -100,7 +100,7 @@ int getOTPUser(char* usrname, otpuser * user) {
     }
     // Recherche de l'utilisateur dans le fichier
     while(readLine(f, &usr)){
-        if (strcmp(usrname, usr.username)) {
+        if (!strcmp(usrname, usr.username)) {
             found = 1;
             *user = usr;
             break;
@@ -148,7 +148,6 @@ int updateOTPUser(otpuser* user) {
         // Descripteur de fichier temporaire.
         FILE * fw = fopen(SWAP_FILE, "w");
         if (fw == NULL) {
-            //return NULL;
             return -1;
         }
         // Recherche de l'utilisateur dans le fichier
@@ -173,8 +172,6 @@ int updateOTPUser(otpuser* user) {
         }
         
         switchFile (SWAP_FILE, OTPWD_PATH);
-        
-        
     }
     
     return 0;
@@ -182,28 +179,26 @@ int updateOTPUser(otpuser* user) {
 
 int DestroyOTPUser(char* usrname) {
     if (usrname == NULL) {
-        //return NULL;
         return -1;
     }
     // Initialisation
     otpuser usr;
+    usr.passwd = NULL;
     
     // Descripteur de fichier sur OTPWD_PATH.
     FILE * f = fopen(OTPWD_PATH, "r");
     if (f == NULL) {
-        //return NULL;
         return -1;
     }
     // Descripteur de fichier temporaire.
     FILE * fw = fopen(SWAP_FILE, "w");
     if (fw == NULL) {
-        //return NULL;
         return -1;
     }
     
     // Recherche de l'utilisateur dans le fichier
     while(readLine(f, &usr)){
-        if (!strcmp(usrname, usr.username)) {
+        if (strcmp(usrname, usr.username)) {
             writeLine (fw, &usr);
         }
     }
