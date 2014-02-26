@@ -9,14 +9,19 @@
 #include "secret.h"
 
 #define SEPARATOR ":"
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 256
 
 int destroyOTPUser(char* usrname) {
+    if (usrname == NULL) {
+        return -1;
+    }
     char path[BUFFER_SIZE];
     if (snprintf(path, BUFFER_SIZE, "%s%s", OTPWD_PATH, usrname) < 0) {
         return -1;
     }
-    unlink();
+    if (unlink(path) < 0) {
+        return -1;
+    }
 }
 
 int getOTPUser(char* usrname, otpuser* user) {
