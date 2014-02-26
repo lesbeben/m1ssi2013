@@ -9,7 +9,6 @@
 #include "secret.h"
 
 #define SEPARATOR ":"
-#define SWAP_FILE "/tmp/otpasswd~"
 #define BUFFER_SIZE 1024
 
 
@@ -174,7 +173,7 @@ int updateOTPUser(otpuser* user) {
     return 0;
 }
 
-int DestroyOTPUser(char* usrname) {
+int destroyOTPUser(char* usrname) {
     if (usrname == NULL) {
         return -1;
     }

@@ -5,20 +5,16 @@
 #define TOTP_METHOD 0
 #define HOTP_METHOD 1
 
-/** Le nom du fichier où sont stockées les informations nécessaires à 
- * l'authentification de chaque utilisateurs. <br/>
- * Ce fichier contient une ligne par utilisateur avec:
+/** Répertoire destiné a accueillir les données d'authentification utilisateurs.
+ * 
+ * Dans ce répertoire nous trouverons un fichier par utilisateur contenant:
  * <ul>
- *  <li>Le login de l'utilisateur.</li>
- *  <li>La méthode d'OTP choisie.</li>
- *  <li>Le secret de l'utilisateur au format hexadécimal.</li>
- *  <li>Les éventuels paramètres supplémentaires pour la génération d'otp.</li>
+ *  <li> La méthode d'otp choisie par l'utilisateur. </li>
+ *  <li> Le secret de l'utilisateur </li>
+ *  <li> Les paramètres supplémentaires relatifs à la méthode d'otp </li>
  * </ul>
-
- * @todo Réfléchir à la possibilité de créer en tant qu'utilisateur.
- * @todo Changer la valeur d'OTPWD_DIR pour la mise en production.
  */
-#define OTPWD_PATH "/tmp/otpasswd"
+#define OTPWD_PATH "/tmp/otpasswd/"
 
 /** Union de tout les paramètres supplémentaire possibles.
  */
@@ -76,6 +72,6 @@ int updateOTPUser(otpuser * user);
  * @return retourne 0, ou -1 en cas d'erreur.
  *
  */
-int DestroyOTPUser(char* usrname);
+int destroyOTPUser(char* usrname);
 
 #endif

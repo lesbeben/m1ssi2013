@@ -110,7 +110,7 @@ END_TEST
 
 START_TEST (test_destroy_user) {
     otpuser user;
-    ck_assert_msg( DestroyOTPUser(user2.username) == 0,
+    ck_assert_msg( destroyOTPUser(user2.username) == 0,
         "Erreur lors de la suppression d'un utilisateur: %s",
         user1.username
     );
