@@ -1,6 +1,11 @@
 package com.java.dataManager;
 
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
 import com.utils.IOTP;
+import com.utils.OTPGenerator;
+
+
 
 /**Générateur token
  Attributs: -nom du Token
@@ -9,17 +14,43 @@ import com.utils.IOTP;
  -longueur du Token
  */
 
+@Root
 public class Token  {
 
 	/**
 	 * nom du Token
 	 */
+	@Element
 	private String nom = "";
 
 	/**
-	 * méthode de génération à utiliser (par défaut HOTP)
+	 * type de génération utilisé (par défaut HOTP)
 	 */
+	@Element
 	private int method_Type = OTPMethodType.HOTP;
+	
+	
+	/**
+	 * taille de l'OTP
+	 */
+	@Element
+	private int tailleOTP=0; 
+	
+	
+	/**
+	 * compteur actuel du token si méthod_type=HOTP, 0 sinon
+	 */
+	@Element
+	private long count=0;
+	
+	
+	
+	/**
+	 * clé de hashage utilisée
+	 */
+	@Element
+	private String skey_hex = "";
+	
 
 	
 	/**
@@ -37,6 +68,8 @@ public class Token  {
 		this.nom = nom;
 		this.method_Type = method_type;
 		this.iotp_gen = iotp_gen;
+		this.tailleOTP= ((OTPGenerator)iotp_gen).getDigits();
+		this.skey_hex= ((OTPGenerator)iotp_gen).getKey().getHexRepresentation();
 	}
 
     /**
@@ -69,15 +102,17 @@ public class Token  {
 	}
 	
 	
+	
 	/**
-	 * cette fonction toString() retournera cet objet Token 
-	 * sous forme de chaine de caractère
-	 * @return String
+	 * c'est une fonction propre au token qui appelle implicitement son générateur IOTP
+	 * @return
 	 */
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
+	public int generate(){
+		int resultat = iotp_gen.generer();
+		if(method_Type==OTPMethodType.HOTP){
+        count =((OTPGenerator)iotp_gen).getCount();
+		}	
+		return resultat;
 	}
 
 }

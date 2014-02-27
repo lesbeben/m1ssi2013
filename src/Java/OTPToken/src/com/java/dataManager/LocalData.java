@@ -6,15 +6,20 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OptionalDataException;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
 
 /**
  * Cette classe permet de charger et enregistrer les données Utilisateur
  */
 
-public class LocalData{
-
+@Root
+public class LocalData {
 	
 	
 	
@@ -23,26 +28,14 @@ public class LocalData{
 	 */
 	private String PIN = "";
 
-	
-	
-	
-	/**
-	 * booléen précisant si c'est la première utilisation de l'application
-	 */
-	public boolean firstTime = false;
 
 	
 	
 	/**
 	 * liste de token créé par l'utilisateur
 	 */
-	private ArrayList<Token> listeToken = new ArrayList<Token>();
-	
-	
-	/**
-	 * le fichier à enregistrer et qui contiendra les données utilisateur
-	 */
-	private String localFile ="";
+	@ElementList
+	private List<Token> listeToken = new ArrayList<Token>();
 
 	
 	
@@ -63,7 +56,6 @@ public class LocalData{
 
 	
 	
-	
 	/**
 	 * Cette fonction permet d'avoir une seule instance de la classe LocalData
 	 * cette seule instance pourra être utilisée partout dans l'application
@@ -80,30 +72,11 @@ public class LocalData{
 	
 	
 	/**
-	 * fonction qui permet de loader les données chiffées, de déchiffrer les
-	 * données utilisateur, et d'en créer une instance de la classe LocalData
-	 */
-	public void load() {
-	}
-
-	
-	
-	
-	/**
-	 * fonction qui permet de chiffrer et d'enregistrer les données utilisateur
-	 */
-	public void commit() {
-	}
-
-	
-	
-	
-	/**
 	 * Cette fonction retourne la liste des Tokens de l'utilisateur
 	 * 
 	 * @return listeToken
 	 */
-	public ArrayList<Token> getListeToken() {
+	public List<Token> getListeToken() {
 		return listeToken;
 	}
 
@@ -172,41 +145,20 @@ public class LocalData{
 	
 	
 	/**
-	 * @param firstTime
+	 * Cette fonction permet de sérialiser cette classe en format XML
+	 * @throws IOException
 	 */
-	public void setFirstTime(boolean firstTime) {
-		this.firstTime = firstTime;
+	private void serialize() throws IOException {
 	}
 
 	
 	
 	
 	/**
-	 * cete fonction précise si c'est la première utilisation de l'application
-	 * 
-	 * @return true si c'est la première utilisation de l'application
-	 * @return false sinon
+	 * Cette fonction permet de déserialiser un contenu de type LocalData
+	 * @throws IOException
 	 */
-	public boolean isFirstTime() {
-		return firstTime;
-	}
-
-	
-	
-	
-	/**
-	 * Cette fonction permet de sérialiser en XML notre objet LocalData
-	 */
-	private void serialize(){
-	}
-
-	
-	
-	
-	/**
-	 * Cette fonction fait le parsing XML du contenu de notre fichier en un objet LocalData
-	 */
-	private void deserialize() {
+	private void deserialize() throws  IOException {
 	}
 
 }
