@@ -14,7 +14,7 @@
  *  <li> Les paramètres supplémentaires relatifs à la méthode d'otp </li>
  * </ul>
  */
-#define OTPWD_PATH "/tmp/otpasswd/"
+#define OTPWD_PATH "/tmp/otpasswd"
 
 /** Union de tout les paramètres supplémentaire possibles.
  */
