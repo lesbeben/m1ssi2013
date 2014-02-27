@@ -13,15 +13,7 @@ import java.util.ArrayList;
  * Cette classe permet de charger et enregistrer les données Utilisateur
  */
 
-public class LocalData implements Serializable {
-
-	
-	
-	
-	/**
-	 * serial Version UId généré par défaut
-	 */
-	private static final long serialVersionUID = 1L;
+public class LocalData{
 
 	
 	
@@ -45,6 +37,12 @@ public class LocalData implements Serializable {
 	 * liste de token créé par l'utilisateur
 	 */
 	private ArrayList<Token> listeToken = new ArrayList<Token>();
+	
+	
+	/**
+	 * le fichier à enregistrer et qui contiendra les données utilisateur
+	 */
+	private String localFile ="";
 
 	
 	
@@ -197,36 +195,18 @@ public class LocalData implements Serializable {
 	
 	
 	/**
-	 * Cette fonction permet de sérialiser un objt passer en paramètres
-	 * 
-	 * @param obj
-	 * @return byte[]
-	 * @throws IOException
+	 * Cette fonction permet de sérialiser en XML notre objet LocalData
 	 */
-	private byte[] serialize(Object obj) throws IOException {
-		ByteArrayOutputStream b = new ByteArrayOutputStream();
-		ObjectOutputStream o = new ObjectOutputStream(b);
-		o.writeObject(obj);
-		return b.toByteArray();
+	private void serialize(){
 	}
 
 	
 	
 	
 	/**
-	 * Cette fonction permet de déserialiser un contenu de type LocalData
-	 * 
-	 * @param contenu
-	 * @return LocalData
-	 * @throws OptionalDataException
-	 * @throws ClassNotFoundException
-	 * @throws IOException
+	 * Cette fonction fait le parsing XML du contenu de notre fichier en un objet LocalData
 	 */
-	private Object deserialize(byte[] contenu) throws OptionalDataException,
-			ClassNotFoundException, IOException {
-		ByteArrayInputStream b = new ByteArrayInputStream(contenu);
-		ObjectInputStream o = new ObjectInputStream(b);
-		return o.readObject();
+	private void deserialize() {
 	}
 
 }
