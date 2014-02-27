@@ -91,9 +91,17 @@ END_TEST
 START_TEST (test_update_user_secret) {
     destroySecret(user2.passwd);
     user2.passwd = createSecret(20);
+    otpuser user;
     ck_assert_msg(updateOTPUser(&user2) == 0,
         "Erreur lors de la mise à jour de l'utilisateur: %s",
         user2.username
+    );
+    ck_assert_msg(getOTPUser(user2.username, &user) == 0,
+                  "Erreur lors de l'obtention des données de %s",
+                  user2.username
+    );
+    ck_assert_msg(secretcmp(user2.passwd, user.passwd) == 0,
+                  "Les secrets ne correspondent pas !"
     );
 }
 END_TEST
@@ -101,9 +109,18 @@ END_TEST
 
 START_TEST (test_update_user_hotp_count) {
     user2.params.count += 1;
+    otpuser user;
     ck_assert_msg(updateOTPUser(&user2) == 0,
         "Erreur lors de la mise à jour de l'utilisateur: %s",
         user2.username
+    );
+    ck_assert_msg(getOTPUser(user2.username, &user) == 0,
+        "Erreur lors de l'obtention des données de %s",
+        user2.username
+    );
+    ck_assert_msg(user2.params.count == user.params.count,
+        "Les compteurs sont incohérent %d == %d", 
+        user2.params.count, user.params.count
     );
 }
 END_TEST
@@ -130,10 +147,9 @@ Suite * users_suite (void) {
     
     TCase * tc_update_s = tcase_create("Mise à jour secret");
     tcase_add_test(tc_update_s, test_update_user_secret);
-    tcase_add_test(tc_update_s, test_get_user);
+    
     TCase * tc_update_c = tcase_create("Mise à jour compteur");
     tcase_add_test(tc_update_c, test_update_user_hotp_count);
-    tcase_add_test(tc_update_c, test_get_user);
     
     TCase * tc_destroy = tcase_create("Suppression");
     tcase_add_test(tc_destroy, test_destroy_user);
@@ -167,7 +183,7 @@ int main(int argc, char * argv[]) {
     Suite * s = users_suite();
     SRunner * sr = srunner_create(s);
 //     Directive pour empécher le fork:
-//     srunner_set_fork_status(sr, CK_NOFORK);
+//      srunner_set_fork_status(sr, CK_NOFORK);
     srunner_run_all(sr, CK_NORMAL);
     failed_count = srunner_ntests_failed(sr);
     srunner_free(sr);
