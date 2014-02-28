@@ -71,6 +71,15 @@ public class Token  {
 		this.tailleOTP= ((OTPGenerator)iotp_gen).getDigits();
 		this.skey_hex= ((OTPGenerator)iotp_gen).getKey().getHexRepresentation();
 	}
+	
+	
+	
+	/**
+	 * constructeur par défaut (utille pour la désérialisation)
+	 */
+	public void token(){	
+	}
+	
 
     /**
      * Cette fonction retourne le nom du token

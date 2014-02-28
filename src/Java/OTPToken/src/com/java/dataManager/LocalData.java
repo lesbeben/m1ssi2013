@@ -1,18 +1,15 @@
 package com.java.dataManager;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OptionalDataException;
-import java.io.OutputStream;
-import java.io.Serializable;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.core.Persister;
+
 
 /**
  * Cette classe permet de charger et enregistrer les données Utilisateur
@@ -146,9 +143,16 @@ public class LocalData {
 	
 	/**
 	 * Cette fonction permet de sérialiser cette classe en format XML
-	 * @throws IOException
+	 * @return StringXML
 	 */
-	private void serialize() throws IOException {
+	private String serialize() {
+		Serializer serializer = new Persister();
+		StringWriter writer = new StringWriter();
+		try {
+			serializer.write(this, writer);
+		} catch (Exception e) {
+		}
+		return writer.toString();
 	}
 
 	
@@ -157,8 +161,40 @@ public class LocalData {
 	/**
 	 * Cette fonction permet de déserialiser un contenu de type LocalData
 	 * @throws IOException
+	 * @return LocalData Object
 	 */
-	private void deserialize() throws  IOException {
+	private LocalData deserialize(String contenuXML) {
+		Serializer serializer = new Persister();
+		LocalData local=null;
+		try {
+			local = serializer.read(LocalData.class, contenuXML);
+		} catch (Exception e) {
+		}
+		return local;
+	}
+	
+	
+	
+	/**
+	 * cette fonction permet de chiffrer en AES les données passées en paramètres
+	 * avec le PIN de l'utilisateur
+	 * @param String non chiffré
+	 * @return String chiffré avec AES
+	 */
+	public String EncryptData(String data){
+		return null;
+	}
+	
+	
+	
+	/**
+	 * cette fonction permet de déchiffrer les données (chiffrées avec AES) passées en paramètres
+	 * avec le PIN de l'utilisateur
+	 * @param String chiffré
+	 * @return String non chiffré
+	 */
+	public String DecryptData(String data){
+		return null;
 	}
 
 }
