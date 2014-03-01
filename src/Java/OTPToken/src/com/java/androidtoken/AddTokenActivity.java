@@ -6,9 +6,10 @@ import android.os.Bundle;
 
 
 /**Ecran d'Ajout d'un Token
- Ecran affiché lorsque l'utilisateur désire ajouter un Token depuis le menu Android
- Sortie: - si "Bouton enregistrement du Token" clické, afficher TokenListActivity
+ *Ecran affiché lorsque l'utilisateur désire ajouter un Token depuis le menu Android
+ *Sortie: - si "Bouton enregistrement du Token" clické, afficher TokenListActivity
          - sinon si "menu cancel Bouton" clické, afficher l'écran précédent
+ *@author ADEGOLOYE Yves
 */       
 
 

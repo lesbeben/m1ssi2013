@@ -2,8 +2,11 @@ package com.java.dataManager;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
-import com.utils.IOTP;
-import com.utils.OTPGenerator;
+import com.java.utils.HOTP;
+import com.java.utils.IOTP;
+import com.java.utils.OTPGenerator;
+import com.java.utils.Secret;
+import com.java.utils.TOTP;
 
 
 
@@ -44,6 +47,13 @@ public class Token  {
 	private long count=0;
 	
 	
+	/**
+	 * temps de validité du token si méthod_type=TOTP, 0 sinon
+	 */
+	@Element
+	private int quantum=0;
+	
+	
 	
 	/**
 	 * clé de hashage utilisée
@@ -63,7 +73,7 @@ public class Token  {
 	 * constructeur du token 
 	 * @return token
 	 */
-	public void token(String nom, int method_type, IOTP iotp_gen) {
+	public Token(String nom, int method_type, IOTP iotp_gen) {
 
 		this.nom = nom;
 		this.method_Type = method_type;
@@ -77,7 +87,7 @@ public class Token  {
 	/**
 	 * constructeur par défaut (utille pour la désérialisation)
 	 */
-	public void token(){	
+	public Token(){	
 	}
 	
 
@@ -117,7 +127,22 @@ public class Token  {
 	 * @return
 	 */
 	public int generate(){
+		if(method_Type==OTPMethodType.HOTP){
+			if(iotp_gen ==null){
+				Secret secret = new Secret();
+				secret.setSecret(skey_hex);
+				iotp_gen = new HOTP(count, secret, tailleOTP);
+			}
+		}else{
+			if(iotp_gen ==null){
+				Secret secret = new Secret();
+				secret.setSecret(skey_hex);
+				iotp_gen = new TOTP(secret, tailleOTP,quantum);
+			}
+		}
+
 		int resultat = iotp_gen.generer();
+		
 		if(method_Type==OTPMethodType.HOTP){
         count =((OTPGenerator)iotp_gen).getCount();
 		}	

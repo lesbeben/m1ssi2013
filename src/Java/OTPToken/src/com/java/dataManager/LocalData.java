@@ -2,13 +2,28 @@ package com.java.dataManager;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
 
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
+
+import android.content.Context;
+
+import com.java.dataManager.IOFileUtils;
+import com.java.dataManager.Token;
+import com.java.test.LocaleDataTest;
 
 
 /**
@@ -18,12 +33,14 @@ import org.simpleframework.xml.core.Persister;
 @Root
 public class LocalData {
 	
+	public static String LOCAL_DATA_FILE = "localData.xml";
+	public static String LOCAL_PIN_FILE = "pin.xml";
 	
 	
 	/**
 	 * PIN de l'utisateur
 	 */
-	private String PIN = "";
+	private String PIN = "0000";
 
 
 	
@@ -40,7 +57,7 @@ public class LocalData {
 	/**
 	 * instance de la classe LocalData
 	 */
-	private LocalData instance = null;
+	private static LocalData instance = null;
 
 	
 	
@@ -58,9 +75,10 @@ public class LocalData {
 	 * cette seule instance pourra être utilisée partout dans l'application
 	 * (design patern singleton)
 	 */
-	public LocalData getInstance() {
+	public static LocalData getInstance() {
 		if (instance == null) {
-			return new LocalData();
+			instance = new LocalData();
+			return instance;
 		}
 		return instance;
 	}
@@ -87,7 +105,14 @@ public class LocalData {
 	 * @return token
 	 */
 	public Token getToken(String nom) {
-		return null;
+		Token res = null;
+		for (int i = 0; i < listeToken.size(); i++) {
+			Token resIT = listeToken.get(i);
+			if (resIT.getNom().equalsIgnoreCase(nom)) {
+				res = resIT;
+			}
+		}
+		return res;
 	}
 
 	
@@ -99,7 +124,7 @@ public class LocalData {
 	 * @param token
 	 */
 	public void addToken(Token token) {
-
+		listeToken.add(token);
 	}
 
 	
@@ -111,10 +136,13 @@ public class LocalData {
 	 * @param nom
 	 */
 	public void removeToken(String nom) {
-
+		for (int i = 0; i < listeToken.size(); i++) {
+			Token res = (Token) listeToken.get(i);
+			if (res.getNom().equalsIgnoreCase(nom)) {
+				listeToken.remove(i);
+			}
+		}
 	}
-
-	
 	
 	
 	/**
@@ -165,9 +193,9 @@ public class LocalData {
 	 */
 	private LocalData deserialize(String contenuXML) {
 		Serializer serializer = new Persister();
-		LocalData local=null;
+		LocaleDataTest local = null;
 		try {
-			local = serializer.read(LocalData.class, contenuXML);
+			local = serializer.read(LocaleDataTest.class, contenuXML);
 		} catch (Exception e) {
 		}
 		return local;
@@ -179,10 +207,28 @@ public class LocalData {
 	 * cette fonction permet de chiffrer en AES les données passées en paramètres
 	 * avec le PIN de l'utilisateur
 	 * @param String non chiffré
+	 * @param byte[] la clé pour le chiffrement
 	 * @return String chiffré avec AES
 	 */
-	public String EncryptData(String data){
+	private byte[] EncryptData(String data,byte[] key_AES) {
+
+		Cipher cipher;
+		try {
+			cipher = Cipher.getInstance("AES");
+			SecretKeySpec key;
+			key = new SecretKeySpec(key_AES, "AES");
+			cipher.init(Cipher.ENCRYPT_MODE, key);
+			return cipher.doFinal(data.getBytes("UTF-8"));
+		} catch (IllegalBlockSizeException e) {
+		} catch (BadPaddingException e) {
+		} catch (UnsupportedEncodingException e) {
+		} catch (InvalidKeyException e) {
+		} catch (NoSuchAlgorithmException e) {
+		} catch (NoSuchPaddingException e) {
+		}
+
 		return null;
+
 	}
 	
 	
@@ -191,9 +237,78 @@ public class LocalData {
 	 * cette fonction permet de déchiffrer les données (chiffrées avec AES) passées en paramètres
 	 * avec le PIN de l'utilisateur
 	 * @param String chiffré
+	 * @param byte[] la clé pour le déchiffrement, le même utilisé lors du chiffrement
 	 * @return String non chiffré
 	 */
-	public String DecryptData(String data){
+	public String DecryptData(String data,byte[] key_AES){
+		Cipher cipher;
+		try {
+			cipher = Cipher.getInstance("AES");
+			SecretKeySpec key;
+			key = new SecretKeySpec(key_AES, "AES");
+			cipher.init(Cipher.DECRYPT_MODE, key);
+			return new String(cipher.doFinal(data), "UTF-8");
+		} catch (IllegalBlockSizeException e) {
+		} catch (BadPaddingException e) {
+		} catch (UnsupportedEncodingException e) {
+		} catch (InvalidKeyException e) {
+		} catch (NoSuchAlgorithmException e) {
+		} catch (NoSuchPaddingException e) {
+		}
+
+		return null;
+	}
+	
+	
+	/**
+	 * chargement des données utilisateurs
+	 * @param le context de l'application
+	 */
+	public void load(Context context) {
+
+		// chargement du fichier "localData.xml"
+		String res;
+		try {
+			res = DecryptData(IOFileUtils.readFromInternalFile(context,
+					LOCAL_DATA_FILE),"0123456789abcdef".getBytes("UTF-8"));
+			LocaleDataTest data = deserialize(res);
+			listeToken = data.getListeToken();
+		} catch (UnsupportedEncodingException e) {
+		}
+	}
+	
+	
+	/**
+	 * fonction utilisée pour l'enregistrement des données dans le fichier interne du device
+	 * @param le contexte de l'application
+	 */
+	public void commit(Context context) {
+
+		// Enregistrement des données dans le fichier "localData.xml"
+		String data = serialize();
+		byte[] res;
+		try {
+			res = EncryptData(data,"0123456789abcdef".getBytes("UTF-8"));
+			IOFileUtils.clearFile(context, LOCAL_DATA_FILE);
+			IOFileUtils.saveToInternalFile(context, LOCAL_DATA_FILE, res);
+		} catch (UnsupportedEncodingException e) {
+		}
+	}
+
+	/**
+	 * fonction utilisée pour enregistrer le PIN utilisateur dans le fichier pin.xml
+	 */
+	public void savePin() {
+	}
+	
+	
+	/**
+	 * fonction utilisée pour créer la clé AES (à base du PIN passé en paramètre)
+	 * pour le chiffrement 
+	 * @param PIN de l'utilisateur
+	 * @param contexte de l'application
+	 */
+	private byte[] createAESKey_withPIN(Context context,String PIN){
 		return null;
 	}
 

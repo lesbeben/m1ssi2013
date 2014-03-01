@@ -4,9 +4,10 @@ import android.os.Bundle;
 import android.app.Activity;
 
 /**Ecran Splash, premier écran affiché lors du lancement de l'application
-loading des données Utilisateur
-sortie: -si première utilisation de l'application, afficher SetPINActivity
+*loading des données Utilisateur
+*sortie: -si première utilisation de l'application, afficher SetPINActivity
         -sinon afficher PINLoginActivity.
+*@author ADEGOLOYE Yves
 */
 
 public class SplashActivity extends Activity {

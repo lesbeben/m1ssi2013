@@ -6,6 +6,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
+
+/**
+ * Une classe pour la génération de mots de
+ * passes jetables avec r�implémentation du HMAC
+ *
+ * @author ADEGOLOYE Yves
+ */
 public final class Utils {
 	
 	public static final int BLK_SIZE = 64;

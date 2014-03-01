@@ -1,5 +1,9 @@
 package com.java.dataManager;
 
+/**
+ * Interface catégorisant les 2 types de génération d'OTP utilisée
+ * @author ADEGOLOYE Yves
+ */
 public interface OTPMethodType {
 	
 	/**
