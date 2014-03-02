@@ -193,9 +193,9 @@ public class LocalData {
 	 */
 	private LocalData deserialize(String contenuXML) {
 		Serializer serializer = new Persister();
-		LocaleDataTest local = null;
+		LocalData local = null;
 		try {
-			local = serializer.read(LocaleDataTest.class, contenuXML);
+			local = serializer.read(LocalData.class, contenuXML);
 		} catch (Exception e) {
 		}
 		return local;
@@ -240,7 +240,7 @@ public class LocalData {
 	 * @param byte[] la clé pour le déchiffrement, le même utilisé lors du chiffrement
 	 * @return String non chiffré
 	 */
-	public String DecryptData(String data,byte[] key_AES){
+	public String DecryptData(byte[] data,byte[] key_AES){
 		Cipher cipher;
 		try {
 			cipher = Cipher.getInstance("AES");
