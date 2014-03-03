@@ -8,8 +8,8 @@ import java.util.Arrays;
 
 
 /**
- * Une classe pour la génération de mots de
- * passes jetables avec r�implémentation du HMAC
+ * Une classe pour la génération de mots de passes jetables avec 
+ * réimplémentation du HMAC.
  *
  * @author ADEGOLOYE Yves
  */
