@@ -10,20 +10,25 @@ import java.io.PrintWriter;
 import android.content.Context;
 
 /**
- * Classe permet de créer, modifier, supprimer , enregistrer dans un fichier interne du
- * device Android
+ * Classe permet de crÃ©er, modifier, supprimer , enregistrer dans un fichier 
+ * interne du device Android.
  * @author ADEGOLOYE Yves
  */
-public class IOFileUtils {
-
+public final class IOFileUtils {
+	
+	private IOFileUtils() {
+		
+	}
+	
 	/**
-	 * Cette fonction permet de savoir si le fichier passé en paramètre
-	 * existe dans la mémoire interne du device
+	 * Cette fonction permet de savoir si le fichier passÃ© en paramÃ¨tre
+	 * existe dans la mÃ©moire interne du device.
+	 * 
 	 * @param context
 	 * @param fileName
 	 * @return boolean
 	 */
-	public static boolean isExistInternalFile(Context context, String fileName) {
+	public static boolean internalFileExists(Context context, String fileName) {
 		File file = new File(context.getFilesDir(), fileName);
 		if (!file.exists()) {
 			return false;
@@ -34,7 +39,9 @@ public class IOFileUtils {
 	
 	
 	/**
-	 * Cette fonction crée un nouveau fichier avec comme nom , celui passé en paramètre
+	 * Cette fonction crÃ©e un nouveau fichier avec comme nom , celui passÃ© en 
+	 * paramÃ¨tre.
+	 * 
 	 * @param context
 	 * @param fileName
 	 */
@@ -44,14 +51,16 @@ public class IOFileUtils {
 		try {
 			file.createNewFile();
 		} catch (IOException e) {
+			//RIEN
 		}
 	}
 	
 
 	
 	/**
-	 * Cette fonction renvoie le fichier (en mémoire interne du device)
-	 * ayant pour nom celui passé en paramètres.
+	 * Cette fonction renvoie le fichier (en mÃ©moire interne du device) ayant 
+	 * pour nom celui passÃ© en paramÃ¨tres.
+	 * 
 	 * @param context
 	 * @param fileName
 	 * @return File
@@ -63,8 +72,9 @@ public class IOFileUtils {
 	
 	
 	/**
-	 * Cette fonction supprime de la mémoire interne le fichier ayant pour nom
-	 * celui passé en paramètres
+	 * Cette fonction supprime de la mÃ©moire interne le fichier ayant pour nom
+	 * celui passÃ© en paramÃ¨tres.
+	 * 
 	 * @param context
 	 * @param fileName
 	 * @return boolean
@@ -79,16 +89,19 @@ public class IOFileUtils {
 	
 	
 	/**
-	 * Cette fonction enregistre le contenu passé en paramètre dans le fichier ,
+	 * Cette fonction enregistre le contenu passÃ© en paramÃ¨tre dans le fichier.
+	 * 
 	 * @param context
 	 * @param fileName
 	 * @param contenu en byte[]
 	 */
 
-	public static void saveToInternalFile(Context context, String fileName,byte[] contenu) {
+	public static void saveToInternalFile(
+			Context context, String fileName, byte[] contenu) {
 		FileOutputStream outputStream;
 		try {
-			outputStream = context.openFileOutput(fileName,Context.MODE_PRIVATE);
+			outputStream = 
+					context.openFileOutput(fileName, Context.MODE_PRIVATE);
 			outputStream.write(contenu);
 			outputStream.close();
 		} catch (Exception e) {
@@ -98,29 +111,32 @@ public class IOFileUtils {
 	
 	
 	/**
-	 * Cette fonction lire le fichier passé en paramètre ,
+	 * Cette fonction lit le fichier passÃ© en paramÃ©tre.
 	 * @param context
 	 * @param fileName
 	 * @param contenu en byte[]
 	 */
 
-	public static byte[] readFromInternalFile(Context context, String fileName) {
+	public static byte[] readFromInternalFile(
+			Context context, String fileName) {
 		FileInputStream inputStream;
 		byte[] content = null;
 		try {
-			inputStream = context.openFileInput( fileName);
+			inputStream = context.openFileInput(fileName);
 			content = new byte[inputStream.available()];
             inputStream.read(content);
             inputStream.close();
 		} catch (Exception e) {
+			//RIEN
 		}
 		return content;
 	}
 	
 	
 	/**
-	 * Cette fonction supprime le contenu le fichier ayant pour nom
-	 * celui passé en paramètres
+	 * Cette fonction supprime le contenu le fichier ayant pour nom celui passÃ© 
+	 * en paramÃ¨tres.
+	 * 
 	 * @param context
 	 * @param fileName
 	 * @return boolean
@@ -135,6 +151,7 @@ public class IOFileUtils {
 			writer.print("");
 			writer.close();
 		} catch (FileNotFoundException e) {
+			//RIEN
 		}
 
 	}

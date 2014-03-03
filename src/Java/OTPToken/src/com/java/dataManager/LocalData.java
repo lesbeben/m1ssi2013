@@ -1,6 +1,5 @@
 package com.java.dataManager;
 
-import java.io.IOException;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
@@ -19,12 +18,10 @@ import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 import android.content.Context;
 import android.provider.Settings.Secure;
-import com.java.dataManager.IOFileUtils;
-import com.java.dataManager.Token;
 
 
 /**
- * Cette classe permet de charger et enregistrer les données Utilisateur
+ * Cette classe permet de charger et enregistrer les donnÃ©es Utilisateur.
  * 
  * @author ADEGOLOYE Yves
  */
@@ -32,20 +29,16 @@ import com.java.dataManager.Token;
 @Root
 public class LocalData {
 	
-	public static String LOCAL_DATA_FILE = "localData.xml";
-	public static String LOCAL_PIN_FILE = "pin.xml";
-	
+	public static final String LOCAL_DATA_FILE = "localData.xml";
+	public static final String LOCAL_PIN_FILE = "pin.xml";	
 	
 	/**
-	 * PIN de l'utisateur
+	 * PIN de l'utisateur.
 	 */
 	private String PIN = "0000";
-
-
-	
 	
 	/**
-	 * liste de token créé par l'utilisateur
+	 * liste de token crÃ©Ã©s par l'utilisateur.
 	 */
 	@ElementList
 	private List<Token> listeToken = new ArrayList<Token>();
@@ -54,7 +47,7 @@ public class LocalData {
 	
 	
 	/**
-	 * instance de la classe LocalData
+	 * instance de la classe LocalData.
 	 */
 	private static LocalData instance = null;
 
@@ -62,7 +55,7 @@ public class LocalData {
 	
 	
 	/**
-	 * constructeur de la classe LocalData
+	 * Constructeur de la classe LocalData.
 	 */
 	private LocalData() {
 	}
@@ -70,8 +63,8 @@ public class LocalData {
 	
 	
 	/**
-	 * Cette fonction permet d'avoir une seule instance de la classe LocalData
-	 * cette seule instance pourra être utilisée partout dans l'application
+	 * Cette fonction permet d'avoir une seule instance de la classe LocalData.
+	 * Cette seule instance pourra Ãªtre utilisÃ©e partout dans l'application.
 	 * (design patern singleton)
 	 */
 	public static LocalData getInstance() {
@@ -86,7 +79,7 @@ public class LocalData {
 	
 	
 	/**
-	 * Cette fonction retourne la liste des Tokens de l'utilisateur
+	 * Cette fonction retourne la liste des Tokens de l'utilisateur.
 	 * 
 	 * @return listeToken
 	 */
@@ -98,10 +91,10 @@ public class LocalData {
 	
 	
 	/**
-	 * Cette fonction retourne un token en prenant comme paramètre son nom
+	 * Cette fonction retourne un token en prenant comme paramÃ¨tre son nom.
 	 * 
-	 * @param nom
-	 * @return token
+	 * @param nom Le nom du token Ã  rÃ©cupÃ©rer.
+	 * @return token Le token rÃ©cupÃ©rÃ©
 	 */
 	public Token getToken(String nom) {
 		Token res = null;
@@ -118,7 +111,7 @@ public class LocalData {
 	
 	
 	/**
-	 * Ajoute un token à la liste des tokens
+	 * Ajoute un token Ã  la liste des tokens.
 	 * 
 	 * @param token
 	 */
@@ -130,7 +123,7 @@ public class LocalData {
 	
 	
 	/**
-	 * Supprime un token de la liste des tokens
+	 * Supprime un token de la liste des tokens.
 	 * 
 	 * @param nom
 	 */
@@ -145,7 +138,7 @@ public class LocalData {
 	
 	
 	/**
-	 * Cette fonction retourne le PIN de l'utiliateur
+	 * Cette fonction retourne le PIN de l'utiliateur.
 	 * 
 	 * @return PIN
 	 */
@@ -157,7 +150,7 @@ public class LocalData {
 	
 
 	/**
-	 * Modifie le PIN Utilisateur
+	 * Modifie le PIN Utilisateur.
 	 * 
 	 * @param pIN
 	 */
@@ -169,7 +162,8 @@ public class LocalData {
 	
 	
 	/**
-	 * Cette fonction permet de sérialiser cette classe en format XML
+	 * Cette fonction permet de sï¿½rialiser cette classe en format XML.
+	 * 
 	 * @return StringXML
 	 */
 	private String serialize() {
@@ -178,6 +172,7 @@ public class LocalData {
 		try {
 			serializer.write(this, writer);
 		} catch (Exception e) {
+			//RIEN
 		}
 		return writer.toString();
 	}
@@ -186,7 +181,8 @@ public class LocalData {
 	
 	
 	/**
-	 * Cette fonction permet de déserialiser un contenu de type LocalData
+	 * Cette fonction permet de dÃ©serialiser un contenu de type LocalData.
+	 * 
 	 * @throws IOException
 	 * @return LocalData Object
 	 */
@@ -196,6 +192,7 @@ public class LocalData {
 		try {
 			local = serializer.read(LocalData.class, contenuXML);
 		} catch (Exception e) {
+			//RIEN
 		}
 		return local;
 	}
@@ -203,13 +200,13 @@ public class LocalData {
 	
 	
 	/**
-	 * cette fonction permet de chiffrer en AES les données passées en paramètres
-	 * avec le PIN de l'utilisateur
-	 * @param String non chiffré
-	 * @param byte[] la clé pour le chiffrement
-	 * @return String chiffré avec AES
+	 * cette fonction permet de chiffrer en AES les donnÃ©es passÃ©es en 
+	 * paramÃ¨tres avec le PIN de l'utilisateur.
+	 * @param String non chiffrÃ©e
+	 * @param byte[] la clÃ© pour le chiffrement
+	 * @return String chiffrÃ©e avec AES
 	 */
-	private byte[] EncryptData(String data,byte[] key_AES) {
+	private byte[] EncryptData(String data, byte[] key_AES) {
 
 		Cipher cipher;
 		try {
@@ -219,11 +216,17 @@ public class LocalData {
 			cipher.init(Cipher.ENCRYPT_MODE, key);
 			return cipher.doFinal(data.getBytes("UTF-8"));
 		} catch (IllegalBlockSizeException e) {
+			//TODO
 		} catch (BadPaddingException e) {
+			//TODO
 		} catch (UnsupportedEncodingException e) {
+			//TODO
 		} catch (InvalidKeyException e) {
+			//TODO
 		} catch (NoSuchAlgorithmException e) {
+			//TODO
 		} catch (NoSuchPaddingException e) {
+			//TODO
 		}
 
 		return null;
@@ -233,11 +236,12 @@ public class LocalData {
 	
 	
 	/**
-	 * cette fonction permet de déchiffrer les données (chiffrées avec AES) passées en paramètres
-	 * avec le PIN de l'utilisateur
-	 * @param String chiffré
-	 * @param byte[] la clé pour le déchiffrement, le même utilisé lors du chiffrement
-	 * @return String non chiffré
+	 * cette fonction permet de dÃ©chiffrer les donnÃ©es (chiffrÃ©es avec AES) 
+	 * passÃ©es en paramÃ©tres avec le PIN de l'utilisateur.
+	 * @param String chiffrÃ©e
+	 * @param byte[] la clÃ© pour le dÃ©chiffrement, la mÃªme utilisÃ©e que lors du 
+	 * 				 chiffrement
+	 * @return String non chiffrÃ©e
 	 */
 	public String DecryptData(byte[] data,byte[] key_AES){
 		Cipher cipher;
@@ -260,45 +264,46 @@ public class LocalData {
 	
 	
 	/**
-	 * chargement des données utilisateurs
+	 * Chargement des donnÃ©es utilisateurs.
 	 * @param le context de l'application
 	 */
 	public void load(Context context) {
-
 		// chargement du fichier "localData.xml"
 		String res;
 		try {
-			res = DecryptData(IOFileUtils.readFromInternalFile(context,
-					LOCAL_DATA_FILE),createAESKey_withPIN(context, PIN));
+			res = DecryptData(
+					IOFileUtils.readFromInternalFile(context, LOCAL_DATA_FILE),
+					createAESKey_withPIN(context, PIN)
+			);
 			LocaleDataTest data = deserialize(res);
 			listeToken = data.getListeToken();
 		} catch (UnsupportedEncodingException e) {
+			//TODO
 		}
 	}
 	
 	
 	/**
-	 * fonction utilisée pour l'enregistrement des données dans le fichier interne du device
+	 * Fonction utilisÃ©e pour l'enregistrement des donnÃ©es dans le fichier 
+	 * interne du device.
+	 * 
 	 * @param le contexte de l'application
 	 */
 	public void commit(Context context) {
 
-		// Enregistrement des données dans le fichier "localData.xml"
+		// Enregistrement des donnÃ©es dans le fichier "localData.xml"
 		String data = serialize();
 		byte[] res;
-		try {
-			res = EncryptData(data,createAESKey_withPIN(context, PIN));
-			IOFileUtils.clearFile(context, LOCAL_DATA_FILE);
-			IOFileUtils.saveToInternalFile(context, LOCAL_DATA_FILE, res);
-		} catch (UnsupportedEncodingException e) {
-		}
+		res = EncryptData(data, createAESKey_withPIN(context, PIN));
+		IOFileUtils.clearFile(context, LOCAL_DATA_FILE);
+		IOFileUtils.saveToInternalFile(context, LOCAL_DATA_FILE, res);
 	}
 
 	/**
-	 * fonction pour hashé le PIN en Sha1
+	 * fonction pour hasher le PIN en Sha1.
 	 * 
-	 * @param pin non hashé
-	 * @return byte[] pin hashé
+	 * @param pin non hashÃ©
+	 * @return byte[] pin hashÃ©
 	 */
 	public byte[] hash_pin(String pin) {
 
@@ -311,15 +316,17 @@ public class LocalData {
 			bytes = md.digest();
 			
 		} catch (NoSuchAlgorithmException e) {
+			//TODO
 		} catch (UnsupportedEncodingException e) {
+			//TODO
 		}
 		return bytes;
 
 	}
 
 	/**
-	 * fonction utilisée pour enregistrer le PIN utilisateur Hashé en SHA1 dans
-	 * le fichier pin.xml
+	 * Fonction utilisÃ©e pour enregistrer le PIN utilisateur HashÃ© en SHA1 dans
+	 * le fichier pin.xml.
 	 * 
 	 * @param le contexte de l'application
 	 */
@@ -334,46 +341,45 @@ public class LocalData {
 	}
 
 	/**
-	 * fonction pour lire le contenu hashé du fichier pin.xml
+	 * Fonction pour lire le contenu hashÃ© du fichier pin.xml.
 	 * 
 	 * @param lecontexte de l'application
-	 * @return PIN hashé
+	 * @return PIN hashÃ©
 	 */
 	public byte[] loadPin(Context context) {
 
 		// chargement du fichier "pin.xml"
-		byte[] hashpin = IOFileUtils.readFromInternalFile(context,
-				LOCAL_PIN_FILE);
+		byte[] hashpin = IOFileUtils.readFromInternalFile(
+				context,
+				LOCAL_PIN_FILE
+		);
 		return hashpin;
 	}
 	
 	
 	/**
-	 * fonction utilisée pour créer la clé AES (à base du PIN passé en paramètre)
-	 * pour le chiffrement.
-	 * La fonction de hashage utilisée est MD5 avec une sortie de 128 bits
+	 * Fonction utilisÃ©e pour crÃ©er la clÃ© AES (Ã  base du PIN passÃ© en 
+	 * paramÃ¨tre) pour le chiffrement.
+	 * La fonction de hashage utilisÃ©e est MD5 avec une sortie de 128 bits
 	 * @param PIN de l'utilisateur
 	 * @param contexte de l'application 
 	 */
-	private byte[] createAESKey_withPIN(Context context,String PIN){
+	private byte[] createAESKey_withPIN(Context context, String PIN){
 		
-		String android_id = Secure.getString(context.getContentResolver(),
-                Secure.ANDROID_ID); 
+		String android_id = Secure.getString(
+				context.getContentResolver(),
+                Secure.ANDROID_ID
+        ); 
 		
 		String passwordToHash = PIN + android_id;
 		
         byte[] bytes = null;
-        try {
-        	
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            
-            md.update(passwordToHash.getBytes());
-            
-             bytes = md.digest();
-            
-        } 
-        catch (NoSuchAlgorithmException e) 
-        {
+        try {        	
+            MessageDigest md = MessageDigest.getInstance("MD5");            
+            md.update(passwordToHash.getBytes());            
+            bytes = md.digest();            
+        } catch (NoSuchAlgorithmException e) {
+        	//TODO
         }
         return bytes;
 	}
