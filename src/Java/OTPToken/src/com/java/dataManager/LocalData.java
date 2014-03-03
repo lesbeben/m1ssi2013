@@ -4,30 +4,29 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
-
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
-
 import android.content.Context;
-
+import android.provider.Settings.Secure;
 import com.java.dataManager.IOFileUtils;
 import com.java.dataManager.Token;
-import com.java.test.LocaleDataTest;
 
 
 /**
  * Cette classe permet de charger et enregistrer les données Utilisateur
+ * 
+ * @author ADEGOLOYE Yves
  */
 
 @Root
@@ -270,7 +269,7 @@ public class LocalData {
 		String res;
 		try {
 			res = DecryptData(IOFileUtils.readFromInternalFile(context,
-					LOCAL_DATA_FILE),"0123456789abcdef".getBytes("UTF-8"));
+					LOCAL_DATA_FILE),createAESKey_withPIN(context, PIN));
 			LocaleDataTest data = deserialize(res);
 			listeToken = data.getListeToken();
 		} catch (UnsupportedEncodingException e) {
@@ -288,7 +287,7 @@ public class LocalData {
 		String data = serialize();
 		byte[] res;
 		try {
-			res = EncryptData(data,"0123456789abcdef".getBytes("UTF-8"));
+			res = EncryptData(data,createAESKey_withPIN(context, PIN));
 			IOFileUtils.clearFile(context, LOCAL_DATA_FILE);
 			IOFileUtils.saveToInternalFile(context, LOCAL_DATA_FILE, res);
 		} catch (UnsupportedEncodingException e) {
@@ -296,20 +295,87 @@ public class LocalData {
 	}
 
 	/**
-	 * fonction utilisée pour enregistrer le PIN utilisateur dans le fichier pin.xml
+	 * fonction pour hashé le PIN en Sha1
+	 * 
+	 * @param pin non hashé
+	 * @return byte[] pin hashé
 	 */
-	public void savePin() {
+	public byte[] hash_pin(String pin) {
+
+		byte[] bytes = null;
+		try {
+
+			// Hashage du PIN
+			MessageDigest md = MessageDigest.getInstance("SHA1");
+			md.update(pin.getBytes("UTF-8"));
+			bytes = md.digest();
+			
+		} catch (NoSuchAlgorithmException e) {
+		} catch (UnsupportedEncodingException e) {
+		}
+		return bytes;
+
+	}
+
+	/**
+	 * fonction utilisée pour enregistrer le PIN utilisateur Hashé en SHA1 dans
+	 * le fichier pin.xml
+	 * 
+	 * @param le contexte de l'application
+	 */
+	public void savePin(Context context) {
+
+		// hashage du PIN
+		byte[] bytes = hash_pin(PIN);
+
+		// Enregistrement du hashage dans le fichier pin.xml
+		IOFileUtils.clearFile(context, LOCAL_PIN_FILE);
+		IOFileUtils.saveToInternalFile(context, LOCAL_PIN_FILE, bytes);
+	}
+
+	/**
+	 * fonction pour lire le contenu hashé du fichier pin.xml
+	 * 
+	 * @param lecontexte de l'application
+	 * @return PIN hashé
+	 */
+	public byte[] loadPin(Context context) {
+
+		// chargement du fichier "pin.xml"
+		byte[] hashpin = IOFileUtils.readFromInternalFile(context,
+				LOCAL_PIN_FILE);
+		return hashpin;
 	}
 	
 	
 	/**
 	 * fonction utilisée pour créer la clé AES (à base du PIN passé en paramètre)
-	 * pour le chiffrement 
+	 * pour le chiffrement.
+	 * La fonction de hashage utilisée est MD5 avec une sortie de 128 bits
 	 * @param PIN de l'utilisateur
-	 * @param contexte de l'application
+	 * @param contexte de l'application 
 	 */
 	private byte[] createAESKey_withPIN(Context context,String PIN){
-		return null;
+		
+		String android_id = Secure.getString(context.getContentResolver(),
+                Secure.ANDROID_ID); 
+		
+		String passwordToHash = PIN + android_id;
+		
+        byte[] bytes = null;
+        try {
+        	
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            
+            md.update(passwordToHash.getBytes());
+            
+             bytes = md.digest();
+            
+        } 
+        catch (NoSuchAlgorithmException e) 
+        {
+        }
+        return bytes;
 	}
 
 }
