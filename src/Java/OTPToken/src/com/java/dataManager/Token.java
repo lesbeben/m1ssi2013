@@ -11,10 +11,11 @@ import com.java.utils.TOTP;
 
 
 /**Générateur token
- Attributs: -nom du Token
- -clé de Génération
- -méthode de Génération (HOTP/TOTP)
- -longueur du Token
+ *Attributs: -nom du Token
+ *-clé de Génération
+ *-méthode de Génération (HOTP/TOTP)
+ *-longueur du Token
+ * @author ADEGOLOYE Yves
  */
 
 @Root
