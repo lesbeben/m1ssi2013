@@ -3,10 +3,10 @@ package com.java.androidtoken;
 import android.os.Bundle;
 import android.app.ListActivity;
 
-/**Ecran d'accueil regroupant la liste des OTP créé
-*Sortie -si "Bouton menu Android AddToken" cliké, afficher AddTokenActivity
-       -si "Bouton menu Android RemoveToken" clické , afficher RemoveTokenActivity
-       -sinon si "menu cancel Bouton" clické, éteindre l'application
+/**Ecran d'accueil regroupant la liste des OTP crÃ©Ã©s
+*Sortie -si "Bouton menu Android AddToken" clikÃ©, afficher AddTokenActivity
+       -si "Bouton menu Android RemoveToken" clickÃ© , afficher RemoveTokenActivity
+       -sinon si "menu cancel Bouton" clickÃ©, Ã©teindre l'application
 *@author ADEGOLOYE Yves
 */
 
