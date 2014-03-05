@@ -354,6 +354,21 @@ public class LocalData {
 	
 	
 	/**
+	 * Cette fonction compare le pin user lors du login 
+	 * et le pin hashé enregistrer localement
+	 * @param userloginpin
+	 * @param Context
+	 * @return boolean
+	 */
+	public boolean validatePin(Context context,String pin){
+		if(hash_pin(pin) == loadPin(context)){
+			return true;
+		}
+		return false;
+	}
+	
+	
+	/**
 	 * Fonction utilisée pour créer la clé AES (à base du PIN passé en 
 	 * paramètre) pour le chiffrement.
 	 * La fonction de hashage utilisée est MD5 avec une sortie de 128 bits
