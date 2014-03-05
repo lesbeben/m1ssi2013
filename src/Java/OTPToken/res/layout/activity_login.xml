@@ -17,7 +17,7 @@
 			android:id="@+id/mainPinText"
 		    android:layout_width="fill_parent" 
 		    android:layout_height="wrap_content" 
-		    android:text="@string/pinChangeExistingPin"
+		    android:text="@string/loginPin"
 		    android:layout_marginTop="5sp"
 		    android:textSize="20dip"		    
 		    />

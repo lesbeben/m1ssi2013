@@ -8,14 +8,16 @@
 <TextView android:text="@string/pinChangeExistingPin" 
 		  android:id="@+id/pinChangeExistingPin" 
 		  android:layout_width="wrap_content" 
-		  android:layout_height="wrap_content"></TextView>
+		  android:layout_height="wrap_content"
+		  android:visibility="gone"></TextView>
 
 <EditText
     android:id="@+id/pinChangeExistingPinEdit"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:inputType="number"
-    android:password="true" >
+    android:password="true"
+    android:visibility="gone" >
 </EditText>
 <TextView android:text="@string/pinChangeNew1" 
 		  android:id="@+id/pingChangeNew1" 

@@ -15,11 +15,21 @@
     <string name="pinChangeNew2">Confirmer le PIN</string>
     <string name="pinChangeSubmit">Enregistrer</string>
     <string name="pinAlertInvalidPin">PIN Invalide</string>
-    <string name="pinAlertNewPinsDifferent">The new PINs are not the same</string>
+    <string name="pinAlertNewPinsDifferent">Les valeurs rentrées ne sont pas les mêmes</string>
     <string name="pinAlertNewPinBlank">Le nouveau PIN est nécessaire</string>
     <string name="pinRemoveExistingPin">Entrer votre PIN</string>
     <string name="pinRemoveSubmit">Supprimer</string>
-    <string name="pinChangeExistingPin">Entrer votre PIN</string>
+    <string name="pinChangeExistingPin">Entrez l\'ancien PIN</string>
     <string name="mainLogin">Login</string>
+    <string name="loginEditPinEmpty">Veuillez rentrer votre PIN</string>
+    <string name="loginPin">Entrez votre PIN</string>
+    <string name="cancel">Annuler</string>
+    <string name="confirmDelete">Voulez vous supprimer ce token?</string>
+    <string name="toastDeleted">Token Supprimé</string>
+    <string name="toastAdded">Token Ajouté</string>
+    <string name="otpDialogTitle">One Time Password</string>
+    <string name="menu_add_token">Ajouter un Token</string>
+    <string name="menu_pin_change">Changer votre PIN</string>
+    <string name="menu_delete_token">Supprimer un Token</string>
 
 </resources>
