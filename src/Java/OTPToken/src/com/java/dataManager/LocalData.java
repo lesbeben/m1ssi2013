@@ -233,11 +233,17 @@ public class LocalData {
 			cipher.init(Cipher.DECRYPT_MODE, key);
 			return new String(cipher.doFinal(data), "UTF-8");
 		} catch (IllegalBlockSizeException e) {
+			//TODO
 		} catch (BadPaddingException e) {
+			//TODO
 		} catch (UnsupportedEncodingException e) {
+			//TODO
 		} catch (InvalidKeyException e) {
+			//TODO
 		} catch (NoSuchAlgorithmException e) {
+			//TODO
 		} catch (NoSuchPaddingException e) {
+			//TODO
 		}
 
 		return null;
@@ -252,8 +258,9 @@ public class LocalData {
 	public void load(Context context) {
 		// chargement du fichier "localData.xml"
 		String res;
-		byte[] contenu= IOFileUtils.readFromInternalFile(context, LOCAL_DATA_FILE);
-		if(contenu!=null){
+		byte[] contenu = 
+				IOFileUtils.readFromInternalFile(context, LOCAL_DATA_FILE);
+		if (contenu != null) {
 		res = DecryptData(contenu
 				,
 				createAESKey_withPIN(context, PIN));
@@ -339,7 +346,7 @@ public class LocalData {
 
 	/**
 	 * Cette fonction compare le pin user lors du login et le pin hashé
-	 * enregistrer localement
+	 * enregistrer localement.
 	 * 
 	 * @param userloginpin
 	 * @param Context

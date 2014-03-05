@@ -17,7 +17,7 @@ public class PINLoginActivity extends Activity {
 	/**
 	 * Ecran de connexion à l'application Ecran affiché après l'écran splash (si
 	 * ce n'est pas la première utilisation de l'application) Sortie: -si le PIN
-	 * est OK, afficher TokenListActivity -sinon, Dialog de PIN incorrect
+	 * est OK, afficher TokenListActivity -sinon, Dialog de PIN incorrect.
 	 * 
 	 * @author ADEGOLOYE Yves
 	 */
@@ -102,8 +102,8 @@ public class PINLoginActivity extends Activity {
 
 	}
 
-	private DialogInterface.OnClickListener dialogClose = new DialogInterface.OnClickListener() {
-
+	private DialogInterface.OnClickListener dialogClose = 
+			new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int which) {
 			dialog.dismiss();
 		}

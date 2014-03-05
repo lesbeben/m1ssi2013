@@ -1,5 +1,4 @@
 package com.java.utils;
-import java.lang.Math;
 
 /**
  * Une classe abstraite pour les générateurs d'OTP.

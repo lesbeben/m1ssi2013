@@ -37,8 +37,10 @@ public class SetPINActivity extends Activity {
 		Intent i = getIntent();
 		isChange = i.getBooleanExtra("change_pin", false);
 
-		TextView existingPIN = (TextView) findViewById(R.id.pinChangeExistingPin);
-		EditText existingPinEdit = (EditText) findViewById(R.id.pinChangeExistingPinEdit);
+		TextView existingPIN = 
+				(TextView) findViewById(R.id.pinChangeExistingPin);
+		EditText existingPinEdit = 
+				(EditText) findViewById(R.id.pinChangeExistingPinEdit);
 		if (isChange) {
 			existingPIN.setVisibility(View.VISIBLE);
 			existingPinEdit.setVisibility(View.VISIBLE);
@@ -56,29 +58,31 @@ public class SetPINActivity extends Activity {
 		
 		public void onClick(View v) {
 			
-			if(isChange){
-				
-				String existingPin = ((EditText)findViewById(R.id.pinChangeExistingPinEdit)).getText().toString();
+			if (isChange) {				
+				String existingPin = 
+						((EditText) findViewById(R.id.pinChangeExistingPinEdit)).getText().toString();
 				
 				boolean validate = LocalData.getInstance().validatePin(
 						getApplicationContext(), existingPin);
 				
-				if(!validate){				
+				if (!validate) {				
 					showDialog(DIALOG_INVALID_EXISTING_PIN);
 					return;
 				}
 			}
 			
 
-			String newPin1 = ((EditText)findViewById(R.id.pinChangeNew1Edit)).getText().toString();
-			String newPin2 = ((EditText)findViewById(R.id.pinChangeNew2Edit)).getText().toString();
+			String newPin1 = 
+					((EditText) findViewById(R.id.pinChangeNew1Edit)).getText().toString();
+			String newPin2 = 
+					((EditText) findViewById(R.id.pinChangeNew2Edit)).getText().toString();
 			
-			if(newPin1.length() == 0){
+			if (newPin1.length() == 0) {
 				showDialog(DIALOG_NO_NEW_PIN);
 				return;
 			}
 			
-			if(!newPin1.contentEquals(newPin2)){
+			if (!newPin1.contentEquals(newPin2)) {
 				showDialog(DIALOG_DIFF_NEW_PIN);
 				return;
 			}
@@ -87,11 +91,13 @@ public class SetPINActivity extends Activity {
             LocalData.getInstance().savePin(getApplicationContext());
             
             
-            if(isChange){
-            finish();	
-            }else{
-				Intent i = new Intent(SetPINActivity.this,
-						TokenListActivity.class);
+            if (isChange) {
+            	finish();	
+            } else {
+				Intent i = new Intent(
+						SetPINActivity.this,
+						TokenListActivity.class
+						);
 				startActivity(i);
 				finish();
             }
@@ -102,7 +108,7 @@ public class SetPINActivity extends Activity {
 	protected Dialog onCreateDialog(int id) {
 		Dialog d;
 		
-		switch(id){
+		switch (id) {
 		case DIALOG_DIFF_NEW_PIN:
 			d = createAlertDialog(R.string.pinAlertNewPinsDifferent);
 			break;
@@ -123,14 +129,15 @@ public class SetPINActivity extends Activity {
 	}
 	
 	
-	private DialogInterface.OnClickListener dialogClose = new 	DialogInterface.OnClickListener() {
+	private DialogInterface.OnClickListener dialogClose = 
+			new DialogInterface.OnClickListener() {
 		
 		public void onClick(DialogInterface dialog, int which) {
 			dialog.dismiss();
 		}
 	};
 	
-	private Dialog createAlertDialog(int messageId){
+	private Dialog createAlertDialog(int messageId) {
 		
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setMessage(messageId)

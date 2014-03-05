@@ -5,7 +5,6 @@ import com.java.dataManager.LocalData;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.app.Activity;
 import android.content.Intent;
 
@@ -18,7 +17,8 @@ import android.content.Intent;
  */
 
 public class SplashActivity extends Activity {
-
+	private static final int WAIT_TIME = 3000;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,7 +28,7 @@ public class SplashActivity extends Activity {
 	}
 
 	/**
-	 * Async Task to make http call
+	 * Async Task to make http call.
 	 */
 	private class PrefetchData extends AsyncTask<Void, Void, Void> {
 		private boolean isAreadyHavePIN = false;
@@ -39,36 +39,32 @@ public class SplashActivity extends Activity {
 		}
 
 		@Override
-		protected Void doInBackground(Void... arg0) {
-			
-            synchronized(this)
-            {
+		protected Void doInBackground(Void... arg0) {			
+            synchronized (this) {
                try {
-				wait(3000);
-				
-				
-				// tester l'existence du fichier pin.xml, s'il n'existe pas, le créer
-				if (IOFileUtils.internalFileExists(getApplicationContext(),
-						LocalData.LOCAL_PIN_FILE)) {
-					isAreadyHavePIN = true;
-				} else {
-					IOFileUtils.createInternalFile(getApplicationContext(),
-							LocalData.LOCAL_PIN_FILE);
-				}
-				
-				
-				// tester l'existence du fichier localData.xml, s'il n'existe pas, le créer
-				if (!IOFileUtils.internalFileExists(getApplicationContext(),
-						LocalData.LOCAL_DATA_FILE)) {
-					IOFileUtils.createInternalFile(getApplicationContext(),
-							LocalData.LOCAL_PIN_FILE);
-				}
-			
-				
-				
-				
-			} catch (InterruptedException e) {
-			}
+					wait(WAIT_TIME);
+					
+					// tester l'existence du fichier pin.xml, s'il n'existe pas,
+					// le créer
+					if (IOFileUtils.internalFileExists(getApplicationContext(),
+							LocalData.LOCAL_PIN_FILE)) {
+						isAreadyHavePIN = true;
+					} else {
+						IOFileUtils.createInternalFile(getApplicationContext(),
+								LocalData.LOCAL_PIN_FILE);
+					}
+					
+					
+					// tester l'existence du fichier localData.xml, 
+					// s'il n'existe pas, le créer
+					if (!IOFileUtils.internalFileExists(getApplicationContext(),
+							LocalData.LOCAL_DATA_FILE)) {
+						IOFileUtils.createInternalFile(getApplicationContext(),
+								LocalData.LOCAL_PIN_FILE);
+					}				
+               } catch (InterruptedException e) {
+            	   //TODO
+               }
             }			
 			return null;
 		}
