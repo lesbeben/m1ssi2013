@@ -26,7 +26,7 @@ import android.provider.Settings.Secure;
  */
 
 @Root
-public class LocalData {
+public final class LocalData {
 
 	public static final String LOCAL_DATA_FILE = "localData.xml";
 	public static final String LOCAL_PIN_FILE = "pin.xml";
@@ -34,7 +34,7 @@ public class LocalData {
 	/**
 	 * PIN de l'utisateur.
 	 */
-	private String PIN = "0000";
+	private String pin = "0000";
 
 	/**
 	 * liste de token créés par l'utilisateur.
@@ -133,7 +133,7 @@ public class LocalData {
 	 * @return PIN
 	 */
 	public String getPIN() {
-		return PIN;
+		return pin;
 	}
 
 	/**
@@ -142,11 +142,11 @@ public class LocalData {
 	 * @param pIN
 	 */
 	public void setPIN(String pIN) {
-		PIN = pIN;
+		pin = pIN;
 	}
 
 	/**
-	 * Cette fonction permet de s�rialiser cette classe en format XML.
+	 * Cette fonction permet de sérialiser cette classe en format XML.
 	 * 
 	 * @return StringXML
 	 */
@@ -187,13 +187,13 @@ public class LocalData {
 	 * @param byte[] la clé pour le chiffrement
 	 * @return String chiffrée avec AES
 	 */
-	private byte[] EncryptData(String data, byte[] key_AES) {
+	private byte[] encryptData(String data, byte[] aesKey) {
 
 		Cipher cipher;
 		try {
 			cipher = Cipher.getInstance("AES");
 			SecretKeySpec key;
-			key = new SecretKeySpec(key_AES, "AES");
+			key = new SecretKeySpec(aesKey, "AES");
 			cipher.init(Cipher.ENCRYPT_MODE, key);
 			return cipher.doFinal(data.getBytes("UTF-8"));
 		} catch (IllegalBlockSizeException e) {
@@ -224,12 +224,12 @@ public class LocalData {
 	 *        chiffrement
 	 * @return String non chiffrée
 	 */
-	public String DecryptData(byte[] data, byte[] key_AES) {
+	public String decryptData(byte[] data, byte[] aesKey) {
 		Cipher cipher;
 		try {
 			cipher = Cipher.getInstance("AES");
 			SecretKeySpec key;
-			key = new SecretKeySpec(key_AES, "AES");
+			key = new SecretKeySpec(aesKey, "AES");
 			cipher.init(Cipher.DECRYPT_MODE, key);
 			return new String(cipher.doFinal(data), "UTF-8");
 		} catch (IllegalBlockSizeException e) {
@@ -261,9 +261,9 @@ public class LocalData {
 		byte[] contenu = 
 				IOFileUtils.readFromInternalFile(context, LOCAL_DATA_FILE);
 		if (contenu != null) {
-		res = DecryptData(contenu
+		res = decryptData(contenu
 				,
-				createAESKey_withPIN(context, PIN));
+				createAesKeyWithPin(context, pin));
 		LocalData data = deserialize(res);
 		listeToken = data.getListeToken();
 		}
@@ -281,7 +281,7 @@ public class LocalData {
 		// Enregistrement des données dans le fichier "localData.xml"
 		String data = serialize();
 		byte[] res;
-		res = EncryptData(data, createAESKey_withPIN(context, PIN));
+		res = encryptData(data, createAesKeyWithPin(context, pin));
 		IOFileUtils.clearFile(context, LOCAL_DATA_FILE);
 		IOFileUtils.saveToInternalFile(context, LOCAL_DATA_FILE, res);
 	}
@@ -293,7 +293,7 @@ public class LocalData {
 	 *            non hashé
 	 * @return byte[] pin hashé
 	 */
-	public byte[] hash_pin(String pin) {
+	public byte[] hashPin(String pin) {
 
 		byte[] bytes = null;
 		try {
@@ -322,7 +322,7 @@ public class LocalData {
 	public void savePin(Context context) {
 
 		// hashage du PIN
-		byte[] bytes = hash_pin(PIN);
+		byte[] bytes = hashPin(pin);
 
 		// Enregistrement du hashage dans le fichier pin.xml
 		IOFileUtils.clearFile(context, LOCAL_PIN_FILE);
@@ -353,7 +353,7 @@ public class LocalData {
 	 * @return boolean
 	 */
 	public boolean validatePin(Context context, String pin) {
-		if ((new String(hash_pin(pin))).equalsIgnoreCase(new String(
+		if ((new String(hashPin(pin))).equalsIgnoreCase(new String(
 				loadPin(context)))) {
 			return true;
 		}
@@ -365,17 +365,17 @@ public class LocalData {
 	 * paramètre) pour le chiffrement. La fonction de hashage utilisée est MD5
 	 * avec une sortie de 128 bits
 	 * 
-	 * @param PIN
+	 * @param pin
 	 *            de l'utilisateur
 	 * @param contexte
 	 *            de l'application
 	 */
-	private byte[] createAESKey_withPIN(Context context, String PIN) {
+	private byte[] createAesKeyWithPin(Context context, String pin) {
 
-		String android_id = Secure.getString(context.getContentResolver(),
+		String androidId = Secure.getString(context.getContentResolver(),
 				Secure.ANDROID_ID);
 
-		String passwordToHash = PIN + android_id;
+		String passwordToHash = pin + androidId;
 
 		byte[] bytes = null;
 		try {

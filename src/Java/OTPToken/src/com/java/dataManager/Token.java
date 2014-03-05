@@ -8,8 +8,6 @@ import com.java.utils.OTPGenerator;
 import com.java.utils.Secret;
 import com.java.utils.TOTP;
 
-
-
 /**
  * Générateur de token.
  * Attributs: - nom du Token
@@ -32,56 +30,48 @@ public class Token  {
 	 * type de génération utilisé (par défaut HOTP).
 	 */
 	@Element
-	private int method_Type = OTPMethodType.HOTP;
-	
+	private OTPMethodType methodType = OTPMethodType.HOTP;
 	
 	/**
 	 * Taille de l'OTP.
 	 */
 	@Element
-	private int tailleOTP = 0; 
-	
+	private int tailleOTP = 0;	
 	
 	/**
 	 * Compteur actuel du token si méthod_type=HOTP, 0 sinon.
 	 */
 	@Element
-	private long count = 0;
-	
+	private long count = 0;	
 	
 	/**
 	 * Temps de validité du token si méthod_type = TOTP, 0 sinon.
 	 */
 	@Element
-	private int quantum = 0;
-	
-	
+	private int quantum = 0;	
 	
 	/**
 	 * Clé de hashage utilisée.
 	 */
 	@Element
-	private String skey_hex = "";
-	
-
+	private String skeyHex = "";
 	
 	/**
 	 * Générateur otp.
 	 */
-	private IOTP iotp_gen ;
-
+	private IOTP iotpGen;
 	
 	/**
 	 * constructeur du token.
 	 * @return token
 	 */
-	public Token(String nom, int methodType, IOTP iotpGen) {
+	public Token(String nom, OTPMethodType methodType, IOTP iotpGen) {
 
 		this.nom = nom;
-		this.method_Type = methodType;
-		this.iotp_gen = iotpGen;
+		this.methodType = methodType;
+		this.iotpGen = iotpGen;
 		this.tailleOTP = ((OTPGenerator) iotpGen).getDigits();
-		this.skey_hex = 
+		this.skeyHex = 
 				((OTPGenerator) iotpGen).getKey().getHexRepresentation();
 	}
 	
@@ -111,8 +101,8 @@ public class Token  {
      * @return O pour HOTP
      * @return 1 pour TOTP
      */
-	public int getMethod_Type() {
-		return method_Type;
+	public OTPMethodType getMethodType() {
+		return methodType;
 	}
 
 
@@ -121,8 +111,8 @@ public class Token  {
      * 
      * @return IOTP
      */
-	public IOTP getIotp_gen() {
-		return iotp_gen;
+	public IOTP getIotpGen() {
+		return iotpGen;
 	}
 	
 	
@@ -134,24 +124,24 @@ public class Token  {
 	 * @return
 	 */
 	public int generate() {
-		if (method_Type == OTPMethodType.HOTP) {
-			if (iotp_gen == null) {
+		if (methodType == OTPMethodType.HOTP) {
+			if (iotpGen == null) {
 				Secret secret = new Secret();
-				secret.setSecret(skey_hex);
-				iotp_gen = new HOTP(count, secret, tailleOTP);
+				secret.setSecret(skeyHex);
+				iotpGen = new HOTP(count, secret, tailleOTP);
 			}
 		} else {
-			if (iotp_gen == null) {
+			if (iotpGen == null) {
 				Secret secret = new Secret();
-				secret.setSecret(skey_hex);
-				iotp_gen = new TOTP(secret, tailleOTP, quantum);
+				secret.setSecret(skeyHex);
+				iotpGen = new TOTP(secret, tailleOTP, quantum);
 			}
 		}
 
-		int resultat = iotp_gen.generer();
+		int resultat = iotpGen.generer();
 		
-		if (method_Type == OTPMethodType.HOTP) {
-        count = ((OTPGenerator) iotp_gen).getCount();
+		if (methodType == OTPMethodType.HOTP) {
+        count = ((OTPGenerator) iotpGen).getCount();
 		}	
 		return resultat;
 	}
