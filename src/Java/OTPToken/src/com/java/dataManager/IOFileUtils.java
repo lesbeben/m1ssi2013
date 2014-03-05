@@ -34,9 +34,7 @@ public final class IOFileUtils {
 			return false;
 		}
 		return true;
-	}
-	
-	
+	}	
 	
 	/**
 	 * Cette fonction crée un nouveau fichier avec comme nom , celui passé en 
@@ -153,7 +151,6 @@ public final class IOFileUtils {
 		} catch (FileNotFoundException e) {
 			//RIEN
 		}
-
 	}
 
 }
