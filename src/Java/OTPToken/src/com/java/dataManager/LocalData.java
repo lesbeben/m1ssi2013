@@ -339,9 +339,7 @@ public class LocalData {
 	public byte[] loadPin(Context context) {
 
 		// chargement du fichier "pin.xml"
-		byte[] hashpin = IOFileUtils.readFromInternalFile(context,
-				LOCAL_PIN_FILE);
-		return hashpin;
+		return IOFileUtils.readFromInternalFile(context, LOCAL_PIN_FILE);
 	}
 
 	/**
@@ -353,12 +351,9 @@ public class LocalData {
 	 * @return boolean
 	 */
 	public boolean validatePin(Context context, String pin) {
-		if ((new String(hash_pin(pin))).equalsIgnoreCase(new String(
-				loadPin(context)))) {
-			return true;
-		}
-		return false;
-	}
+        return (new String(hash_pin(pin))).equalsIgnoreCase(new String(
+                loadPin(context)));
+    }
 
 	/**
 	 * Fonction utilisée pour créer la clé AES (à base du PIN passé en
