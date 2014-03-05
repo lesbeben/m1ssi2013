@@ -5,15 +5,10 @@ package com.java.dataManager;
  * 
  * @author ADEGOLOYE Yves
  */
-public interface OTPMethodType {
+public enum OTPMethodType {
+	HOTP, TOTP;
 	
-	/**
-	 * OTP Method Type HOTP.
-	 */
-	int HOTP = 0;		
-	
-	/**
-	 * OTP Method Type HOTP.
-	 */
-	int TOTP = 1;
+	private OTPMethodType() {
+		//Pour usage ultérieur
+	}
 }
