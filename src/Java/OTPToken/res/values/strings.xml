@@ -19,9 +19,10 @@
     <string name="pinAlertNewPinBlank">Le nouveau PIN est nécessaire</string>
     <string name="pinRemoveExistingPin">Entrer votre PIN</string>
     <string name="pinRemoveSubmit">Supprimer</string>
-    <string name="pinChangeExistingPin">Entrez l'ancien PIN</string>
+    <string name="pinChangeExistingPin">Entrez l\'ancien PIN</string>
     <string name="mainLogin">Login</string>
     <string name="loginEditPinEmpty">Veuillez rentrer votre PIN</string>
+    <string name="loginPin">Entrez votre PIN</string>
     
 
 </resources>

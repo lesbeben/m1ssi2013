@@ -85,6 +85,7 @@ public class SplashActivity extends Activity {
 				startActivity(i);
 			} else {
 				i = new Intent(SplashActivity.this, SetPINActivity.class);
+				i.putExtra("change_pin", false);
 				startActivity(i);
 			}
 
