@@ -12,6 +12,11 @@ import com.java.utils.TOTP;
 
 import junit.framework.TestCase;
 
+/**
+ * Une classe de test pour la classe Token.
+ * 
+ * @author celtic
+ */
 public class TokenTests extends TestCase {
 	
 	/*
@@ -19,18 +24,21 @@ public class TokenTests extends TestCase {
 	 */
 	@Test
 	public void testToken() {
-		String nom = "test";
-		OTPMethodType methodType = OTPMethodType.HOTP;
+		String nom = "test"; //Le nome
+		OTPMethodType methodType = OTPMethodType.HOTP; //La méthode
 		ISecret secret = new Secret();
-		secret.setSecret("AABBCCDDEEFF");
-		IOTP otpGen = new HOTP(secret);
-		Token token = new Token(nom, methodType, otpGen);
+		secret.setSecret("AABBCCDDEEFF"); //Un secret pour le générateur d'otp
+		IOTP otpGen = new HOTP(secret); //Le générateur
+		Token token = new Token(nom, methodType, otpGen); //Le token a tester
+		//Cohérence des nom donnés et stockés
 		assertEquals("Name is incorect.", token.getNom(), "test");
+		//Cohérence des méthodes donnés et stockés
 		assertEquals(
 				"OTP method is incorect.", 
 				token.getMethodType(), 
 				OTPMethodType.HOTP
 		);
+		//Cohérence des générateurs donnés et stockés
 		assertEquals("Generator is incorect.", token.getIotpGen(), otpGen);
 	}
 	
@@ -40,6 +48,7 @@ public class TokenTests extends TestCase {
 	@SuppressWarnings("unused")
 	@Test
 	public void testTokenBad() {
+		//Création des paramètres normaux
 		int count = 0;
 		OTPMethodType methodType = OTPMethodType.HOTP;
 		ISecret secret = new Secret();
@@ -64,27 +73,39 @@ public class TokenTests extends TestCase {
 		} catch (IllegalArgumentException e) {
 			count++;
 		}
-		//incoherent method type
+		//incoherence entre le type de méthode et le générateur
 		try {
 			token = new Token("test", OTPMethodType.TOTP, otpGen);
 		} catch (IllegalArgumentException e) {
 			count++;
 		}
+		//On vérifie que les quatres cas se sont terminés avec des IAr
 		assertEquals(
 				"Bad cases not correctly handled" + (4 - count) + "out of 4", 
 				4, count
 		);
 	}
 	
+	/*
+	 * Test de la génération de mots de passe jetables pour HOTP
+	 */
 	@Test
 	public void testGenerateHOTP() {
-		int count = 4;
+		int count = (int) (Math.random() * 1000); //Un compteur aléatoire.
 		OTPMethodType methodType = OTPMethodType.HOTP;
 		ISecret secret = new Secret();
 		secret.setSecret("AABBCCDDEEFF");
+		/*
+		 * Initialisation d'un premier générateur pour l'initialisation du token
+		 */
 		IOTP otpGen = new HOTP(count, secret, 6);
+		/*
+		 * Initialisation d'un deuxième générateur qui servira de témoin
+		 */
 		IOTP otpGen2 = new HOTP(count, secret, 6);
-		Token token = new Token("test", OTPMethodType.HOTP, otpGen);
+		//Création du token
+		Token token = new Token("test", methodType, otpGen);
+		//On test la cohérence témoin / token sur 100 valeurs successives.
 		for (int i = 0; i < 100; i++) {	
 			assertEquals(
 					"Wrong value for" + i + "th OTP.", 
@@ -96,24 +117,29 @@ public class TokenTests extends TestCase {
 	
 	@Test
 	public void testGenerateTOTP() {
-		int count = 4;
+		
 		OTPMethodType methodType = OTPMethodType.TOTP;
 		ISecret secret = new Secret();
 		secret.setSecret("AABBCCDDEEFF");
+		//Initialisation d'un premier générateur pour l'initialisation du token.
 		IOTP otpGen = new TOTP(secret, 6, 1);
+		//Initialisation d'un second générateur témoin.
 		IOTP otpGen2 = new TOTP(secret, 6, 1);
-		Token token = new Token("test", OTPMethodType.TOTP, otpGen);
+		Token token = new Token("test", methodType, otpGen);
+		//Cohérence témoin / token de la première valeur
 		assertEquals(
 			"Wrong value for OTP.", 
 			otpGen2.generer(), 
 			token.generate()
 		);
+		//On attend le temps d'un quantum de temps (ici fixé à 1)
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(1500);
 		} catch (InterruptedException e) {
 			System.out.println("Fatal ; interruption while in sleep.");
 			return;
 		}
+		//Cohérence témoin / token de la première valeur
 		assertEquals(
 			"Wrong value for OTP.", 
 			otpGen2.generer(), 

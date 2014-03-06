@@ -1,7 +1,7 @@
 package com.java.dataManager;
 
 /**
- * Interface catégorisant les 2 types de génération d'OTP utilisées.
+ * Enumération représentant les types de générateurs d'OTP disponibles.
  * 
  * @author ADEGOLOYE Yves
  */

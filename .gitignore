@@ -29,7 +29,10 @@
 # Fichiers générés par des IDE
 *.kdev4
 
-#Project files
+#Project files eclipse
 *.metadata*
 *gen/*
 *project.properties
+*OTPToken/.*
+*OTPToken/gen/*
+*OTPToken/bin/*
