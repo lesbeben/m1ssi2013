@@ -36,3 +36,4 @@
 **/OTPToken/.*
 **/AndroidToken/.*
 **/OTPToken/bin/**
+**/R.java
