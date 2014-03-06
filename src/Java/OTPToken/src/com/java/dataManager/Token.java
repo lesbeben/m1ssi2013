@@ -2,6 +2,7 @@ package com.java.dataManager;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
+
 import com.java.utils.HOTP;
 import com.java.utils.IOTP;
 import com.java.utils.OTPGenerator;
@@ -59,20 +60,35 @@ public class Token  {
 	/**
 	 * Générateur otp.
 	 */
-	private IOTP iotpGen;
+	private IOTP otpGen;
 	
 	/**
 	 * constructeur du token.
+	 * @pre nom != null
+	 * 		methodType != null
+	 * 		otpGen != null
+	 * 		methodType == otpGen.class
 	 * @return token
 	 */
-	public Token(String nom, OTPMethodType methodType, IOTP iotpGen) {
-
+	public Token(String nom, OTPMethodType methodType, IOTP otpGen) {
+		if (nom == null || methodType == null || otpGen == null) {
+			throw new IllegalArgumentException();
+		}
+		if (methodType == OTPMethodType.HOTP) {
+			if (otpGen.getClass() != HOTP.class) {
+				throw new IllegalArgumentException();
+			}
+		} else {
+			if (otpGen.getClass() != TOTP.class) {
+				throw new IllegalArgumentException();
+			}
+		}
 		this.nom = nom;
 		this.methodType = methodType;
-		this.iotpGen = iotpGen;
-		this.tailleOTP = ((OTPGenerator) iotpGen).getDigits();
+		this.otpGen = otpGen;
+		this.tailleOTP = ((OTPGenerator) otpGen).getDigits();
 		this.skeyHex = 
-				((OTPGenerator) iotpGen).getKey().getHexRepresentation();
+				((OTPGenerator) otpGen).getKey().getHexRepresentation();
 	}
 	
 	
@@ -112,7 +128,7 @@ public class Token  {
      * @return IOTP
      */
 	public IOTP getIotpGen() {
-		return iotpGen;
+		return otpGen;
 	}
 	
 	
@@ -125,23 +141,23 @@ public class Token  {
 	 */
 	public int generate() {
 		if (methodType == OTPMethodType.HOTP) {
-			if (iotpGen == null) {
+			if (otpGen == null) {
 				Secret secret = new Secret();
 				secret.setSecret(skeyHex);
-				iotpGen = new HOTP(count, secret, tailleOTP);
+				otpGen = new HOTP(count, secret, tailleOTP);
 			}
 		} else {
-			if (iotpGen == null) {
+			if (otpGen == null) {
 				Secret secret = new Secret();
 				secret.setSecret(skeyHex);
-				iotpGen = new TOTP(secret, tailleOTP, quantum);
+				otpGen = new TOTP(secret, tailleOTP, quantum);
 			}
 		}
 
-		int resultat = iotpGen.generer();
+		int resultat = otpGen.generer();
 		
 		if (methodType == OTPMethodType.HOTP) {
-        count = ((OTPGenerator) iotpGen).getCount();
+			count = ((OTPGenerator) otpGen).getCount();
 		}	
 		return resultat;
 	}

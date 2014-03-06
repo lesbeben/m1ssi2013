@@ -8,6 +8,7 @@ import com.java.utils.HOTP;
 import com.java.utils.IOTP;
 import com.java.utils.ISecret;
 import com.java.utils.Secret;
+import com.java.utils.TOTP;
 
 import junit.framework.TestCase;
 
@@ -69,6 +70,54 @@ public class TokenTests extends TestCase {
 		} catch (IllegalArgumentException e) {
 			count++;
 		}
-		assertEquals("Bad cases not correctly handled", 4, count);
+		assertEquals(
+				"Bad cases not correctly handled" + (4 - count) + "out of 4", 
+				4, count
+		);
+	}
+	
+	@Test
+	public void testGenerateHOTP() {
+		int count = 4;
+		OTPMethodType methodType = OTPMethodType.HOTP;
+		ISecret secret = new Secret();
+		secret.setSecret("AABBCCDDEEFF");
+		IOTP otpGen = new HOTP(count, secret, 6);
+		IOTP otpGen2 = new HOTP(count, secret, 6);
+		Token token = new Token("test", OTPMethodType.HOTP, otpGen);
+		for (int i = 0; i < 100; i++) {	
+			assertEquals(
+					"Wrong value for" + i + "th OTP.", 
+					otpGen2.generer(), 
+					token.generate()
+			);
+		}
+	}
+	
+	@Test
+	public void testGenerateTOTP() {
+		int count = 4;
+		OTPMethodType methodType = OTPMethodType.TOTP;
+		ISecret secret = new Secret();
+		secret.setSecret("AABBCCDDEEFF");
+		IOTP otpGen = new TOTP(secret, 6, 1);
+		IOTP otpGen2 = new TOTP(secret, 6, 1);
+		Token token = new Token("test", OTPMethodType.TOTP, otpGen);
+		assertEquals(
+			"Wrong value for OTP.", 
+			otpGen2.generer(), 
+			token.generate()
+		);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			System.out.println("Fatal ; interruption while in sleep.");
+			return;
+		}
+		assertEquals(
+			"Wrong value for OTP.", 
+			otpGen2.generer(), 
+			token.generate()
+		);
 	}
 }
