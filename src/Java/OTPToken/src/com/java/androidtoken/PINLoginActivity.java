@@ -54,8 +54,16 @@ public class PINLoginActivity extends Activity {
 
 					LocalData.getInstance().load(getApplicationContext());
 
-					Intent i = new Intent(PINLoginActivity.this,
-							TokenListActivity.class);
+					Intent i = null;
+					if (LocalData.getInstance().getListeToken().size() != 0) {
+						i = new Intent(PINLoginActivity.this,
+								TokenListActivity.class);
+					} else {
+						i = new Intent(PINLoginActivity.this,
+								AddTokenActivity.class);
+						i.putExtra("from-login", true);
+					}
+
 					startActivity(i);
 					finish();
 				}
@@ -102,8 +110,7 @@ public class PINLoginActivity extends Activity {
 
 	}
 
-	private DialogInterface.OnClickListener dialogClose = 
-			new DialogInterface.OnClickListener() {
+	private DialogInterface.OnClickListener dialogClose = new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int which) {
 			dialog.dismiss();
 		}

@@ -115,17 +115,17 @@ public final class LocalData {
 			}
 		}
 	}
-	
-	
+
 	/**
 	 * Supprime un token de la liste des tokens.
 	 * 
-	 * @param index dans la liste
+	 * @param index
+	 *            dans la liste
 	 */
-	public void removeToken(long index) {
-				listeToken.remove(index);
+	public void removeToken(int index) {
+		Token token = listeToken.get(index);
+		listeToken.remove(token);
 	}
-	
 
 	/**
 	 * Cette fonction retourne le PIN de l'utiliateur.
@@ -233,17 +233,17 @@ public final class LocalData {
 			cipher.init(Cipher.DECRYPT_MODE, key);
 			return new String(cipher.doFinal(data), "UTF-8");
 		} catch (IllegalBlockSizeException e) {
-			//TODO
+			// TODO
 		} catch (BadPaddingException e) {
-			//TODO
+			// TODO
 		} catch (UnsupportedEncodingException e) {
-			//TODO
+			// TODO
 		} catch (InvalidKeyException e) {
-			//TODO
+			// TODO
 		} catch (NoSuchAlgorithmException e) {
-			//TODO
+			// TODO
 		} catch (NoSuchPaddingException e) {
-			//TODO
+			// TODO
 		}
 
 		return null;
@@ -258,14 +258,13 @@ public final class LocalData {
 	public void load(Context context) {
 		// chargement du fichier "localData.xml"
 		String res;
-		byte[] contenu = 
-				IOFileUtils.readFromInternalFile(context, LOCAL_DATA_FILE);
+		byte[] contenu = IOFileUtils.readFromInternalFile(context,
+				LOCAL_DATA_FILE);
 		if (contenu != null) {
-		res = decryptData(contenu
-				,
-				createAesKeyWithPin(context, pin));
-		LocalData data = deserialize(res);
-		listeToken = data.getListeToken();
+			res = decryptData(contenu, createAesKeyWithPin(context, pin));
+			LocalData data = deserialize(res);
+			if(data.getListeToken()!=null)
+			listeToken = data.getListeToken();
 		}
 	}
 
@@ -351,10 +350,9 @@ public final class LocalData {
 	 * @return boolean
 	 */
 	public boolean validatePin(Context context, String pin) {
-        return (new String(hashPin(pin))).equalsIgnoreCase(new String(
-                loadPin(context)));
-    }
-
+		return (new String(hashPin(pin))).equalsIgnoreCase(new String(
+				loadPin(context)));
+	}
 
 	/**
 	 * Fonction utilisée pour créer la clé AES (à base du PIN passé en

@@ -142,7 +142,8 @@ public class Token  {
 		
 		if (methodType == OTPMethodType.HOTP) {
         count = ((OTPGenerator) iotpGen).getCount();
-		}	
+		}
+		
 		return resultat;
 	}
 }

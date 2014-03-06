@@ -60,7 +60,7 @@ public class SplashActivity extends Activity {
 					if (!IOFileUtils.internalFileExists(getApplicationContext(),
 							LocalData.LOCAL_DATA_FILE)) {
 						IOFileUtils.createInternalFile(getApplicationContext(),
-								LocalData.LOCAL_PIN_FILE);
+								LocalData.LOCAL_DATA_FILE);
 					}				
                } catch (InterruptedException e) {
             	   //TODO
