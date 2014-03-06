@@ -9,9 +9,9 @@ import android.content.Context;
 import android.test.AndroidTestCase;
 import android.test.IsolatedContext;
 
-public class IOFileUtilsTests extends AndroidTestCase {
+public class LocalDataTests extends AndroidTestCase {
 	
-	public void testInternalFileExists() {
+	public void testTokenList() {
 		int count = 0;
 		Context context = new IsolatedContext(null, getContext());
 		String fileName = "test";
