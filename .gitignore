@@ -31,8 +31,8 @@
 
 #Project files eclipse
 *.metadata*
-*gen/*
+**/OTPToken/gen/**
 *project.properties
-*OTPToken/.*
-*OTPToken/gen/*
-*OTPToken/bin/*
+**/OTPToken/.*
+**/AndroidToken/.*
+**/OTPToken/bin/**
