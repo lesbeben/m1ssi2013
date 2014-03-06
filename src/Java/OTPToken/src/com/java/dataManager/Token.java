@@ -157,6 +157,7 @@ public class Token  {
 		int resultat = otpGen.generer();
 		
 		if (methodType == OTPMethodType.HOTP) {
+
 			count = ((OTPGenerator) otpGen).getCount();
 		}	
 		return resultat;
