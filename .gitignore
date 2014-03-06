@@ -29,7 +29,10 @@
 # Fichiers générés par des IDE
 *.kdev4
 
-#Project files
+#Project files eclipse
 *.metadata*
-*gen/*
+**/OTPToken/gen/**
 *project.properties
+**/OTPToken/.*
+**/AndroidToken/.*
+**/OTPToken/bin/**

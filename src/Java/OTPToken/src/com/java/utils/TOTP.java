@@ -46,7 +46,7 @@ public class TOTP extends OTPGenerator {
 	 */
 	public TOTP(ISecret key, int digits, int quantum) {
 		super(digits);
-		if (key == null) {
+		if (key == null || quantum <= 0) {
 			throw new IllegalArgumentException("key");
 		}
 		this.key = key;
