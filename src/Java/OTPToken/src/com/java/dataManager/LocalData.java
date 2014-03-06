@@ -22,6 +22,9 @@ import android.provider.Settings.Secure;
 /**
  * Cette classe permet de charger et enregistrer les données Utilisateur.
  * 
+ * @post tokenList != null
+ * 		 decryptData(encryptData(data, key), key) == data
+ *  
  * @author ADEGOLOYE Yves
  */
 
@@ -40,7 +43,7 @@ public final class LocalData {
 	 * liste de token créés par l'utilisateur.
 	 */
 	@ElementList
-	private List<Token> listeToken = new ArrayList<Token>();
+	private List<Token> tokenList = new ArrayList<Token>();
 
 	/**
 	 * instance de la classe LocalData.
@@ -69,23 +72,25 @@ public final class LocalData {
 	/**
 	 * Cette fonction retourne la liste des Tokens de l'utilisateur.
 	 * 
-	 * @return listeToken
+	 * @return La liste des tokens de l'utilisateur.
 	 */
 	public List<Token> getListeToken() {
-		return listeToken;
+		return tokenList;
 	}
 
 	/**
 	 * Cette fonction retourne un token en prenant comme paramètre son nom.
 	 * 
-	 * @param nom
-	 *            Le nom du token à récupérer.
-	 * @return token Le token récupéré
+	 * @param nom : Le nom du token à récupérer.
+	 * 
+	 * @pre nom != null
+	 * 
+	 * @return Le token récupéré s'il existe, null sinon.
 	 */
 	public Token getToken(String nom) {
 		Token res = null;
-		for (int i = 0; i < listeToken.size(); i++) {
-			Token resIT = listeToken.get(i);
+		for (int i = 0; i < tokenList.size(); i++) {
+			Token resIT = tokenList.get(i);
 			if (resIT.getNom().equalsIgnoreCase(nom)) {
 				res = resIT;
 			}
@@ -96,41 +101,52 @@ public final class LocalData {
 	/**
 	 * Ajoute un token à la liste des tokens.
 	 * 
-	 * @param token
+	 * @param token : Le token à ajouter à la liste.
+	 * 
+	 * @pre token != null
+	 * 		getToken(token.getNom()) == null
+	 * @post getToken(token.getNom()) == token
 	 */
 	public void addToken(Token token) {
-		listeToken.add(token);
+		tokenList.add(token);
 	}
 
 	/**
 	 * Supprime un token de la liste des tokens.
 	 * 
-	 * @param nom
+	 * @param nom : Le nom du token à supprimer.
+	 * 
+	 * @pre nom != null
+	 * @post getToken(nom) == null
 	 */
 	public void removeToken(String nom) {
-		for (int i = 0; i < listeToken.size(); i++) {
-			Token res = (Token) listeToken.get(i);
+		for (int i = 0; i < tokenList.size(); i++) {
+			Token res = (Token) tokenList.get(i);
 			if (res.getNom().equalsIgnoreCase(nom)) {
-				listeToken.remove(i);
+				tokenList.remove(i);
 			}
 		}
 	}
 	
 	
 	/**
-	 * Supprime un token de la liste des tokens.
+	 * Supprime un token de la liste des tokens d'après sa position dans celle
+	 * ci.
 	 * 
 	 * @param index dans la liste
+	 * 
+	 * @pre index > 0
+	 * 		index < getTokenList.length
 	 */
 	public void removeToken(long index) {
-				listeToken.remove(index);
+				tokenList.remove(index);
 	}
 	
 
 	/**
 	 * Cette fonction retourne le PIN de l'utiliateur.
 	 * 
-	 * @return PIN
+	 * @return Le pin de l'utilisateur
 	 */
 	public String getPIN() {
 		return pin;
@@ -139,16 +155,19 @@ public final class LocalData {
 	/**
 	 * Modifie le PIN Utilisateur.
 	 * 
-	 * @param pIN
+	 * @param pin
+	 * 
+	 * @pre pin != null
+	 * @post getPin == pin
 	 */
-	public void setPIN(String pIN) {
-		pin = pIN;
+	public void setPIN(String pin) {
+		this.pin = pin;
 	}
 
 	/**
 	 * Cette fonction permet de sérialiser cette classe en format XML.
 	 * 
-	 * @return StringXML
+	 * @return Une serialisation de cette classe en XML
 	 */
 	private String serialize() {
 		Serializer serializer = new Persister();
@@ -164,8 +183,10 @@ public final class LocalData {
 	/**
 	 * Cette fonction permet de déserialiser un contenu de type LocalData.
 	 * 
-	 * @throws IOException
+	 * @param contenuXML : La chaine au format XML à désérialiser.
+	 * 
 	 * @return LocalData Object
+	 * @throws IOException
 	 */
 	private LocalData deserialize(String contenuXML) {
 		Serializer serializer = new Persister();
@@ -182,10 +203,13 @@ public final class LocalData {
 	 * cette fonction permet de chiffrer en AES les données passées en
 	 * paramètres avec le PIN de l'utilisateur.
 	 * 
-	 * @param String
-	 *            non chiffrée
-	 * @param byte[] la clé pour le chiffrement
-	 * @return String chiffrée avec AES
+	 * @param data : La chaine en clair non chiffrée
+	 * @param aesKey : la clé pour le chiffrement
+	 * 
+	 * @pre data != null
+	 * 		aesKey != null	
+	 * 
+	 * @return String correpondant au chiffrée AES de data.
 	 */
 	private byte[] encryptData(String data, byte[] aesKey) {
 
@@ -215,14 +239,13 @@ public final class LocalData {
 	}
 
 	/**
-	 * cette fonction permet de déchiffrer les données (chiffrées avec AES)
-	 * passées en paramétres avec le PIN de l'utilisateur.
+	 * Cette fonction permet de déchiffrer les données (chiffrées avec AES)
+	 * passées en paramétres avec la clef donnée.
 	 * 
-	 * @param String
-	 *            chiffrée
-	 * @param byte[] la clé pour le déchiffrement, la même utilisée que lors du
-	 *        chiffrement
-	 * @return String non chiffrée
+	 * @param data : Les données chiffrées sous forme de tableau d'octet.
+	 * @param aesKey : La clé pour le déchiffrement
+	 * 
+	 * @return Le déchiffré AES de data pour la clef aesKey
 	 */
 	public String decryptData(byte[] data, byte[] aesKey) {
 		Cipher cipher;
@@ -252,8 +275,8 @@ public final class LocalData {
 	/**
 	 * Chargement des données utilisateurs.
 	 * 
-	 * @param le
-	 *            context de l'application
+	 * @param context : Le contexte de l'application
+	 * @pre context != null
 	 */
 	public void load(Context context) {
 		// chargement du fichier "localData.xml"
@@ -261,11 +284,10 @@ public final class LocalData {
 		byte[] contenu = 
 				IOFileUtils.readFromInternalFile(context, LOCAL_DATA_FILE);
 		if (contenu != null) {
-		res = decryptData(contenu
-				,
-				createAesKeyWithPin(context, pin));
-		LocalData data = deserialize(res);
-		listeToken = data.getListeToken();
+			res = decryptData(contenu,
+					createAesKeyWithPin(context, pin));
+			LocalData data = deserialize(res);
+			tokenList = data.getListeToken();
 		}
 	}
 
@@ -273,8 +295,9 @@ public final class LocalData {
 	 * Fonction utilisée pour l'enregistrement des données dans le fichier
 	 * interne du device.
 	 * 
-	 * @param le
-	 *            contexte de l'application
+	 * @param context : le contexte de l'application
+	 * @pre context != null
+	 * 		IOFileUtils.internalFileExists(LOCAL_DATA_FILE) == true
 	 */
 	public void commit(Context context) {
 
@@ -287,40 +310,39 @@ public final class LocalData {
 	}
 
 	/**
-	 * fonction pour hasher le PIN en Sha1.
+	 * Fonction pour hasher le PIN en Sha1.
 	 * 
-	 * @param pin
-	 *            non hashé
-	 * @return byte[] pin hashé
+	 * @param pin : Le pin à hacher.
+	 * 
+	 * @pre pin != null
+	 * 
+	 * @return Le pin hashé sous forme d'un tableau d'octets
 	 */
 	public byte[] hashPin(String pin) {
-
 		byte[] bytes = null;
 		try {
-
 			// Hashage du PIN
 			MessageDigest md = MessageDigest.getInstance("SHA1");
 			md.update(pin.getBytes("UTF-8"));
 			bytes = md.digest();
-
 		} catch (NoSuchAlgorithmException e) {
 			// TODO
 		} catch (UnsupportedEncodingException e) {
 			// TODO
 		}
 		return bytes;
-
 	}
 
 	/**
 	 * Fonction utilisée pour enregistrer le PIN utilisateur Hashé en SHA1 dans
 	 * le fichier pin.xml.
 	 * 
-	 * @param le
-	 *            contexte de l'application
+	 * @param context : Le contexte de l'application
+	 * 
+	 * @pre context != null
+	 * 		IOFileUtils.InternalFileExists(LOCAL_PIN_FILE) == true
 	 */
 	public void savePin(Context context) {
-
 		// hashage du PIN
 		byte[] bytes = hashPin(pin);
 
@@ -332,12 +354,14 @@ public final class LocalData {
 	/**
 	 * Fonction pour lire le contenu hashé du fichier pin.xml.
 	 * 
-	 * @param lecontexte
-	 *            de l'application
-	 * @return PIN hashé
+	 * @param context : le contexte de l'application
+	 * 
+	 * @pre context != null
+	 * 		IOFileUtils.internalFileExists(LOCAL_PIN_FILE) == true
+	 * 
+	 * @return Le hashé contenu dans le fichier LOCAL_PIN_FILE
 	 */
 	public byte[] loadPin(Context context) {
-
 		// chargement du fichier "pin.xml"
 		return IOFileUtils.readFromInternalFile(context, LOCAL_PIN_FILE);
 	}
@@ -346,9 +370,15 @@ public final class LocalData {
 	 * Cette fonction compare le pin user lors du login et le pin hashé
 	 * enregistrer localement.
 	 * 
-	 * @param userloginpin
-	 * @param Context
-	 * @return boolean
+	 * @param pin : Le pin de l'utilisateur
+	 * @param context : Le contexte de l'application
+	 * 
+	 * @pre context != null
+	 * 		pin != null
+	 * 		IOFileUtils.InternalFileExists(LOCAL_PIN_FILE)
+	 * 
+	 * @return true si le hashé du pin coincide avec le contenu de 
+	 * 		   LOCAL_PIN_FILE
 	 */
 	public boolean validatePin(Context context, String pin) {
         return (new String(hashPin(pin))).equalsIgnoreCase(new String(
@@ -361,10 +391,13 @@ public final class LocalData {
 	 * paramètre) pour le chiffrement. La fonction de hashage utilisée est MD5
 	 * avec une sortie de 128 bits
 	 * 
-	 * @param pin
-	 *            de l'utilisateur
-	 * @param contexte
-	 *            de l'application
+	 * @param pin : Le PIN de l'utilisateur
+	 * @param context : Le contexte de l'application
+	 * 
+	 * @pre context != null
+	 * 		pin != null
+	 * 
+	 * @return Une chaine d'octet représentant une clef pour le chiffrement aes.
 	 */
 	private byte[] createAesKeyWithPin(Context context, String pin) {
 

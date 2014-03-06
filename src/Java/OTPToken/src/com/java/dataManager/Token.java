@@ -134,10 +134,10 @@ public class Token  {
 	
 	
 	/**
-	 * c'est une fonction propre au token qui appelle implicitement son 
-	 * générateur IOTP.
+	 * Fonction propre au token qui appelle implicitement son générateur d'OTP.
 	 * 
-	 * @return
+	 * @return Un mot de passe jetable tel que retourné par le générateur 
+	 * 		   interne
 	 */
 	public int generate() {
 		if (methodType == OTPMethodType.HOTP) {

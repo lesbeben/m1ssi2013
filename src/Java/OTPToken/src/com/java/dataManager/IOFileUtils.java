@@ -10,8 +10,8 @@ import java.io.PrintWriter;
 import android.content.Context;
 
 /**
- * Classe permet de créer, modifier, supprimer , enregistrer dans un fichier 
- * interne du device Android.
+ * Cette classe permet de créer, modifier, supprimer , enregistrer dans un 
+ * fichier interne du device Android.
  * @author ADEGOLOYE Yves
  */
 public final class IOFileUtils {
@@ -24,9 +24,13 @@ public final class IOFileUtils {
 	 * Cette fonction permet de savoir si le fichier passé en paramètre
 	 * existe dans la mémoire interne du device.
 	 * 
-	 * @param context
-	 * @param fileName
-	 * @return boolean
+	 * @param context : Le contexte de l'application
+	 * @param fileName : Le nom du fichier à chercher
+	 * 
+	 * @pre context != null
+	 * 		filename != null
+	 * 
+	 * @return true si le fichier existe, false sinon
 	 */
 	public static boolean internalFileExists(Context context, String fileName) {
 		File file = new File(context.getFilesDir(), fileName);
@@ -40,8 +44,11 @@ public final class IOFileUtils {
 	 * Cette fonction crée un nouveau fichier avec comme nom , celui passé en 
 	 * paramètre.
 	 * 
-	 * @param context
-	 * @param fileName
+	 * @param context : Le context de l'application.
+	 * @param fileName : Le nom du fichier à créer.
+	 * 
+	 * @pre context != null
+	 * 		filename != null
 	 */
 
 	public static void createInternalFile(Context context, String fileName) {
@@ -49,7 +56,7 @@ public final class IOFileUtils {
 		try {
 			file.createNewFile();
 		} catch (IOException e) {
-			//RIEN
+			//TODO
 		}
 	}
 	
@@ -59,9 +66,13 @@ public final class IOFileUtils {
 	 * Cette fonction renvoie le fichier (en mémoire interne du device) ayant 
 	 * pour nom celui passé en paramètres.
 	 * 
-	 * @param context
-	 * @param fileName
-	 * @return File
+	 * @param context Le contexte de l'application
+	 * @param fileName Le nom du fichier à récupérer
+	 * 
+	 * @pre context != null
+	 * 		filename != null
+	 * 
+	 * @return File : Le flux de fichier correspondant au nom passé en paramètre
 	 */
 	public static File getInternalFile(Context context, String fileName) {
 		File file = new File(context.getFilesDir() + "/" + fileName);
@@ -73,9 +84,13 @@ public final class IOFileUtils {
 	 * Cette fonction supprime de la mémoire interne le fichier ayant pour nom
 	 * celui passé en paramètres.
 	 * 
-	 * @param context
-	 * @param fileName
-	 * @return boolean
+	 * @param context : Le contexte de l'application.
+	 * @param fileName : Le nom du fichier à supprimer
+	 * 
+	 * @pre : context != null
+	 * 		  fileName != null
+	 * 
+	 * @return true si le fichier à été supprimé, false sinon
 	 */
 
 	public static boolean deleteFile(Context context, String fileName) {
@@ -89,9 +104,14 @@ public final class IOFileUtils {
 	/**
 	 * Cette fonction enregistre le contenu passé en paramètre dans le fichier.
 	 * 
-	 * @param context
-	 * @param fileName
-	 * @param contenu en byte[]
+	 * @param context : Le contexte de l'application
+	 * @param fileName : Le nom du fichier à écrire
+	 * @param contenu en byte[] : Les données à écrire dans le fichier.
+	 * 
+	 * @pre context != null
+	 * 		filename != null
+	 * 		contenu != null
+	 * 		internalFileExists(filename)
 	 */
 
 	public static void saveToInternalFile(
@@ -110,9 +130,15 @@ public final class IOFileUtils {
 	
 	/**
 	 * Cette fonction lit le fichier passé en paramétre.
-	 * @param context
-	 * @param fileName
-	 * @param contenu en byte[]
+	 * 
+	 * @param context : Le contexte de l'application 
+	 * @param fileName : Le nom du fichier à lire
+	 * 
+	 * @pre context != null
+	 * 		filename != null
+	 * 		internalFileExists(filename)
+	 * 
+	 * @return Le contenu du fichier sous la forme d'un tableau d'octet
 	 */
 
 	public static byte[] readFromInternalFile(
@@ -125,18 +151,23 @@ public final class IOFileUtils {
             inputStream.read(content);
             inputStream.close();
 		} catch (Exception e) {
-			//RIEN
+			//TODO
 		}
 		return content;
 	}
 	
 	
 	/**
-	 * Cette fonction supprime le contenu le fichier ayant pour nom celui passé 
+	 * Cette fonction supprime le contenu du fichier ayant pour nom celui passé 
 	 * en paramètres.
 	 * 
-	 * @param context
-	 * @param fileName
+	 * @param context : Le contexte de l'application.
+	 * @param fileName : Le nom du fichier à effacer.
+	 * 
+	 * @pre context != null
+	 * 		filename != null
+	 * 		internalFileExists(filename)
+	 * 
 	 * @return boolean
 	 */
 
@@ -149,7 +180,7 @@ public final class IOFileUtils {
 			writer.print("");
 			writer.close();
 		} catch (FileNotFoundException e) {
-			//RIEN
+			//TODO
 		}
 	}
 

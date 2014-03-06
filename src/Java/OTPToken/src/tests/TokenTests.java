@@ -23,7 +23,7 @@ public class TokenTests extends TestCase {
 	 * Test du constructeur en condition normales.
 	 */
 	@Test
-	public void testToken() {
+	public void testTokenStringMethodOTPGen() {
 		String nom = "test"; //Le nome
 		OTPMethodType methodType = OTPMethodType.HOTP; //La méthode
 		ISecret secret = new Secret();
@@ -145,5 +145,15 @@ public class TokenTests extends TestCase {
 			otpGen2.generer(), 
 			token.generate()
 		);
+	}
+	
+	@Test
+	public void testToken() {
+		Token token = new Token();
+		int otp = token.generate();
+		assertTrue("Invalid otp length.", otp < Math.pow(10, 9));
+		int otp2 = token.generate();
+		assertTrue("Invalid otp length.", otp2 < Math.pow(10, 9));
+		assertFalse("Two successive values are equals.", otp == otp2);
 	}
 }
