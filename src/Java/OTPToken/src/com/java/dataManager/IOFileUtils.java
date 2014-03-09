@@ -33,6 +33,9 @@ public final class IOFileUtils {
 	 * @return true si le fichier existe, false sinon
 	 */
 	public static boolean internalFileExists(Context context, String fileName) {
+		if ((fileName == null) || (context == null)) {
+			throw new IllegalArgumentException("Empty filename");
+		}
 		File file = new File(context.getFilesDir(), fileName);
 		if (!file.exists()) {
 			return false;
@@ -52,6 +55,9 @@ public final class IOFileUtils {
 	 */
 
 	public static void createInternalFile(Context context, String fileName) {
+		if ((fileName == null) || (context == null)) {
+			throw new IllegalArgumentException("Empty filename");
+		}
 		File file = new File(context.getFilesDir(), fileName);
 		try {
 			file.createNewFile();
@@ -106,7 +112,7 @@ public final class IOFileUtils {
 	 * 
 	 * @param context : Le contexte de l'application
 	 * @param fileName : Le nom du fichier à écrire
-	 * @param contenu en byte[] : Les données à écrire dans le fichier.
+	 * @param content en byte[] : Les données à écrire dans le fichier.
 	 * 
 	 * @pre context != null
 	 * 		filename != null
@@ -115,12 +121,12 @@ public final class IOFileUtils {
 	 */
 
 	public static void saveToInternalFile(
-			Context context, String fileName, byte[] contenu) {
+			Context context, String fileName, byte[] content) {
 		FileOutputStream outputStream;
 		try {
 			outputStream = 
 					context.openFileOutput(fileName, Context.MODE_PRIVATE);
-			outputStream.write(contenu);
+			outputStream.write(content);
 			outputStream.close();
 		} catch (Exception e) {
 			e.printStackTrace();
