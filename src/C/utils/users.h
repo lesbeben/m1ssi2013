@@ -74,4 +74,18 @@ int updateOTPUser(otpuser * user);
  */
 int destroyOTPUser(char* usrname);
 
+/** Place un verrou sur le fichier OTPWD_PATH.
+ *
+ * @return retourne 0, ou -1 en cas d'erreur.
+ *
+ */
+int lockFile();
+
+/** Enlève le verrou sur le fichier OTPWD_PATH.
+ * 
+ * @return retourne 0, ou -1 en cas d'erreur.
+ *
+ */
+int unlockFile();
+
 #endif

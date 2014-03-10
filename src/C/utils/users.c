@@ -53,7 +53,6 @@ int readLine(FILE *f, otpuser *user) {
     return 1;
 }
 
-
 int writeLine (FILE *f, otpuser *user) {
     char line[BUFFER_SIZE];
     char bufferSecret[2 * (user->passwd->length) + 1];
@@ -87,6 +86,31 @@ int switchFile (char * from, char * to) {
     return 0;
 }
 
+int lockFile() {
+    FILE * f = fopen(OTPWD_PATH, "r");
+    if (f == NULL) {
+        return -1;
+    }
+    if (flock(fileno(f), LOCK_EX) == -1) {
+        fclose(f);
+        return -1;
+    }
+    fclose(f);
+    return 0;
+}
+
+int unlockFile() {
+    FILE * f = fopen(OTPWD_PATH, "r");
+    if (f == NULL) {
+        return -1;
+    }
+    if (flock(fileno(f), LOCK_UN) == -1) {
+        fclose(f);
+        return -1;
+    }
+    fclose(f);
+    return 0;
+}
 
 /*******************************************************************************
  *                                                                             *
@@ -154,6 +178,7 @@ int updateOTPUser(otpuser* user) {
             return -1;
         }
     }
+
     // Descripteur de fichier temporaire.
     FILE * fw = fopen(SWAP_FILE, "w");
     if (fw == NULL) {
@@ -224,6 +249,7 @@ int destroyOTPUser(char* usrname) {
     if (f == NULL) {
         return -1;
     }
+
     // Descripteur de fichier temporaire.
     FILE * fw = fopen(SWAP_FILE, "w");
     if (fw == NULL) {
