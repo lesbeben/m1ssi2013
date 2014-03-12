@@ -288,8 +288,5 @@ int destroyOTPUser(char* usrname) {
     if (fclose(fw) != 0) {
         return -1;
     }
-
-
-
     return 0;
 }

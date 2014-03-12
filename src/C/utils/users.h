@@ -75,13 +75,19 @@ int updateOTPUser(otpuser * user);
 int destroyOTPUser(char* usrname);
 
 /** Place un verrou sur le fichier OTPWD_PATH.
- *
+
+ * Si le fichier était vérouillé alors l'appel est bloquant
+ * sinon l'appel verrouille le fichier et continue.
+ * 
  * @return retourne 0, ou -1 en cas d'erreur.
  *
  */
 int lockFile();
 
 /** Enlève le verrou sur le fichier OTPWD_PATH.
+ * 
+ * Si le fichier était verouillé alors l'appel deverouille le
+ * fichier et continue.
  * 
  * @return retourne 0, ou -1 en cas d'erreur.
  *
