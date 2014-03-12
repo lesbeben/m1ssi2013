@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['createrandomsecret',['createRandomSecret',['../secret_8h.html#a7dc1d549310c0bff6d2553982665b2fc',1,'secret.h']]],
-  ['createsecret',['createSecret',['../secret_8h.html#a4cdb6b186b32819f6e14e168d6b59564',1,'secret.h']]]
+  ['buffer',['buffer',['../structsecret__struct.html#aff2566f4c366b48d73479bef43ee4d2e',1,'secret_struct']]]
 ];

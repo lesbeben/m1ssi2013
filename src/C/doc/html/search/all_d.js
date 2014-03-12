@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['secret',['secret',['../secret_8h.html#ad603bade8e4595117694a292eadcf1ab',1,'secret.h']]],
-  ['secret_2ec',['secret.c',['../secret_8c.html',1,'']]],
-  ['secret_2eh',['secret.h',['../secret_8h.html',1,'']]],
-  ['secret_5fstruct',['secret_struct',['../structsecret__struct.html',1,'']]]
+  ['texttosecret',['textToSecret',['../secret_8h.html#a3a4d4e078902cbd7b5f4d4b02a59d82e',1,'secret.h']]],
+  ['totp_2eh',['totp.h',['../totp_8h.html',1,'']]],
+  ['totp_5fmethod',['TOTP_METHOD',['../users_8h.html#a63e24656e8284fd47ab8911ac5bb814c',1,'users.h']]]
 ];

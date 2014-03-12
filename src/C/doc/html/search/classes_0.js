@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['secret_5fstruct',['secret_struct',['../structsecret__struct.html',1,'']]]
+  ['otpopt',['otpopt',['../unionotpopt.html',1,'']]],
+  ['otpuser',['otpuser',['../structotpuser.html',1,'']]]
 ];

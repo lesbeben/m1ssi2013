@@ -1,0 +1,327 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>OTP: Référence du fichier utils/users.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+  $(window).load(resizeHeight);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">OTP
+   </div>
+   <div id="projectbrief">Étude et implémentation de protocoles de mot de passes jetable</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.6 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="annotated.html"><span>Structures&#160;de&#160;données</span></a></li>
+      <li class="current"><a href="files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+      <li><a href="globals.html"><span>Variables&#160;globale</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('users_8h.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Structures de données</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Définitions de type</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Structures de données</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Fonctions</a>  </div>
+  <div class="headertitle">
+<div class="title">Référence du fichier users.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &quot;<a class="el" href="secret_8h_source.html">secret.h</a>&quot;</code><br/>
+</div>
+<p><a href="users_8h_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Structures de données</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">union &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="unionotpopt.html">otpopt</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structotpuser.html">otpuser</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a63e24656e8284fd47ab8911ac5bb814c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#a63e24656e8284fd47ab8911ac5bb814c">TOTP_METHOD</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:a63e24656e8284fd47ab8911ac5bb814c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0079afc4715db197e1d020120c52f003"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#a0079afc4715db197e1d020120c52f003">HOTP_METHOD</a>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:a0079afc4715db197e1d020120c52f003"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad864fc8f72b46e83229349fb173afa0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#ad864fc8f72b46e83229349fb173afa0e">OTPWD_PATH</a>&#160;&#160;&#160;&quot;/tmp/otpasswd&quot;</td></tr>
+<tr class="separator:ad864fc8f72b46e83229349fb173afa0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:afebe1894bf39039a315ff6d482c0d0be"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#afebe1894bf39039a315ff6d482c0d0be">getOTPUser</a> (char *usrname, <a class="el" href="structotpuser.html">otpuser</a> *user)</td></tr>
+<tr class="separator:afebe1894bf39039a315ff6d482c0d0be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a666dc67d04a34a1212ee4c1088c869"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#a2a666dc67d04a34a1212ee4c1088c869">updateOTPUser</a> (<a class="el" href="structotpuser.html">otpuser</a> *user)</td></tr>
+<tr class="separator:a2a666dc67d04a34a1212ee4c1088c869"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa595e4a0bc1208525bab7cb07069f873"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#aa595e4a0bc1208525bab7cb07069f873">destroyOTPUser</a> (char *usrname)</td></tr>
+<tr class="separator:aa595e4a0bc1208525bab7cb07069f873"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb78f9c59e326eb90c7ad0aaa912fac1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#abb78f9c59e326eb90c7ad0aaa912fac1">lockFile</a> ()</td></tr>
+<tr class="separator:abb78f9c59e326eb90c7ad0aaa912fac1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dc4cd2e43da46ba9767c8cd478e0b61"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#a4dc4cd2e43da46ba9767c8cd478e0b61">unlockFile</a> ()</td></tr>
+<tr class="separator:a4dc4cd2e43da46ba9767c8cd478e0b61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Documentation des macros</h2>
+<a class="anchor" id="a0079afc4715db197e1d020120c52f003"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HOTP_METHOD&#160;&#160;&#160;1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00006">6</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad864fc8f72b46e83229349fb173afa0e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define OTPWD_PATH&#160;&#160;&#160;&quot;/tmp/otpasswd&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Répertoire destiné a accueillir les données d'authentification utilisateurs.</p>
+<p>Dans ce répertoire nous trouverons un fichier par utilisateur contenant: </p>
+<ul>
+<li>
+La méthode d'otp choisie par l'utilisateur.  </li>
+<li>
+Le secret de l'utilisateur  </li>
+<li>
+Les paramètres supplémentaires relatifs à la méthode d'otp  </li>
+</ul>
+
+<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00017">17</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a63e24656e8284fd47ab8911ac5bb814c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TOTP_METHOD&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00005">5</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des fonctions</h2>
+<a class="anchor" id="aa595e4a0bc1208525bab7cb07069f873"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int destroyOTPUser </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>usrname</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Libère les ressources associées à un utilisateur.</p>
+<p>Cette fonction permet d'encapsuler le type otpuser et de proposer une libération des ressources simplifiée. Elle DOIT libérer toutes les ressources associées à l'utilisateur dans la RAM.</p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">user</td><td>un pointeur vers un otpuser.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section pre"><dt>Précondition</dt><dd>user != NULL</dd></dl>
+<dl class="section return"><dt>Renvoie</dt><dd>retourne 0, ou -1 en cas d'erreur. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="afebe1894bf39039a315ff6d482c0d0be"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int getOTPUser </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>usrname</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structotpuser.html">otpuser</a> *&#160;</td>
+          <td class="paramname"><em>user</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Obtient les informations de l'utilisateur dont le login est usrname.</p>
+<p>Cette fonction doit aller lire les informations dans le fichier correspondant à l'utilisateur puis remplir la structure passée en paramètre.</p>
+<p>Si le fichier est introuvable on indiquera une erreur en retournant NULL. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">usrname</td><td>Le nom de l'utilisateur à rechercher.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section pre"><dt>Précondition</dt><dd>usrname != NULL </dd>
+<dd>
+usrname se termine par un NULL-byte.</dd></dl>
+<dl class="section return"><dt>Renvoie</dt><dd>0 si tout s'est bien passé, -1 sinon. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="abb78f9c59e326eb90c7ad0aaa912fac1"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int lockFile </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Place un verrou sur le fichier OTPWD_PATH.</p>
+<p>Si le fichier était vérouillé alors l'appel est bloquant sinon l'appel verrouille le fichier et continue.</p>
+<dl class="section return"><dt>Renvoie</dt><dd>retourne 0, ou -1 en cas d'erreur. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a4dc4cd2e43da46ba9767c8cd478e0b61"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int unlockFile </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enlève le verrou sur le fichier OTPWD_PATH.</p>
+<p>Si le fichier était verouillé alors l'appel deverouille le fichier et continue.</p>
+<dl class="section return"><dt>Renvoie</dt><dd>retourne 0, ou -1 en cas d'erreur. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a2a666dc67d04a34a1212ee4c1088c869"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int updateOTPUser </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structotpuser.html">otpuser</a> *&#160;</td>
+          <td class="paramname"><em>user</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enregistre les informations d'un utilisateur.</p>
+<p>Cette fonction permet de mettre à jour les informations d'un utilisateur dans le fichier OTPWD_PATH. Si ces informations n'existent pas alors elles doivent être créées.</p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">user</td><td>La structure utilisateur à enregistrer. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section pre"><dt>Précondition</dt><dd>user.username != NULL;</dd></dl>
+<dl class="section return"><dt>Renvoie</dt><dd>-1 en cas d'erreur. 0 en cas de succès. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->

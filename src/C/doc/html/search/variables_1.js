@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['length',['length',['../structsecret__struct.html#a9f59b34b1f25fe00023291b678246bcc',1,'secret_struct']]]
+  ['count',['count',['../unionotpopt.html#ad43c3812e6d13e0518d9f8b8f463ffcf',1,'otpopt']]]
 ];
