@@ -5,17 +5,6 @@
 #define TOTP_METHOD 0
 #define HOTP_METHOD 1
 
-/** Répertoire destiné a accueillir les données d'authentification utilisateurs.
- * 
- * Dans ce répertoire nous trouverons un fichier par utilisateur contenant:
- * <ul>
- *  <li> La méthode d'otp choisie par l'utilisateur. </li>
- *  <li> Le secret de l'utilisateur </li>
- *  <li> Les paramètres supplémentaires relatifs à la méthode d'otp </li>
- * </ul>
- */
-#define OTPWD_PATH "/tmp/otpasswd"
-
 /** Union de tout les paramètres supplémentaire possibles.
  */
 typedef union {
@@ -44,7 +33,7 @@ typedef struct {
  *
  * @return 0 si tout s'est bien passé, -1 sinon.
  */
-int getOTPUser(char * usrname, otpuser * user);
+int getOTPUser(const char * usrname, otpuser * user);
 
 /** Enregistre les informations d'un utilisateur.
  * 

@@ -5,10 +5,22 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/file.h>
+#include <sys/stat.h>
 
 #include "users.h"
 #include "secret.h"
 
+
+/** Répertoire destiné a accueillir les données d'authentification utilisateurs.
+ * 
+ * Dans ce répertoire nous trouverons un fichier par utilisateur contenant:
+ * <ul>
+ *  <li> La méthode d'otp choisie par l'utilisateur. </li>
+ *  <li> Le secret de l'utilisateur </li>
+ *  <li> Les paramètres supplémentaires relatifs à la méthode d'otp </li>
+ * </ul>
+ */
+#define OTPWD_PATH "/tmp/otpasswd"
 #define SEPARATOR ":"
 #define SWAP_FILE "/tmp/otpasswd~"
 #define BUFFER_SIZE 1024
@@ -112,13 +124,55 @@ int unlockFile() {
     return 0;
 }
 
+/**
+ * Vérifie que les permissions sur le fichiers sont conforme aux attentes.
+ * 
+ * C'est à dire: 
+ *  -propriétaire: root
+ *  -groupe: root
+ *  -droits: 1700 <=> sticky bit + rwx------
+ * 
+ * @return 0 si le fichier est correct, -1 sinon.
+ */
+int check_file_stats(FILE * f) {
+    struct stat s;
+    if (f == NULL) {
+        return -1;
+    }
+    if (fstat(fileno(f), &s) == -1) {
+        // Impossible d'obtenir les informations du fichier.
+        return -1;
+    }
+// //     if (s.st_uid != 0) { 
+// //         // Le propriétaire n'est pas root.
+// //         return -1;
+// //     }
+// //     if (s.st_gid != 0) {
+// //         // Le propriétaire n'est pas root.
+// //         return -1;
+// //     }
+    if ((s.st_mode & S_ISVTX) == 0) { 
+        // Le fichier n'a pas le sticky bit
+        return -1;
+    }
+    if ((s.st_mode &  (S_IRWXG | S_IRWXO)) != 0) { 
+        // Les droits des autres ne sont pas nuls.
+        return -1;
+    }
+    if ((s.st_mode & S_IRWXU) != S_IRWXU) { 
+        // Le propriétaire n'a pas tout les droits sur le fichier.
+        return -1;
+    }
+    return 0;
+}
+
 /*******************************************************************************
  *                                                                             *
  *                              FONCTIONS                                      *
  *                                                                             *
  ******************************************************************************/
 
-int getOTPUser(char* usrname, otpuser * user) {
+int getOTPUser(const char* usrname, otpuser * user) {
     if (usrname == NULL || user == NULL) {
         return -1;
     }
@@ -131,6 +185,9 @@ int getOTPUser(char* usrname, otpuser * user) {
     // Descripteur de fichier sur OTPWD_PATH.
     FILE * f = fopen(OTPWD_PATH, "r");
     if (f == NULL) {
+        return -1;
+    }
+    if (check_file_stats(f) == -1) {
         return -1;
     }
     // Recherche de l'utilisateur dans le fichier
@@ -165,8 +222,7 @@ int updateOTPUser(otpuser* user) {
     // Descripteur de fichier sur OTPWD_PATH.
     FILE * f = fopen(OTPWD_PATH, "r");
     if (f == NULL) {
-        int fd = open(OTPWD_PATH, O_WRONLY | O_CREAT | O_EXCL, 0700);
-        // Libère les ressources et on retourne une erreur.
+        int fd = open(OTPWD_PATH, O_WRONLY | O_CREAT | O_EXCL, S_IRWXU | S_ISVTX);
         if (fd < 0) {
             // Cas où le fichier est présent sur le système où erreur I/O
             return -1;
@@ -178,11 +234,22 @@ int updateOTPUser(otpuser* user) {
             return -1;
         }
     }
+    if (check_file_stats(f) == -1) {
+        return -1;
+    }
 
     // Descripteur de fichier temporaire.
     FILE * fw = fopen(SWAP_FILE, "w");
     if (fw == NULL) {
         fclose(f);
+        return -1;
+    }
+    // Permissions a setter ici.
+    if (fchmod(fileno(fw), S_ISVTX | S_IRWXU) == -1) {
+        return -1;
+    }
+    
+    if (check_file_stats(f) == -1) {
         return -1;
     }
 
@@ -249,10 +316,17 @@ int destroyOTPUser(char* usrname) {
     if (f == NULL) {
         return -1;
     }
+    
+    if (check_file_stats(f) == -1) {
+        return -1;
+    }
 
     // Descripteur de fichier temporaire.
     FILE * fw = fopen(SWAP_FILE, "w");
     if (fw == NULL) {
+        return -1;
+    }
+    if (fchmod(fileno(fw), S_ISVTX | S_IRWXU) == -1) {
         return -1;
     }
     if (flock(fileno(fw), LOCK_EX) == -1) {
