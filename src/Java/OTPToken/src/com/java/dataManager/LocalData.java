@@ -209,7 +209,7 @@ public final class LocalData {
 	 * 
 	 * @return String correpondant au chiffrée AES de data.
 	 */
-	private byte[] encryptData(String data, byte[] aesKey) {
+	public byte[] encryptData(String data, byte[] aesKey) {
 
 		Cipher cipher;
 		try {
@@ -255,19 +255,23 @@ public final class LocalData {
 			return new String(cipher.doFinal(data), "UTF-8");
 		} catch (IllegalBlockSizeException e) {
 			// TODO
+			return "Block Size";
 		} catch (BadPaddingException e) {
 			// TODO
+			return "Padding";
 		} catch (UnsupportedEncodingException e) {
 			// TODO
+			return "Encoding";
 		} catch (InvalidKeyException e) {
 			// TODO
+			return "Key";
 		} catch (NoSuchAlgorithmException e) {
 			// TODO
+			return "Algorithm";
 		} catch (NoSuchPaddingException e) {
 			// TODO
+			return "Padding 2";
 		}
-
-		return null;
 	}
 
 	/**
@@ -397,7 +401,7 @@ public final class LocalData {
 	 * 
 	 * @return Une chaine d'octet représentant une clef pour le chiffrement aes.
 	 */
-	private byte[] createAesKeyWithPin(Context context, String pin) {
+	public byte[] createAesKeyWithPin(Context context, String pin) {
 
 		String androidId = Secure.getString(context.getContentResolver(),
 				Secure.ANDROID_ID);

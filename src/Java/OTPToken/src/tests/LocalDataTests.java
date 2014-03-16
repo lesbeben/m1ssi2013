@@ -1,40 +1,64 @@
 package tests;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.Iterator;
 
-import com.java.dataManager.IOFileUtils;
+import org.junit.runners.MethodSorters;
 
-import android.content.Context;
+import com.java.dataManager.LocalData;
+import com.java.dataManager.OTPMethodType;
+import com.java.dataManager.Token;
+
 import android.test.AndroidTestCase;
-import android.test.IsolatedContext;
 
 public class LocalDataTests extends AndroidTestCase {
 	
-	public void testTokenList() {
-		int count = 0;
-		Context context = new IsolatedContext(null, getContext());
-		String fileName = "test";
-        String fileName2 = "try";
-        File file = new File(context.getFilesDir(), fileName);
-        try {
-			file.createNewFile();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public void testCipher() {
+		String data = "ceci est un test";
+		LocalData ld = LocalData.getInstance();
+		if (ld == null) {
+			System.out.println("Null localdata");
+			return;
 		}
-        try {
-            assertTrue(IOFileUtils.internalFileExists(context, null));
-        } catch (IllegalArgumentException iae) {
-            count++;
-        }
-        //On vérifie que les quatres cas se sont terminés avec des IAR
-        assertEquals(
-                "Bad cases not correctly handled" + (1 - count) + "out of 1",
-                1, count
-        );
-        assertTrue("File exists.", IOFileUtils.internalFileExists(context, fileName));
-        assertFalse("File does not exist.", IOFileUtils.internalFileExists(context, "other"));
+		byte[] key = ld.createAesKeyWithPin(this.getContext(), "0000");
+		byte[] cypher = ld.encryptData(data, key);
+		String decipher 
+			= LocalData.getInstance().decryptData(cypher, key);
+		assertEquals("Inconsitent cipher / decipher", data, decipher);
 	}
-
+	
+	public void testCipherBad() {
+		LocalData ld = LocalData.getInstance();
+		if (ld == null) {
+			System.out.println("Null localdata");
+			return;
+		}
+		int count = 0;
+		String data = "Ceci est un test";
+		byte[] key = ld.createAesKeyWithPin(this.getContext(), "0000");
+		byte[] cipher;
+		try {
+			cipher = ld.encryptData(null, key);
+		} catch (IllegalArgumentException e) {
+			count++;
+		}
+		try {
+			cipher = ld.encryptData(data, null);
+		} catch (IllegalArgumentException e) {
+			count++;
+		}
+		assertEquals("Bad casses not correctly handled.", 2, count);
+	}
+	
+	public void testTest() {
+		LocalData ld = LocalData.getInstance();
+		assertFalse("tokenList == null", ld.getListeToken() == null);
+		for (Token token : ld.getListeToken()) {
+			assertEquals("Bad name for token", token.getNom(), "");
+			assertTrue(
+					"Bad method type", 
+					token.getMethodType() == OTPMethodType.HOTP
+					|| token.getMethodType() == OTPMethodType.TOTP);
+					
+		}
+	}
 }

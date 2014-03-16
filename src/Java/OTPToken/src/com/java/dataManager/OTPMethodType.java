@@ -6,9 +6,15 @@ package com.java.dataManager;
  * @author ADEGOLOYE Yves
  */
 public enum OTPMethodType {
-	HOTP, TOTP;
+	HOTP("hotp"), TOTP("totp");
 	
-	private OTPMethodType() {
-		//Pour usage ultérieur
+	private String type;
+	
+	private OTPMethodType(String type) {
+		this.type = type;
+	}
+	
+	public String toString() {
+		return type;
 	}
 }
