@@ -7,7 +7,6 @@ from PyQt5.QtWidgets import QInputDialog, QSpinBox
 
 import hotp
 import sys
-import secretstorage
 
 class QOtpToken(QWidget):
     def __init__(self):
