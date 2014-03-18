@@ -46,7 +46,7 @@ class QOtpToken(QWidget):
 
         hbox = QHBoxLayout()
         hbox.addWidget(QLabel("Mot de passe jetable: "))
-        self.display = QLineEdit("Test")
+        self.display = QLineEdit("")
         self.display.setReadOnly(True)
         hbox.addWidget(self.display)
         vbox.addLayout(hbox)
