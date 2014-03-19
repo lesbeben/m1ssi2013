@@ -57,10 +57,23 @@ int readLine(FILE *f, otpuser *user) {
     // Troisième token : le mot de passe en clair
     token = strtok_r(NULL, SEPARATOR, &saveptr);
     user->passwd = hexToSecret(token);
-
-    // Dernier token : le paramètre count
-    token = strtok_r(NULL, SEPARATOR, &saveptr);
-    user->params.count = atoi(token);
+    
+    switch (user->method) {
+        case HOTP_METHOD :
+            // Dernier token : le paramètre count
+            token = strtok_r(NULL, SEPARATOR, &saveptr);
+            user->params.count = atoi(token);
+            break;
+            
+        case TOTP_METHOD :
+            // Dernier token : la derniere date d'authentification
+            token = strtok_r(NULL, SEPARATOR, &saveptr);
+            user->params.tps = atoi(token);
+            break;
+            
+        default :
+            break;
+    }
 
     return 1;
 }
@@ -69,12 +82,28 @@ int writeLine (FILE *f, otpuser *user) {
     char line[BUFFER_SIZE];
     char bufferSecret[2 * (user->passwd->length) + 1];
     // On rempli le buffer avec données utilisateur
-    if ((sprintf(line, "%s:%d:%s:%d\n",user->username, user->method,
-                 getHexRepresentation(user->passwd, bufferSecret,
-                                      (2 * (user->passwd->length) + 1)),
-                 user->params.count)) < 0) {
-        return -1;
-    };
+    switch (user->method) {
+        case HOTP_METHOD :
+            if ((sprintf(line, "%s:%d:%s:%d\n",user->username, user->method,
+                getHexRepresentation(user->passwd, bufferSecret,
+                                     (2 * (user->passwd->length) + 1)),
+                         user->params.count)) < 0) {
+                return -1;
+             };
+            break;
+            
+        case TOTP_METHOD :
+            if ((sprintf(line, "%s:%d:%s:%ld\n",user->username, user->method,
+                getHexRepresentation(user->passwd, bufferSecret,
+                                     (2 * (user->passwd->length) + 1)),
+                         user->params.tps)) < 0) {
+                return -1;
+            };
+            break;
+            
+        default :
+            break;
+    }
     // On écrit le buffer dans le fichier.
     if (fputs (line, f) == EOF) {
         return -1;

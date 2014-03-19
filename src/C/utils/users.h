@@ -9,6 +9,7 @@
  */
 typedef union {
     int count; /**< Le compteur pour hotp. */
+    long tps; /**< Date derniere authentification */
 } otpopt;
 
 /** Structure permettant de représenter un utilisateur en mémoire.

@@ -5,15 +5,15 @@
 #include "utils.h"
 #include <time.h>
 
-int generateTOTP(secret key, int quantum, int len) {
+int generateTOTP(secret key, int quantum, long time, int len) {
     // Vérification de préconditions
-    if (!((key != NULL) && (quantum > 0) && (len >= 6 && len <= 8))) {
+    if (!((key != NULL) && (quantum > 0) && (len >= 6 && len <= 8) && (time > 0))) {
         return -1;
     }
 
     // On définit le compteur comme étant la première seconde dans
     // la fenêtre définit par le quantum.
-    long counter = time(NULL);
+    long counter = time;
     counter = counter / quantum;
 
     //Allocation des buffers
