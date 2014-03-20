@@ -27,7 +27,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
     if (pam_get_authtok(pamh, PAM_AUTHTOK, &otp, NULL) != PAM_SUCCESS) {
         return PAM_AUTH_ERR;
     }
-    
+
     if (lockFile() == -1) {
         pam_syslog(pamh, LOG_ERR, "can't get lock");
         return PAM_AUTH_ERR;
@@ -39,7 +39,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
         return PAM_USER_UNKNOWN;
     }
 
-    // Vérification d'un mot de passe + resynch. 
+    // Vérification d'un mot de passe + resynch.
     int otp_expected = 0;
     int otp_given = atoi(otp);
     for (int i = 0; i < 3; i++) {
@@ -50,7 +50,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
             return PAM_AUTH_ERR;
         }
         if (otp_expected == otp_given) {
-            user.params.count += i;
+            user.params.count += i + 1;
             updateOTPUser(&user);
             if (unlockFile() == -1) {
                 pam_syslog(pamh, LOG_ERR, "can't free lock on users");
@@ -60,9 +60,31 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
             pam_syslog(pamh, LOG_ERR, "Auth denied expect %d", otp_expected);
         }
     }
-    
+
     if (unlockFile() == -1) {
         pam_syslog(pamh, LOG_ERR, "can't free lock on users");
     }
     return PAM_AUTH_ERR;
+}
+
+int pam_sm_setcred (pam_handle_t *pamh, int flags,
+                    int argc, const char **argv) {
+    int retval;
+    const void *pretval = NULL;
+
+    D(("called."));
+
+    retval = PAM_SUCCESS;
+
+    D(("recovering return code from auth call"));
+    /* We will only find something here if UNIX_LIKE_AUTH is set --
+     *      don't worry about an explicit check of argv. */
+    if (pam_get_data(pamh, "unix_setcred_return", &pretval) == PAM_SUCCESS
+            && pretval) {
+        retval = *(const int *)pretval;
+        pam_set_data(pamh, "unix_setcred_return", NULL, NULL);
+        D(("recovered data indicates that old retval was %d", retval));
+    }
+
+    return retval;
 }
