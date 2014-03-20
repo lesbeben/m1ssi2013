@@ -74,6 +74,19 @@ int destroyOTPUser(char* usrname);
  */
 int lockFile();
 
+/** Indique si un utilisateur existe.
+ * 
+ * Parcours le fichiers des utilisateurs pour trouver si un utilisateur existe.
+ * si une entrée au nom de l'utilisateur existe alors la fonction retournera
+ * 1, sinon elle retournera 0.
+ * 
+ * @param[in] username le nom de l'utilisateur recherché.
+ * 
+ * @return 1 si l'utilisateur existe, 0 si il n'existe pas ou -1 en cas 
+ * d'erreur.
+ */
+int userExists(const char * username);
+
 /** Enlève le verrou sur le fichier OTPWD_PATH.
  * 
  * Si le fichier était verouillé alors l'appel deverouille le

@@ -393,3 +393,21 @@ int destroyOTPUser(char* usrname) {
     }
     return 0;
 }
+
+int userExists(const char* username) {
+    otpuser user;
+    FILE* users_base = fopen(OTPWD_PATH, "r");
+    if (users_base == NULL) {
+        return -1;
+    }
+    while (readLine(users_base, &user)) {
+        if (strcmp(username, user.username) == 0) {
+            return 1;
+        }
+    }
+    if (fclose(users_base) != 0) {
+        return -1;
+    }
+    return 0;
+}
+
