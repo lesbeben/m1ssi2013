@@ -11,31 +11,26 @@
 #include "utils/hotp.h"
 #include "utils/users.h"
 
-int pam_sm_authenticate(pam_handle_t *pamh, int flags,
-                        int argc, const char **argv) {
+/** TODO:
+ *  - Gérer les cas TRY_FIRST_PASS, USE_FIRST_PASS ou ni l'un ni l'autre
+ * (i.e. prompter pour un nouveau token).
+ *  - Gérer la mise à jour de secret/création de compte: voir ligne 111.
+ */
 
-    const char * usrname;
-    const char * otp;
+/** Vérifie que qu'un utilisateur entre le bon OTP.
+ *
+ * Seule fonction qui devrait vraiment différer entre pam_hotp et pam_totp.
+ */
+int _check_otp(pam_handle_t * pamh, const char * username, const char * otp) {
     otpuser user;
-
-    // Récupération du nom d'utilisateur dans name.
-    if (pam_get_user(pamh, &usrname, NULL) != PAM_SUCCESS) {
-        return PAM_USER_UNKNOWN;
-    }
-
-    // Obtention d'un OTP par PAM.
-    if (pam_get_authtok(pamh, PAM_AUTHTOK, &otp, NULL) != PAM_SUCCESS) {
-        return PAM_AUTH_ERR;
-    }
-
     if (lockFile() == -1) {
         pam_syslog(pamh, LOG_ERR, "can't get lock");
         return PAM_AUTH_ERR;
     }
 
     // Récupération des données utilisateurs.
-    if (getOTPUser(usrname, &user) == -1) {
-        pam_syslog(pamh, LOG_ERR, "user unknown: %s", usrname);
+    if (getOTPUser(username, &user) == -1) {
+        pam_syslog(pamh, LOG_ERR, "bad username %s", username);
         return PAM_USER_UNKNOWN;
     }
 
@@ -55,11 +50,11 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
             if (unlockFile() == -1) {
                 pam_syslog(pamh, LOG_ERR, "can't free lock on users");
             }
+            pam_syslog(pamh, LOG_NOTICE, "%s logged in", username);
             return PAM_SUCCESS;
-        } else {
-            pam_syslog(pamh, LOG_ERR, "Auth denied expect %d", otp_expected);
         }
     }
+    pam_syslog(pamh, LOG_ERR,"%s failed to log", username);
 
     if (unlockFile() == -1) {
         pam_syslog(pamh, LOG_ERR, "can't free lock on users");
@@ -67,6 +62,31 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
     return PAM_AUTH_ERR;
 }
 
+int pam_sm_authenticate(pam_handle_t *pamh, int flags,
+                        int argc, const char **argv) {
+
+    const char * usrname;
+    const char * otp;
+    int retval;
+    // Récupération du nom d'utilisateur dans name.
+    if ((retval = pam_get_user(pamh, &usrname, NULL)) != PAM_SUCCESS) {
+        return retval;
+    }
+    if (usrname == NULL) {
+        return PAM_USER_UNKNOWN;
+    }
+
+    // Obtention d'un OTP par PAM.
+    if ((retval = pam_get_authtok(pamh, PAM_AUTHTOK, &otp,
+                                  "Mot de passe jetable: ")) != PAM_SUCCESS) {
+        return retval;
+    }
+
+
+    return _check_otp(pamh, usrname, otp);
+}
+
+/** Identique à pam_unix */
 int pam_sm_setcred (pam_handle_t *pamh, int flags,
                     int argc, const char **argv) {
     int retval;
@@ -87,4 +107,31 @@ int pam_sm_setcred (pam_handle_t *pamh, int flags,
     }
 
     return retval;
+}
+
+PAM_EXTERN int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
+                                 int argc, const char **argv) {
+    // Obtenir le nom d'utilisateur.
+    const char * username;
+    int retval = pam_get_user(pamh,&username, NULL);
+    if (retval != PAM_SUCCESS) {
+        return retval;
+    }
+    // Tester phase.
+    if (flags & PAM_PRELIM_CHECK) {
+        // - PRELIM, vérification avant de mettre à jour les informations.
+        //   - Test si l'utilisateur a un compte actif.
+        if (!userExists(username)) {
+            // Aucun compte existant, pré requis pour mettre à jour le secret
+            // validé.
+            return PAM_SUCCESS;
+        }
+        // L'utilisateur à un compte il faut vérifier qu'il en est
+        // le propriétaire.
+        return PAM_TRY_AGAIN;
+    }
+    //  - PRELIM OK
+    //    - Prompter pour nouveau secret.
+
+    return PAM_PERM_DENIED;
 }
