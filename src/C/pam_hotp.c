@@ -56,6 +56,8 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
                 pam_syslog(pamh, LOG_ERR, "can't free lock on users");
             }
             return PAM_SUCCESS;
+        } else {
+            pam_syslog(pamh, LOG_ERR, "Auth denied expect %d", otp_expected);
         }
     }
     
