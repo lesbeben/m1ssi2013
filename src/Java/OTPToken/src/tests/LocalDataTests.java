@@ -4,9 +4,9 @@ import com.java.dataManager.LocalData;
 import com.java.dataManager.OTPMethodType;
 import com.java.dataManager.Token;
 
-import android.test.AndroidTestCase;
+import android.test.InstrumentationTestCase;
 
-public class LocalDataTests extends AndroidTestCase {
+public class LocalDataTests extends InstrumentationTestCase {
 	
 	public void testCipher() {
 		String data = "ceci est un test";
@@ -15,7 +15,9 @@ public class LocalDataTests extends AndroidTestCase {
 			System.out.println("Null localdata");
 			return;
 		}
-		byte[] key = ld.createAesKeyWithPin(this.getContext(), "0000");
+		byte[] key = ld.createAesKeyWithPin(
+				getInstrumentation().getContext(), "0000"
+		);
 		byte[] cypher = ld.encryptData(data, key);
 		String decipher 
 			= LocalData.getInstance().decryptData(cypher, key);
@@ -30,7 +32,9 @@ public class LocalDataTests extends AndroidTestCase {
 		}
 		int count = 0;
 		String data = "Ceci est un test";
-		byte[] key = ld.createAesKeyWithPin(this.getContext(), "0000");
+		byte[] key = ld.createAesKeyWithPin(
+				getInstrumentation().getContext(), "0000"
+		);
 		byte[] cipher;
 		try {
 			cipher = ld.encryptData(null, key);
