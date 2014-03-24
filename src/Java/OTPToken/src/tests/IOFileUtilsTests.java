@@ -4,11 +4,12 @@ import java.io.File;
 
 import android.content.Context;
 import android.test.AndroidTestCase;
+import android.test.InstrumentationTestCase;
 import android.test.IsolatedContext;
 
 import com.java.dataManager.IOFileUtils;
 
-public class IOFileUtilsTests extends AndroidTestCase {
+public class IOFileUtilsTests extends InstrumentationTestCase {
 	
 	//repris sur stack overflow pour gagner du temps (à mettre dans utils?)
 	//à nettoyer (cas des nom multiples de 4)
@@ -24,7 +25,7 @@ public class IOFileUtilsTests extends AndroidTestCase {
 	
 	
 	public void testInternalFileExists() {
-		Context context = new IsolatedContext(null, getContext());
+		Context context = getInstrumentation().getContext();
 		String fileName = "test";
         IOFileUtils.createInternalFile(context, fileName);
         assertTrue("File does not exist.", IOFileUtils.internalFileExists(context, fileName));
@@ -32,7 +33,7 @@ public class IOFileUtilsTests extends AndroidTestCase {
 	}
 	
 	public void testCreateInternalFile() {
-		Context context = new IsolatedContext(null, getContext());
+		Context context = getInstrumentation().getContext();
 		String fileName = "test2";
 		IOFileUtils.createInternalFile(context, fileName);
 		File out = IOFileUtils.getInternalFile(context, fileName);
@@ -40,7 +41,7 @@ public class IOFileUtilsTests extends AndroidTestCase {
 	}
 	
 	public void testDeleteFile() {
-		Context context = new IsolatedContext(null, getContext());
+		Context context = getInstrumentation().getContext();
 		String fileName = "test3";
 		IOFileUtils.createInternalFile(context, fileName);
 		IOFileUtils.deleteFile(context, fileName);
@@ -49,7 +50,7 @@ public class IOFileUtilsTests extends AndroidTestCase {
 	}
 	
 	public void testSaveFile() {
-		Context context = new IsolatedContext(null, getContext());
+		Context context = getInstrumentation().getContext();
 		String fileName = "test4";
 		IOFileUtils.createInternalFile(context, fileName);
 		byte[] content = hexStringToByteArray("aefd2b5c");
@@ -59,7 +60,7 @@ public class IOFileUtilsTests extends AndroidTestCase {
 	}
 	
 	public void testClearFile() {
-		Context context = new IsolatedContext(null, getContext());
+		Context context = getInstrumentation().getContext();
 		String fileName = "test4";
 		IOFileUtils.createInternalFile(context, fileName);
 		byte[] content = hexStringToByteArray("aefd2b5c");
@@ -71,7 +72,7 @@ public class IOFileUtilsTests extends AndroidTestCase {
 	
 	public void testIArs() {
 		int count = 0;
-		Context context = new IsolatedContext(null, getContext());
+		Context context = getInstrumentation().getContext();
 		String fileName = "testiar";
         try {
             assertTrue(IOFileUtils.internalFileExists(context, null));
