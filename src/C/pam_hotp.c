@@ -12,8 +12,6 @@
 #include "utils/users.h"
 
 /** TODO:
- *  - Gérer les cas TRY_FIRST_PASS, USE_FIRST_PASS ou ni l'un ni l'autre
- * (i.e. prompter pour un nouveau token).
  *  - Gérer la mise à jour de secret/création de compte: voir ligne 111.
  */
 
@@ -66,7 +64,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
                         int argc, const char **argv) {
 
     const char * usrname;
-    const char * otp;
+    char * otp;
     int retval;
     // Récupération du nom d'utilisateur dans name.
     if ((retval = pam_get_user(pamh, &usrname, NULL)) != PAM_SUCCESS) {
@@ -77,8 +75,9 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
     }
 
     // Obtention d'un OTP par PAM.
-    if ((retval = pam_get_authtok(pamh, PAM_AUTHTOK, &otp,
-                                  "Mot de passe jetable: ")) != PAM_SUCCESS) {
+    if ((retval = pam_prompt(pamh, PAM_PROMPT_ECHO_ON,
+                             &otp, "Mot de passe jetable: "))
+        != PAM_SUCCESS) {
         return retval;
     }
 
