@@ -4,9 +4,9 @@ project (OTP)
 add_definitions(--std=c99 -Wall -Werror)
 
 # Test la présence des lib utilisées.
-find_library(${__UNIX_PATHS_INCLUDED} crypto)
-find_library(${__UNIX_PATHS_INCLUDED} m)
-find_library(${__UNIX_PATHS_INCLUDED} check)
+find_library(TMP crypto ${__UNIX_PATHS_INCLUDED})
+find_library(TMP m ${__UNIX_PATHS_INCLUDED})
+find_library(TMP check ${__UNIX_PATHS_INCLUDED})
 
 # Les deux libs statiques à générer
 add_library(hotp STATIC hotp.c hotp.h utils.c utils.h secret.h)
