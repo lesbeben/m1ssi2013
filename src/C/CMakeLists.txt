@@ -24,7 +24,8 @@ add_library(pam_totp MODULE pam_totp.c)
 # set_target_properties(pam_totp PROPERTIES PREFIX "")
 target_link_libraries(pam_totp pam totp users m)
 
-find_path(PAM_MODULES_PATH pam_unix.so HINTS ${__UNIX_PATHS_INCLUDED})
+set(PAM_LIB_DIR /usr/lib/security /lib/security /usr/lib64/security /lib64/security)
+find_path(PAM_MODULES_PATH pam_unix.so HINTS ${PAM_LIB_DIR})
 
 message("Répertoire de modules PAM détecté: ${PAM_MODULES_PATH}")
 
