@@ -22,7 +22,7 @@ add_library(pam_hotp MODULE pam_hotp.c)
 target_link_libraries(pam_hotp pam hotp users m)
 add_library(pam_totp MODULE pam_totp.c)
 # set_target_properties(pam_totp PROPERTIES PREFIX "")
-target_link_libraries(pam_totp pam totp users m)
+target_link_libraries(pam_totp pam hotp users m)
 
 set(PAM_LIB_DIR /usr/lib/security /lib/security /usr/lib64/security /lib64/security)
 find_path(PAM_MODULES_PATH pam_unix.so HINTS ${PAM_LIB_DIR})

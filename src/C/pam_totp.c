@@ -9,7 +9,8 @@
 
 #include <sys/syslog.h>
 
-#include "utils/totp.h"
+//#include "utils/totp.h"
+#include "utils/hotp.h"
 #include "utils/users.h"
 
 #define QUANTUM 30
@@ -42,13 +43,13 @@ int _check_otp(pam_handle_t * pamh, const char * username, const char * otp) {
     // Vérification d'un mot de passe.
     int otp_expected = 0;
     int otp_given = atoi(otp);
-    long lastAuth = user.params.tps / QUANTUM;
+    long lastAuth = user.params.tps;
     int hasFound = 0;
     for (int i = -2; i <= 3 && !hasFound; i++) {
-        int delta = i* QUANTUM;
-        long counter = time(NULL) + delta;
+        int delta = i * QUANTUM;
+        long counter = (time(NULL) + delta) / QUANTUM;
         if (lastAuth < counter) {
-            otp_expected = generateTOTP(user.passwd, QUANTUM, counter, OTP_LENGTH);
+            otp_expected = generateHOTP(user.passwd, counter, OTP_LENGTH);
             if (otp_expected == -1) {
                 pam_syslog(pamh, LOG_ERR, "generateTOTP failed");
                 unlockFile();
@@ -82,7 +83,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
                         int argc, const char **argv) {
 
     const char * usrname;
-    const char * otp;
+    char * otp;
     int retval;
     // Récupération du nom d'utilisateur dans name.
     if ((retval = pam_get_user(pamh, &usrname, NULL)) != PAM_SUCCESS) {
@@ -93,11 +94,11 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
     }
 
     // Obtention d'un OTP par PAM.
-    if ((retval = pam_get_authtok(pamh, PAM_AUTHTOK, &otp,
-                                  "Mot de passe jetable: ")) != PAM_SUCCESS) {
+    if ((retval = pam_prompt(pamh, PAM_PROMPT_ECHO_ON,
+        &otp, "Mot de passe jetable: "))
+        != PAM_SUCCESS) {
         return retval;
     }
-
 
     return _check_otp(pamh, usrname, otp);
 }

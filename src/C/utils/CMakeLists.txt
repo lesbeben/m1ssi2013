@@ -6,7 +6,7 @@ add_definitions(--std=c99 -Wall -Werror)
 # Test la présence des lib utilisées.
 find_package(OpenSSL REQUIRED)
 IF(CMAKE_BUILD_TYPE MATCHES DEBUG)
-    find_package(Check REQUIRED)
+ #   find_package(Check REQUIRED)
 ENDIF(CMAKE_BUILD_TYPE MATCHES DEBUG)
 
 # Les deux libs statiques à générer
