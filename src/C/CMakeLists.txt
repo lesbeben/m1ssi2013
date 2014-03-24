@@ -11,9 +11,11 @@ add_definitions(--std=c99 -Wall -Werror)
 #Ajout du répertoire utils contenant les utilitaire/générateurs
 add_subdirectory(utils)
 
-link_directories(utils/)
+link_directories(${CMAKE_SOURCE_DIR}/utils/)
 
 set(CMAKE_SHARED_MODULE_PREFIX "")
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake;${CMAKE_MODULE_PATH}")
+find_package(PAM)
 add_library(pam_hotp MODULE pam_hotp.c)
 # set_target_properties(pam_hotp PROPERTIES PREFIX "")
 target_link_libraries(pam_hotp pam hotp users m)
