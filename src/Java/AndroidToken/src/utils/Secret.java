@@ -8,7 +8,7 @@ public class Secret implements ISecret {
     private byte[] secret;
     
     private static final int HEX_BASE = 16;
-
+    private static final String HEX_CHARS = "abcdefABCDEF0123456789";
 
 	@Override
 	public void setSecret(byte[] secret) {
@@ -33,8 +33,14 @@ public class Secret implements ISecret {
 	@Override
 	public void setSecret(String hexRepresentation) {
         //TODO Ca marche ce truc?
-		if (hexRepresentation == null) {
+		if ((hexRepresentation == null) 
+				|| (hexRepresentation.length() % 2 != 0)) {
 			throw new IllegalArgumentException();
+		}
+		for (int i = 0; i < hexRepresentation.length(); i++) {
+			if (HEX_CHARS.indexOf(hexRepresentation.charAt(i)) == -1) {
+				throw new IllegalArgumentException();
+			}
 		}
 		//conversion en byte[] et stocke dans secret
 		this.secret = hexStringToByteArray(hexRepresentation);

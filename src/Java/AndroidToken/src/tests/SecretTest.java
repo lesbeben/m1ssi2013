@@ -34,6 +34,12 @@ public class SecretTest {
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
+	public void badTestSetSecretString2() {
+		ISecret key = new Secret();
+		key.setSecret("LKHJDTA54R897764387DJKL"); 
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
 	public void badTestSetSecretInt() {
 		ISecret key = new Secret();
 		key.setSecret(-1); 
@@ -53,13 +59,14 @@ public class SecretTest {
 
 	@Test
 	public void testSetSecretString() {
-		String hex = "AABBCCDDEEFF";
+		String hex = "32EFC21342CF4213";
 		ISecret secret = new Secret();
 		secret.setSecret(hex);
 		byte[] expected = 
 				new byte[] {
-					(byte) 0xAA, (byte) 0xBB, (byte) 0xCC,
-					(byte) 0xDD, (byte) 0xEE, (byte) 0xFF,
+					(byte) 0x32, (byte) 0xEF, (byte) 0xC2,
+					(byte) 0x13, (byte) 0x42, (byte) 0xCF,
+					(byte) 0x42, (byte) 0x13
 				};
 		assertArrayEquals(
 				"Incoherent value for secret", 

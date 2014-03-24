@@ -1,9 +1,5 @@
 package tests;
 
-import java.util.Iterator;
-
-import org.junit.runners.MethodSorters;
-
 import com.java.dataManager.LocalData;
 import com.java.dataManager.OTPMethodType;
 import com.java.dataManager.Token;

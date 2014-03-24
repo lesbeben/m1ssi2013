@@ -40,6 +40,8 @@ public interface ISecret {
 	 * La valeur du secret sera égale à la valeur représentée par la chaine.
 	 * 
 	 * @pre hexRepresentation != null 
+	 * 		hexRepresentation[i] in [0-9]U[A-F]
+	 * 		hexrepresentation.length % 2 = 0
 	 * @post getHexRepresentation = hexRep
 	 * @param hexRepresentation la chaine hexa représentant le secret.
 	 */
