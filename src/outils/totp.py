@@ -8,7 +8,7 @@ class Totp_Generator():
 
     def get_otp(self):
         # Obtention du compteur
-        count = int(time.mktime(time.gmtime()) / self.quantum)
+        count = int((time.time()) / self.quantum)
         # Création d'un objet permettant de calculer hmac_sha1
         hmac_gen = hmac.new(self.__secret, count.to_bytes(8, byteorder='big'), hashlib.sha1)
         # HMAC_SHA1(secret, count)

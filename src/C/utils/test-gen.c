@@ -5,8 +5,7 @@
 #include <unistd.h>
 #include <time.h>
 
-#include "hotp.h"
-#include "totp.h"
+#include "otp.h"
 #include "utils.h"
 #include "secret.h"
 
@@ -216,7 +215,7 @@ int main(int argc, char * argv[]) {
     printf("Testing HOTP calculation.\n");
     s = hexToSecret("AABBCCDDEEFF");
     int otp, otp2;
-    if ((otp = generateHOTP(s, 0, 6)) == -1) {
+    if ((otp = generate_otp(s, 0, 6)) == -1) {
         printKO("Error while executing. -1 returned.");
     } else {
         if (0 > otp || otp > 999999) {
@@ -226,24 +225,24 @@ int main(int argc, char * argv[]) {
             printf("OTP : %d\n", otp);
         }
     }
-    if ((otp2 = generateHOTP(s, 1, 6)) == otp) {
+    if ((otp2 = generate_otp(s, 1, 6)) == otp) {
         printKO("Two successive valus are equal. This should not happen.");
     } else {
         printOK("Two successive values are differents.");
         printf("OTP2 : %d\n", otp2);
     }
 
-    if (generateHOTP(NULL, 0, 7) != -1)
+    if (generate_otp(NULL, 0, 7) != -1)
         printKO("NULL secret not correctly handled");
-    if (generateHOTP(s, 0, -1) != -1)
+    if (generate_otp(s, 0, -1) != -1)
         printKO("-1 length not correctly handled");
-    if (generateHOTP(s, 0, 99) != -1)
+    if (generate_otp(s, 0, 99) != -1)
         printKO("99 length not correctly handled");
 
     /* Testing TOTP calculation. */
     printf("Testing TOTP calculation.\n");
     
-    if ((otp = generateTOTP(s, 30, time(NULL), 6)) == -1) {
+    if ((otp = generate_otp(s, time(NULL), 6)) == -1) {
         printKO("Error while executing. -1 returned.");
     } else {
         printf("OTP : %d\n", otp);
@@ -254,19 +253,19 @@ int main(int argc, char * argv[]) {
         }
     }
     sleep(2);
-    if (generateTOTP(s, 1, time(NULL), 6) == otp) {
+    if (generate_otp(s, time(NULL), 6) == otp) {
         printKO("Two successive valus are equal. This should not happen.");
     } else {
         printOK("Two successive values are differents.");
     }
 
-    if (generateTOTP(NULL, 0, time(NULL), 7) != -1)
+    if (generate_otp(NULL, time(NULL) / 30, 7) != -1)
         printKO("NULL secret not correctly handled");
-    if (generateTOTP(s, -1, time(NULL), 7) != -1)
-        printKO("bad quantum not correctly handled");
-    if (generateTOTP(s, 0, time(NULL), -1) != -1)
+//     if (generate_otp(s, time(NULL) / 30, 7) != -1)
+//         printKO("bad quantum not correctly handled");
+    if (generate_otp(s, time(NULL) / 30, -1) != -1)
         printKO("-1 length not correctly handled");
-    if (generateTOTP(s, 0, time(NULL), 99) != -1)
+    if (generate_otp(s, time(NULL) / 30, 99) != -1)
         printKO("99 length not correctly handled");
 
     destroySecret(s);

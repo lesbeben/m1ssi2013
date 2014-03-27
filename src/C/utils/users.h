@@ -2,6 +2,15 @@
 #define USERS_H
 #include "secret.h"
 
+// Macros de code retour.
+#define USR_SUCCESS                      0
+#define USR_ERR_SYS                     -1
+#define USR_ERR_IO                      -2
+#define USR_ERR_USR_UKN                 -3
+#define USR_ERR_USR_FILE                -4
+#define USR_ERR_PARAM                   -5
+#define NO_MORE_USERS                   -6
+
 #define TOTP_METHOD 0
 #define HOTP_METHOD 1
 
@@ -16,8 +25,11 @@ typedef union {
  */
 typedef struct {
     char * username; /**< Le nom de l'utilisateur. */
-    int method; /**< La méthode d'OTP de l'utilisateur.*/
+    char method; /**< La méthode d'OTP de l'utilisateur.*/
     secret passwd; /**< Le secret de l'utilisateur. */
+    char otp_len;      /**< La taille des otp à générer. */
+    char isBanned;  /**< Indique si l'utilisateur à le droit de tenter 
+                         de s'authentifier */
     otpopt params; /**< Les paramètres optionels pour l'authentification. */
 } otpuser;
 

@@ -164,26 +164,32 @@ Suite * users_suite (void) {
 
 int main(int argc, char * argv[]) {
     // Remplissage des variables de test.
-    user1.username = strndup("usertest", 9);
+    user1.username = strndup("shifty", 6);
     user1.method = HOTP_METHOD;
     user1.passwd = createSecret(20);
+    user1.otp_len = 8;
+    user1.isBanned = 0;
     user1.params.count = 0;
     
-    user2.username = strndup("pedro", 6);
+    user2.username = strndup("root", 5);
     user2.method = HOTP_METHOD;
     user2.passwd = createSecret(20);
+    user2.otp_len = 6;
+    user2.isBanned = 0;
     user2.params.count = 0;
     
-    user3.username = strndup("johndoe", 8);
+    user3.username = strndup("sagemath", 8);
     user3.method = HOTP_METHOD;
     user3.passwd = createSecret(20);
+    user3.otp_len = 8;
+    user3.isBanned = 0;
     user3.params.count = 0;
     
     int failed_count = 0;
     Suite * s = users_suite();
     SRunner * sr = srunner_create(s);
 //     Directive pour empécher le fork:
-//      srunner_set_fork_status(sr, CK_NOFORK);
+    srunner_set_fork_status(sr, CK_NOFORK);
     srunner_run_all(sr, CK_NORMAL);
     failed_count = srunner_ntests_failed(sr);
     srunner_free(sr);

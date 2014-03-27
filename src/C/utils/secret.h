@@ -10,8 +10,9 @@
  */
 typedef struct {
     int length; /**< La taille du secret en octet, toujours supérieur à 0*/
-    char * buffer; /**< Le pointeur vers les octets du tableau,
-                        normalement non NULL. */
+    char * buffer; /**< pointeur vers un buffer
+                        contenant les octets du secret.
+                        NULL si le buffer n'est pas alloué */
 } secret_struct;
 
 /** Type permettant de représenter un secret. Ce type permet d'«encapsuler»
@@ -19,10 +20,9 @@ typedef struct {
  */
 typedef secret_struct * secret;
 
-/** Crée un "objet" secret rempli avec des length octets pseudo aléatoires.
+/** Crée un "objet" secret rempli avec des length octets NULS.
  * 
- * Cette fonction se base sur le fichier /dev/urandom pour générer de 
- * l'aléatoire ce qui est plus rapide mais moins fiable que /dev/random.
+ * Cette fonction créée un secret avec des octets initialisés à 0.
  * @param[in] length la taille du secret en octets.
  * @pre la taille ne peut pas être négative.
  *

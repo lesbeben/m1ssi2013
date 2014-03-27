@@ -10,7 +10,7 @@
 #include <sys/syslog.h>
 
 //#include "utils/totp.h"
-#include "utils/hotp.h"
+#include "utils/otp.h"
 #include "utils/users.h"
 
 #define QUANTUM 30
@@ -49,7 +49,7 @@ int _check_otp(pam_handle_t * pamh, const char * username, const char * otp) {
         int delta = i * QUANTUM;
         long counter = (time(NULL) + delta) / QUANTUM;
         if (lastAuth < counter) {
-            otp_expected = generateHOTP(user.passwd, counter, OTP_LENGTH);
+            otp_expected = generate_otp(user.passwd, counter, OTP_LENGTH);
             if (otp_expected == -1) {
                 pam_syslog(pamh, LOG_ERR, "generateTOTP failed");
                 unlockFile();

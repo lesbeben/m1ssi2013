@@ -8,7 +8,7 @@
 
 #include <sys/syslog.h>
 
-#include "utils/hotp.h"
+#include "utils/otp.h"
 #include "utils/users.h"
 
 /** TODO:
@@ -36,9 +36,9 @@ int _check_otp(pam_handle_t * pamh, const char * username, const char * otp) {
     int otp_expected = 0;
     int otp_given = atoi(otp);
     for (int i = 0; i < 3; i++) {
-        otp_expected = generateHOTP(user.passwd, user.params.count + i, 8);
+        otp_expected = generate_otp(user.passwd, user.params.count + i, 8);
         if (otp_expected == -1) {
-            pam_syslog(pamh, LOG_ERR, "generateHOTP failed");
+            pam_syslog(pamh, LOG_ERR, "generate_otp failed");
             unlockFile();
             return PAM_AUTH_ERR;
         }
