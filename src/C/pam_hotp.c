@@ -36,7 +36,7 @@ int _check_otp(pam_handle_t * pamh, const char * username, const char * otp) {
     int otp_expected = 0;
     int otp_given = atoi(otp);
     for (int i = 0; i < 3; i++) {
-        otp_expected = generate_otp(user.passwd, user.params.count + i, 8);
+        otp_expected = generate_otp(user.passwd, user.params.count + i, user.otp_len);
         if (otp_expected == -1) {
             pam_syslog(pamh, LOG_ERR, "generate_otp failed");
             unlockFile();
