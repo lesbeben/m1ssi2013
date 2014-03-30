@@ -113,19 +113,31 @@ public class Token  {
 	public String getNom() {
 		return nom;
 	}
-
+	
+	/**
+	 * Retourne la clef secrète de ce token.
+	 */
 	public String getSecretKey() {
 		return skeyHex;
 	}
 	
+	/**
+	 * Retourne la valeur du compteur pour ce token.
+	 */
 	public long getCount() {
 		return count;
 	}
 	
+	/**
+	 * Retourne la tailles des mots de passes générés par ce token.
+	 */
 	public int getSize() {
 		return tailleOTP;
 	}
 	
+	/**
+	 * Retourne la valeur du quantum de temps pour ce token.
+	 */
 	public int getQuantum() {
 		return quantum;
 	}
