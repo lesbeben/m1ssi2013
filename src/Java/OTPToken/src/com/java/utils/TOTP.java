@@ -47,7 +47,7 @@ public class TOTP extends OTPGenerator {
 	public TOTP(ISecret key, int digits, int quantum) {
 		super(digits);
 		if (key == null || quantum <= 0) {
-			throw new IllegalArgumentException("key");
+			throw new IllegalArgumentException("key or quantum invalid");
 		}
 		this.key = key;
 		this.timeQuantum = quantum;
@@ -68,7 +68,14 @@ public class TOTP extends OTPGenerator {
 		this.timeQuantum = DEFAULT_QUANTUM;
 
 	}
-
+	
+	/**
+	 * Renvoie la valeur du quantum de temps pour ce générateur.
+	 */
+	public int getQuantum() {
+		return timeQuantum;
+	}
+	
 	@Override
 	/**
 	 * Renvoie la valeur du compteur de temps.

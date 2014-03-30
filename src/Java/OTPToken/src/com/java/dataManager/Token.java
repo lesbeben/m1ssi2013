@@ -89,6 +89,11 @@ public class Token  {
 		this.tailleOTP = ((OTPGenerator) otpGen).getDigits();
 		this.skeyHex = 
 				((OTPGenerator) otpGen).getKey().getHexRepresentation();
+		if (methodType == OTPMethodType.HOTP) {
+			count = ((HOTP) otpGen).getCount();
+		} else if (methodType == OTPMethodType.TOTP) {
+			quantum = ((TOTP) otpGen).getQuantum();
+		}
 	}
 	
 	
@@ -109,6 +114,21 @@ public class Token  {
 		return nom;
 	}
 
+	public String getSecretKey() {
+		return skeyHex;
+	}
+	
+	public long getCount() {
+		return count;
+	}
+	
+	public int getSize() {
+		return tailleOTP;
+	}
+	
+	public int getQuantum() {
+		return quantum;
+	}
 	
     /**
      * Cette fonction retourne le type de générateur token utilisé (HOTP ou 
@@ -157,7 +177,6 @@ public class Token  {
 		int resultat = otpGen.generer();
 		
 		if (methodType == OTPMethodType.HOTP) {
-
 			count = ((OTPGenerator) otpGen).getCount();
 		}	
 		return resultat;
