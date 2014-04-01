@@ -56,7 +56,13 @@ public class IOFileUtilsTests extends InstrumentationTestCase {
 		byte[] content = hexStringToByteArray("aefd2b5c");
 		IOFileUtils.saveToInternalFile(context, fileName, content);
 		byte[] out = IOFileUtils.readFromInternalFile(context, fileName);
-		assertEquals("Different content.", content, out);
+		assertEquals(
+				"Inpout and output contents differe.", 
+				content.length, out.length
+		);
+		for (int i = 0; i < content.length; i++) {
+			assertEquals("Contents differe", content[i], out[i]);
+		}
 	}
 	
 	public void testClearFile() {

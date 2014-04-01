@@ -81,6 +81,9 @@ public final class IOFileUtils {
 	 * @return File : Le flux de fichier correspondant au nom passé en paramètre
 	 */
 	public static File getInternalFile(Context context, String fileName) {
+		if ((fileName == null) || (context == null)) {
+			throw new IllegalArgumentException("Empty filename");
+		}
 		File file = new File(context.getFilesDir() + "/" + fileName);
 		return file;
 	}
@@ -100,6 +103,9 @@ public final class IOFileUtils {
 	 */
 
 	public static boolean deleteFile(Context context, String fileName) {
+		if ((fileName == null) || (context == null)) {
+			throw new IllegalArgumentException("Empty filename");
+		}
 		File dir = context.getFilesDir();
 		File file = new File(dir, fileName);
 		boolean deleted = file.delete();
@@ -122,6 +128,9 @@ public final class IOFileUtils {
 
 	public static void saveToInternalFile(
 			Context context, String fileName, byte[] content) {
+		if ((fileName == null) || (context == null) || (content == null)) {
+			throw new IllegalArgumentException("Empty filename");
+		}
 		FileOutputStream outputStream;
 		try {
 			outputStream = 
@@ -149,6 +158,9 @@ public final class IOFileUtils {
 
 	public static byte[] readFromInternalFile(
 			Context context, String fileName) {
+		if ((fileName == null) || (context == null)) {
+			throw new IllegalArgumentException("Empty filename");
+		}
 		FileInputStream inputStream;
 		byte[] content = null;
 		try {
@@ -178,6 +190,9 @@ public final class IOFileUtils {
 	 */
 
 	public static void clearFile(Context context, String fileName) {
+		if ((fileName == null) || (context == null)) {
+			throw new IllegalArgumentException("Empty filename");
+		}
 		File dir = context.getFilesDir();
 		File file = new File(dir, fileName);
 		PrintWriter writer;
