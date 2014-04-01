@@ -149,11 +149,13 @@ public class TokenTests extends TestCase {
 	
 	@Test
 	public void testToken() {
-		Token token = new Token();
-		int otp = token.generate();
-		assertTrue("Invalid otp length.", otp < Math.pow(10, 9));
-		int otp2 = token.generate();
-		assertTrue("Invalid otp length.", otp2 < Math.pow(10, 9));
-		assertFalse("Two successive values are equals.", otp == otp2);
+		int count = 0;
+		try {
+			Token token = new Token();
+			int otp = token.generate();
+		} catch (IllegalStateException e) {
+			count++;
+		}
+		assertEquals("Bad cases not correctly handled.", 1, count);
 	}
 }

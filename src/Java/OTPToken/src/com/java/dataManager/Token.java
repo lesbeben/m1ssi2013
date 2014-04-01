@@ -172,6 +172,9 @@ public class Token  {
 	 * 		   interne
 	 */
 	public int generate() {
+		if (nom == null || tailleOTP == 0 || skeyHex == null) {
+			throw new IllegalStateException();
+		}
 		if (methodType == OTPMethodType.HOTP) {
 			if (otpGen == null) {
 				Secret secret = new Secret();
