@@ -7,15 +7,18 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
+
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
+
 import android.content.Context;
 import android.provider.Settings.Secure;
 
@@ -88,6 +91,9 @@ public final class LocalData {
 	 * @return Le token récupéré s'il existe, null sinon.
 	 */
 	public Token getToken(String nom) {
+		if (nom == null) {
+			throw new IllegalArgumentException();
+		}
 		Token res = null;
 		for (int i = 0; i < tokenList.size(); i++) {
 			Token resIT = tokenList.get(i);
@@ -108,6 +114,9 @@ public final class LocalData {
 	 * @post getToken(token.getNom()) == token
 	 */
 	public void addToken(Token token) {
+		if (token == null || getToken(token.getNom()) != null) {
+			throw new IllegalArgumentException();
+		}
 		tokenList.add(token);
 	}
 
@@ -120,6 +129,9 @@ public final class LocalData {
 	 * @post getToken(nom) == null
 	 */
 	public void removeToken(String nom) {
+		if (nom == null) {
+			throw new IllegalArgumentException();
+		}
 		for (int i = 0; i < tokenList.size(); i++) {
 			Token res = (Token) tokenList.get(i);
 			if (res.getNom().equalsIgnoreCase(nom)) {
@@ -138,7 +150,10 @@ public final class LocalData {
 	 * 		index < getTokenList.length
 	 */
 	public void removeToken(long index) {
-				tokenList.remove(index);
+		if (index <= 0) {
+			throw new IllegalArgumentException();
+		}
+		tokenList.remove(index);
 	}
 
 	/**
@@ -159,6 +174,9 @@ public final class LocalData {
 	 * @post getPin == pin
 	 */
 	public void setPIN(String pin) {
+		if (pin == null) {
+			throw new IllegalArgumentException();
+		}
 		this.pin = pin;
 	}
 
@@ -210,7 +228,10 @@ public final class LocalData {
 	 * @return String correpondant au chiffrée AES de data.
 	 */
 	public byte[] encryptData(String data, byte[] aesKey) {
-
+		if (data == null || aesKey == null) {
+			throw new IllegalArgumentException();
+		}
+		
 		Cipher cipher;
 		try {
 			cipher = Cipher.getInstance("AES");

@@ -1,5 +1,8 @@
 package tests;
 
+import org.junit.Test;
+
+import com.java.androidtoken.SetPINActivity;
 import com.java.dataManager.LocalData;
 import com.java.dataManager.OTPMethodType;
 import com.java.dataManager.Token;
@@ -153,6 +156,56 @@ public class LocalDataTests extends InstrumentationTestCase {
 		);
 	}
 	
+	public void testGetTokenBad() {
+		LocalData ld = LocalData.getInstance();
+		int count = 0;
+		try {
+			ld.getToken(null);
+		} catch (IllegalArgumentException e) {
+			count++;
+		}
+		assertEquals("Bad cases not correctly handled", 1, count);
+	}
+	
+	public void testAddTokenBad() {
+		LocalData ld = LocalData.getInstance();
+		ISecret s = new Secret();
+		s.setSecret("aabbccdd");
+		Token t = new Token("test", OTPMethodType.HOTP, new HOTP(s));
+		int count = 0;
+		ld.addToken(t);
+		try {
+			ld.addToken(null);
+		} catch (IllegalArgumentException e) {
+			count++;
+		}
+		try {
+			ld.addToken(t);
+		} catch (IllegalArgumentException e) {
+			count++;
+		}
+		assertEquals("Bad cases not correctly handled", 2, count);
+	}
+	
+	public void testRemoveToken() {
+		LocalData ld = LocalData.getInstance();
+		int count = 0;
+		try {
+			ld.removeToken(null);
+		} catch (IllegalArgumentException e) {
+			count++;
+		}
+		try {
+			ld.removeToken(-1);
+		} catch (IllegalArgumentException e) {
+			count++;
+		}
+		assertEquals("Bad cases not correctly handled.", 2, count);
+		
+		ld.removeToken("test");
+		assertTrue("Token not correctly removed", ld.getToken("test") == null);
+	}
+	
 	public void testTest() {
 		LocalData ld = LocalData.getInstance();
 		assertFalse("tokenList == null", ld.getListeToken() == null);
@@ -163,5 +216,16 @@ public class LocalDataTests extends InstrumentationTestCase {
 					|| token.getMethodType() == OTPMethodType.TOTP);
 					
 		}
+	}
+	
+	public void testPinBad() {
+		LocalData ld = LocalData.getInstance();
+		int count = 0;
+		try {
+			ld.setPIN(null);
+		} catch (IllegalArgumentException e) {
+			count++;
+		}
+		assertEquals("Bad cases not correctly handled", 1, count);
 	}
 }
