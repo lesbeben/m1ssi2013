@@ -21,12 +21,10 @@ include_directories(${PAM_INCLUDE_DIR})
 
 add_library(pam_hotp MODULE pam_hotp.c)
 # set_target_properties(pam_hotp PROPERTIES PREFIX "")
-target_link_libraries(pam_hotp pam otp users m)
+target_link_libraries(pam_hotp pam otp users m crypto)
 add_library(pam_totp MODULE pam_totp.c)
 # set_target_properties(pam_totp PROPERTIES PREFIX "")
-target_link_libraries(pam_totp pam otp users m)
+target_link_libraries(pam_totp pam otp users m crypto)
 
-
-message("-- Répertoire d'installation des modules PAM: ${PAM_MODULES_PATH}")
 install(TARGETS pam_hotp LIBRARY DESTINATION /lib/security)
 install(TARGETS pam_totp LIBRARY DESTINATION /lib/security)
