@@ -27,36 +27,6 @@ if (EXISTS ${PAM_INCLUDE_DIR}/pam/pam_appl.h)
 set(HAVE_PAM_PAM_APPL_H 1)
 endif (EXISTS ${PAM_INCLUDE_DIR}/pam/pam_appl.h)
 
-if (NOT DEFINED PAM_MESSAGE_CONST)
-include(CheckCXXSourceCompiles)
-# XXX does this work with plain c?
-check_cxx_source_compiles("
-#if ${HAVE_PAM_PAM_APPL_H}+0
-# include <pam/pam_appl.h>
-#else
-# include <security/pam_appl.h>
-#endif
-
-static int PAM_conv(
-int num_msg,
-const struct pam_message **msg, /* this is the culprit */
-struct pam_response **resp,
-void *ctx)
-{
-return 0;
-}
-
-int main(void)
-{
-struct pam_conv PAM_conversation = {
-&PAM_conv, /* this bombs out if the above does not match */
-0
-};
-
-return 0;
-}
-" PAM_MESSAGE_CONST)
-endif (NOT DEFINED PAM_MESSAGE_CONST)
 set(PAM_MESSAGE_CONST ${PAM_MESSAGE_CONST} CACHE BOOL "PAM expects a 
 conversation function with const pam_message")
 

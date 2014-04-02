@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 
 # Nom susceptible de changer.
-project (OTP)
+project (OTP C)
 
 IF(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64")
     ADD_DEFINITIONS(-fPIC) 
