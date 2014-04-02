@@ -10,7 +10,10 @@ if (PAM_INCLUDE_DIR AND PAM_LIBRARY)
 set(PAM_FIND_QUIETLY TRUE)
 endif (PAM_INCLUDE_DIR AND PAM_LIBRARY)
 
-find_path(PAM_INCLUDE_DIR NAMES security/pam_appl.h pam/pam_appl.h)
+find_path(PAM_INCLUDE_DIR NAMES pam_appl.h 
+    HINTS
+    ${CMAKE_C_IMPLICIT_INCLUDE_DIRECTORIES}/security
+    ${CMAKE_C_IMPLICIT_INCLUDE_DIRECTORIES}/pam)
 find_library(PAM_LIBRARY pam)
 find_library(DL_LIBRARY dl)
 
@@ -22,10 +25,22 @@ else (DL_LIBRARY)
 set(PAM_LIBRARIES ${PAM_LIBRARY})
 endif (DL_LIBRARY)
 
-if (EXISTS ${PAM_INCLUDE_DIR}/pam/pam_appl.h)
+if (EXISTS ${PAM_INCLUDE_DIR}/pam_appl.h)
 # darwin claims to be something special
 set(HAVE_PAM_PAM_APPL_H 1)
-endif (EXISTS ${PAM_INCLUDE_DIR}/pam/pam_appl.h)
+endif (EXISTS ${PAM_INCLUDE_DIR}/pam_appl.h)
+
+if (NOT EXISTS ${PAM_INCLUDE_DIR}/_pam_macros.h)
+message(FATAL_ERROR "Impossible de trouver _pam_macros.h")
+endif (NOT EXISTS ${PAM_INCLUDE_DIR}/_pam_macros.h)
+
+if (NOT EXISTS ${PAM_INCLUDE_DIR}/pam_modules.h)
+message(FATAL_ERROR "Impossible de trouver pam_modules.h")
+endif (NOT EXISTS ${PAM_INCLUDE_DIR}/pam_modules.h)
+
+if (NOT EXISTS ${PAM_INCLUDE_DIR}/pam_ext.h)
+message(FATAL_ERROR "Impossible de trouver pam_ext.h")
+endif (NOT EXISTS ${PAM_INCLUDE_DIR}/pam_ext.h)
 
 set(PAM_MESSAGE_CONST ${PAM_MESSAGE_CONST} CACHE BOOL "PAM expects a 
 conversation function with const pam_message")
