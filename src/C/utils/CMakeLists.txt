@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 2.6)
-project (OTP)
+project (OTP C)
 
 add_definitions(--std=c99 -Wall -Werror)
 
