@@ -29,7 +29,7 @@ find_path(PAM_MODULES_PATH pam_unix.so HINTS ${PAM_LIB_DIR})
 
 if (${PAM_MODULES_PATH} MATCHES PAM_MODULES_PATH-NOTFOUND)
 message(FATAL_ERROR "Impossible de déterminer le répertoire d'installation des modules PAM")
-endif (${PAM_MODULES_PATH} MATCHES "PAM_MODULES_PATH-NOT_FOUND")
+endif (${PAM_MODULES_PATH} MATCHES PAM_MODULES_PATH-NOTFOUND)
 message("-- Répertoire d'installation des modules PAM: ${PAM_MODULES_PATH}")
 install(TARGETS pam_hotp LIBRARY DESTINATION ${PAM_MODULES_PATH})
 install(TARGETS pam_totp LIBRARY DESTINATION ${PAM_MODULES_PATH})
