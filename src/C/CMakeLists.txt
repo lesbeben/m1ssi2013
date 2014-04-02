@@ -27,7 +27,7 @@ target_link_libraries(pam_totp pam otp users m)
 set(PAM_LIB_DIR /usr/lib/security /lib/security /usr/lib64/security /lib64/security)
 find_path(PAM_MODULES_PATH pam_unix.so HINTS ${PAM_LIB_DIR})
 
-if (${PAM_MODULES_PATH} MATCHES "PAM_MODULES_PATH-NOT_FOUND")
+if (${PAM_MODULES_PATH} MATCHES PAM_MODULES_PATH-NOTFOUND)
 message(FATAL_ERROR "Impossible de déterminer le répertoire d'installation des modules PAM")
 endif (${PAM_MODULES_PATH} MATCHES "PAM_MODULES_PATH-NOT_FOUND")
 message("-- Répertoire d'installation des modules PAM: ${PAM_MODULES_PATH}")
