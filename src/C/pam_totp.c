@@ -3,9 +3,9 @@
 #include <time.h>
 
 #define _PAM_EXTERN_FUNCTIONS
-#include <security/_pam_macros.h>
-#include <security/pam_modules.h>
-#include <security/pam_ext.h>
+#include <_pam_macros.h>
+#include <pam_modules.h>
+#include <pam_ext.h>
 
 #include <sys/syslog.h>
 

@@ -10,7 +10,10 @@ if (PAM_INCLUDE_DIR AND PAM_LIBRARY)
 set(PAM_FIND_QUIETLY TRUE)
 endif (PAM_INCLUDE_DIR AND PAM_LIBRARY)
 
-find_path(PAM_INCLUDE_DIR NAMES security/pam_appl.h pam/pam_appl.h)
+find_path(PAM_INCLUDE_DIR NAMES pam_appl.h 
+    HINTS
+    ${CMAKE_C_IMPLICIT_INCLUDE_DIRECTORIES}/security
+    ${CMAKE_C_IMPLICIT_INCLUDE_DIRECTORIES}/pam)
 find_library(PAM_LIBRARY pam)
 find_library(DL_LIBRARY dl)
 
@@ -22,41 +25,23 @@ else (DL_LIBRARY)
 set(PAM_LIBRARIES ${PAM_LIBRARY})
 endif (DL_LIBRARY)
 
-if (EXISTS ${PAM_INCLUDE_DIR}/pam/pam_appl.h)
+if (EXISTS ${PAM_INCLUDE_DIR}/pam_appl.h)
 # darwin claims to be something special
 set(HAVE_PAM_PAM_APPL_H 1)
-endif (EXISTS ${PAM_INCLUDE_DIR}/pam/pam_appl.h)
+endif (EXISTS ${PAM_INCLUDE_DIR}/pam_appl.h)
 
-if (NOT DEFINED PAM_MESSAGE_CONST)
-include(CheckCXXSourceCompiles)
-# XXX does this work with plain c?
-check_cxx_source_compiles("
-#if ${HAVE_PAM_PAM_APPL_H}+0
-# include <pam/pam_appl.h>
-#else
-# include <security/pam_appl.h>
-#endif
+if (NOT EXISTS ${PAM_INCLUDE_DIR}/_pam_macros.h)
+message(FATAL_ERROR "Impossible de trouver _pam_macros.h")
+endif (NOT EXISTS ${PAM_INCLUDE_DIR}/_pam_macros.h)
 
-static int PAM_conv(
-int num_msg,
-const struct pam_message **msg, /* this is the culprit */
-struct pam_response **resp,
-void *ctx)
-{
-return 0;
-}
+if (NOT EXISTS ${PAM_INCLUDE_DIR}/pam_modules.h)
+message(FATAL_ERROR "Impossible de trouver pam_modules.h")
+endif (NOT EXISTS ${PAM_INCLUDE_DIR}/pam_modules.h)
 
-int main(void)
-{
-struct pam_conv PAM_conversation = {
-&PAM_conv, /* this bombs out if the above does not match */
-0
-};
+if (NOT EXISTS ${PAM_INCLUDE_DIR}/pam_ext.h)
+message(FATAL_ERROR "Impossible de trouver pam_ext.h")
+endif (NOT EXISTS ${PAM_INCLUDE_DIR}/pam_ext.h)
 
-return 0;
-}
-" PAM_MESSAGE_CONST)
-endif (NOT DEFINED PAM_MESSAGE_CONST)
 set(PAM_MESSAGE_CONST ${PAM_MESSAGE_CONST} CACHE BOOL "PAM expects a 
 conversation function with const pam_message")
 
