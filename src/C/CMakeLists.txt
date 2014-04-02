@@ -12,7 +12,7 @@ add_definitions(--std=c99 -Wall -Werror)
 add_subdirectory(utils)
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake;${CMAKE_MODULE_PATH}")
-find_package(PAM)
+find_package(PAM REQUIRED)
 
 link_directories(${CMAKE_SOURCE_DIR}/utils/)
 include_directories(${PAM_INCLUDE_DIR})
