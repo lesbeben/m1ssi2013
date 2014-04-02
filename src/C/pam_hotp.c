@@ -52,7 +52,7 @@ int _check_otp(pam_handle_t * pamh, const char * username, const char * otp) {
             return PAM_SUCCESS;
         }
     }
-    pam_syslog(pamh, LOG_ERR,"%s failed to log", username);
+    pam_syslog(pamh, LOG_ERR,"%s failed to log in", username);
 
     if (unlockFile() == -1) {
         pam_syslog(pamh, LOG_ERR, "can't free lock on users");

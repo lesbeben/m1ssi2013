@@ -61,12 +61,13 @@ int _check_otp(pam_handle_t * pamh, const char * username, const char * otp) {
                 if (unlockFile() == -1) {
                     pam_syslog(pamh, LOG_ERR, "can't free lock");
                 }
+                pam_syslog(pamh, LOG_NOTICE, "%s logged in", username); 
                 return PAM_SUCCESS;
-            } else {
-                pam_syslog(pamh, LOG_ERR, "Auth denied expect %d", otp_expected);
             }
         }
     }
+    
+    pam_syslog(pamh, LOG_NOTICE, "%s failed to log in", username); 
     if (!hasFound) {
         pam_syslog(pamh, LOG_ERR, "can't synchronize");
     }
@@ -97,7 +98,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
         != PAM_SUCCESS) {
         return retval;
     }
-
+    
     return _check_otp(pamh, usrname, otp);
 }
 
