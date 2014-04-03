@@ -49,7 +49,7 @@ int _check_otp(pam_handle_t * pamh, const char * username, const char * otp) {
         if (lastAuth < counter) {
             otp_expected = generate_otp(user.passwd, counter, user.otp_len);
             if (otp_expected < OTP_SUCCESS) {
-                pam_syslog(pamh, LOG_ERR, "TOTP generation failed");
+                pam_syslog(pamh, LOG_ERR, "TOTP generation failed errcode=%d", otp_expected);
                 unlockFile();
                 return PAM_AUTH_ERR;
             }
