@@ -1,8 +1,5 @@
 package tests;
 
-import org.junit.Test;
-
-import com.java.androidtoken.SetPINActivity;
 import com.java.dataManager.LocalData;
 import com.java.dataManager.OTPMethodType;
 import com.java.dataManager.Token;
@@ -204,6 +201,19 @@ public class LocalDataTests extends InstrumentationTestCase {
 		
 		ld.removeToken("test");
 		assertTrue("Token not correctly removed", ld.getToken("test") == null);
+		
+		ISecret s = new Secret();
+		s.setSecret("aabbccdd");
+		Token t = new Token("test", OTPMethodType.HOTP, new HOTP(s));
+
+		ld.addToken(t);
+		int len = ld.getListeToken().size();
+		ld.removeToken(0);
+		assertEquals(
+			"removeToken index does not remove", 
+			len - 1, 
+			ld.getListeToken().size()
+		);
 	}
 	
 	public void testTest() {

@@ -149,8 +149,8 @@ public final class LocalData {
 	 * @pre index > 0
 	 * 		index < getTokenList.length
 	 */
-	public void removeToken(long index) {
-		if (index <= 0) {
+	public void removeToken(int index) {
+		if (index < 0) {
 			throw new IllegalArgumentException();
 		}
 		tokenList.remove(index);

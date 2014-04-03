@@ -92,21 +92,36 @@ public class TokenListActivity extends ListActivity {
 		builder.setTitle(R.string.app_name)
 				.setMessage(R.string.confirmDelete)
 				.setIcon(android.R.drawable.ic_dialog_alert)
-				.setPositiveButton(R.string.btnOK,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog,
-									int which) {
+				.setPositiveButton(
+					R.string.btnOK,
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,	int which) {
 
-								LocalData.getInstance().removeToken(pos);
-								LocalData.getInstance().commit(
-										getApplicationContext());
-								fillData();
+							LocalData.getInstance().removeToken(pos);
+							LocalData.getInstance().commit(
+								getApplicationContext()
+							);
+							fillData();
 
-								Toast.makeText(getApplicationContext(),
-										R.string.toastDeleted,
-										Toast.LENGTH_SHORT).show();
+							Toast.makeText(
+								getApplicationContext(),
+								R.string.toastDeleted,
+								Toast.LENGTH_SHORT
+							).show();
+							
+							if (LocalData.getInstance().getListeToken().size() 
+									== 0) {
+								//Plus de token : en ajouter un.
+								Intent i = new Intent(
+									TokenListActivity.this, 
+									AddTokenActivity.class 
+								);
+								startActivity(i);
+								finish();
 							}
-						}).setNegativeButton(R.string.cancel, null);
+						}
+					}
+				).setNegativeButton(R.string.cancel, null);
 
 		builder.show();
 
@@ -123,7 +138,8 @@ public class TokenListActivity extends ListActivity {
 
 	}
 
-	private DialogInterface.OnClickListener dialogClose = new DialogInterface.OnClickListener() {
+	private DialogInterface.OnClickListener dialogClose = 
+			new DialogInterface.OnClickListener() {
 
 		public void onClick(DialogInterface dialog, int which) {
 			dialog.dismiss();
@@ -257,33 +273,45 @@ public class TokenListActivity extends ListActivity {
 		return d;
 	}
 
-	private DialogInterface.OnClickListener deleteTokenPositiveEvent = new DialogInterface.OnClickListener() {
+	private DialogInterface.OnClickListener deleteTokenPositiveEvent = 
+		new DialogInterface.OnClickListener() {
 
-		public void onClick(DialogInterface dialog, int which) {
+			public void onClick(DialogInterface dialog, int which) {
+	
+				if (mTokenToDeleteId >= 0) {
+					LocalData.getInstance().removeToken(mTokenToDeleteId);
+					LocalData.getInstance().commit(getApplicationContext());
+					mTokenToDeleteId = -1;
+					fillData();
+					removeDialog(DIALOG_DELETE_TOKEN);
+					
+					if (LocalData.getInstance().getListeToken().size() 
+							== 0) {
+						//Plus de token : en ajouter un.
+						Intent i = new Intent(
+							TokenListActivity.this, 
+							AddTokenActivity.class 
+						);
+						startActivity(i);
+						finish();
+					}
+				}
+			}
+		};
 
-			if (mTokenToDeleteId >= 0) {
-				LocalData.getInstance().removeToken(mTokenToDeleteId);
-				LocalData.getInstance().commit(getApplicationContext());
-				mTokenToDeleteId = -1;
-				fillData();
+	private DialogInterface.OnClickListener deleteTokenNegativeEvent = 
+		new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
 				removeDialog(DIALOG_DELETE_TOKEN);
 			}
-		}
-	};
+		};
 
-	private DialogInterface.OnClickListener deleteTokenNegativeEvent = new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int which) {
-			removeDialog(DIALOG_DELETE_TOKEN);
-		}
-	};
-
-	private DialogInterface.OnClickListener deleteTokenEvent = new DialogInterface.OnClickListener() {
-
-		public void onClick(DialogInterface dialog, int which) {
-			mTokenToDeleteId = which;
-
-		}
-	};
+	private DialogInterface.OnClickListener deleteTokenEvent = 
+		new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				mTokenToDeleteId = which;	
+			}
+		};
 
 	private class TokenAdapter extends BaseAdapter {
 		private Context mContext;
@@ -327,10 +355,10 @@ public class TokenListActivity extends ListActivity {
 
 			nameText.setText(currentToken.getNom());
 			methodText
-					.setText(currentToken.getMethodType() == OTPMethodType.HOTP ? "HOTP"
+				.setText(currentToken.getMethodType() == OTPMethodType.HOTP ? "HOTP"
 							: "TOTP");
 			tokenImage
-					.setImageResource(currentToken.getMethodType() == OTPMethodType.HOTP ? R.drawable.round_add
+				.setImageResource(currentToken.getMethodType() == OTPMethodType.HOTP ? R.drawable.round_add
 							: R.drawable.clock32);
 
 			return row;
