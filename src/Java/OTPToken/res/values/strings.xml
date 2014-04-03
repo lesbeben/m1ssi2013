@@ -31,9 +31,10 @@
     <string name="menu_add_token">Ajouter un Token</string>
     <string name="menu_pin_change">Changer votre PIN</string>
     <string name="menu_delete_token">Supprimer un Token</string>
-    <string name="tokenAddDialogNoName">Ajouter un nom à votre token</string>
+    <string name="tokenAddDialogNoName">Ajoutez un nom à votre token</string>
     <string name="tokenAddDialogNoSerial">Ajouter la clé de votre token</string>
     <string name="tokenAddDialogNameAreadyExist">Veuillez changer le nom de votre token, ce nom existe déja</string>
     <string name="tokenAddDialogSerialNotHEX">Veuillez rentrer une clé en format hexadecimal</string>
-
+    <string name="tokenAddDialogSerialInvalidLen">Veuillez rentrer une clé de longueur paire</string>
+    
 </resources>

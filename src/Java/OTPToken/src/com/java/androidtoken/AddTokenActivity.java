@@ -42,6 +42,7 @@ public class AddTokenActivity extends Activity {
 	private static final int DIALOG_NO_SERIAL = 1;
 	private static final int DIALOG_TOKEN_NAME_ALREADY_EXIST = 2;
 	private static final int DIALOG_INVALID_SERIAL_NOT_HEX = 3;
+	private static final int DIALOG_INVALID_SERIAL_INVALID_LEN = 4;
 	private boolean isFromLogin;
 
 	@Override
@@ -67,7 +68,9 @@ public class AddTokenActivity extends Activity {
 		Spinner spinner = (Spinner) findViewById(spinnerId);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
 				this, arrayData, android.R.layout.simple_spinner_item);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		adapter.setDropDownViewResource(
+			android.R.layout.simple_spinner_dropdown_item
+		);
 		spinner.setAdapter(adapter);
 	}
 
@@ -91,7 +94,11 @@ public class AddTokenActivity extends Activity {
 		case DIALOG_NO_SERIAL:
 			d = createAlertDialog(R.string.tokenAddDialogNoSerial);
 			break;
-
+		
+		case DIALOG_INVALID_SERIAL_INVALID_LEN:
+			d = createAlertDialog(R.string.tokenAddDialogSerialInvalidLen);
+			break;
+			
 		default:
 			d = null;
 		}
@@ -125,7 +132,8 @@ public class AddTokenActivity extends Activity {
 		return builder.create();
 	}
 
-	private DialogInterface.OnClickListener dialogClose = new DialogInterface.OnClickListener() {
+	private DialogInterface.OnClickListener dialogClose = 
+			new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int which) {
 			dialog.dismiss();
 		}
@@ -159,7 +167,13 @@ public class AddTokenActivity extends Activity {
 				showDialog(DIALOG_NO_SERIAL);
 				return;
 			}
-
+			
+			if (serial.length() % 2 == 1) {
+				isValid = false;
+				showDialog(DIALOG_INVALID_SERIAL_INVALID_LEN);
+				return;
+			}
+			
 			Pattern p = Pattern.compile("[A-Fa-f0-9]*");
 			Matcher matcher = p.matcher(serial);
 
