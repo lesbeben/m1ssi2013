@@ -4,6 +4,7 @@
 #include "utils.h"
 
 // Macros code de retour
+#define OTP_SUCCESS      0
 #define OTP_ERR_PARAM   -1
 #define OTP_ERR_HMAC    -2
 #define OTP_ERR_EXTRACT -3

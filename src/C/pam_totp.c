@@ -27,13 +27,13 @@
  */
 int _check_otp(pam_handle_t * pamh, const char * username, const char * otp) {
     otpuser user;
-    if (lockFile() == -1) {
+    if (lockFile() != USR_SUCCESS) {
         pam_syslog(pamh, LOG_ERR, "can't get lock");
         return PAM_AUTH_ERR;
     }
 
     // Récupération des données utilisateurs.
-    if (getOTPUser(username, &user) == -1) {
+    if (getOTPUser(username, &user) != USR_SUCCESS) {
         pam_syslog(pamh, LOG_ERR, "bad username %s", username);
         return PAM_USER_UNKNOWN;
     }
@@ -48,8 +48,8 @@ int _check_otp(pam_handle_t * pamh, const char * username, const char * otp) {
         long counter = (time(NULL) + delta) / QUANTUM;
         if (lastAuth < counter) {
             otp_expected = generate_otp(user.passwd, counter, user.otp_len);
-            if (otp_expected == -1) {
-                pam_syslog(pamh, LOG_ERR, "generateTOTP failed");
+            if (otp_expected < OTP_SUCCESS) {
+                pam_syslog(pamh, LOG_ERR, "TOTP generation failed");
                 unlockFile();
                 return PAM_AUTH_ERR;
             }
@@ -58,7 +58,7 @@ int _check_otp(pam_handle_t * pamh, const char * username, const char * otp) {
                 hasFound = 1;
                 user.params.tps = counter;
                 updateOTPUser(&user);
-                if (unlockFile() == -1) {
+                if (unlockFile() == USR_SUCCESS) {
                     pam_syslog(pamh, LOG_ERR, "can't free lock");
                 }
                 pam_syslog(pamh, LOG_NOTICE, "%s logged in", username); 
