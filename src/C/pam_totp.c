@@ -8,6 +8,7 @@
 #include <pam_ext.h>
 
 #include <sys/syslog.h>
+#include <string.h>
 
 #include "utils/otp.h"
 #include "utils/users.h"
@@ -106,6 +107,16 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
             != PAM_SUCCESS) {
             return retval;
         }
+        if (otp2 == NULL) {
+            return PAM_AUTH_ERR;
+        }
+        int len = strlen(otp2);
+        otp = malloc(sizeof(char) * (len + 1));
+        if (otp == NULL) {
+            return PAM_AUTH_ERR;
+        }
+        memcpy(otp, otp2, len * sizeof(char));
+        otp[len] = 0;
     } else {
         if ((retval = pam_prompt(pamh, PAM_PROMPT_ECHO_ON,
             &otp, "Mot de passe jetable: "))
@@ -113,7 +124,11 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
             return retval;
         }
     } 
-    return _check_otp(pamh, usrname, otp);
+    retval = _check_otp(pamh, usrname, otp);
+    if (is_set(&modstr, USE_AUTH_TOK)) {
+        free(otp);
+    }
+    return retval;
 }
 
 /** Identique à pam_unix */
