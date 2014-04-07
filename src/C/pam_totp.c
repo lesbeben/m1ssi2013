@@ -110,6 +110,10 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
         if (otp2 == NULL) {
             return PAM_AUTH_ERR;
         }
+        
+        /* Coutournement de la clause const on passe par un autre buffer
+         * qui lui est modifiable.
+         */
         int len = strlen(otp2);
         otp = malloc(sizeof(char) * (len + 1));
         if (otp == NULL) {
@@ -117,6 +121,11 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
         }
         memcpy(otp, otp2, len * sizeof(char));
         otp[len] = 0;
+        
+        /* Un otp est par définition temporaire on le supprime donc du cache
+         * de PAM pour qu'un autre module ne plante pas en récupérant un OTP.
+         */
+        pam_set_item(pamh, PAM_AUTHTOK, NULL);
     } else {
         if ((retval = pam_prompt(pamh, PAM_PROMPT_ECHO_ON,
             &otp, "Mot de passe jetable: "))
