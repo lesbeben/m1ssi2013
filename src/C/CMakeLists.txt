@@ -20,12 +20,9 @@ link_directories(${CMAKE_SOURCE_DIR}/utils/)
 include_directories(${PAM_INCLUDE_DIR})
 
 add_library(options STATIC options.c)
-add_library(pam_hotp MODULE pam_hotp.c)
-# set_target_properties(pam_hotp PROPERTIES PREFIX "")
-target_link_libraries(pam_hotp pam otp users m crypto)
-add_library(pam_totp MODULE pam_totp.c)
-# set_target_properties(pam_totp PROPERTIES PREFIX "")
-target_link_libraries(pam_totp pam otp users options m crypto)
 
-install(TARGETS pam_hotp LIBRARY DESTINATION /lib/security)
-install(TARGETS pam_totp LIBRARY DESTINATION /lib/security)
+add_library(pam_uotp MODULE pam_uotp.c)
+# set_target_properties(pam_uotp PROPERTIES PREFIX "")
+target_link_libraries(pam_uotp pam otp users options m crypto)
+
+install(TARGETS pam_uotp LIBRARY DESTINATION /lib/security)

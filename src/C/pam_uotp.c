@@ -16,12 +16,77 @@
 #define QUANTUM 30
 
 
+
+int _check_totp(pam_handle_t * pamh, otpuser * user, const char * otp) {
+    // Vérification d'un mot de passe.
+    int otp_expected = 0;
+    int otp_given = atoi(otp);
+    long lastAuth = user->params.tps;
+    int hasFound = 0;
+    for (int i = -2; i <= 3 && !hasFound; i++) {
+        int delta = i * QUANTUM;
+        long counter = (time(NULL) + delta) / QUANTUM;
+        if (lastAuth < counter) {
+            otp_expected = generate_otp(user->passwd, counter, user->otp_len);
+            if (otp_expected < OTP_SUCCESS) {
+                pam_syslog(pamh, LOG_ERR, "TOTP generation failed errcode=%d", otp_expected);
+                unlockFile();
+                return PAM_AUTH_ERR;
+            }
+            
+            if (otp_expected == otp_given) {
+                hasFound = 1;
+                user->params.tps = counter;
+                updateOTPUser(user);
+                pam_syslog(pamh, LOG_NOTICE, "%s logged in", user->username); 
+                return PAM_SUCCESS;
+            }
+        }
+    }
+    
+    pam_syslog(pamh, LOG_NOTICE, "%s failed to log in", user->username); 
+    if (!hasFound) {
+        pam_syslog(pamh, LOG_ERR, "can't synchronize");
+    }
+    return PAM_AUTH_ERR;
+}
+
 /** TODO:
- *  - Gérer les cas TRY_FIRST_PASS, USE_FIRST_PASS ou ni l'un ni l'autre
- * (i.e. prompter pour un nouveau token).
  *  - Gérer la mise à jour de secret/création de compte: voir ligne 111.
  */
 
+/** Vérifie que qu'un utilisateur entre le bon OTP.
+ * 
+ * Seule fonction qui devrait vraiment différer entre pam_hotp et pam_totp.
+ */
+int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp) {
+    // Vérification d'un mot de passe + resynch.
+    int otp_expected = 0;
+    int otp_given = atoi(otp);
+    for (int i = 0; i < 3; i++) {
+        otp_expected = generate_otp(user->passwd, user->params.count + i, user->otp_len);
+        if (otp_expected < OTP_SUCCESS) {
+            pam_syslog(pamh, LOG_ERR, "generate_otp failed");
+            unlockFile();
+            return PAM_AUTH_ERR;
+        }
+        if (otp_expected == otp_given) {
+            user->params.count += i + 1;
+            updateOTPUser(user);
+            if (unlockFile() != USR_SUCCESS) {
+                pam_syslog(pamh, LOG_ERR, "can't free lock on users");
+            }
+            pam_syslog(pamh, LOG_NOTICE, "%s logged in", user->username);
+            return PAM_SUCCESS;
+        }
+    }
+    pam_syslog(pamh, LOG_ERR,"%s failed to log in", user->username);
+    
+    if (unlockFile() != USR_SUCCESS) {
+        pam_syslog(pamh, LOG_ERR, "can't free lock on users");
+    }
+    return PAM_AUTH_ERR;
+} 
 /** Vérifie que qu'un utilisateur entre le bon OTP.
  *
  * Seule fonction qui devrait vraiment différer entre pam_hotp et pam_totp.
@@ -32,52 +97,32 @@ int _check_otp(pam_handle_t * pamh, const char * username, const char * otp) {
         pam_syslog(pamh, LOG_ERR, "can't get lock");
         return PAM_AUTH_ERR;
     }
-
+    
     // Récupération des données utilisateurs.
     if (getOTPUser(username, &user) != USR_SUCCESS) {
         pam_syslog(pamh, LOG_ERR, "bad username %s", username);
         return PAM_USER_UNKNOWN;
     }
-
-    // Vérification d'un mot de passe.
-    int otp_expected = 0;
-    int otp_given = atoi(otp);
-    long lastAuth = user.params.tps;
-    int hasFound = 0;
-    for (int i = -2; i <= 3 && !hasFound; i++) {
-        int delta = i * QUANTUM;
-        long counter = (time(NULL) + delta) / QUANTUM;
-        if (lastAuth < counter) {
-            otp_expected = generate_otp(user.passwd, counter, user.otp_len);
-            if (otp_expected < OTP_SUCCESS) {
-                pam_syslog(pamh, LOG_ERR, "TOTP generation failed errcode=%d", otp_expected);
-                unlockFile();
-                return PAM_AUTH_ERR;
-            }
-            
-            if (otp_expected == otp_given) {
-                hasFound = 1;
-                user.params.tps = counter;
-                updateOTPUser(&user);
-                if (unlockFile() != USR_SUCCESS) {
-                    pam_syslog(pamh, LOG_ERR, "can't free lock");
-                }
-                pam_syslog(pamh, LOG_NOTICE, "%s logged in", username); 
-                return PAM_SUCCESS;
-            }
-        }
-    }
-    
-    pam_syslog(pamh, LOG_NOTICE, "%s failed to log in", username); 
-    if (!hasFound) {
-        pam_syslog(pamh, LOG_ERR, "can't synchronize");
+    int retval;
+    switch(user.method) {
+        case HOTP_METHOD:
+            retval = _check_hotp(pamh, &user, otp);
+            break;
+        case TOTP_METHOD:
+            retval = _check_totp(pamh, &user, otp);
+            break;
+        default:
+            pam_syslog(pamh, LOG_ERR, "Unknown otp method");
+            retval = PAM_AUTH_ERR;
+            break;
     }
     
     if (unlockFile() == -1) {
         pam_syslog(pamh, LOG_ERR, "can't free lock");
     }
-    return PAM_AUTH_ERR;
+    return retval;
 }
+
 
 int pam_sm_authenticate(pam_handle_t *pamh, int flags,
                         int argc, const char **argv) {
@@ -133,6 +178,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
             return retval;
         }
     } 
+    
     retval = _check_otp(pamh, usrname, otp);
     if (is_set(&modstr, USE_AUTH_TOK)) {
         free(otp);
