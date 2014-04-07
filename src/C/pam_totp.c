@@ -59,7 +59,7 @@ int _check_otp(pam_handle_t * pamh, const char * username, const char * otp) {
                 hasFound = 1;
                 user.params.tps = counter;
                 updateOTPUser(&user);
-                if (unlockFile() == USR_SUCCESS) {
+                if (unlockFile() != USR_SUCCESS) {
                     pam_syslog(pamh, LOG_ERR, "can't free lock");
                 }
                 pam_syslog(pamh, LOG_NOTICE, "%s logged in", username); 
