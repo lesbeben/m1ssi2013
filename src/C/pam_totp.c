@@ -86,10 +86,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
     const char *otp2;
     int retval;
     
-    modopt* modstr = (modopt*) malloc(sizeof(modopt));
-    if (modstr == NULL) {
-        return -1;
-    }
+    modopt  modstr;
 
     // Récupération du nom d'utilisateur dans name.
     if ((retval = pam_get_user(pamh, &usrname, NULL)) != PAM_SUCCESS) {
@@ -100,10 +97,10 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
     }
 
     // Obtention d'un OTP par PAM.
-    if (fillflags(modstr, argc, argv) == -1) {
+    if (fillflags(&modstr, argc, argv) == -1) {
         pam_syslog(pamh, LOG_ERR, "No options");
     }
-    if (is_set(modstr, USE_AUTH_TOK)) {
+    if (is_set(&modstr, USE_AUTH_TOK)) {
         if ((retval = pam_get_authtok(pamh, PAM_AUTHTOK,
             &otp2, "Mot de passe jetable: "))
             != PAM_SUCCESS) {
