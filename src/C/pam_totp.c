@@ -82,8 +82,8 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
                         int argc, const char **argv) {
 
     const char * usrname;
-    char * otp;
     const char *otp2;
+    char * otp;
     int retval;
     
     modopt  modstr;
