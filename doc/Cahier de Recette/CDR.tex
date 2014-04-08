@@ -4,6 +4,8 @@
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
 \usepackage{textcomp}
+\usepackage[toc,page]{appendix} 
+\usepackage{listings}
 
 \logo{../../res/logo_univ.png}
 \title{Cahier de recettes}
@@ -16,6 +18,7 @@
 \signataire{\bsc{Bardet} Magali}
 \date{Février 2014}
 
+\histentry{2.1}{08/04/2014}{Explicitation des tests d'aléatoire}
 \histentry{2.0}{20/02/2014}{Version post état de l'art.}
 \histentry{1.2}{16/01/2014}{Version pour la revue de lancement.}
 \histentry{1.1}{15/12/2013}{Version relue et corrigée.}
@@ -235,23 +238,53 @@ des tests à une autre équipe afin que celle-ci travaille à la réparation de 
       \multicolumn{5}{|l|}{Répéter 1 à 3 : $N$ fois.}\\
       \hline
       4 & Calculer $P = \frac{cpt}{N}$ & $P < \frac{1}{100000}$ & EP\_04 & OK \\ \hline 
-    \end{tabular}  
+    \end{tabular}
+    \vskip 2.2cm 
+	%---------------------------------------Test N° 8------------------------------------------------------------------------------
+	\begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
+      \hline
+      \multicolumn{3}{|l|}{Objet testé : Générateur d'OTP} & \multicolumn{2}{c|}{Version : 2.1}\\ \hline
+      \multicolumn{5}{|l|}{Objectif de test : Non prédictibilité des OTPs}\\ \hline
+      \multicolumn{3}{|l|}{Procédure n° 8} & \multicolumn{2}{p{3cm}|}{Pré-requis : EP\_01 }\\ \hline
+      \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
+      \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
+      1 & Générer un fichier aléatoire generated\_bin en utilisant l'utilitaire développé *& fichier générer & - & - \\
+      2 & Appeler dieharder -a -g 201 -f generated\_bin -D default -D histogram -D description pour générer un rapport
+      	& Rapport générer & - & - \\
+      3 & Analyser le rapport & Au moins 70\% des tests passent & EP\_03 & OK \\
+      \hline
+    \end{tabular} 
+    
+	* Le code de l'utilitaire est donné en annexe.
+	
+	
+	\vskip 2.2cm
+	\begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
+      \hline
+      \multicolumn{3}{|l|}{Objet testé : Module PAM} & \multicolumn{2}{c|}{Version : 2.1}\\ \hline
+      \multicolumn{5}{|l|}{Objectif de test : Asociation des utilisateurs}\\ \hline
+      \multicolumn{3}{|l|}{Procédure n° 9} & \multicolumn{2}{p{3cm}|}{Pré-requis : EP\_01, EQ\_04 }\\ \hline
+      \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
+      \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
+      1 & Utiliser l'utilitaire d'association pour le login "login" & Clef privée K générée & - & - \\
+      2 & Générer un OTP pour la clef privée K & Un OTP est retourné & - & - \\
+      3 & Tenter une authentification avec le login "login" et l'OTP généré & Authentification réussie & EF\_02 & OK \\      
+      \hline
+    \end{tabular} 
+	 
   \end{center}
-  
   \section{Couverture de tests}
   \begin{center}
-    \begin{tabular}{|p{3cm}|p{4cm}|p{3cm}|p{5cm}|}
+    \begin{tabular}{|p{2.8cm}|p{4.2cm}|p{3cm}|p{5cm}|}
       \hline
       Id Exigence STB & Méthode de vérification & Procédure utilisée & Commentaire\\ \hline
-      EF\_02 & Associer un token au serveur. & 
-      & Le test de cette exigence dépend de l'implémentation de la méthode d'OTP. Il sera détaillé dans une prochaine version.\\ \hline
+      EF\_02 & Associer un token au serveur. & Procédure N° 9 & \\ \hline
       EF\_03 & Demander un OTP au token et vérifier la validité de cet OTP & Procédure N° 1, 5 & \\ \hline
       EF\_04 & Vérifier qu'il y a connexion avec un OTP valide et qu'on est rejeté avec un OTP invalide. & Procédure N° 2 & \\ \hline
       EF\_05 & Vérifier que les OTP de la fenêtre de resynchronistation sont acceptés. & Procédure N° 6 & \\ \hline
       EP\_01 & Demander un OTP au token et vérifier la validité de cet OTP & Procédure N° 1, 5 & \\ \hline
       EP\_02 & Tester deux fois le même OTP & Procédure N° 5 & \\ \hline
-      EP\_03 & Utilisation d'un logiciel \og{}die hard\fg{} pour vérifier l'aléatoirité des mots de passe. &  
-      & Ce test, nécessitant l'utilisation d'un \og{}die hard\fg{}, requiert une étude préalable et ne peut être détaillé.\\ \hline
+      EP\_03 & Utilisation d'un logiciel \og{}die hard\fg{} pour vérifier l'aléatoirité des mots de passe. & Procédure 	N° 8 & Pour exécuter cette procédure, il est nécessaire de compiler l'utilitaire de génération de fichier aléatoire\\ \hline
       EP\_04 & Tester des OTP jusqu'à réussite de l'attaque ou rejet par l'application. & Procédure N° 7 & \\ \hline
       EP\_05 & Rejouer 2 fois le même OTP & Procédure N° 5 & \\ \hline
       EQ\_01 & Mesurer le temps de génération d'un OTP. & Procédure N° 1 & \\ \hline
@@ -260,4 +293,84 @@ des tests à une autre équipe afin que celle-ci travaille à la réparation de 
       EQ\_05 & Vérifier qu'il n'y a pas plus de 10Ko de mémoire utilisés en plus après la génération. & Procédure N° 4 & \\ \hline
     \end{tabular}  
   \end{center}
+	
+	\newpage
+	\begin{appendices}
+	\chapter{Génération du fichier aléatoire}
+		\lstset{language=C}
+		\begin{lstlisting}
+#define _GNU_SOURCE
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+
+#include "../utils/otp.h"
+#include "../utils/secret.h"
+
+int main(int argc, char *argv[]) {
+    /*
+     * Parameters validation.
+     */
+    if (argc != 3) {
+        printf(
+            "Usage : %s seed nb len\n",
+            argv[0]
+            );
+        printf("\tseed : The hexadecimal seed for generation\n");
+        printf("\tnb : The number of values to generate.\n");
+        exit(EXIT_SUCCESS);
+    }
+    long nb = strtol(argv[2], NULL, 10);
+    if (nb <= 0) {
+        printf("Invalid argument %s. nb must be a number.\n", argv[2]);
+        exit(EXIT_SUCCESS);
+    }
+    long len = 8;
+    /*
+     * Seed validation
+     */
+    char *arg = argv[1];
+    for (int i = 0; i < strlen(arg); i++) {
+        char c[2];
+        snprintf(c, 2, "%c", arg[i]);
+        if (strcasestr("abcdef0123456789", c) == NULL) {
+            printf("Seed must be an hexadecimal string.\n");
+            exit(EXIT_SUCCESS);
+        }
+    }
+    /*
+     * Generation loop.
+     */
+    secret s = hexToSecret(argv[1]);
+    int fd = open(
+        "generated_bin",
+        O_CREAT | O_TRUNC | O_WRONLY,
+        S_IRUSR | S_IWUSR);
+    if (fd == -1) {
+        perror("Opening generated.bin");
+        exit(EXIT_FAILURE);
+    }
+    for (int i = 0; i < nb; i++) {
+        int value = generate_otp(s, i, len);
+    /*
+     * Write exclude extra 0 at the begining comming from the sign bit and
+     * from the fact that otp < 10^8 whereas an int is 2^32.
+     */
+        if (write(fd, ((char *) &value), sizeof(int) - 1) == -1) {
+            perror("writing");
+            close(fd);
+            exit(EXIT_FAILURE);
+        }
+    }
+    close(fd);
+    exit(EXIT_SUCCESS);
+}
+		\end{lstlisting}
+	\end{appendices}  
+  
 \end{document}
