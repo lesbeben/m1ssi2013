@@ -10,11 +10,12 @@
 \projet{M1SSI}
 \projdesc{Projet de génération d'OTP}
 \filiere{M1SSI}
-\version{2.0}
+\version{3.0}
 \relecteur{Gaëtan \bsc{Ferry}}
 \signataire{Magali \bsc{Bardet}}
 \date{Février 2014}
 
+\histentry{3.0}{07/04/2014}{Prise en compte des changements de fin d'itération.}
 \histentry{2.0}{21/02/2014}{Version post état de l'art}
 \histentry{1.3}{16/01/2014}{Version pour la revue de lancement.}
 \histentry{1.2}{06/01/2014}{Version Finale.}
@@ -33,7 +34,7 @@
 \subsection{Contexte du développement}
 	\begin{description} 
 		\item [Cadre :] Projet annuel de la formation M1SSI;
-		\item [Période :] Novembre - Avril;
+		\item [Période :] Novembre - Mai;
 		\item [Contraintes :] Documents techniques et état de l'art rendus pour Janvier.
 	\end{description}
 
@@ -51,7 +52,7 @@
 		\item Garantir une sécurité forte.
 	\end{itemize}
 
-\subsection{Références} 
+\subsection{Références}
 	\begin{tabular}{p{1,5cm}>{\raggedright\arraybackslash}p{13cm}}
 		{[ANS10]} & {ANSSI. Référentiel général de sécurité. \href{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}, 2010.}
 		\tabularnewline
@@ -84,14 +85,14 @@
 	Nous avons comparé les différentes méthodes de développement vues en cours afin d'employer la mieux adaptée à notre projet. Parmi les méthodologies Agiles, qui nous étaient imposées, deux ont retenu notre attention: Scrum et eXtreme Programming (XP). En effet, ces deux méthodes sont bien adaptées à des équipes de taille réduite comme la notre. Nous avons donc comparé point par point les différents aspects de Scrum et XP.\\
 
 	Comme mentionné précédemment, les deux ont l'avantage de bien s'adapter à des effectifs réduits comme le notre. XP est de plus pensé spécifiquement pour les projets de taille réduite. XP est plus orienté technique, avec des pratiques de codes établies tandis que Scrum met plus l'accent sur la gestion de projet pure et favorise la communication au sein de l'équipe.\\	
-		
+
 	Les différents comparatifs \footnote{\href{http://agile-only.com/master-thesis/software-dm/agile-s-dm/c-of-am}{http://agile-only.com/master-thesis/software-dm/agile-s-dm/c-of-am}}\footnote{\href{http://www.exa.unicen.edu.ar/catedras/agilem/comp.pdf}{http://www.exa.unicen.edu.ar/catedras/agilem/comp.pdf}} que nous avons pu étudier montrent que XP est généralement plus rapide mais plus couteux que Scrum. XP centre sa dynamique autour du client, tandis que Scrum favorise l'indépendance des équipes de développement.\\
-		
+
 	Au final, de nombreux critères nous ont orienté dans notre choix mais aucun n'a été plus important que la sécurité. Il s'agit en effet de l'objectif principal à atteindre pour un projet comme le notre et nous avons donc décidé de baser le choix de notre méthodologie dessus.\\
 		
-	Nous avons donc opté pour XP comme base, car cela semblait le plus cohérent pour un projet orienté sécurité, mais nous avons prévu d'adapter la méthode au contraintes de notre projet. En effet, les méthodes Agiles ne sont pas au point pour ce qui est des projets de sécurité informatique et les témoignages\footnote{\href{http://www.tripwire.com/state-of-security/security-data-protection/the-security-implications-of-agile-development/}{http://www.tripwire.com/state-of-security/security-data-protection/the-security-implications-of-agile-development/}} que nous avons pu recueillir préviennent que l'attachement à une méthode particulière peut se révéler contre-productif.\\
+	Nous avons donc opté pour XP comme base, car cela semble le choix le plus cohérent pour un projet orienté sécurité, mais nous avons prévu d'adapter la méthode au contraintes de notre projet. En effet, les méthodes Agiles ne sont pas au point pour ce qui est des projets de sécurité informatique et les témoignages\footnote{\href{http://www.tripwire.com/state-of-security/security-data-protection/the-security-implications-of-agile-development/}{http://www.tripwire.com/state-of-security/security-data-protection/the-security-implications-of-agile-development/}} que nous avons pu recueillir préviennent que l'attachement à une méthode particulière peut se révéler contre-productif.\\
 
-	Néanmoins, afin de nous prêter à l'évaluation du projet dans les meilleures conditions possible, nous resterons au plus proche d'XP à travers tous le développement.
+	Néanmoins, afin de nous prêter à l'évaluation du projet dans les meilleures conditions possibles, nous resterons au plus proche d'XP à travers tous le développement.
 	
 \subsection{eXtreme Programming: les grands principes}
 	Il y a de nombreux principes qui composent l'eXtreme Programming, nous décrirons ici celles sur lesquelles nous comptons nous focaliser.
@@ -105,9 +106,9 @@
 	Selon les principes d'intégration continue, on interface les composants entre eux au fur et à mesure du développement, afin de faciliter la livraison. Le refactoring  consiste à revoir régulièrement le code sans changer les fonctionnalités ou le comportement, ceci afin de produire du code facilement maintenable.
 
 \subsubsection{Appropriation collective du code et programmation en binôme}
-	Chaque membre de l'équipe devra être capable de travailler sur n'importe quelle partie du projet. La programmation se fera en binômes (deux par machine) afin de produire du code rigoureux et d'aider à faire progresser les membres plus faibles en technique. \\
+	Chaque membre de l'équipe devra être capable de travailler sur n'importe quelle partie du projet. La programmation se fera en binômes (deux par machine) afin de produire du code rigoureux et d'aider à faire progresser les membres plus faibles en technique.\\
 
-	La revue de code sera effectuée régulièrement	par les binômes sur le code des autres binôme, afin d'assurer le respect des conventions de codes fixées par le responsable technique et de faciliter l'intégration avec leur propre code.
+	La revue de code sera effectuée régulièrement par les binômes sur le code des autres binômes, afin d'assurer le respect des conventions de codes fixées par le responsable technique et de faciliter l'intégration avec leur propre code.
 
 \subsection{Étapes du développement}
 	\begin{description}
@@ -144,13 +145,13 @@
 		        \item [Objectif :] Fournir un générateur d'OTP.
 		        \item [Activité :] Intégration des outils et des modules de calculs d'OTP dans une IHM.
 		        \item [Produit livrable :] Les tokens.
-		        \item [Responsabilité :]  La moitié de l'équipe.
+		        \item [Responsabilité :] La moitié de l'équipe.
 		    \end{description}
-	    \item [Étape 6 :] Implémentation de la vérification des OTP en C
+	    \item [Étape 6 :] Implémentation des fonctions d'authentification de PAM
 		    \begin{description}
-		        \item [Objectif :] Permettre la vérification de la validité d'un OTP.
+		        \item [Objectif :] Permettre une connexion avec un OTP en vérifiant sa validité.
 		        \item [Activité :] Mettre en place l'algorithme de comparaison de l'OTP reçut avec les données stockées.
-		        \item [Produit livrable :] Module de vérification.
+		        \item [Produit livrable :] Le module d'authentification.
 		        \item [Responsabilité :] La moitié de l'équipe.
 	            \end{description}
 	    \item [Étape 7 :] Création du GUI pour le Token android en Java
@@ -158,49 +159,42 @@
 		        \item [Objectif :] Fournir une interface au token.
 		        \item [Activité :] Développer le GUI pour le Token.
 		        \item [Produit livrable :] Les tokens.
-		        \item [Responsabilité :]  La moitié de l'équipe.
+		        \item [Responsabilité :] La moitié de l'équipe.
 		    \end{description}
 	    \item [Étape 8 :] Déploiment du Token sur SmartPhone
 		    \begin{description}
 		        \item [Objectif :] Token utilisable sur SmartPhone.
 		        \item [Activité :] Intégrer le Token à un SmartPhone.
 		        \item [Produit livrable :] Les tokens.
-		        \item [Responsabilité :]  La moitié de l'équipe.
+		        \item [Responsabilité :] La moitié de l'équipe.
 		    \end{description}
-	    \item [Étape 9 :] Implémentation de la fonction d'authentification sur PAM
-		    \begin{description}
-		        \item [Objectif :] Permettre une connexion avec un OTP.
-		        \item [Activité :] Développement d'un module d'authentification.
-		        \item [Produit livrable :] Le module d'authentification.
-		        \item [Responsabilité :]  La moitié de l'équipe.
-		    \end{description}
-	    \item [Étape 10 :] Création d'utilitaire en ligne de commande
+	    \item [Étape 9 :] Création d'utilitaire en ligne de commande
 		    \begin{description}
 		        \item [Objectif :] Effectuer des opérations en ligne de commande.
 		        \item [Activité :] Créer de nouvelles commandes.
 		        \item [Produit livrable :] L'utilitaire.
-		        \item [Responsabilité :]  La moitié de l'équipe.
+		        \item [Responsabilité :] La moitié de l'équipe.
 		    \end{description}
-	    \item [Étape 11 :] Mise à jour du secret via PAM
+	    \item [Étape 10 :] Mise à jour du secret via PAM
 		    \begin{description}
 		        \item [Objectif :] Permettre la modification du secret.
 		        \item [Activité :] Développement du module PAM permettant la modification du secret.
 		        \item [Produit livrable :] Module PAM de mise à jour du secret.
-		        \item [Responsabilité :]  La moitié de l'équipe.
+		        \item [Responsabilité :] La moitié de l'équipe.
 		    \end{description}
-	    \item [Étape 12 :] Tests finaux, crash-test
+	    \item [Étape 11 :] Tests finaux, crash-test
 		    \begin{description}
 		        \item [Objectif :] Démontrer la force du système.
 		        \item [Activité :] Tester l'application dans son ensemble et tenter des attaques sur le système.
 		        \item [Produit livrable :] Le produit final.
-		        \item [Responsabilité :]  L'équipe.
+		        \item [Responsabilité :] L'équipe.
 		    \end{description}
     \end{description}
     
 \newpage
 %---------------------------------------------------------------------------------------------------------------------------------------------
 \section{Organisation et responsabilités}
-	\begin{figure}[h]
+	\begin{figure}[h!]
 		\includegraphics[scale=0.5]{organigramme.png}
 		\caption{Organigramme des rôles au sein de l'équipe}
 	\end{figure}
@@ -214,11 +208,13 @@
 	
 \newpage
 %---------------------------------------------------------------------------------------------------------------------------------------------
-\section{Organigramme des t\^aches}
+\section{Organigramme des tâches}
 	L'organisation suivante est déduite de l'état de l'art, qui n'est donc pas inclus.
 	\begin{figure}[h]
-		\includegraphics[scale=0.5]{taches.png}
-		\caption{Organigramme des tâches à accomplir}
+		\begin{center}
+			\includegraphics[scale=0.5]{taches.png}
+			\caption{Organigramme des tâches à accomplir}
+		\end{center}
 	\end{figure}
 	
 	\begin{description}
@@ -234,75 +230,75 @@
 	Pour rappel, le projet peut être décomposé en 11 tâches distinctes :
 	\begin{itemize}
 	  \item Réalisation de l'état de l'art.
-	  \item Algorithmes de calcul des OTP en C.
-	  \item Algorithmes de calcul des OTP en JAVA.
+	  \item Implémentation des algorithmes de calcul des OTP en C.
+	  \item Implémentation des algorithmes de calcul des OTP en JAVA.
 	  \item Implémentation de la gestion des utilisateurs en C.
 	  \item Implémentation de la gestion des Tokens en Java.
-	  \item Implémentation de la vérification des OTP en C.
+	  \item Implémentation des fonctions d'authentification de PAM.
 	  \item Création du GUI pour le Token android en Java.
 	  \item Déploiement du Token sur SmartPhone.
-	  \item Implémentation de la fonction d'authentification sur PAM.
-	  \item Création d'utilitaire en ligne de commande.
+	  \item Création d'utilitaires en ligne de commande.
 	  \item Mise à jour du secret via PAM.
 	  \item Test finaux, crash-test.\\
 	\end{itemize}
 
-	Pour réaliser toutes ces taches, on dispose de 169 jours complets de travail. Sur ces 169 jours, 7 collaborateurs travaillerons à temps plein sur le projet. Au total, nous disposons donc d'un total de 1183 jours-hommes de capacité de travail. Évaluons la charge requise pour chacune des taches :\\
+	Pour réaliser toutes ces tâches, on dispose de 169 jours complets de travail. Sur ces 169 jours, 7 collaborateurs travaillerons à temps plein sur le projet. Au total, nous disposons donc d'un total de 1183 jours-hommes de capacité de travail. Évaluons la charge requise pour chacune des taches :\\
 	
-	L'état de l'art est une étape importante qui nécessite d'être parfaitement réalisée. Nous estimons la charge de travail nécessaire à sa réalisation à 413 jours-hommes.
-	
-	Les implémentations des algorithmes pour les calculs d'OTP en C et en JAVA, étapes cruciales à l'avancement du projet, sont évaluées respectivement à 96 et 72 jours-hommes.
-	
-	Ensuite on passe à l'implémentation de la gestion des utilisateurs en C et celle des tokens en Java, pour lesquelles on estime 80 et 60 jours-hommes respectivement.
-	
-	L' implémentation des fonctions de vérifications des OTP en C et la création d'une interface graphique pour le token Android sont également évaluées à 80 et 60 jours-hommes respectivement. 
-	
-	Puis le le déploiement des tokens Androisd sur smartphone prendra seulement 15 jours-hommes.
-	
-	Le développement des fonctions d'authentification sur PAM est évalué à 80 jours-hommes. Dans le même temps on créera des utilitaires en ligne de commande, cette tâche est estimée à 39 jours-hommes.
-	
-	Enfin, on réunit toute l'équipe pour mettre au point la mise à jour d'un secret via PAM, cette tâche est évaluée à 91 jours-hommes.
-	
-	Pour finir, l'étape des tests finaux est évaluée à 49 jours-hommes.\\
-	
-	Ces informations sont résumées dans le tableau suivant :
+	\begin{tabular}{|l|l|}
+		\hline
+		Tâche & Charges\\ 
+		\hline
+		État de l'art & 413 jours-hommes.\\
+		Implémentation des algorithmes pour les calculs d'OTP en C & 96 jours-hommes.\\
+		Implémentation des algorithmes pour les calculs d'OTP en JAVA & 72 jours-hommes.\\
+		Implémentation de la gestion des utilisateurs en C & 80 jours-hommes.\\
+		Implémentation des tokens en JAVA & 60 jours-hommes.\\
+		Implémentation des fonctions d'authentification de PAM & 160 jours-hommes.\\
+		Création d'une interface graphique pour le token Android & 60 jours-hommes.\\
+		Déploiement des tokens Android sur smartphone & 15 jours-hommes.\\
+		Création des utilitaires en ligne de commande & 39 jours-hommes.\\
+		Mise à jour du secret via PAM & 91 jours-hommes.\\
+		Tests finaux & 49 jours-hommes.\\ 
+		\hline
+	\end{tabular}
 	
 	\begin{tabular}{|l|l|l|}
 	 	\hline
-		Tache & Durée & Ressources mobilisées \\ \hline
+		Tâche & Durée & Ressources mobilisées \\ 
+		\hline
 		État de l'art & 59 Jours & 7 personnes \\
-		Algorithmes pour le calcul des OTP en C & 24 Jours & 4 personnes \\
-		Algorithmes pour le calcul des OTP en Java & 24 Jours & 3 personnes \\
+		Implémentation des algorithmes pour le calcul des OTP en C & 24 Jours & 4 personnes \\
+		Implémentation des algorithmes pour le calcul des OTP en Java & 24 Jours & 3 personnes \\
 		Implémentation de la gestion des utilisateurs en C. & 20 jours & 4 personnes \\
 		Implémentation de la gestion des Tokens en Java. & 20 Jours & 3 personnes \\
-		Implémentation de la vérification des OTP en C. & 20 Jours & 4 personnes \\
+		Implémentation des fonctions d'authentification de PAM. & 40 Jours & 4 personnes \\
 	  	Création du GUI pour le Token android en Java. & 20 Jours & 3 personnes \\
 		Déploiment du Token sur SmartPhone. & 5 Jours & 3 personnes \\
-	  	Implémentation de la fonction d'authentification sur PAM. & 20 Jours & 4 personnes \\
 	  	Création d'utilitaire en ligne de commande. & 13 Jours & 3 personnes \\
 	  	Mise à jour du secret via PAM. & 13 Jours & 7 personnes \\
-		Tests finaux & 7 Jours & 7 personnes \\ \hline
+		Tests finaux & 7 Jours & 7 personnes \\ 
+		\hline
 	\end{tabular}
 
 \newpage
 %---------------------------------------------------------------------------------------------------------------------------------------------
 \section{Planning général}
-	\begin{figure}[h]
+	\begin{figure}[h!]
 		\includegraphics[scale=0.33]{ressources.png}
 		\caption{Répartition des ressources sur le projet.}
 	\end{figure}
 	
 	\newpage
 	
-	\begin{figure}[h]
-		\includegraphics[scale=0.33]{gantt.png}
+	\begin{figure}[h!]
+		\includegraphics[scale=0.33]{gantt2-0.png}
 		\caption{Planning des étapes du projet.}
 	\end{figure}
-	\vspace{2cm}
-	\begin{figure}[h]
-		\includegraphics[scale=0.33]{pert.png}
-		\caption{Ordonnancement des tâches du projet.}
-	\end{figure}
+	%\vspace{2cm}
+	%\begin{figure}[h]
+		%\includegraphics[scale=0.33]{pert.png}
+		%\caption{Ordonnancement des tâches du projet.}
+	%\end{figure}
 	
 	\newpage
 
@@ -326,7 +322,7 @@
 
 \subsection{Gestion des configurations}
 \subsubsection{Gestion des versions}
-	Nous avons choisi d'utiliser le logiciel git pour gérer les différentes versions du projet et des documents). A l'aide de celui-ci, nous pourrons aisément contrôler les étapes d'avancement du projet au cours de son développement. 
+	Nous avons choisi d'utiliser le logiciel git pour gérer les différentes versions du projet et des documents. À l'aide de celui-ci, nous pourrons aisément contrôler les étapes d'avancement du projet au cours de son développement. 
 
 	Git permet de développer collaborativement à distance en enregistrant et/ou fusionnant les modifications apportées par les différents membres de l'équipe. Nous ne nous attarderons pas ici sur le fonctionnement de git (voir \href{http://git-scm.com/book/fr/Démarrage-rapide-Rudiments-de-Git}{http://git-scm.com/book/fr/Démarrage-rapide-Rudiments-de-Git}).
 
@@ -360,7 +356,7 @@
 	\item Algorithmes de calcul des OTP en C et Java:
 	\begin{description}
 		\item[Objectifs :] Concevoir des outils de calcul et de vérification d'OTP.
-		\item[Prévisions :] Du 21/01/14 au 15/02/14 - État de l'art terminé.
+		\item[Prévisions :] Du 25/01/14 au 15/02/14 - État de l'art terminé.
 		\item[Objet des vérifications :] Compilation du code + Tests.
 		\item[Modalité de contrôle :] Documentation à remettre au client.
 		\item[Intervenants :] Par groupes.
@@ -369,7 +365,7 @@
 	\item Implémentation de la gestion des utilisateurs en C:
 	\begin{description}
 		\item[Objectifs :] Concevoir des outils de gestion des utilisateurs.
-		\item[Prévisions :] Du 15/02/14 au 08/03/14 - Algorithmes de calcul disponibles.
+		\item[Prévisions :] Du 20/02/14 au 09/03/14 - Algorithmes de calcul disponibles.
 		\item[Objet des vérifications :] Compilation du code + tests.
 		\item[Modalité de contrôle :] Module de gestion utilisateurs à remettre au client.
 		\item[Intervenants :] Par groupes.
@@ -378,25 +374,25 @@
 	\item Implémentation de la gestion des Tokens en Java:
 	\begin{description}
 		\item[Objectifs :] Fournir des générateurs d'OTP.
-		\item[Prévisions :] Du 15/02/14 au 08/03/14 - Algorithmes de calcul disponibles.
+		\item[Prévisions :] Du 20/02/14 au 09/03/14 - Algorithmes de calcul disponibles.
 		\item[Objet des vérifications :] Retour d'un OTP respectant les spécifications.
 		\item[Modalité de contrôle :] Manuel d'utilisation et token à remettre au client.
 		\item[Intervenants :] Par groupes.
 	\end{description}
 	\vfill
-	\item Implémentation de la vérification des OTP en C:
+	\item Implémentation des fonctions d'authentification de PAM:
 	\begin{description}
 		\item[Objectifs :] Vérification de la validité d'un OTP reçut.
-		\item[Prévisions :] Du 08/03/14 au 29/03/14 - Gestion utilisateurs + Tokens disponibles.
+		\item[Prévisions :] Du 12/03/14 au 20/04/14 - Gestion utilisateurs + Tokens disponibles.
 		\item[Objet des vérifications :] Compilation du code + tests.
-		\item[Modalité de contrôle :] Module de vérification des OTP à remettre au client.
+		\item[Modalité de contrôle :] Module d'authentification à remettre au client.
 		\item[Intervenants :] Par groupes.
 	\end{description}
 	\vfill
 	\item Création du GUI pour le Token Android en Java:
 	\begin{description}
 		\item[Objectifs :] Fournir l'interface du token.
-		\item[Prévisions :] Du 08/03/14 au 29/03/14 - Gestion utilisateurs + Tokens disponibles.
+		\item[Prévisions :] Du 12/03/14 au 31/03/14 - Gestion utilisateurs + Tokens disponibles.
 		\item[Objet des vérifications :] Compilation du code + tests.
 		\item[Modalité de contrôle :] Manuel d'utilisation et token à remettre au client.
 		\item[Intervenants :] Par groupes.
@@ -405,7 +401,7 @@
 	\item Déploiement du Token sur SmartPhone:
 	\begin{description}
 		\item[Objectifs :] Token utilisable sur SmartPhone.
-		\item[Prévisions :] Du 29/03/14 au 05/04/14 - Vérification d'OTP disponible + Interface du token.
+		\item[Prévisions :] Du 01/04/14 au 06/04/14 - Vérification d'OTP disponible + Interface du token.
 		\item[Objet des vérifications :] Tests.
 		\item[Modalité de contrôle :] Token à remettre au client.
 		\item[Intervenants :] Par groupes.
@@ -414,7 +410,7 @@
 	\item Implémentation de la fonction d'authentification sur PAM:
 	\begin{description}
 		\item[Objectifs :] Authentification à base d'OTP possible.
-		\item[Prévisions :] Du 29/03/14 au 19/04/14 - Vérification d'OTP disponible + Interface du token.
+		\item[Prévisions :] Du 12/03/14 au 20/04/14 - Vérification d'OTP disponible + Interface du token.
 		\item[Objet des vérifications :] Compilation du code + Tests.
 		\item[Modalité de contrôle :] Module PAM d'authentification à remettre au client.
 		\item[Intervenants :] Par groupes.
@@ -423,7 +419,7 @@
 	\item Création d'utilitaire en ligne de commande:
 	\begin{description}
 		\item[Objectifs :] Lignes de commandes opérationnelles.
-		\item[Prévisions :] Du 05/04/14 au 19/04/14 - Vérification d'OTP disponible + Interface du token.
+		\item[Prévisions :] Du 16/04/14 au 28/04/14 - Vérification d'OTP disponible + Interface du token.
 		\item[Objet des vérifications :] Tests.
 		\item[Modalité de contrôle :] utilitaire à remettre au client.
 		\item[Intervenants :] Par groupes.
@@ -432,7 +428,7 @@
 	\item Mise à jour du secret via PAM:
 	\begin{description}
 		\item[Objectifs :] Changement du secret possible.
-		\item[Prévisions :] Du 19/04/14 au 03/05/14 - Authentification + utilitaire en ligne de commande disponible.
+		\item[Prévisions :] Du 25/04/14 au 07/05/14 - Authentification + utilitaire en ligne de commande disponible.
 		\item[Objet des vérifications :] Compilation du code + Tests.
 		\item[Modalité de contrôle :] Module PAM de mise à jour du secret à remettre au client.
 		\item[Intervenants :] Par groupes.
@@ -441,7 +437,7 @@
 	\item Test finaux, crash-test:
 	\begin{description}
 		\item[Objectifs :] Assurer une sécurité mi-forte (authentification à deux facteurs).
-		\item[Prévisions :] Du 03/05/14 au 11/05/14 - Authentifications possibles.
+		\item[Prévisions :] Du 10/05/14 au 16/05/14 - Authentifications possibles.
 		\item[Objet des vérifications :] Résultat des tests positifs.
 		\item[Modalité de contrôle :] Rapport de tests + Rapport de projet à remettre au client.
 		\item[Intervenants :] Toute l'équipe.
