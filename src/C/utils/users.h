@@ -53,7 +53,7 @@ typedef struct {
  * 
  * @post user contient les données relative à l'utilisateur.
  *
- * @return PAM_SUCCESS si tout s'est bien passé, une valeur négative sinon.
+ * @return USR_SUCCESS si tout s'est bien passé, une valeur négative sinon.
  */
 int getOTPUser(const char * usrname, otpuser * user);
 
@@ -69,7 +69,7 @@ int getOTPUser(const char * usrname, otpuser * user);
  * @post le fichier des utilisateurs a été mis à jour avec les information de 
  *       user
  * 
- * @return PAM_SUCCESS si tout s'est bien passé une valeur négative sinon.
+ * @return USR_SUCCESS si tout s'est bien passé une valeur négative sinon.
  */
 int updateOTPUser(otpuser * user);
 
@@ -95,17 +95,29 @@ int userExists(const char * username);
  *
  * @pre usrname != NULL
  *  *
- * @return retourne PAM_SUCCESS, ou une valeur négative en cas d'erreur.
+ * @return retourne USR_SUCCESS, ou une valeur négative en cas d'erreur.
  *
  */
 int removeOTPUser(char* usrname);
+
+/** Libère les ressources occupées par la structure, ne libère PAS la structure.
+ * 
+ * Cette fonction libère les ressources occupées par la structure passée en 
+ * paramètre. Elle ne doit pas libérer la structure elle même.
+ * 
+ * @param[in] user un pointeur vers la structure user à nettoyer.
+ * 
+ * @return USR_SUCCESS en cas de réussite, une valeur négative sinon.
+ * 
+ */
+int resetOTPUser(otpuser * user);
 
 /** Place un verrou sur le fichier OTPWD_PATH.
 
  * Si le fichier était vérouillé alors l'appel est bloquant
  * sinon l'appel verrouille le fichier et continue.
  * 
- * @return retourne PAM_SUCCESS ou une valeur négative en cas d'erreur.
+ * @return retourne USR_SUCCESS ou une valeur négative en cas d'erreur.
  *
  */
 int lockFile();

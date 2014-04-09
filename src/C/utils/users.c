@@ -39,7 +39,7 @@ int readLine(FILE *f, otpuser *user) {
     char line[BUFFER_SIZE];
     char *token;
     char *saveptr;
-    destroySecret(user->passwd);
+    resetOTPUser(user);
 
     // Récupération de la ligne
     if (fgets(line ,(BUFFER_SIZE),f) == NULL) {
@@ -326,6 +326,7 @@ int updateOTPUser(otpuser* user) {
     // Initialisation
     otpuser usr;
     usr.passwd = NULL;
+    usr.username = NULL;
     int found = 0;
     int ret = USR_SUCCESS;
     size_t bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
@@ -535,3 +536,21 @@ int userExists(const char* username) {
     }
     return USR_SUCCESS;
 }
+
+int resetOTPUser(otpuser* user) {
+    if (user == NULL) {
+        return USR_ERR_PARAM;
+    }
+    if (user->passwd != NULL) {
+        if (destroySecret(user->passwd) != 0) {
+            return USR_ERR_SYS;
+        }
+        user->passwd = NULL;
+    }
+    if (user->username != NULL) {
+        free(user->username);
+        user->username = NULL;
+    }
+    return USR_SUCCESS;
+}
+
