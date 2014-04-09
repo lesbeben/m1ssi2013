@@ -23,7 +23,7 @@ typedef union {
     } hotp;
     struct {
         uint64_t tps; /**< Date derniere authentification */
-        int delay;
+        int delay;    /**< Décalage de l'utilisateur en nombre de quantum */
     } totp;
 } otpopt;
 
@@ -33,64 +33,45 @@ typedef struct {
     char * username; /**< Le nom de l'utilisateur. */
     char method; /**< La méthode d'OTP de l'utilisateur.*/
     secret passwd; /**< Le secret de l'utilisateur. */
-    char otp_len;      /**< La taille des otp à générer. */
+    char otp_len;      /**< La taille des OTP à générer. */
     char isBanned;  /**< Indique si l'utilisateur à le droit de tenter 
                          de s'authentifier */
-    otpopt params; /**< Les paramètres optionels pour l'authentification. */
+    otpopt params; /**< Les paramètres optionnels pour l'authentification. */
 } otpuser;
 
-/** Obtient les informations de l'utilisateur dont le login est usrname.
+/** Obtient les informations de l'utilisateur dont le nom de connexion est
+ *  "usrname".
  * 
- * Cette fonction doit aller lire les informations dans le fichier 
- * correspondant à l'utilisateur puis remplir la structure passée en paramètre.
+ * Cette fonction doit aller lire le fichier des utilisateurs. Si il trouve une
+ * ligne correspondant au nom de l'utilisateur il remplira alors la structure
+ * passée paramètre. Sinon il indiquera l'erreur qu'il aura rencontré.
  * 
- * Si le fichier est introuvable on indiquera une erreur en retournant NULL.
  * @param[in] usrname Le nom de l'utilisateur à rechercher.
  * 
  * @pre usrname != NULL
  * @pre usrname se termine par un NULL-byte.
+ * 
+ * @post user contient les données relative à l'utilisateur.
  *
- * @return 0 si tout s'est bien passé, -1 sinon.
+ * @return PAM_SUCCESS si tout s'est bien passé, une valeur négative sinon.
  */
 int getOTPUser(const char * usrname, otpuser * user);
 
 /** Enregistre les informations d'un utilisateur.
  * 
  * Cette fonction permet de mettre à jour les informations d'un utilisateur dans
- * le fichier OTPWD_PATH. Si ces informations n'existent pas alors elles doivent
- * être créées.
+ * le fichier OTPWD_PATH. Si ces informations n'existent pas alors elles seront
+ * créées.
  * 
  * @param[in] user La structure utilisateur à enregistrer.
- * @pre user.username != NULL;
  * 
- * @return -1 en cas d'erreur. 0 en cas de succès.
+ * @pre user.username != NULL;
+ * @post le fichier des utilisateurs a été mis à jour avec les information de 
+ *       user
+ * 
+ * @return PAM_SUCCESS si tout s'est bien passé une valeur négative sinon.
  */
 int updateOTPUser(otpuser * user);
-
-/** Libère les ressources associées à un utilisateur.
- *
- * Cette fonction permet d'encapsuler le type otpuser et de proposer
- * une libération des ressources simplifiée. Elle DOIT libérer toutes les 
- * ressources associées à l'utilisateur dans la RAM.
- *
- * @param[in] user un pointeur vers un otpuser.
- *
- * @pre user != NULL
- *
- * @return retourne 0, ou -1 en cas d'erreur.
- *
- */
-int destroyOTPUser(char* usrname);
-
-/** Place un verrou sur le fichier OTPWD_PATH.
-
- * Si le fichier était vérouillé alors l'appel est bloquant
- * sinon l'appel verrouille le fichier et continue.
- * 
- * @return retourne 0, ou -1 en cas d'erreur.
- *
- */
-int lockFile();
 
 /** Indique si un utilisateur existe.
  * 
@@ -104,6 +85,31 @@ int lockFile();
  * d'erreur.
  */
 int userExists(const char * username);
+
+/** Supprime un utilisateur du fichier.
+ * 
+ * Cette fonction parcours le fichier des utilisateurs afin de supprimer 
+ * l'entrée correspondant à l'utilisateur donné en paramètre.
+ *
+ * @param[in] usrname le nom de l'utilisateur à supprimer.
+ *
+ * @pre usrname != NULL
+ *  *
+ * @return retourne PAM_SUCCESS, ou une valeur négative en cas d'erreur.
+ *
+ */
+int removeOTPUser(char* usrname);
+
+/** Place un verrou sur le fichier OTPWD_PATH.
+
+ * Si le fichier était vérouillé alors l'appel est bloquant
+ * sinon l'appel verrouille le fichier et continue.
+ * 
+ * @return retourne PAM_SUCCESS ou une valeur négative en cas d'erreur.
+ *
+ */
+int lockFile();
+
 
 /** Enlève le verrou sur le fichier OTPWD_PATH.
  * 

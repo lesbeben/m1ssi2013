@@ -432,7 +432,7 @@ int updateOTPUser(otpuser* user) {
     return USR_SUCCESS;
 }
 
-int destroyOTPUser(char* usrname) {
+int removeOTPUser(char* usrname) {
     if (usrname == NULL) {
         return USR_ERR_PARAM;
     }
