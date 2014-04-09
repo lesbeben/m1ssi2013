@@ -500,6 +500,8 @@ int removeOTPUser(char* usrname) {
 int userExists(const char* username) {
     // Test de l'existence de l'utilisateur sur le système.
     otpuser user;
+    user.passwd = NULL;
+    user.username = NULL;
     int ret = USR_SUCCESS;
     
     size_t bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
@@ -528,13 +530,16 @@ int userExists(const char* username) {
     }
     while ((ret = readLine(users_base, &user)) == USR_SUCCESS) {
         if (strcmp(username, user.username) == 0) {
-            return ret;
+            if (fclose(users_base) != 0) {
+                return USR_ERR_IO;
+            }
+            return 1;
         }
     }
     if (fclose(users_base) != 0) {
         return USR_ERR_IO;
     }
-    return USR_SUCCESS;
+    return 0;
 }
 
 int resetOTPUser(otpuser* user) {

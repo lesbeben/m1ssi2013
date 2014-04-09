@@ -26,18 +26,31 @@ int secretcmp(secret s1, secret s2) {
  */
 START_TEST (test_register_user) {
 
-    ck_assert_msg( updateOTPUser(&user1) == 0,
+    ck_assert_msg(updateOTPUser(&user1) == USR_SUCCESS,
         "Erreur lors de l'enregistrement du premier utilisateur:\n %s", 
         user1.username
     );
-    ck_assert_msg( updateOTPUser(&user2) == 0,
+    ck_assert_msg(userExists(user1.username),
+                   "Erreur lors de l'enregistrement du premier utilisateur:\n %s", 
+                   user1.username
+    );
+    ck_assert_msg( updateOTPUser(&user2) == USR_SUCCESS,
         "Erreur lors de l'enregistrement du second utilisateur:\n %s", 
         user2.username
     );
-    ck_assert_msg( updateOTPUser(&user3) == 0,
+    ck_assert_msg( userExists(user2.username),
+                   "Erreur lors de l'enregistrement du second utilisateur:\n %s", 
+                   user2.username
+    );
+    ck_assert_msg( updateOTPUser(&user3) == USR_SUCCESS,
         "Erreur lors de l'enregistrement du troisième utilisateur:\n %s", 
         user3.username
     );
+    ck_assert_msg( userExists(user3.username),
+                   "Erreur lors de l'enregistrement du second utilisateur:\n %s", 
+                   user3.username
+    );
+    
 }
 END_TEST
 
@@ -45,7 +58,7 @@ END_TEST
  */
 START_TEST (test_get_user) {
     otpuser user;
-    ck_assert_msg( getOTPUser(user2.username, &user) == 0,
+    ck_assert_msg( getOTPUser(user2.username, &user) == USR_SUCCESS,
         "Erreur lors de l'acces au deuxième utilisateur (inexistant):\n %s",
         user2.username
     );
@@ -55,7 +68,7 @@ START_TEST (test_get_user) {
     );
     
     if (user.username != NULL) {
-        ck_assert_msg( strcmp(user.username, user2.username) == 0,
+        ck_assert_msg( strcmp(user.username, user2.username) == USR_SUCCESS,
             "Erreur nom d'utilisateur incohérent:\n %s != %s",
             user2.username, user.username
         );
@@ -80,7 +93,7 @@ START_TEST (test_get_user) {
         }
     }
 
-    ck_assert_msg(secretcmp(user.passwd, user2.passwd) == 0,
+    ck_assert_msg(secretcmp(user.passwd, user2.passwd) == USR_SUCCESS,
         "Erreur les secrets ne coïncident pas."
     );
 }
@@ -92,15 +105,15 @@ START_TEST (test_update_user_secret) {
     destroySecret(user2.passwd);
     user2.passwd = createSecret(20);
     otpuser user;
-    ck_assert_msg(updateOTPUser(&user2) == 0,
+    ck_assert_msg(updateOTPUser(&user2) == USR_SUCCESS,
         "Erreur lors de la mise à jour de l'utilisateur: %s",
         user2.username
     );
-    ck_assert_msg(getOTPUser(user2.username, &user) == 0,
+    ck_assert_msg(getOTPUser(user2.username, &user) == USR_SUCCESS,
                   "Erreur lors de l'obtention des données de %s",
                   user2.username
     );
-    ck_assert_msg(secretcmp(user2.passwd, user.passwd) == 0,
+    ck_assert_msg(secretcmp(user2.passwd, user.passwd) == USR_SUCCESS,
                   "Les secrets ne correspondent pas !"
     );
 }
@@ -110,11 +123,11 @@ END_TEST
 START_TEST (test_update_user_hotp_count) {
     user2.params.hotp.count += 1;
     otpuser user;
-    ck_assert_msg(updateOTPUser(&user2) == 0,
+    ck_assert_msg(updateOTPUser(&user2) == USR_SUCCESS,
         "Erreur lors de la mise à jour de l'utilisateur: %s",
         user2.username
     );
-    ck_assert_msg(getOTPUser(user2.username, &user) == 0,
+    ck_assert_msg(getOTPUser(user2.username, &user) == USR_SUCCESS,
         "Erreur lors de l'obtention des données de %s",
         user2.username
     );
@@ -126,12 +139,11 @@ START_TEST (test_update_user_hotp_count) {
 END_TEST
 
 START_TEST (test_destroy_user) {
-    otpuser user;
-    ck_assert_msg( removeOTPUser(user2.username) == 0,
+    ck_assert_msg( removeOTPUser(user2.username) == USR_SUCCESS,
         "Erreur lors de la suppression d'un utilisateur: %s",
         user1.username
     );
-    ck_assert_msg(getOTPUser(user2.username, &user) != 0,
+    ck_assert_msg(!userExists(user2.username),
         "Erreur l'utilisateur ne devrait plus être présent dans le fichier."
     );
 }
