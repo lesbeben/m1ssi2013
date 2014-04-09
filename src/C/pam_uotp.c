@@ -15,8 +15,14 @@
 #include "options.h"
 #define QUANTUM 30
 
+/** TODO:
+ *  - Gérer la mise à jour de secret/création de compte: 
+ *    voir ligne pam_sm_chauthtok.
+ */
 
-
+/** Vérifie que l'otp est valide pour l'utilisateur passé en paramètre.
+ * 
+ */
 int _check_totp(pam_handle_t * pamh, otpuser * user, const char * otp) {
     // Vérification d'un mot de passe.
     int otp_expected = 0;
@@ -24,47 +30,44 @@ int _check_totp(pam_handle_t * pamh, otpuser * user, const char * otp) {
     long lastAuth = user->params.totp.tps;
     int hasFound = 0;
     for (int i = -2; i <= 3 && !hasFound; i++) {
-        int delta = i * QUANTUM;
+        int delta = (user->params.totp.delay + i) * QUANTUM;
         long counter = (time(NULL) + delta) / QUANTUM;
         if (lastAuth < counter) {
             otp_expected = generate_otp(user->passwd, counter, user->otp_len);
             if (otp_expected < OTP_SUCCESS) {
-                pam_syslog(pamh, LOG_ERR, "TOTP generation failed errcode=%d", otp_expected);
+                pam_syslog(pamh, LOG_ERR, "TOTP generation failed errcode=%d",
+                           otp_expected);
                 unlockFile();
                 return PAM_AUTH_ERR;
             }
-            
+
             if (otp_expected == otp_given) {
                 hasFound = 1;
                 user->params.totp.tps = counter;
+                user->params.totp.delay += i;
                 updateOTPUser(user);
-                pam_syslog(pamh, LOG_NOTICE, "%s logged in", user->username); 
+                pam_syslog(pamh, LOG_NOTICE, "%s logged in", user->username);
                 return PAM_SUCCESS;
             }
         }
     }
-    
-    pam_syslog(pamh, LOG_NOTICE, "%s failed to log in", user->username); 
+
+    pam_syslog(pamh, LOG_NOTICE, "%s failed to log in", user->username);
     if (!hasFound) {
         pam_syslog(pamh, LOG_ERR, "can't synchronize");
     }
     return PAM_AUTH_ERR;
 }
 
-/** TODO:
- *  - Gérer la mise à jour de secret/création de compte: voir ligne 111.
- */
-
 /** Vérifie que qu'un utilisateur entre le bon OTP.
- * 
- * Seule fonction qui devrait vraiment différer entre pam_hotp et pam_totp.
  */
 int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp) {
     // Vérification d'un mot de passe + resynch.
     int otp_expected = 0;
     int otp_given = atoi(otp);
     for (int i = 0; i < 3; i++) {
-        otp_expected = generate_otp(user->passwd, user->params.hotp.count + i, user->otp_len);
+        otp_expected = generate_otp(user->passwd, user->params.hotp.count + i,
+                                    user->otp_len);
         if (otp_expected < OTP_SUCCESS) {
             pam_syslog(pamh, LOG_ERR, "generate_otp failed");
             unlockFile();
@@ -81,12 +84,12 @@ int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp) {
         }
     }
     pam_syslog(pamh, LOG_ERR,"%s failed to log in", user->username);
-    
+
     if (unlockFile() != USR_SUCCESS) {
         pam_syslog(pamh, LOG_ERR, "can't free lock on users");
     }
     return PAM_AUTH_ERR;
-} 
+}
 /** Vérifie que qu'un utilisateur entre le bon OTP.
  *
  * Seule fonction qui devrait vraiment différer entre pam_hotp et pam_totp.
@@ -97,7 +100,7 @@ int _check_otp(pam_handle_t * pamh, const char * username, const char * otp) {
         pam_syslog(pamh, LOG_ERR, "can't get lock");
         return PAM_AUTH_ERR;
     }
-    
+
     // Récupération des données utilisateurs.
     if (getOTPUser(username, &user) != USR_SUCCESS) {
         pam_syslog(pamh, LOG_ERR, "bad username %s", username);
@@ -105,18 +108,18 @@ int _check_otp(pam_handle_t * pamh, const char * username, const char * otp) {
     }
     int retval;
     switch(user.method) {
-        case HOTP_METHOD:
-            retval = _check_hotp(pamh, &user, otp);
-            break;
-        case TOTP_METHOD:
-            retval = _check_totp(pamh, &user, otp);
-            break;
-        default:
-            pam_syslog(pamh, LOG_ERR, "Unknown otp method");
-            retval = PAM_AUTH_ERR;
-            break;
+    case HOTP_METHOD:
+        retval = _check_hotp(pamh, &user, otp);
+        break;
+    case TOTP_METHOD:
+        retval = _check_totp(pamh, &user, otp);
+        break;
+    default:
+        pam_syslog(pamh, LOG_ERR, "Unknown otp method");
+        retval = PAM_AUTH_ERR;
+        break;
     }
-    
+
     if (unlockFile() == -1) {
         pam_syslog(pamh, LOG_ERR, "can't free lock");
     }
@@ -131,7 +134,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
     const char *otp2;
     char * otp;
     int retval;
-    
+
     modopt  modstr;
 
     // Récupération du nom d'utilisateur dans name.
@@ -148,14 +151,14 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
     }
     if (is_set(&modstr, USE_AUTH_TOK)) {
         if ((retval = pam_get_authtok(pamh, PAM_AUTHTOK,
-            &otp2, "Mot de passe jetable: "))
-            != PAM_SUCCESS) {
+                                      &otp2, "Mot de passe jetable: "))
+                != PAM_SUCCESS) {
             return retval;
         }
         if (otp2 == NULL) {
             return PAM_AUTH_ERR;
         }
-        
+
         /* Coutournement de la clause const on passe par un autre buffer
          * qui lui est modifiable.
          */
@@ -166,19 +169,19 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
         }
         memcpy(otp, otp2, len * sizeof(char));
         otp[len] = 0;
-        
+
         /* Un otp est par définition temporaire on le supprime donc du cache
          * de PAM pour qu'un autre module ne plante pas en récupérant un OTP.
          */
         pam_set_item(pamh, PAM_AUTHTOK, NULL);
     } else {
         if ((retval = pam_prompt(pamh, PAM_PROMPT_ECHO_ON,
-            &otp, "Mot de passe jetable: "))
-            != PAM_SUCCESS) {
+                                 &otp, "Mot de passe jetable: "))
+                != PAM_SUCCESS) {
             return retval;
         }
-    } 
-    
+    }
+
     retval = _check_otp(pamh, usrname, otp);
     if (is_set(&modstr, USE_AUTH_TOK)) {
         free(otp);
@@ -210,7 +213,7 @@ int pam_sm_setcred (pam_handle_t *pamh, int flags,
 }
 
 int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
-                                 int argc, const char **argv) {
+                      int argc, const char **argv) {
     // Obtenir le nom d'utilisateur.
     const char * username;
     int retval = pam_get_user(pamh,&username, NULL);
