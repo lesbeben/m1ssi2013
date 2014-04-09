@@ -19,10 +19,8 @@ find_package(PAM REQUIRED)
 link_directories(${CMAKE_SOURCE_DIR}/utils/)
 include_directories(${PAM_INCLUDE_DIR})
 
-add_library(options STATIC options.c)
-
-add_library(pam_uotp MODULE pam_uotp.c)
+add_library(pam_uotp MODULE pam_uotp.c options.c)
 # set_target_properties(pam_uotp PROPERTIES PREFIX "")
-target_link_libraries(pam_uotp pam otp users options m crypto)
+target_link_libraries(pam_uotp pam otp users m crypto)
 
 install(TARGETS pam_uotp LIBRARY DESTINATION /lib/security)
