@@ -102,7 +102,7 @@ int readLine(FILE *f, otpuser *user) {
             destroySecret(user->passwd);
             return USR_ERR_USR_FILE;
         }
-        user->params.count = atoi(token);
+        user->params.hotp.count = atoi(token);
         break;
 
     case TOTP_METHOD :
@@ -112,7 +112,14 @@ int readLine(FILE *f, otpuser *user) {
             destroySecret(user->passwd);
             return USR_ERR_USR_FILE;
         }
-        user->params.tps = atoi(token);
+        user->params.totp.tps = atoi(token);
+        token = strtok_r(NULL, SEPARATOR, &saveptr);
+        if (token == NULL) {
+            free(user->username);
+            destroySecret(user->passwd);
+            return USR_ERR_USR_FILE;
+        }
+        user->params.totp.delay = atoll(token);
         break;
 
     default :
@@ -131,21 +138,21 @@ int writeLine (FILE *f, otpuser *user) {
     // On rempli le buffer avec données utilisateur
     switch (user->method) {
     case HOTP_METHOD :
-        if ((sprintf(line, "%s:%d:%s:%d:%d:%d\n",user->username, user->method,
+        if ((sprintf(line, "%s:%d:%s:%d:%d:%ld\n",user->username, user->method,
                      getHexRepresentation(user->passwd, bufferSecret,
                                           (2 * (user->passwd->length) + 1)),
                      user->otp_len, user->isBanned,
-                     user->params.count)) < 0) {
+                     user->params.hotp.count)) < 0) {
             return USR_ERR_SYS;
         };
         break;
 
     case TOTP_METHOD :
-        if ((sprintf(line, "%s:%d:%s:%d:%d:%ld\n",user->username, user->method,
+        if ((sprintf(line, "%s:%d:%s:%d:%d:%ld:%d\n",user->username, user->method,
                      getHexRepresentation(user->passwd, bufferSecret,
                                           (2 * (user->passwd->length) + 1)),
                      user->otp_len, user->isBanned,
-                     user->params.tps)) < 0) {
+                     user->params.totp.tps, user->params.totp.delay)) < 0) {
             return USR_ERR_SYS;
         };
         break;

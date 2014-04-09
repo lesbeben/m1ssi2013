@@ -21,7 +21,7 @@ int _check_totp(pam_handle_t * pamh, otpuser * user, const char * otp) {
     // Vérification d'un mot de passe.
     int otp_expected = 0;
     int otp_given = atoi(otp);
-    long lastAuth = user->params.tps;
+    long lastAuth = user->params.totp.tps;
     int hasFound = 0;
     for (int i = -2; i <= 3 && !hasFound; i++) {
         int delta = i * QUANTUM;
@@ -36,7 +36,7 @@ int _check_totp(pam_handle_t * pamh, otpuser * user, const char * otp) {
             
             if (otp_expected == otp_given) {
                 hasFound = 1;
-                user->params.tps = counter;
+                user->params.totp.tps = counter;
                 updateOTPUser(user);
                 pam_syslog(pamh, LOG_NOTICE, "%s logged in", user->username); 
                 return PAM_SUCCESS;
@@ -64,14 +64,14 @@ int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp) {
     int otp_expected = 0;
     int otp_given = atoi(otp);
     for (int i = 0; i < 3; i++) {
-        otp_expected = generate_otp(user->passwd, user->params.count + i, user->otp_len);
+        otp_expected = generate_otp(user->passwd, user->params.hotp.count + i, user->otp_len);
         if (otp_expected < OTP_SUCCESS) {
             pam_syslog(pamh, LOG_ERR, "generate_otp failed");
             unlockFile();
             return PAM_AUTH_ERR;
         }
         if (otp_expected == otp_given) {
-            user->params.count += i + 1;
+            user->params.hotp.count += i + 1;
             updateOTPUser(user);
             if (unlockFile() != USR_SUCCESS) {
                 pam_syslog(pamh, LOG_ERR, "can't free lock on users");

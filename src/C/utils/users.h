@@ -1,6 +1,7 @@
 #ifndef USERS_H
 #define USERS_H
 #include "secret.h"
+#include <stdint.h>
 
 // Macros de code retour.
 #define USR_SUCCESS                      0
@@ -17,8 +18,13 @@
 /** Union de tout les paramètres supplémentaire possibles.
  */
 typedef union {
-    int count; /**< Le compteur pour hotp. */
-    long tps; /**< Date derniere authentification */
+    struct {
+        uint64_t count;  /**< Le compteur pour hotp. */
+    } hotp;
+    struct {
+        uint64_t tps; /**< Date derniere authentification */
+        int delay;
+    } totp;
 } otpopt;
 
 /** Structure permettant de représenter un utilisateur en mémoire.

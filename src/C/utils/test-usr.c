@@ -69,9 +69,9 @@ START_TEST (test_get_user) {
     if (user2.method == user.method) {
         switch (user2.method) {
             case HOTP_METHOD:
-                ck_assert_msg(user2.params.count == user.params.count,
+                ck_assert_msg(user2.params.hotp.count == user.params.hotp.count,
                     "HOTP:Erreur les compteur ne sont pas cohérents:\n%d != %d",
-                    user2.params.count, user.params.count
+                    user2.params.hotp.count, user.params.hotp.count
                 );
                 break;
             case TOTP_METHOD:
@@ -108,7 +108,7 @@ END_TEST
 
 
 START_TEST (test_update_user_hotp_count) {
-    user2.params.count += 1;
+    user2.params.hotp.count += 1;
     otpuser user;
     ck_assert_msg(updateOTPUser(&user2) == 0,
         "Erreur lors de la mise à jour de l'utilisateur: %s",
@@ -118,9 +118,9 @@ START_TEST (test_update_user_hotp_count) {
         "Erreur lors de l'obtention des données de %s",
         user2.username
     );
-    ck_assert_msg(user2.params.count == user.params.count,
+    ck_assert_msg(user2.params.hotp.count == user.params.hotp.count,
         "Les compteurs sont incohérent %d == %d", 
-        user2.params.count, user.params.count
+        user2.params.hotp.count, user.params.hotp.count
     );
 }
 END_TEST
@@ -169,21 +169,21 @@ int main(int argc, char * argv[]) {
     user1.passwd = createSecret(20);
     user1.otp_len = 8;
     user1.isBanned = 0;
-    user1.params.count = 0;
+    user1.params.hotp.count = 0;
     
     user2.username = strndup("root", 5);
     user2.method = HOTP_METHOD;
     user2.passwd = createSecret(20);
     user2.otp_len = 6;
     user2.isBanned = 0;
-    user2.params.count = 0;
+    user2.params.hotp.count = 0;
     
     user3.username = strndup("sagemath", 8);
     user3.method = HOTP_METHOD;
     user3.passwd = createSecret(20);
     user3.otp_len = 8;
     user3.isBanned = 0;
-    user3.params.count = 0;
+    user3.params.hotp.count = 0;
     
     int failed_count = 0;
     Suite * s = users_suite();
