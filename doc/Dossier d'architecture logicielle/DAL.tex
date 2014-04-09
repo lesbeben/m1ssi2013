@@ -268,7 +268,9 @@ de ces deux fonction propre à notre projet.
 La demande de secret sera permise grâce a l'implémentation des fonctions requises au sein du
 module. Par exemple une fois l'application configurée pour déléguer la gestion de secret au
 module l'application pourra faire appel à ces fonctions.
+\newline
 % TODO: Graphique explicatif de la gestion de secret.
+\includegraphics[width=\textwidth]{../graphics/association.jpg}
 
 \section{Authentification}
 L'authentification sera fournie par le module pam. Une application qui fait appel à PAM pour gérer
@@ -278,4 +280,6 @@ Typiquement lors d'une connexion en SSH si le serveur est configuré pour utilis
 d'authentification par OTP est dans la liste pour gérer l'authentification alors un otp sera demandé
 à l'utilisateur. Le module pam décidera de la validité du mot de passe.
 % TODO: Graphique explicatif de l'authentification
+\newline
+\includegraphics[width=\textwidth]{../graphics/authentification.jpg}
 \end{document}
