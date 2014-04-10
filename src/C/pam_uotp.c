@@ -259,7 +259,8 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
         const char *cstotp;
 
         // Tout d'abord, qui éxecute le processus courant ?
-        if (geteuid () == 0) {
+        if (getuid () == 0) {
+            pam_syslog(pamh, LOG_ERR,"%d", geteuid());
             // Si l'utilisateur est root, alors pas de conditions
             // supplémentaires, l'utilisateur à l'autorité
             return PAM_SUCCESS;
@@ -312,7 +313,6 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
         struct pam_conv* conv;
         pam_get_item(pamh, PAM_CONV, (const void **) &conv);
         conv_data * appdata = (conv_data*) conv->appdata_ptr;
-
         /* On recréé l'utilisateur de zéro s'il existe déjà */
 
         // Nom
@@ -325,24 +325,26 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
                 return retval;
             }
         } else {
-            retstr = strndup(appdata->method, 5);
+            retstr = strndup(appdata->method, 4);
         }
         if (strncasecmp (retstr, "totp", 5) == 0) {
             user.method = TOTP_METHOD;
 
             // Demande du quantum
-            char * quantum;
             if (appdata->quantum == -1) {
+                char * quantum;
                 if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &quantum,
                                           "Quantum : ")) != PAM_SUCCESS) {
                     return retval;
                 }
                 char * endptr;
                 user.params.totp.quantum = strtol (quantum, &endptr, 10);
-                if (quantum != endptr || user.params.totp.quantum < 0) {
+                if (*endptr != 0 || user.params.totp.quantum < 0) {
                     pam_info(pamh, "Quantum incorrect.");
+                    free (quantum);
                     return PAM_PERM_DENIED;
                 }
+                free (quantum);
             } else {
                 user.params.totp.quantum = appdata->quantum;
                 if (user.params.totp.quantum < 0) {
@@ -353,7 +355,6 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
 
             user.params.totp.tps = 0;
 
-            free (quantum);
         } else if (strncasecmp (retstr, "hotp", 5) == 0) {
             user.method = HOTP_METHOD;
             user.params.hotp.count = 0;
@@ -373,7 +374,7 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
             }
             char* endptr;
             user.otp_len = (char) strtol (retstr, &endptr, 10);
-            if (retstr != endptr) {
+            if (*endptr != 0) {
                 pam_info(pamh, "Longueur OTP incorrect.");
                 free (retstr);
                 return PAM_PERM_DENIED;

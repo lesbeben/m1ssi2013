@@ -55,6 +55,9 @@ void parsing_error(char * prgname) {
 int main(int argc, char * argv[]) {
     char * user = NULL; /** Le nom de l'utilisateur */
     conv_data app_data;
+    memset(app_data.method, 0, 5);
+    app_data.length = -1;
+    app_data.quantum = - 1;
     int retval; /** Stockage de valeur de retour. */
 
     // TODO: Parser argv
@@ -80,7 +83,7 @@ int main(int argc, char * argv[]) {
             if (optarg[0] != '-') {
                 char * endptr;
                 app_data.length = strtol(optarg, &endptr, 10);
-                if (endptr != optarg) {
+                if (*endptr != 0) {
                     parsing_error(argv[0]);
                 }
             } else {
@@ -91,7 +94,7 @@ int main(int argc, char * argv[]) {
             if (optarg[0] != '-') {
                 char * endptr;
                 app_data.quantum = strtol(optarg, &endptr, 10);
-                if (endptr != optarg) {
+                if (*endptr != 0) {
                     parsing_error(argv[0]);
                 }            } else {
                 parsing_error(argv[0]);
@@ -112,7 +115,6 @@ int main(int argc, char * argv[]) {
                 "Erreur lors de l'initialisation de l'échange avec PAM");
         exit(EXIT_FAILURE);
     }
-
     // Demande de changement de secret.
     retval = pam_chauthtok(pamh, 0);
     if (retval != PAM_SUCCESS) {
