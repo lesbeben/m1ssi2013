@@ -215,63 +215,148 @@ int pam_sm_setcred (pam_handle_t *pamh, int flags,
 
 int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
                       int argc, const char **argv) {
+    int retval;
+    char *otp;
+    
     // Obtenir le nom d'utilisateur.
     const char * username;
-    int retval = pam_get_user (pamh, &username, NULL);
-    if (retval != PAM_SUCCESS) {
+    if ((retval = pam_get_user (pamh, &username, NULL)) != PAM_SUCCESS) {
         return retval;
     }
 
     if (username == NULL) {
+        pam_syslog (pamh, LOG_ERR, "Unknown user");
         return PAM_USER_UNKNOWN;
     }
 
-    // Tester phase.
+    // 1er appel de la fonction avec le flag PAM_PRELIM_CHECK.
+    // Test si l'utilisateur a un compte actif.
     if (flags & PAM_PRELIM_CHECK) {
-        // - PRELIM, vérification avant de mettre à jour les informations.
-        //   - Test si l'utilisateur a un compte actif.
+        const char *cstotp;
 
         // Tout d'abord, qui éxecute le processus courant ?
         if (geteuid () == 0) {
-            // Si l'utilisateur est root, alors pas de conditions supplémentaires, 
-            // l'utilisateur à l'autorité
+            // Si l'utilisateur est root, alors pas de conditions 
+            // supplémentaires, l'utilisateur à l'autorité
             return PAM_SUCCESS;
         }
 
-        if (!userExists (username)) {
-            // Aucun compte existant, pré requis pour mettre à jour le secret
-            // validé.
+        switch (retval = userExists (username)) {
+            case 0 : 
+                // Aucun compte existant, pré requis pour mettre à jour le 
+                // secret validé.
+                return PAM_SUCCESS;
+            case 1 :
+                // Compte existant, il faudra vérifier s'il en est le 
+                // propriétaire
+                break;
+            default :
+                // Une erreur s'est produite
+                pam_syslog (pamh, LOG_ERR, 
+                    "user doesn't exists in otpasswd file");
+                return PAM_AUTHTOK_ERR;
+        }
+
+        // Vérifier l'autheticité du propriétaire par une demande 
+        // d'authentification (pas d'appel à pam_sm_authenticate pour ne pas 
+        // récupérer une deuxième fois le user)
+        if ((retval = pam_get_authtok (pamh, PAM_AUTHTOK, &cstotp, 
+                "Mot de passe jetable: ")) != PAM_SUCCESS) {
+            return retval;
+        }
+
+        if (cstotp == NULL) {
+            return PAM_AUTH_ERR;
+        }
+
+        int otpLen = strlen (cstotp);
+        otp = malloc (sizeof (char) * (otpLen + 1));
+        if (otp == NULL) {
+            return PAM_AUTH_ERR;
+        }
+        memcpy (otp, cstotp, otpLen * sizeof (char));
+        otp[otpLen] = 0;
+        // Suppression de l'otp du cache
+        pam_set_item (pamh, PAM_AUTHTOK, NULL);
+
+        retval = _check_otp (pamh, username, otp);
+        free(otp);
+        if (retval == PAM_SUCCESS) {
             return PAM_SUCCESS;
         }
 
-        // L'utilisateur à un compte il faut vérifier qu'il en est
-        // le propriétaire.
-
-        if (pam_sm_authenticate (pamh, flags, argc, argv) != PAM_SUCCESS) {
-            return PAM_SUCCESS;
-        }
+        pam_syslog (pamh, LOG_ERR, "user authentication failed");
         return PAM_TRY_AGAIN;
     }
-    //  - PRELIM OK
-    otpuser user;
-    int secretLen;
 
-    // Récupération des données utilisateurs.
-    if (getOTPUser (username, &user) != USR_SUCCESS) {
-        pam_syslog (pamh, LOG_ERR, "bad username %s", username);
-        return PAM_USER_UNKNOWN;
+    //  2eme appel de la fonction avec le flag PAM_UPDATE_AUTHTOK.
+    if (flags & PAM_UPDATE_AUTHTOK) {
+        otpuser user;
+        int secretLen;
+        char * retstr;
+
+        /* On recréé l'utilisateur de zéro s'il existe déjà */
+
+        // Nom
+        strcpy (user.username, username);
+
+        // Demande de la méthode d'authentification
+        if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &retstr, 
+            "Méthode d'authentification (hotp/totp) : ")) != PAM_SUCCESS) {
+            return retval;
+        }
+
+        if (strncmp (retstr, "hotp", 5) == 0) {
+            user.method = 'h';
+
+            // Demande du quantum
+            char * quantum;
+            if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &quantum, 
+                "Quantum : ")) != PAM_SUCCESS) {
+                return retval;
+            }
+
+            user.params.totp.tps = 0;
+            user.params.totp.delay = atoi (quantum);
+
+            free (quantum);
+        } else if (strncmp (retstr, "totp", 5) == 0) {
+            user.method = 't';
+            user.params.hotp.count = 0;
+        } else {
+            return PAM_AUTHTOK_ERR;
+        }
+
+        // Le secret
+        secretLen = getLength (user.passwd);
+        user.passwd = createRandomSecret (secretLen);
+
+        // Demande de la longueur des mots de passe générés
+        if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &retstr, 
+            "Taille des mots de passe : ")) != PAM_SUCCESS) {
+            return retval;
+        }
+        user.otp_len = (char) atoi (retstr);
+        free (retstr);
+
+        // État de l'utilisateur
+        user.isBanned = 0;
+
+
+        /* Mise à jour du fichier otpasswd */
+        if (updateOTPUser (&user) != PAM_SUCCESS) {
+            pam_syslog (pamh, LOG_ERR, "user update failed");
+            return PAM_PERM_DENIED;
+        }
+        
+        // Prompt du nouveau secret
+        otp = malloc (secretLen * sizeof (char));
+        getHexRepresentation (user.passwd, otp, secretLen);
+        pam_info (pamh, "Le nouveau secret est : %s", otp);
+        free (otp);
+
+        return PAM_SUCCESS;
     }
-
-    // MàJ du secret
-    secretLen = getLength (user.passwd);
-    user.passwd = createRandomSecret (secretLen);
-    updateOTPUser (&user);
-
-    // Prompt du nouveau secret
-    char *otp = malloc (secretLen * sizeof (char));
-    getHexRepresentation (user.passwd, otp, secretLen);
-    pam_info (pamh, "Le nouveau secret est : %s", otp);
-    free (otp);
 
     return PAM_PERM_DENIED;
 }
