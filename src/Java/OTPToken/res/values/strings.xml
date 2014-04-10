@@ -7,8 +7,10 @@
     <string name="tokenName">Nom</string>
     <string name="tokenSerial">Clé</string>
     <string name="tokenOtp">Longueur d\'OTP</string>
+    <string name="tokenOtpQuantum">Quantum</string>
     <string name="tokenTypeSpinnerPrompt">Ajouter le type de token</string>
     <string name="tokenOtpSpinnerPrompt">Ajouter la Longueur d\'OTP</string>
+    <string name="tokenOtpQuantumPrompt">Ajouter le quatum de temps</string>
     <string name="tokenAddComplete">Terminer</string>
     <string name="btnOK">OK</string>
     <string name="pinChangeNew1">Nouveau PIN</string>

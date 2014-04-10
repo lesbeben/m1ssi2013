@@ -81,9 +81,10 @@ public class TOTP extends OTPGenerator {
 	 * Renvoie la valeur du compteur de temps.
 	 * @return getTime() / timeQuantum
 	 */
-	public long getCount() {
+	public long getCount() {/*
 		Date d = new Date();
-		count = (long) d.getTime() / (timeQuantum * TO_SEC);
+		count = (long) d.getTime() / (timeQuantum * TO_SEC);*/
+		count = System.currentTimeMillis() / (timeQuantum * TO_SEC);
 		return count;
 	}
 

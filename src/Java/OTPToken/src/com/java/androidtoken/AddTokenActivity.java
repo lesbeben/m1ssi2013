@@ -2,6 +2,7 @@ package com.java.androidtoken;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import com.java.dataManager.LocalData;
 import com.java.dataManager.OTPMethodType;
 import com.java.dataManager.Token;
@@ -10,14 +11,18 @@ import com.java.utils.IOTP;
 import com.java.utils.ISecret;
 import com.java.utils.Secret;
 import com.java.utils.TOTP;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -59,9 +64,39 @@ public class AddTokenActivity extends Activity {
 		Button btnComplete = (Button) findViewById(R.id.btnAddStep2);
 		btnComplete.setOnClickListener(buttonComplete);
 
-		((Spinner) findViewById(R.id.tokenTypeSpinner)).setSelection(0);
-		((Spinner) findViewById(R.id.tokenOtpSpinner)).setSelection(0);
+		Spinner otpType = (Spinner) findViewById(R.id.tokenTypeSpinner);
+		
+		otpType.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				Spinner otpType = (Spinner) findViewById(R.id.tokenTypeSpinner);
+				String methodName = (String) otpType.getSelectedItem();
+				if (methodName.equalsIgnoreCase("hotp token")) {
+					View v = findViewById(R.id.tokenOtpQuantumSpinner);
+					v.setVisibility(View.INVISIBLE);
+					v = findViewById(R.id.tokenOtpQuantum);
+					v.setVisibility(View.INVISIBLE);
+				} else {
+					View v = findViewById(R.id.tokenOtpQuantumSpinner);
+					v.setVisibility(View.VISIBLE);
+					v = findViewById(R.id.tokenOtpQuantum);
+					v.setVisibility(View.VISIBLE);
+				}
+			}
 
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				//Ne rien faire				
+			}
+		});
+		
+		otpType.setSelection(0);
+		((Spinner) findViewById(R.id.tokenOtpSpinner)).setSelection(0);
+		View v = findViewById(R.id.tokenOtpQuantumSpinner);
+		v.setVisibility(View.INVISIBLE);
+		v = findViewById(R.id.tokenOtpQuantum);
+		v.setVisibility(View.INVISIBLE);
 	}
 
 	private void loadSpinner(int spinnerId, int arrayData) {
@@ -186,18 +221,21 @@ public class AddTokenActivity extends Activity {
 			if (isValid) {
 
 				int tokenType = ((Spinner) findViewById(R.id.tokenTypeSpinner))
-						.getSelectedItemPosition();
+					.getSelectedItemPosition();
 				int otpLength = Integer
-						.parseInt(((Spinner) findViewById(R.id.tokenOtpSpinner))
-								.getSelectedItem().toString());
-
+					.parseInt(((Spinner) findViewById(R.id.tokenOtpSpinner))
+						.getSelectedItem().toString());
+				int quantum = Integer.parseInt(
+					((Spinner) findViewById(R.id.tokenOtpQuantumSpinner)
+				).getSelectedItem().toString());
+				
 				ISecret key = new Secret();
 				key.setSecret(serial);
 				IOTP gene = null;
 				if (tokenType == 0) {
 					gene = new HOTP(0, key, otpLength);
 				} else {
-					gene = new TOTP(key, otpLength, TOTP.DEFAULT_QUANTUM);
+					gene = new TOTP(key, otpLength, quantum);
 				}
 
 				Token token = new Token(name,
