@@ -16,16 +16,17 @@
 #include "utils/otp.h"
 #include "utils/users.h"
 #include "options.h"
+#include "tools/conv.h"
 
 #define OTP_MAX_LENGTH 8
 
 /** TODO:
- *  - Gérer la mise à jour de secret/création de compte: 
+ *  - Gérer la mise à jour de secret/création de compte:
  *    voir ligne pam_sm_chauthtok.
  */
 
 /** Vérifie que l'otp est valide pour l'utilisateur passé en paramètre.
- * 
+ *
  */
 int _check_totp(pam_handle_t * pamh, otpuser * user, const char * otp) {
     // Vérification d'un mot de passe.
@@ -61,7 +62,7 @@ int _check_totp(pam_handle_t * pamh, otpuser * user, const char * otp) {
             }
         }
     }
-    
+
     user->isBanned += 1;
     updateOTPUser(user);
 
@@ -102,10 +103,10 @@ int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp) {
             return PAM_SUCCESS;
         }
     }
-    
+
     user->isBanned += 1;
     updateOTPUser(user);
-    
+
     pam_syslog(pamh, LOG_ERR,"%s failed to log in", user->username);
 
     if (unlockFile() != USR_SUCCESS) {
@@ -239,7 +240,8 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
                       int argc, const char **argv) {
     int retval;
     char otp[OTP_MAX_LENGTH + 1];
-    
+
+
     // Obtenir le nom d'utilisateur.
     const char * username;
     if ((retval = pam_get_user (pamh, &username, NULL)) != PAM_SUCCESS) {
@@ -258,32 +260,32 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
 
         // Tout d'abord, qui éxecute le processus courant ?
         if (geteuid () == 0) {
-            // Si l'utilisateur est root, alors pas de conditions 
+            // Si l'utilisateur est root, alors pas de conditions
             // supplémentaires, l'utilisateur à l'autorité
             return PAM_SUCCESS;
         }
 
         switch (retval = userExists (username)) {
-            case 0 : 
-                // Aucun compte existant, pré requis pour mettre à jour le 
-                // secret validé.
-                return PAM_SUCCESS;
-            case 1 :
-                // Compte existant, il faudra vérifier s'il en est le 
-                // propriétaire
-                break;
-            default :
-                // Une erreur s'est produite
-                pam_syslog (pamh, LOG_ERR, 
-                    "user doesn't exists in otpasswd file");
-                return PAM_AUTHTOK_ERR;
+        case 0 :
+            // Aucun compte existant, pré requis pour mettre à jour le
+            // secret validé.
+            return PAM_SUCCESS;
+        case 1 :
+            // Compte existant, il faudra vérifier s'il en est le
+            // propriétaire
+            break;
+        default :
+            // Une erreur s'est produite
+            pam_syslog (pamh, LOG_ERR,
+                        "user doesn't exists in otpasswd file");
+            return PAM_AUTHTOK_ERR;
         }
 
-        // Vérifier l'autheticité du propriétaire par une demande 
-        // d'authentification (pas d'appel à pam_sm_authenticate pour ne pas 
+        // Vérifier l'autheticité du propriétaire par une demande
+        // d'authentification (pas d'appel à pam_sm_authenticate pour ne pas
         // récupérer une deuxième fois le user)
-        if ((retval = pam_get_authtok (pamh, PAM_AUTHTOK, &cstotp, 
-                "Mot de passe jetable: ")) != PAM_SUCCESS) {
+        if ((retval = pam_get_authtok (pamh, PAM_AUTHTOK, &cstotp,
+                                       "Mot de passe jetable: ")) != PAM_SUCCESS) {
             return retval;
         }
 
@@ -307,29 +309,49 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
     if (flags & PAM_UPDATE_AUTHTOK) {
         otpuser user;
         char * retstr;
+        struct pam_conv* conv;
+        pam_get_item(pamh, PAM_CONV, (const void **) &conv);
+        conv_data * appdata = (conv_data*) conv->appdata_ptr;
 
         /* On recréé l'utilisateur de zéro s'il existe déjà */
 
         // Nom
         user.username = strdup(username);
-        
+
         // Demande de la méthode d'authentification
-        if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &retstr, 
-            "Méthode d'authentification (hotp/totp) : ")) != PAM_SUCCESS) {
-            return retval;
+        if (appdata->method[0] == 0) {
+            if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &retstr,
+                                      "Méthode d'authentification (hotp/totp) : ")) != PAM_SUCCESS) {
+                return retval;
+            }
+        } else {
+            retstr = strndup(appdata->method, 5);
         }
         if (strncasecmp (retstr, "totp", 5) == 0) {
             user.method = TOTP_METHOD;
 
             // Demande du quantum
             char * quantum;
-            if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &quantum, 
-                "Quantum : ")) != PAM_SUCCESS) {
-                return retval;
+            if (appdata->quantum == -1) {
+                if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &quantum,
+                                          "Quantum : ")) != PAM_SUCCESS) {
+                    return retval;
+                }
+                char * endptr;
+                user.params.totp.quantum = strtol (quantum, &endptr, 10);
+                if (quantum != endptr || user.params.totp.quantum < 0) {
+                    pam_info(pamh, "Quantum incorrect.");
+                    return PAM_PERM_DENIED;
+                }
+            } else {
+                user.params.totp.quantum = appdata->quantum;
+                if (user.params.totp.quantum < 0) {
+                    pam_info(pamh, "Quantum incorrect.");
+                    return PAM_PERM_DENIED;
+                }
             }
 
             user.params.totp.tps = 0;
-            user.params.totp.delay = atoi (quantum);
 
             free (quantum);
         } else if (strncasecmp (retstr, "hotp", 5) == 0) {
@@ -344,12 +366,26 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
         user.passwd = createRandomSecret (16);
         free(retstr);
         // Demande de la longueur des mots de passe générés
-        if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &retstr, 
-            "Taille des mots de passe : ")) != PAM_SUCCESS) {
-            return retval;
+        if (appdata->length == -1) {
+            if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &retstr,
+                                      "Taille des mots de passe : ")) != PAM_SUCCESS) {
+                return retval;
+            }
+            char* endptr;
+            user.otp_len = (char) strtol (retstr, &endptr, 10);
+            if (retstr != endptr) {
+                pam_info(pamh, "Longueur OTP incorrect.");
+                free (retstr);
+                return PAM_PERM_DENIED;
+            }
+            free (retstr);
+        } else {
+            user.otp_len = appdata->length;
         }
-        user.otp_len = (char) atoi (retstr);
-        free (retstr);
+        if (user.otp_len < 6 || user.otp_len > 8) {
+            pam_info(pamh, "Longueur OTP incorrect.");
+            return PAM_PERM_DENIED;
+        }
 
         // État de l'utilisateur
         user.isBanned = 0;
