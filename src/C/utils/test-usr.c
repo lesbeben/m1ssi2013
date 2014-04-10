@@ -176,7 +176,7 @@ Suite * users_suite (void) {
 
 int main(int argc, char * argv[]) {
     // Remplissage des variables de test.
-    user1.username = strndup("shifty", 6);
+    user1.username = strndup("bilbo", 6);
     user1.method = HOTP_METHOD;
     user1.passwd = createSecret(20);
     user1.otp_len = 8;
@@ -191,11 +191,11 @@ int main(int argc, char * argv[]) {
     user2.params.hotp.count = 0;
     
     user3.username = strndup("git", 8);
-    user3.method = HOTP_METHOD;
+    user3.method = TOTP_METHOD;
     user3.passwd = createSecret(20);
     user3.otp_len = 8;
     user3.isBanned = 0;
-    user3.params.hotp.count = 0;
+    user3.params.totp.quantum = 30;
     
     int failed_count = 0;
     Suite * s = users_suite();

@@ -1,3 +1,4 @@
+#define _XOPEN_SOURCE 700
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
@@ -289,15 +290,10 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
         }
 
         int otpLen = strlen (cstotp);
-        otp = malloc (sizeof (char) * (otpLen + 1));
-        if (otp == NULL) {
-            return PAM_AUTH_ERR;
-        }
-        memcpy (otp, cstotp, otpLen * sizeof (char));
-        otp[otpLen] = 0;
+        otp = strndup(cstotp, otpLen);
+
         // Suppression de l'otp du cache
         pam_set_item (pamh, PAM_AUTHTOK, NULL);
-
         retval = _check_otp (pamh, username, otp);
         free(otp);
         if (retval == PAM_SUCCESS) {
@@ -311,22 +307,21 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
     //  2eme appel de la fonction avec le flag PAM_UPDATE_AUTHTOK.
     if (flags & PAM_UPDATE_AUTHTOK) {
         otpuser user;
-        int secretLen;
         char * retstr;
 
         /* On recréé l'utilisateur de zéro s'il existe déjà */
 
         // Nom
-        strcpy (user.username, username);
-
+        user.username = strdup(username);
+        
         // Demande de la méthode d'authentification
         if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &retstr, 
             "Méthode d'authentification (hotp/totp) : ")) != PAM_SUCCESS) {
             return retval;
         }
 
-        if (strncmp (retstr, "hotp", 5) == 0) {
-            user.method = 'h';
+        if (strncmp (retstr, "totp", 5) == 0) {
+            user.method = TOTP_METHOD;
 
             // Demande du quantum
             char * quantum;
@@ -339,16 +334,16 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
             user.params.totp.delay = atoi (quantum);
 
             free (quantum);
-        } else if (strncmp (retstr, "totp", 5) == 0) {
-            user.method = 't';
+        } else if (strncmp (retstr, "hotp", 5) == 0) {
+            user.method = HOTP_METHOD;
             user.params.hotp.count = 0;
         } else {
+            pam_syslog(pamh, LOG_ERR, "Méthode inconnue: %s", retstr);
             return PAM_AUTHTOK_ERR;
         }
 
         // Le secret
-        secretLen = getLength (user.passwd);
-        user.passwd = createRandomSecret (secretLen);
+        user.passwd = createRandomSecret (16);
 
         // Demande de la longueur des mots de passe générés
         if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &retstr, 
@@ -363,17 +358,16 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
 
 
         /* Mise à jour du fichier otpasswd */
-        if (updateOTPUser (&user) != PAM_SUCCESS) {
+        if (updateOTPUser (&user) != USR_SUCCESS) {
             pam_syslog (pamh, LOG_ERR, "user update failed");
             return PAM_PERM_DENIED;
         }
-        
         // Prompt du nouveau secret
-        otp = malloc (secretLen * sizeof (char));
-        getHexRepresentation (user.passwd, otp, secretLen);
+        otp = malloc (33 * sizeof (char));
+        getHexRepresentation (user.passwd, otp, 33);
         pam_info (pamh, "Le nouveau secret est : %s", otp);
         free (otp);
-
+        
         return PAM_SUCCESS;
     }
 

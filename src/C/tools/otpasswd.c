@@ -1,7 +1,9 @@
+#define _XOPEN_SOURCE 700
 #include <stdio.h>
 #include <stdlib.h>
 #include <pam_appl.h>
 #include <pam_misc.h>
+#include <string.h>
 
 /** Fonction qui affiche un message d'erreur en fonction du code de retour
  *
@@ -45,7 +47,7 @@ int main(int argc, char * argv[]) {
 
     // TODO: Parser argv
     if (argc == 2) {
-        user = argv[1];
+        user = strdup(argv[1]);
     }
 
     // Début du dialogue avec PAM.
@@ -68,6 +70,7 @@ int main(int argc, char * argv[]) {
     if (user != NULL) {
         free(user);
     }
+    printf("Yolo !\n");
     pam_end(pamh, 0);
     exit(EXIT_SUCCESS);
 }
