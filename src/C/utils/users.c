@@ -120,6 +120,13 @@ int readLine(FILE *f, otpuser *user) {
             return USR_ERR_USR_FILE;
         }
         user->params.totp.delay = atoll(token);
+        token = strtok_r(NULL, SEPARATOR, &saveptr);
+        if (token == NULL) {
+            free(user->username);
+            destroySecret(user->passwd);
+            return USR_ERR_USR_FILE;
+        }
+        user->params.totp.quantum = atoi(token);
         break;
 
     default :
@@ -148,11 +155,12 @@ int writeLine (FILE *f, otpuser *user) {
         break;
 
     case TOTP_METHOD :
-        if ((sprintf(line, "%s:%d:%s:%d:%d:%ld:%d\n",user->username, user->method,
+        if ((sprintf(line, "%s:%d:%s:%d:%d:%ld:%d:%d\n",user->username, user->method,
                      getHexRepresentation(user->passwd, bufferSecret,
                                           (2 * (user->passwd->length) + 1)),
                      user->otp_len, user->isBanned,
-                     user->params.totp.tps, user->params.totp.delay)) < 0) {
+                     user->params.totp.tps, user->params.totp.delay,
+                     user->params.totp.quantum)) < 0) {
             return USR_ERR_SYS;
         };
         break;
@@ -265,6 +273,7 @@ int getOTPUser(const char* usrname, otpuser * user) {
     // Initialisation
     int found = 0;
     otpuser usr;
+    usr.username = NULL;
     usr.passwd = NULL;
     int ret = USR_SUCCESS;
 
@@ -526,6 +535,10 @@ int userExists(const char* username) {
 
     FILE* users_base = fopen(OTPWD_PATH, "r");
     if (users_base == NULL) {
+        struct stat s;
+        if (stat(OTPWD_PATH, &s) != 0) {
+            return 0;
+        }
         return USR_ERR_IO;
     }
     while ((ret = readLine(users_base, &user)) == USR_SUCCESS) {

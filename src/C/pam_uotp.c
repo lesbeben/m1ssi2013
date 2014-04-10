@@ -14,7 +14,7 @@
 #include "utils/otp.h"
 #include "utils/users.h"
 #include "options.h"
-#define QUANTUM 30
+
 
 /** TODO:
  *  - Gérer la mise à jour de secret/création de compte: 
@@ -30,9 +30,14 @@ int _check_totp(pam_handle_t * pamh, otpuser * user, const char * otp) {
     int otp_given = atoi(otp);
     long lastAuth = user->params.totp.tps;
     int hasFound = 0;
+    //Check if banned
+    if (user->isBanned > 2) {
+        pam_syslog(pamh, LOG_ERR, "User banned");
+        return PAM_AUTH_ERR;
+    }
     for (int i = -2; i <= 3 && !hasFound; i++) {
-        int delta = (user->params.totp.delay + i) * QUANTUM;
-        long counter = (time(NULL) + delta) / QUANTUM;
+        int delta = (user->params.totp.delay + i) * user->params.totp.quantum;
+        long counter = (time(NULL) + delta) / user->params.totp.quantum;
         if (lastAuth < counter) {
             otp_expected = generate_otp(user->passwd, counter, user->otp_len);
             if (otp_expected < OTP_SUCCESS) {
@@ -44,6 +49,7 @@ int _check_totp(pam_handle_t * pamh, otpuser * user, const char * otp) {
 
             if (otp_expected == otp_given) {
                 hasFound = 1;
+                user->isBanned = 0;
                 user->params.totp.tps = counter;
                 user->params.totp.delay += i;
                 updateOTPUser(user);
@@ -52,6 +58,9 @@ int _check_totp(pam_handle_t * pamh, otpuser * user, const char * otp) {
             }
         }
     }
+    
+    user->isBanned += 1;
+    updateOTPUser(user);
 
     pam_syslog(pamh, LOG_NOTICE, "%s failed to log in", user->username);
     if (!hasFound) {
@@ -66,6 +75,11 @@ int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp) {
     // Vérification d'un mot de passe + resynch.
     int otp_expected = 0;
     int otp_given = atoi(otp);
+    //Check if banned
+    if (user->isBanned > 2) {
+        pam_syslog(pamh, LOG_ERR, "User banned");
+        return PAM_AUTH_ERR;
+    }
     for (int i = 0; i < 3; i++) {
         otp_expected = generate_otp(user->passwd, user->params.hotp.count + i,
                                     user->otp_len);
@@ -75,6 +89,7 @@ int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp) {
             return PAM_AUTH_ERR;
         }
         if (otp_expected == otp_given) {
+            user->isBanned = 0;
             user->params.hotp.count += i + 1;
             updateOTPUser(user);
             if (unlockFile() != USR_SUCCESS) {
@@ -84,6 +99,10 @@ int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp) {
             return PAM_SUCCESS;
         }
     }
+    
+    user->isBanned += 1;
+    updateOTPUser(user);
+    
     pam_syslog(pamh, LOG_ERR,"%s failed to log in", user->username);
 
     if (unlockFile() != USR_SUCCESS) {

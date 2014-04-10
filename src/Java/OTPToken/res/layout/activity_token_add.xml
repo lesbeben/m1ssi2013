@@ -60,19 +60,55 @@
                 android:textSize="18sp" >
             </EditText>
 
-            <TextView
-                android:id="@+id/tokenOtp"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tokenOtp" >
-            </TextView>
-
-            <Spinner
-                android:id="@+id/tokenOtpSpinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:prompt="@string/tokenOtpSpinnerPrompt" >
-            </Spinner>
+                android:orientation="horizontal" >
+                
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" 
+                    android:orientation="vertical" >
+                    
+	                <TextView
+	                    android:id="@+id/tokenOtp"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_weight="0.61"
+	                    android:text="@string/tokenOtp" />
+	                
+	                <Spinner
+	                    android:id="@+id/tokenOtpSpinner"
+	                    android:layout_width="147dp"
+	                    android:layout_height="wrap_content"
+	                    android:layout_weight="1"
+	                    android:entries="@array/otpLength"
+	                    android:prompt="@string/tokenOtpSpinnerPrompt" />
+		                
+                </LinearLayout>
+                <LinearLayout 
+                    android:layout_width="wrap_content"
+                    android:id="@+id/totpSpecific"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" >
+		                
+	                <TextView
+	                    android:id="@+id/tokenOtpQuantum"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_weight="1"
+	                    android:text="@string/tokenOtpQuantum" />
+	                
+	                <Spinner
+	                    android:id="@+id/tokenOtpQuantumSpinner"
+	                    android:layout_width="147dp"
+	                    android:layout_height="wrap_content"
+	                    android:layout_weight="1"
+	                    android:entries="@array/otpQuantum"
+	                    android:prompt="@string/tokenOtpSpinnerPrompt" />
+	                
+                </LinearLayout>
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btnAddStep2"
