@@ -297,7 +297,7 @@ if (OPENSSL_INCLUDE_DIR)
   endif ()
 endif ()
 
-include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
+#include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
 
 if (OPENSSL_VERSION)
   find_package_handle_standard_args(OpenSSL
