@@ -341,6 +341,16 @@ int updateOTPUser(otpuser* user) {
         fclose(fw);
         return USR_ERR_IO;
     }
+    struct stat s;
+    if (fstat(fileno(f), &s) != 0) {
+        return USR_ERR_IO;
+    }
+    if (fchmod(fileno(fw), s.st_mode) != 0) {
+        return USR_ERR_IO;
+    }
+    if (fchown(fileno(fw), s.st_uid, s.st_gid) != 0) {
+        return USR_ERR_IO;
+    }
     // Recherche de l'utilisateur dans le fichier
     while((ret = readLine(f, &usr)) == USR_SUCCESS) {
         if (!strcmp(user->username, usr.username)) {
