@@ -14,7 +14,6 @@
 #include "utils/otp.h"
 #include "utils/users.h"
 #include "options.h"
-#define QUANTUM 30
 
 /** TODO:
  *  - Gérer la mise à jour de secret/création de compte: 
@@ -31,8 +30,8 @@ int _check_totp(pam_handle_t * pamh, otpuser * user, const char * otp) {
     long lastAuth = user->params.totp.tps;
     int hasFound = 0;
     for (int i = -2; i <= 3 && !hasFound; i++) {
-        int delta = (user->params.totp.delay + i) * QUANTUM;
-        long counter = (time(NULL) + delta) / QUANTUM;
+        int delta = (user->params.totp.delay + i) * user->params.totp.quantum;
+        long counter = (time(NULL) + delta) / user->params.totp.quantum;
         if (lastAuth < counter) {
             otp_expected = generate_otp(user->passwd, counter, user->otp_len);
             if (otp_expected < OTP_SUCCESS) {

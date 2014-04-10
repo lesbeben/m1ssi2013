@@ -176,7 +176,7 @@ Suite * users_suite (void) {
 
 int main(int argc, char * argv[]) {
     // Remplissage des variables de test.
-    user1.username = strndup("bilbo", 6);
+    user1.username = strndup("shifty", 6);
     user1.method = HOTP_METHOD;
     user1.passwd = createSecret(20);
     user1.otp_len = 8;

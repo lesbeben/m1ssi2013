@@ -120,6 +120,13 @@ int readLine(FILE *f, otpuser *user) {
             return USR_ERR_USR_FILE;
         }
         user->params.totp.delay = atoll(token);
+        token = strtok_r(NULL, SEPARATOR, &saveptr);
+        if (token == NULL) {
+            free(user->username);
+            destroySecret(user->passwd);
+            return USR_ERR_USR_FILE;
+        }
+        user->params.totp.quantum = atoi(token);
         break;
 
     default :
@@ -148,11 +155,12 @@ int writeLine (FILE *f, otpuser *user) {
         break;
 
     case TOTP_METHOD :
-        if ((sprintf(line, "%s:%d:%s:%d:%d:%ld:%d\n",user->username, user->method,
+        if ((sprintf(line, "%s:%d:%s:%d:%d:%ld:%d:%d\n",user->username, user->method,
                      getHexRepresentation(user->passwd, bufferSecret,
                                           (2 * (user->passwd->length) + 1)),
                      user->otp_len, user->isBanned,
-                     user->params.totp.tps, user->params.totp.delay)) < 0) {
+                     user->params.totp.tps, user->params.totp.delay,
+                     user->params.totp.quantum)) < 0) {
             return USR_ERR_SYS;
         };
         break;
