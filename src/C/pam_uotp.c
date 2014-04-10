@@ -257,10 +257,8 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
     // Test si l'utilisateur a un compte actif.
     if (flags & PAM_PRELIM_CHECK) {
         const char *cstotp;
-
         // Tout d'abord, qui éxecute le processus courant ?
         if (getuid () == 0) {
-            pam_syslog(pamh, LOG_ERR,"%d", geteuid());
             // Si l'utilisateur est root, alors pas de conditions
             // supplémentaires, l'utilisateur à l'autorité
             return PAM_SUCCESS;

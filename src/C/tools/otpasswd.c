@@ -105,6 +105,7 @@ int main(int argc, char * argv[]) {
             break;
         }
     }
+
     struct pam_conv conv = {misc_conv, &app_data}; /** La structure de gestion de conversation avec PAM*/
     pam_handle_t * pamh; /** Le handle pam */
 
@@ -122,7 +123,6 @@ int main(int argc, char * argv[]) {
         show_error("pam_chauthtok", retval);
         exit(EXIT_FAILURE);
     }
-
     // Libération des ressources.
     if (user != NULL) {
         free(user);
