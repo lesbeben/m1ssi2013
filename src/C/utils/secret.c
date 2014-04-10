@@ -93,7 +93,7 @@ secret createRandomSecret(int length) {
     // Boucle de lecture de res->length octets dans /dev/random.
     while (totalRead < res->length) {
         ret = read(fd, res->buffer + totalRead, res->length - totalRead);
-        if (ret != res->length) {
+        if (ret < 0) {
             destroySecret(res);
             return NULL;
         }
