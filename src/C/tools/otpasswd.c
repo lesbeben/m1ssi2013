@@ -70,7 +70,6 @@ int main(int argc, char * argv[]) {
     if (user != NULL) {
         free(user);
     }
-    printf("Yolo !\n");
     pam_end(pamh, 0);
     exit(EXIT_SUCCESS);
 }

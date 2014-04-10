@@ -11,11 +11,13 @@
 
 #include <sys/syslog.h>
 #include <string.h>
+#include <strings.h>
 
 #include "utils/otp.h"
 #include "utils/users.h"
 #include "options.h"
 
+#define OTP_MAX_LENGTH 8
 
 /** TODO:
  *  - Gérer la mise à jour de secret/création de compte: 
@@ -236,7 +238,7 @@ int pam_sm_setcred (pam_handle_t *pamh, int flags,
 int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
                       int argc, const char **argv) {
     int retval;
-    char *otp;
+    char otp[OTP_MAX_LENGTH + 1];
     
     // Obtenir le nom d'utilisateur.
     const char * username;
@@ -289,13 +291,10 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
             return PAM_AUTH_ERR;
         }
 
-        int otpLen = strlen (cstotp);
-        otp = strndup(cstotp, otpLen);
-
+        strncpy(otp, cstotp, OTP_MAX_LENGTH);
         // Suppression de l'otp du cache
         pam_set_item (pamh, PAM_AUTHTOK, NULL);
         retval = _check_otp (pamh, username, otp);
-        free(otp);
         if (retval == PAM_SUCCESS) {
             return PAM_SUCCESS;
         }
@@ -319,8 +318,7 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
             "Méthode d'authentification (hotp/totp) : ")) != PAM_SUCCESS) {
             return retval;
         }
-
-        if (strncmp (retstr, "totp", 5) == 0) {
+        if (strncasecmp (retstr, "totp", 5) == 0) {
             user.method = TOTP_METHOD;
 
             // Demande du quantum
@@ -334,7 +332,7 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
             user.params.totp.delay = atoi (quantum);
 
             free (quantum);
-        } else if (strncmp (retstr, "hotp", 5) == 0) {
+        } else if (strncasecmp (retstr, "hotp", 5) == 0) {
             user.method = HOTP_METHOD;
             user.params.hotp.count = 0;
         } else {
@@ -344,7 +342,7 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
 
         // Le secret
         user.passwd = createRandomSecret (16);
-
+        free(retstr);
         // Demande de la longueur des mots de passe générés
         if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &retstr, 
             "Taille des mots de passe : ")) != PAM_SUCCESS) {
@@ -363,11 +361,11 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
             return PAM_PERM_DENIED;
         }
         // Prompt du nouveau secret
-        otp = malloc (33 * sizeof (char));
-        getHexRepresentation (user.passwd, otp, 33);
-        pam_info (pamh, "Le nouveau secret est : %s", otp);
-        free (otp);
-        
+        int output_length = getLength(user.passwd) * 2 + 1;
+        char output_secret[output_length];
+        getHexRepresentation (user.passwd, output_secret, output_length);
+        pam_info (pamh, "Le nouveau secret est : %s", output_secret);
+
         return PAM_SUCCESS;
     }
 
