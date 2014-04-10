@@ -145,7 +145,7 @@ int writeLine (FILE *f, otpuser *user) {
     // On rempli le buffer avec données utilisateur
     switch (user->method) {
     case HOTP_METHOD :
-        if ((sprintf(line, "%s:%d:%s:%d:%d:%ld\n",user->username, user->method,
+        if ((snprintf(line,BUFFER_SIZE - 1 ,"%s:%d:%s:%d:%d:%ld\n",user->username, user->method,
                      getHexRepresentation(user->passwd, bufferSecret,
                                           (2 * (user->passwd->length) + 1)),
                      user->otp_len, user->isBanned,
@@ -155,7 +155,7 @@ int writeLine (FILE *f, otpuser *user) {
         break;
 
     case TOTP_METHOD :
-        if ((sprintf(line, "%s:%d:%s:%d:%d:%ld:%d:%d\n",user->username, user->method,
+        if ((snprintf(line, BUFFER_SIZE - 1, "%s:%d:%s:%d:%d:%ld:%d:%d\n",user->username, user->method,
                      getHexRepresentation(user->passwd, bufferSecret,
                                           (2 * (user->passwd->length) + 1)),
                      user->otp_len, user->isBanned,
