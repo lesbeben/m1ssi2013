@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <unistd.h>
 
 #define _PAM_EXTERN_FUNCTIONS
 #include <_pam_macros.h>
@@ -216,25 +217,61 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
                       int argc, const char **argv) {
     // Obtenir le nom d'utilisateur.
     const char * username;
-    int retval = pam_get_user(pamh,&username, NULL);
+    int retval = pam_get_user (pamh, &username, NULL);
     if (retval != PAM_SUCCESS) {
         return retval;
     }
+
+    if (username == NULL) {
+        return PAM_USER_UNKNOWN;
+    }
+
     // Tester phase.
     if (flags & PAM_PRELIM_CHECK) {
         // - PRELIM, vérification avant de mettre à jour les informations.
         //   - Test si l'utilisateur a un compte actif.
-        if (!userExists(username)) {
+
+        // Tout d'abord, qui éxecute le processus courant ?
+        if (geteuid () == 0) {
+            // Si l'utilisateur est root, alors pas de conditions supplémentaires, 
+            // l'utilisateur à l'autorité
+            return PAM_SUCCESS;
+        }
+
+        if (!userExists (username)) {
             // Aucun compte existant, pré requis pour mettre à jour le secret
             // validé.
             return PAM_SUCCESS;
         }
+
         // L'utilisateur à un compte il faut vérifier qu'il en est
         // le propriétaire.
+
+        if (pam_sm_authenticate (pamh, flags, argc, argv) != PAM_SUCCESS) {
+            return PAM_SUCCESS;
+        }
         return PAM_TRY_AGAIN;
     }
     //  - PRELIM OK
-    //    - Prompter pour nouveau secret.
+    otpuser user;
+    int secretLen;
+
+    // Récupération des données utilisateurs.
+    if (getOTPUser (username, &user) != USR_SUCCESS) {
+        pam_syslog (pamh, LOG_ERR, "bad username %s", username);
+        return PAM_USER_UNKNOWN;
+    }
+
+    // MàJ du secret
+    secretLen = getLength (user.passwd);
+    user.passwd = createRandomSecret (secretLen);
+    updateOTPUser (&user);
+
+    // Prompt du nouveau secret
+    char *otp = malloc (secretLen * sizeof (char));
+    getTextRepresentation (user.passwd, otp, secretLen);
+    pam_info (pamh, "Le nouveau secret est : %s", otp);
+    free (otp);
 
     return PAM_PERM_DENIED;
 }
