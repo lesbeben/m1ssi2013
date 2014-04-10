@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="OTP" company="" webLink="https://github.com/lesbeben/m1ssi2013" view-date="2013-12-01" view-index="2" gantt-divider-location="481" resource-divider-location="300" version="2.0" locale="fr">
+<?xml version="1.0" encoding="UTF-8"?><project name="OTP" company="" webLink="https://github.com/lesbeben/m1ssi2013" view-date="2013-12-01" view-index="0" gantt-divider-location="481" resource-divider-location="300" version="2.0" locale="fr">
     <description/>
     <view zooming-state="default:8" id="gantt-chart">
         <field id="tpd3" name="Nom" width="44" order="0"/>
@@ -6,12 +6,14 @@
         <field id="tpd5" name="Date de fin" width="11" order="2"/>
         <field id="tpc0" name="Charges (jours-hommes)" width="15" order="3"/>
         <field id="tpc1" name="Charges effectives (jours-hommes)" width="16" order="4"/>
+        <option id="taskLabelUp" value=""/>
+        <option id="taskLabelDown" value=""/>
         <option id="taskLabelLeft" value="name"/>
         <option id="taskLabelRight" value="resources"/>
     </view>
     <view id="resource-table">
         <field id="0" name="Nom" width="50" order="0"/>
-        <field id="1" name="Rôle par défaut" width="49" order="1"/>
+        <field id="1" name="Rôle par défaut" width="50" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -130,7 +132,7 @@
                 <depend id="113" type="2" difference="0" hardness="Rubber"/>
             </task>
         </task>
-        <task id="101" name="Module PAM" color="#660066" meeting="false" start="2014-01-25" duration="90" complete="81" expand="true">
+        <task id="101" name="Module PAM" color="#660066" meeting="false" start="2014-01-25" duration="90" complete="95" expand="true">
             <task id="40" name="Implémentation des algorithmes de calcul des OTP" color="#990099" meeting="false" start="2014-01-25" duration="22" complete="100" expand="true">
                 <depend id="232" type="2" difference="0" hardness="Strong"/>
                 <customproperty taskproperty-id="tpc0" value="96"/>
@@ -147,7 +149,7 @@
             <task id="235" name="Rédaction de la documentation Fonctions C" color="#cc00cc" meeting="false" start="2014-03-10" duration="2" complete="100" expand="true">
                 <depend id="151" type="2" difference="0" hardness="Rubber"/>
             </task>
-            <task id="102" name="Implémentation des fonctions d'authentification de PAM" color="#990099" meeting="false" start="2014-03-12" duration="40" complete="70" expand="true">
+            <task id="102" name="Implémentation des fonctions d'authentification de PAM" color="#990099" meeting="false" start="2014-03-12" duration="40" complete="100" expand="true">
                 <depend id="108" type="2" difference="0" hardness="Rubber"/>
                 <customproperty taskproperty-id="tpc0" value="80"/>
             </task>
@@ -261,11 +263,11 @@
         <displaycolumn property-id="tpd9" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd8" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd0" order="-1" width="75" visible="false"/>
-        <displaycolumn property-id="tpd3" order="0" width="211" visible="true"/>
-        <displaycolumn property-id="tpd4" order="1" width="58" visible="true"/>
-        <displaycolumn property-id="tpd5" order="2" width="56" visible="true"/>
-        <displaycolumn property-id="tpc0" order="3" width="75" visible="true"/>
-        <displaycolumn property-id="tpc1" order="4" width="77" visible="true"/>
+        <displaycolumn property-id="tpd3" order="0" width="204" visible="true"/>
+        <displaycolumn property-id="tpd4" order="1" width="56" visible="true"/>
+        <displaycolumn property-id="tpd5" order="2" width="54" visible="true"/>
+        <displaycolumn property-id="tpc0" order="3" width="73" visible="true"/>
+        <displaycolumn property-id="tpc1" order="4" width="75" visible="true"/>
     </taskdisplaycolumns>
     <previous/>
     <roles roleset-name="Default"/>
