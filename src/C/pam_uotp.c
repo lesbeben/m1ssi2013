@@ -269,7 +269,7 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
 
     // Prompt du nouveau secret
     char *otp = malloc (secretLen * sizeof (char));
-    getTextRepresentation (user.passwd, otp, secretLen);
+    getHexRepresentation (user.passwd, otp, secretLen);
     pam_info (pamh, "Le nouveau secret est : %s", otp);
     free (otp);
 
