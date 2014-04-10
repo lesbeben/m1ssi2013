@@ -63,7 +63,7 @@ int main(int argc, char * argv[]) {
     
     // Libération des ressources.
     if (user != NULL) {
-        free(user);
+        //free(user);
     }
     pam_end(pamh, 0);
     exit(EXIT_SUCCESS);

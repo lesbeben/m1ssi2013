@@ -265,6 +265,7 @@ int getOTPUser(const char* usrname, otpuser * user) {
     // Initialisation
     int found = 0;
     otpuser usr;
+    usr.username = NULL;
     usr.passwd = NULL;
     int ret = USR_SUCCESS;
 
@@ -526,6 +527,10 @@ int userExists(const char* username) {
 
     FILE* users_base = fopen(OTPWD_PATH, "r");
     if (users_base == NULL) {
+        struct stat s;
+        if (stat(OTPWD_PATH, &s) == 0) {
+            return 0;
+        }
         return USR_ERR_IO;
     }
     while ((ret = readLine(users_base, &user)) == USR_SUCCESS) {
