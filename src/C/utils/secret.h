@@ -122,12 +122,12 @@ int getLength(secret key);
  */
 char * getHexRepresentation(secret key, char * buffer, int length);
 
-/** Donne une représentation hexadécimale du secret.
+/** Donne une représentation textuelle du secret.
  * 
- * Cette fonction va convertir chaque octet du secret en une paire de caractères
- * héxadécimaux et les inscrires dans le buffer.<br/>
+ * Cette fonction va convertir chaque octet du secret en un caractère.<br/>
  * Si la longueur passée en paramètre n'est pas suffisante alors la fonction
  * indiquera une erreur.
+ * 
  * @param[in] key le secret que l'on veut représenter.
  * @param[in] length le nombre d'octet modifiables dans le buffer.
  * @param[out] buffer le buffer destiné à contenir la représentation du secret.

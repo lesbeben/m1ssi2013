@@ -190,7 +190,7 @@ int main(int argc, char * argv[]) {
     user2.isBanned = 0;
     user2.params.hotp.count = 0;
     
-    user3.username = strndup("sagemath", 8);
+    user3.username = strndup("git", 8);
     user3.method = HOTP_METHOD;
     user3.passwd = createSecret(20);
     user3.otp_len = 8;
@@ -201,7 +201,7 @@ int main(int argc, char * argv[]) {
     Suite * s = users_suite();
     SRunner * sr = srunner_create(s);
 //     Directive pour empécher le fork:
-    srunner_set_fork_status(sr, CK_NOFORK);
+    //srunner_set_fork_status(sr, CK_NOFORK);
     srunner_run_all(sr, CK_NORMAL);
     failed_count = srunner_ntests_failed(sr);
     srunner_free(sr);

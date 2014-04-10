@@ -2,6 +2,7 @@
 #define USERS_H
 #include "secret.h"
 #include <stdint.h>
+#include <sys/types.h>
 
 // Macros de code retour.
 #define USR_SUCCESS                      0
@@ -22,8 +23,9 @@ typedef union {
         uint64_t count;  /**< Le compteur pour hotp. */
     } hotp;
     struct {
-        uint64_t tps; /**< Date derniere authentification */
-        int delay;    /**< Décalage de l'utilisateur en nombre de quantum */
+        uint64_t tps; /**< Date derniere authentification.*/
+        int delay;    /**< Décalage de l'utilisateur en nombre de quantum.*/
+        int quantum; /**< La période de validité d'un otp pour l'utilisateur.*/
     } totp;
 } otpopt;
 
