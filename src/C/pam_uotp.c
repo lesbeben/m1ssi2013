@@ -354,7 +354,6 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
         // État de l'utilisateur
         user.isBanned = 0;
 
-
         /* Mise à jour du fichier otpasswd */
         if (updateOTPUser (&user) != USR_SUCCESS) {
             pam_syslog (pamh, LOG_ERR, "user update failed");

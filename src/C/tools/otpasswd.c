@@ -4,6 +4,8 @@
 #include <pam_appl.h>
 #include <pam_misc.h>
 #include <string.h>
+#include <inttypes.h>
+#include "conv.h"
 
 /** Fonction qui affiche un message d'erreur en fonction du code de retour
  *
@@ -39,16 +41,69 @@ void show_error(char * prefix, int code) {
     fprintf(stderr, "\n");
 }
 
+void cleanup(pam_handle_t * pamh, void * data, int error_status) {
+    free(data);
+}
+
+void parsing_error(char * prgname) {
+    fprintf(stderr, "utilisation: ");
+    fprintf(stderr, "%s [-l login] [-m (hotp|totp)] [-s 16-8] [-q quantum]\n", 
+            prgname);
+    exit(EXIT_FAILURE);
+}
+
 int main(int argc, char * argv[]) {
-    struct pam_conv conv = {misc_conv, NULL}; /** La structure de gestion de conversation avec PAM*/
-    pam_handle_t * pamh; /** Le handle pam */
     char * user = NULL; /** Le nom de l'utilisateur */
+    conv_data app_data;
     int retval; /** Stockage de valeur de retour. */
 
     // TODO: Parser argv
-    if (argc == 2) {
-        user = strdup(argv[1]);
+    char arg;
+    while ((arg = getopt(argc, argv, "l:m:s:q:")) != -1) {
+        switch (arg) {
+        case 'l':
+            if (optarg[0] != '-') {
+                user = strdup(optarg);
+            } else {
+                parsing_error(argv[0]);
+            }
+            break;
+        case 'm':
+            if (optarg[0] != '-') {
+                memcpy(app_data.method, optarg, 4);
+                app_data.method[4] = 0;
+            } else {
+                parsing_error(argv[0]);
+            }
+            break;
+        case 's':
+            if (optarg[0] != '-') {
+                char * endptr;
+                app_data.length = strtol(optarg, &endptr, 10);
+                if (endptr != optarg) {
+                    parsing_error(argv[0]);
+                }
+            } else {
+                parsing_error(argv[0]);
+            }
+            break;
+        case 'q':
+            if (optarg[0] != '-') {
+                char * endptr;
+                app_data.quantum = strtol(optarg, &endptr, 10);
+                if (endptr != optarg) {
+                    parsing_error(argv[0]);
+                }            } else {
+                parsing_error(argv[0]);
+            }
+            break;
+        default:
+            parsing_error(argv[0]);
+            break;
+        }
     }
+    struct pam_conv conv = {misc_conv, &app_data}; /** La structure de gestion de conversation avec PAM*/
+    pam_handle_t * pamh; /** Le handle pam */
 
     // Début du dialogue avec PAM.
     retval = pam_start("otpasswd", user, &conv, &pamh);
@@ -57,7 +112,7 @@ int main(int argc, char * argv[]) {
                 "Erreur lors de l'initialisation de l'échange avec PAM");
         exit(EXIT_FAILURE);
     }
-    
+
     // Demande de changement de secret.
     retval = pam_chauthtok(pamh, 0);
     if (retval != PAM_SUCCESS) {
@@ -65,7 +120,7 @@ int main(int argc, char * argv[]) {
         show_error("pam_chauthtok", retval);
         exit(EXIT_FAILURE);
     }
-    
+
     // Libération des ressources.
     if (user != NULL) {
         free(user);
