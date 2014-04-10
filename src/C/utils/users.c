@@ -217,48 +217,6 @@ int unlockFile() {
     return USR_SUCCESS;
 }
 
-/**
- * Vérifie que les permissions sur le fichiers sont conforme aux attentes.
- *
- * C'est à dire:
- *  -propriétaire: root
- *  -groupe: root
- *  -droits: 1700 <=> sticky bit + rwx------
- *
- * @return 0 si le fichier est correct, -1 sinon.
- */
-int check_file_stats(FILE * f) {
-    struct stat s;
-    if (f == NULL) {
-        return USR_ERR_PARAM;
-    }
-    if (fstat(fileno(f), &s) == -1) {
-        // Impossible d'obtenir les informations du fichier.
-        return USR_ERR_IO;
-    }
-// //     if (s.st_uid != 0) {
-// //         // Le propriétaire n'est pas root.
-// //         return -1;
-// //     }
-// //     if (s.st_gid != 0) {
-// //         // Le propriétaire n'est pas root.
-// //         return -1;
-// //     }
-    if ((s.st_mode & S_ISVTX) == 0) {
-        // Le fichier n'a pas le sticky bit
-        return USR_ERR_USR_FILE;
-    }
-    if ((s.st_mode &  (S_IRWXG | S_IRWXO)) != 0) {
-        // Les droits des autres ne sont pas nuls.
-        return USR_ERR_USR_FILE;
-    }
-    if ((s.st_mode & S_IRWXU) != S_IRWXU) {
-        // Le propriétaire n'a pas tout les droits sur le fichier.
-        return USR_ERR_USR_FILE;
-    }
-    return USR_SUCCESS;
-}
-
 /*******************************************************************************
  *                                                                             *
  *                              FONCTIONS                                      *
@@ -302,9 +260,7 @@ int getOTPUser(const char* usrname, otpuser * user) {
     if (f == NULL) {
         return USR_ERR_IO;
     }
-    if ((ret = check_file_stats(f)) != USR_SUCCESS) {
-        return ret;
-    }
+
     // Recherche de l'utilisateur dans le fichier
     while((ret = readLine(f, &usr)) == USR_SUCCESS) {
         if (!strcmp(usrname, usr.username)) {
@@ -372,24 +328,12 @@ int updateOTPUser(otpuser* user) {
             return USR_ERR_IO;
         }
     }
-    if ((ret = check_file_stats(f)) != USR_SUCCESS) {
-        return ret;
-    }
 
     // Descripteur de fichier temporaire.
     FILE * fw = fopen(SWAP_FILE, "w");
     if (fw == NULL) {
         fclose(f);
         return USR_ERR_IO;
-    }
-
-    // Mise en place des droits sur le nouveau fichier.
-    if (fchmod(fileno(fw), S_ISVTX | S_IRWXU) == -1) {
-        return USR_ERR_IO;
-    }
-
-    if ((ret = check_file_stats(f)) != USR_SUCCESS) {
-        return ret;
     }
 
     if (flock(fileno(fw), LOCK_EX) == -1) {
@@ -457,9 +401,6 @@ int removeOTPUser(char* usrname) {
         return USR_ERR_IO;
     }
 
-    if ((ret = check_file_stats(f)) != USR_SUCCESS) {
-        return ret;
-    }
 
     // Descripteur de fichier temporaire.
     FILE * fw = fopen(SWAP_FILE, "w");
