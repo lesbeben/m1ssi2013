@@ -528,7 +528,7 @@ int userExists(const char* username) {
     FILE* users_base = fopen(OTPWD_PATH, "r");
     if (users_base == NULL) {
         struct stat s;
-        if (stat(OTPWD_PATH, &s) == 0) {
+        if (stat(OTPWD_PATH, &s) != 0) {
             return 0;
         }
         return USR_ERR_IO;

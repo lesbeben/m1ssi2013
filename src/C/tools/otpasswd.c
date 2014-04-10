@@ -44,6 +44,9 @@ int main(int argc, char * argv[]) {
     int retval; /** Stockage de valeur de retour. */
 
     // TODO: Parser argv
+    if (argc == 2) {
+        user = argv[1];
+    }
 
     // Début du dialogue avec PAM.
     retval = pam_start("otpasswd", user, &conv, &pamh);
@@ -63,7 +66,7 @@ int main(int argc, char * argv[]) {
     
     // Libération des ressources.
     if (user != NULL) {
-        //free(user);
+        free(user);
     }
     pam_end(pamh, 0);
     exit(EXIT_SUCCESS);
