@@ -14,3 +14,6 @@
 *.out
 *.toc
 *.snm
+
+# Gantt
+*.gan
