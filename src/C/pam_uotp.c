@@ -317,7 +317,7 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
         user.username = strdup(username);
 
         // Demande de la méthode d'authentification
-        if (appdata->method[0] == 0) {
+        if (appdata != NULL && appdata->method[0] == 0) {
             if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &retstr,
                                       "Méthode d'authentification (hotp/totp) : ")) != PAM_SUCCESS) {
                 return retval;
@@ -329,7 +329,7 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
             user.method = TOTP_METHOD;
 
             // Demande du quantum
-            if (appdata->quantum == -1) {
+            if (appdata != NULL && appdata->quantum == -1) {
                 char * quantum;
                 if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &quantum,
                                           "Quantum : ")) != PAM_SUCCESS) {
@@ -360,12 +360,16 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
             pam_syslog(pamh, LOG_ERR, "Méthode inconnue: %s", retstr);
             return PAM_AUTHTOK_ERR;
         }
+        free(retstr);
 
         // Le secret
         user.passwd = createRandomSecret (16);
-        free(retstr);
+        if (user.passwd == NULL) {
+            pam_info(pamh, "Impossible de générer un secret.");
+            return PAM_PERM_DENIED;
+        }
         // Demande de la longueur des mots de passe générés
-        if (appdata->length == -1) {
+        if (appdata != NULL && appdata->length == -1) {
             if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &retstr,
                                       "Taille des mots de passe : ")) != PAM_SUCCESS) {
                 return retval;
@@ -392,13 +396,16 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
         /* Mise à jour du fichier otpasswd */
         if (updateOTPUser (&user) != USR_SUCCESS) {
             pam_syslog (pamh, LOG_ERR, "user update failed");
+            resetOTPUser(&user);
             return PAM_PERM_DENIED;
         }
+        // Libération des ressources de l'utilisateur.
         // Prompt du nouveau secret
         int output_length = getLength(user.passwd) * 2 + 1;
         char output_secret[output_length];
         getHexRepresentation (user.passwd, output_secret, output_length);
         pam_info (pamh, "Le nouveau secret est : %s", output_secret);
+        resetOTPUser(&user);
 
         return PAM_SUCCESS;
     }

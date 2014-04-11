@@ -26,7 +26,7 @@ typedef secret_struct * secret;
  * @param[in] length la taille du secret en octets.
  * @pre la taille ne peut pas être négative.
  *
- * @return L'adresse d'un nouveau secret.
+ * @return L'adresse d'un nouveau secret. NULL en cas d'erreur.
  */
 secret createSecret(int length);
 
@@ -37,7 +37,7 @@ secret createSecret(int length);
  * @param[in] length la taille du secret en octets.
  * @pre la taille ne peut pas être négative.
  *
- * @return L'adresse d'un nouveau secret.
+ * @return L'adresse d'un nouveau secret. NULL en cas d'erreur.
  */
 secret createRandomSecret(int length);
 
