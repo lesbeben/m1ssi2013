@@ -120,6 +120,8 @@ int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp) {
  */
 int _check_otp(pam_handle_t * pamh, const char * username, const char * otp) {
     otpuser user;
+    user.passwd = NULL;
+    user.username = NULL;
     if (lockFile() != USR_SUCCESS) {
         pam_syslog(pamh, LOG_ERR, "can't get lock");
         return PAM_AUTH_ERR;
@@ -143,7 +145,7 @@ int _check_otp(pam_handle_t * pamh, const char * username, const char * otp) {
         retval = PAM_AUTH_ERR;
         break;
     }
-
+    resetOTPUser(&user);
     if (unlockFile() == -1) {
         pam_syslog(pamh, LOG_ERR, "can't free lock");
     }
@@ -307,6 +309,8 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
     //  2eme appel de la fonction avec le flag PAM_UPDATE_AUTHTOK.
     if (flags & PAM_UPDATE_AUTHTOK) {
         otpuser user;
+        user.passwd = NULL;
+        user.username = NULL;
         char * retstr;
         struct pam_conv* conv;
         pam_get_item(pamh, PAM_CONV, (const void **) &conv);
@@ -320,6 +324,7 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
         if (appdata != NULL && appdata->method[0] == 0) {
             if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &retstr,
                                       "Méthode d'authentification (hotp/totp) : ")) != PAM_SUCCESS) {
+                resetOTPUser(&user);
                 return retval;
             }
         } else {
@@ -333,6 +338,8 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
                 char * quantum;
                 if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &quantum,
                                           "Quantum : ")) != PAM_SUCCESS) {
+                    free(retstr);
+                    resetOTPUser(&user);
                     return retval;
                 }
                 char * endptr;
@@ -340,6 +347,8 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
                 if (*endptr != 0 || user.params.totp.quantum < 0) {
                     pam_info(pamh, "Quantum incorrect.");
                     free (quantum);
+                    free(retstr);
+                    resetOTPUser(&user);
                     return PAM_PERM_DENIED;
                 }
                 free (quantum);
@@ -347,6 +356,8 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
                 user.params.totp.quantum = appdata->quantum;
                 if (user.params.totp.quantum < 0) {
                     pam_info(pamh, "Quantum incorrect.");
+                    free(retstr);
+                    resetOTPUser(&user);
                     return PAM_PERM_DENIED;
                 }
             }
@@ -357,8 +368,10 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
             user.method = HOTP_METHOD;
             user.params.hotp.count = 0;
         } else {
-            pam_syslog(pamh, LOG_ERR, "Méthode inconnue: %s", retstr);
-            return PAM_AUTHTOK_ERR;
+            pam_info(pamh, "Méthode inconnue: %s", retstr);
+            free(retstr);
+            resetOTPUser(&user);
+            return PAM_PERM_DENIED;
         }
         free(retstr);
 
@@ -366,12 +379,14 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
         user.passwd = createRandomSecret (16);
         if (user.passwd == NULL) {
             pam_info(pamh, "Impossible de générer un secret.");
+            resetOTPUser(&user);
             return PAM_PERM_DENIED;
         }
         // Demande de la longueur des mots de passe générés
         if (appdata != NULL && appdata->length == -1) {
             if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &retstr,
                                       "Taille des mots de passe : ")) != PAM_SUCCESS) {
+                resetOTPUser(&user);
                 return retval;
             }
             char* endptr;
@@ -379,6 +394,7 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
             if (*endptr != 0) {
                 pam_info(pamh, "Longueur OTP incorrect.");
                 free (retstr);
+                resetOTPUser(&user);
                 return PAM_PERM_DENIED;
             }
             free (retstr);
@@ -387,6 +403,7 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
         }
         if (user.otp_len < 6 || user.otp_len > 8) {
             pam_info(pamh, "Longueur OTP incorrect.");
+            resetOTPUser(&user);
             return PAM_PERM_DENIED;
         }
 
