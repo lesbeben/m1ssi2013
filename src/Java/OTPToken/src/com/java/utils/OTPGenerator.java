@@ -43,12 +43,11 @@ public abstract class OTPGenerator implements IOTP {
      * Deux valeurs successives doivent être différentes.
      */
 	public int generer(long offset) {
-        /*byte[] hs = Utils.hmacSha1(getKey(), getCount(offset));
+        byte[] hs = Utils.hmacSha1(getKey(), getCount(offset));
         byte[] sBits = Utils.truncate(hs);
         int sNum = Utils.convert(sBits);
         int d = sNum % (int) (Math.pow(10, getDigits()));
-        increaseCount();*/
-    	int d = (int) getCount(offset) % 100000;
+        increaseCount();
     	return d;
     }
 
