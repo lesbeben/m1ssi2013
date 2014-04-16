@@ -79,12 +79,14 @@ public class TOTP extends OTPGenerator {
 	@Override
 	/**
 	 * Renvoie la valeur du compteur de temps.
+	 * @param offset : Le décalage de temps à prendre en compte dans le calcul
+	 * 				   du compteur.
 	 * @return getTime() / timeQuantum
 	 */
-	public long getCount() {/*
+	public long getCount(long offset) {/*
 		Date d = new Date();
 		count = (long) d.getTime() / (timeQuantum * TO_SEC);*/
-		count = System.currentTimeMillis() / (timeQuantum * TO_SEC);
+		count = (System.currentTimeMillis() + offset) / (timeQuantum * TO_SEC);
 		return count;
 	}
 

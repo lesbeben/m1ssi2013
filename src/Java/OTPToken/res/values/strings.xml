@@ -19,6 +19,7 @@
     <string name="pinAlertInvalidPin">PIN Invalide</string>
     <string name="pinAlertNewPinsDifferent">Les valeurs rentrées ne sont pas les mêmes</string>
     <string name="pinAlertNewPinBlank">Le nouveau PIN est nécessaire</string>
+    <string name="synchAlert">Erreur lors de la synchronisation</string>
     <string name="pinRemoveExistingPin">Entrer votre PIN</string>
     <string name="pinRemoveSubmit">Supprimer</string>
     <string name="pinChangeExistingPin">Entrez l\'ancien PIN</string>
@@ -31,6 +32,7 @@
     <string name="toastAdded">Token Ajouté</string>
     <string name="otpDialogTitle">One Time Password</string>
     <string name="menu_add_token">Ajouter un Token</string>
+    <string name="menu_sync">Synchroniser l\'horloge</string>
     <string name="menu_pin_change">Changer votre PIN</string>
     <string name="menu_delete_token">Supprimer un Token</string>
     <string name="tokenAddDialogNoName">Ajoutez un nom à votre token</string>

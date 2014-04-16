@@ -1,10 +1,14 @@
 package com.java.androidtoken;
 
 import java.util.List;
+
 import com.java.dataManager.LocalData;
 import com.java.dataManager.OTPMethodType;
 import com.java.dataManager.Token;
+import com.java.utils.SntpClient;
+
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,11 +45,15 @@ public class TokenListActivity extends ListActivity {
 	private static final int MENU_ADD_TOKEN = Menu.FIRST;
 	private static final int MENU_CHANGE_PIN = Menu.FIRST + 1;
 	private static final int MENU_DELETE_TOKEN = Menu.FIRST + 2;
+	private static final int MENU_SYNC = Menu.FIRST + 3;
 
 	private static final int DIALOG_INVALID_PIN = 0;
 	private static final int DIALOG_OTP = 1;
 	private static final int DIALOG_DELETE_TOKEN = 2;
+	private static final int DIALOG_SYNCH = 3;
 
+	private static final int SYNC_TIMEOUT = 5000;
+	
 	private int mSelectedTokenId = -1;
 	private int mTokenToDeleteId = -1;
 
@@ -57,7 +65,8 @@ public class TokenListActivity extends ListActivity {
 		setContentView(R.layout.activity_token_list);
 
 		lv = (ListView) findViewById(android.R.id.list);
-		lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+		lv.setOnItemLongClickListener(
+				new AdapterView.OnItemLongClickListener() {
 			public boolean onItemLongClick(AdapterView<?> arg0, View v,
 					int pos, long id) {
 				return onLongListItemClick(v, pos, id);
@@ -85,7 +94,8 @@ public class TokenListActivity extends ListActivity {
 		super.onPause();
 	}
 
-	protected boolean onLongListItemClick(View v, final int pos, final long id) {
+	protected boolean onLongListItemClick(
+			View v, final int pos, final long id) {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -151,7 +161,10 @@ public class TokenListActivity extends ListActivity {
 		Dialog d;
 
 		switch (id) {
-
+		case DIALOG_SYNCH:
+			d = createAlertDialog(R.string.synchAlert);
+			break;
+		
 		case DIALOG_INVALID_PIN:
 			d = createAlertDialog(R.string.pinAlertInvalidPin);
 			break;
@@ -191,12 +204,15 @@ public class TokenListActivity extends ListActivity {
 		case DIALOG_DELETE_TOKEN:
 			mTokenToDeleteId = -1;
 			break;
+			
+		default :
+			break;
 		}
 	}
 
 	private String generateOtp(int pos) {
 		Token token = LocalData.getInstance().getListeToken().get(pos);
-		int otp = token.generate();
+		int otp = token.generate(LocalData.getInstance().getTimeOffset());
 		LocalData.getInstance().commit(getApplicationContext());
 		return Integer.toString(otp);
 	}
@@ -210,6 +226,7 @@ public class TokenListActivity extends ListActivity {
 				android.R.drawable.ic_lock_lock);
 		menu.add(0, MENU_DELETE_TOKEN, 2, R.string.menu_delete_token).setIcon(
 				android.R.drawable.ic_menu_delete);
+		menu.add(0, MENU_SYNC, 2, R.string.menu_sync);
 		return true;
 	}
 
@@ -234,7 +251,23 @@ public class TokenListActivity extends ListActivity {
 		case MENU_DELETE_TOKEN:
 			showDialog(DIALOG_DELETE_TOKEN);
 			return true;
-
+		
+		case MENU_SYNC:
+			SntpClient client = new SntpClient();
+			long now = 0;
+			if (client.requestTime("0.fr.pool.ntp.org", SYNC_TIMEOUT)) {
+				now = client.getNtpTime() + SystemClock.elapsedRealtime() 
+						 - client.getNtpTimeReference();
+				LocalData.getInstance().setTimeOffset(
+					now - System.currentTimeMillis()
+				);
+			} else {
+				showDialog(DIALOG_SYNCH);
+			} 
+			return true;
+			
+		default :
+			break;
 		}
 
 		return super.onMenuItemSelected(featureId, item);
@@ -355,11 +388,17 @@ public class TokenListActivity extends ListActivity {
 
 			nameText.setText(currentToken.getNom());
 			methodText
-				.setText(currentToken.getMethodType() == OTPMethodType.HOTP ? "HOTP"
-							: "TOTP");
+				.setText(
+					currentToken.getMethodType() == OTPMethodType.HOTP 
+					? "HOTP"
+					: "TOTP"
+				);
 			tokenImage
-				.setImageResource(currentToken.getMethodType() == OTPMethodType.HOTP ? R.drawable.round_add
-							: R.drawable.clock32);
+				.setImageResource(
+					currentToken.getMethodType() == OTPMethodType.HOTP 
+						? R.drawable.round_add
+						: R.drawable.clock32
+				);
 
 			return row;
 		}

@@ -17,7 +17,7 @@ import android.content.Intent;
  */
 
 public class SplashActivity extends Activity {
-	private static final int WAIT_TIME = 3000;
+	private static final int WAIT_TIME = 1000;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

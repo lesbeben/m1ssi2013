@@ -42,12 +42,13 @@ public abstract class OTPGenerator implements IOTP {
     /**
      * Deux valeurs successives doivent être différentes.
      */
-	public int generer() {
-        byte[] hs = Utils.hmacSha1(getKey(), getCount());
+	public int generer(long offset) {
+        /*byte[] hs = Utils.hmacSha1(getKey(), getCount(offset));
         byte[] sBits = Utils.truncate(hs);
         int sNum = Utils.convert(sBits);
         int d = sNum % (int) (Math.pow(10, getDigits()));
-        increaseCount();
+        increaseCount();*/
+    	int d = (int) getCount(offset) % 100000;
     	return d;
     }
 
@@ -61,9 +62,11 @@ public abstract class OTPGenerator implements IOTP {
 
 	/**
 	 * Retourne la valeur du compteur actuel du générateur d'OTP. 
+	 * @parma offset : Le décalage à prendre en compte dans le calcul du 
+	 * 				   compteur
 	 * @return La valeur du compteur.
 	 */
-	public abstract long getCount();
+	public abstract long getCount(long offset);
 	
 	/**
 	 * Fixe la valeur du compteur du générateur d'OTP.

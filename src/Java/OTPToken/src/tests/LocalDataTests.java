@@ -1,13 +1,18 @@
 package tests;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import com.java.dataManager.LocalData;
 import com.java.dataManager.OTPMethodType;
 import com.java.dataManager.Token;
 import com.java.utils.HOTP;
 import com.java.utils.ISecret;
 import com.java.utils.Secret;
+import com.java.utils.SntpClient;
 import com.java.utils.TOTP;
 
+import android.os.SystemClock;
 import android.test.InstrumentationTestCase;
 
 public class LocalDataTests extends InstrumentationTestCase {
@@ -148,8 +153,8 @@ public class LocalDataTests extends InstrumentationTestCase {
 		);
 		assertEquals(
 				"Incoherent value for generated OTP", 
-				token2.generate(), 
-				newToken2.generate()
+				token2.generate(ld.getTimeOffset()), 
+				newToken2.generate(ld.getTimeOffset())
 		);
 	}
 	
@@ -237,5 +242,23 @@ public class LocalDataTests extends InstrumentationTestCase {
 			count++;
 		}
 		assertEquals("Bad cases not correctly handled", 1, count);
+	}
+	
+	public void testNTP() {
+		SntpClient client = new SntpClient();
+		if (client.requestTime("0.fr.pool.ntp.org", 5000)) {
+			long now = client.getNtpTime() + SystemClock.elapsedRealtime() 
+					 - client.getNtpTimeReference();
+			assertEquals(
+				"Bad NTP time", 
+				System.currentTimeMillis() / 1000, 
+				now / 1000
+			);
+		}
+		try {
+			InetAddress address = InetAddress.getByName("www.google.fr");
+		} catch (UnknownHostException e) {
+			assertEquals("Network problem", 0, 1);
+		}
 	}
 }

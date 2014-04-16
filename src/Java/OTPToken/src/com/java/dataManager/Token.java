@@ -90,7 +90,7 @@ public class Token  {
 		this.skeyHex = 
 				((OTPGenerator) otpGen).getKey().getHexRepresentation();
 		if (methodType == OTPMethodType.HOTP) {
-			count = ((HOTP) otpGen).getCount();
+			count = ((HOTP) otpGen).getCount(0);
 		} else if (methodType == OTPMethodType.TOTP) {
 			quantum = ((TOTP) otpGen).getQuantum();
 		}
@@ -168,10 +168,12 @@ public class Token  {
 	/**
 	 * Fonction propre au token qui appelle implicitement son générateur d'OTP.
 	 * 
+	 * @param offset : Le décalage à prendre en compte dans le calcul de l'OTP
+	 * 				   en seconde.
 	 * @return Un mot de passe jetable tel que retourné par le générateur 
 	 * 		   interne
 	 */
-	public int generate() {
+	public int generate(long offset) {
 		if (nom == null || tailleOTP == 0 || skeyHex == null) {
 			throw new IllegalStateException();
 		}
@@ -189,10 +191,10 @@ public class Token  {
 			}
 		}
 
-		int resultat = otpGen.generer();
+		int resultat = otpGen.generer(offset);
 		
 		if (methodType == OTPMethodType.HOTP) {
-			count = ((OTPGenerator) otpGen).getCount();
+			count = ((OTPGenerator) otpGen).getCount(0);
 		}	
 		return resultat;
 	}

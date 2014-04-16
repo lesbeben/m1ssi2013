@@ -41,7 +41,12 @@ public final class LocalData {
 	 * PIN de l'utisateur.
 	 */
 	private String pin = "0000";
-
+	
+	/**
+	 * Décalage de temps entre l'horloge systeme et le temps réseau.
+	 */
+	private long offset = 0;
+	
 	/**
 	 * liste de token créés par l'utilisateur.
 	 */
@@ -71,7 +76,23 @@ public final class LocalData {
 		}
 		return instance;
 	}
-
+	
+	/**
+	 * Retourne l'actuel offset ntp / système.
+	 * 
+	 * @return offset
+	 */
+	public long getTimeOffset() {
+		return offset;
+	}
+	
+	/**
+	 * Positionne l'offset de temps ntp / système.
+	 */
+	public void setTimeOffset(long offset) {
+		this.offset = offset;
+	}
+	
 	/**
 	 * Cette fonction retourne la liste des Tokens de l'utilisateur.
 	 * 

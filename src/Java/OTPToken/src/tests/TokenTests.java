@@ -109,8 +109,8 @@ public class TokenTests extends TestCase {
 		for (int i = 0; i < 100; i++) {	
 			assertEquals(
 					"Wrong value for" + i + "th OTP.", 
-					otpGen2.generer(), 
-					token.generate()
+					otpGen2.generer(0), 
+					token.generate(0)
 			);
 		}
 	}
@@ -129,8 +129,8 @@ public class TokenTests extends TestCase {
 		//Cohérence témoin / token de la première valeur
 		assertEquals(
 			"Wrong value for OTP.", 
-			otpGen2.generer(), 
-			token.generate()
+			otpGen2.generer(0), 
+			token.generate(0)
 		);
 		//On attend le temps d'un quantum de temps (ici fixé à 1)
 		try {
@@ -142,8 +142,8 @@ public class TokenTests extends TestCase {
 		//Cohérence témoin / token de la première valeur
 		assertEquals(
 			"Wrong value for OTP.", 
-			otpGen2.generer(), 
-			token.generate()
+			otpGen2.generer(0), 
+			token.generate(0)
 		);
 	}
 	
@@ -152,7 +152,7 @@ public class TokenTests extends TestCase {
 		int count = 0;
 		try {
 			Token token = new Token();
-			int otp = token.generate();
+			int otp = token.generate(0);
 		} catch (IllegalStateException e) {
 			count++;
 		}

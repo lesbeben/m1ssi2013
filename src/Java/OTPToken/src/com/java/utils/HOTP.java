@@ -47,7 +47,7 @@ public class HOTP extends OTPGenerator {
     }
 	
 	@Override
-	public long getCount() {
+	public long getCount(long offset) {
 		return count;
 	}
 
