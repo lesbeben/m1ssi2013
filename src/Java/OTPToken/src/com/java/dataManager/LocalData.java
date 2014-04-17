@@ -19,7 +19,10 @@ import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
+import com.java.utils.SntpClient;
+
 import android.content.Context;
+import android.os.SystemClock;
 import android.provider.Settings.Secure;
 
 /**
@@ -36,7 +39,14 @@ public final class LocalData {
 
 	public static final String LOCAL_DATA_FILE = "localData.xml";
 	public static final String LOCAL_PIN_FILE = "pin.xml";
-
+	public static final String[] NTP_SERVER_LIST = {
+		"0.pool.ntp.org",
+		"1.pool.ntp.org",
+		"2.pool.ntp.org",
+		"3.pool.ntp.org"
+	};
+	public static final int SYNC_TIMEOUT = 5000;
+	
 	/**
 	 * PIN de l'utisateur.
 	 */
@@ -91,6 +101,23 @@ public final class LocalData {
 	 */
 	public void setTimeOffset(long offset) {
 		this.offset = offset;
+	}
+	
+	/**
+	 * Se connect à un serveur NTP pour fixer l'offset à une valeur correcte.
+	 */
+	public boolean synchronize() {
+		SntpClient client = new SntpClient();
+		long now = 0;
+		for (String server : NTP_SERVER_LIST) {
+			if (client.requestTime(server, SYNC_TIMEOUT)) {
+				now = client.getNtpTime() + SystemClock.elapsedRealtime() 
+						 - client.getNtpTimeReference();
+				getInstance().setTimeOffset(now - System.currentTimeMillis());
+				return true;
+			}
+		}		 
+		return false;
 	}
 	
 	/**

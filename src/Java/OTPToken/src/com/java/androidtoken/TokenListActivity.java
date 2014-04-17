@@ -51,8 +51,6 @@ public class TokenListActivity extends ListActivity {
 	private static final int DIALOG_OTP = 1;
 	private static final int DIALOG_DELETE_TOKEN = 2;
 	private static final int DIALOG_SYNCH = 3;
-
-	private static final int SYNC_TIMEOUT = 5000;
 	
 	private int mSelectedTokenId = -1;
 	private int mTokenToDeleteId = -1;
@@ -253,15 +251,7 @@ public class TokenListActivity extends ListActivity {
 			return true;
 		
 		case MENU_SYNC:
-			SntpClient client = new SntpClient();
-			long now = 0;
-			if (client.requestTime("0.fr.pool.ntp.org", SYNC_TIMEOUT)) {
-				now = client.getNtpTime() + SystemClock.elapsedRealtime() 
-						 - client.getNtpTimeReference();
-				LocalData.getInstance().setTimeOffset(
-					now - System.currentTimeMillis()
-				);
-			} else {
+			if (!LocalData.getInstance().synchronize()) {
 				showDialog(DIALOG_SYNCH);
 			} 
 			return true;

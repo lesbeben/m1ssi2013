@@ -28,7 +28,7 @@ public class SplashActivity extends Activity {
 	}
 
 	/**
-	 * Async Task to make http call.
+	 * Async Task to fetch local data.
 	 */
 	private class PrefetchData extends AsyncTask<Void, Void, Void> {
 		private boolean isAreadyHavePIN = false;
@@ -42,8 +42,15 @@ public class SplashActivity extends Activity {
 		protected Void doInBackground(Void... arg0) {			
             synchronized (this) {
                try {
-					wait(WAIT_TIME);
-					
+            	   //On profite du splash pour tenter de synchroniser le temps
+					Thread t = new Thread(new Runnable() {						
+						@Override
+						public void run() {
+							LocalData.getInstance().synchronize();			
+						}
+					});
+					long t0 = System.currentTimeMillis();
+					t.start();
 					// tester l'existence du fichier pin.xml, s'il n'existe pas,
 					// le créer
 					if (IOFileUtils.internalFileExists(getApplicationContext(),
@@ -61,7 +68,14 @@ public class SplashActivity extends Activity {
 							LocalData.LOCAL_DATA_FILE)) {
 						IOFileUtils.createInternalFile(getApplicationContext(),
 								LocalData.LOCAL_DATA_FILE);
-					}				
+					}
+					// Si l'action est executée trop vite, on attend un peu pour
+					// que le splash soit visible.
+					t.join();
+					long t1 = System.currentTimeMillis();
+					if (t1 - t0 < WAIT_TIME) {
+						wait(WAIT_TIME - (t1 - t0));
+					}
                } catch (InterruptedException e) {
             	   //TODO
                }
