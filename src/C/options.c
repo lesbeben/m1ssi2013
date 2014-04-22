@@ -2,14 +2,16 @@
 
 #include "options.h"
 
-#define SEPARATOR "="
-#define BUFFER_SIZE 32
+#define DELAY_TOTP "1"
+#define DELAY_HOTP "3"
 
 int fillflags(modopt* flag, int argc, const char** argv) {
     // Initialisation
     //char line[BUFFER_SIZE];
     char * endptr;
     const char *tmp;
+    set_opt(flag, DELAY_TOTP_AUTH, DELAY_TOTP);
+    set_opt(flag, DELAY_HOTP_AUTH, DELAY_HOTP);
     
     for (int i =0; i < argc; i++) {
         if (!strcmp("use_auth_tok", argv[i])) {
@@ -17,8 +19,8 @@ int fillflags(modopt* flag, int argc, const char** argv) {
             continue;
         }
         if (!strncmp("delay_totp", argv[i], 10)) {
-            tmp = argv[i] + 11;
-            if (!strcmp("=", argv[i] + 10)) {
+            if (*(argv[i] + 10) == '=') {
+                tmp = argv[i] + 11;
                 if (*tmp != '\0') {
                     if (strtol (tmp, &endptr, 10) > 0) {
                         set_opt(flag, DELAY_TOTP_AUTH, tmp);
@@ -28,8 +30,8 @@ int fillflags(modopt* flag, int argc, const char** argv) {
             continue;
         }
         if (!strncmp("delay_hotp", argv[i], 10)) {
-            tmp = argv[i] + 11;
-            if (!strcmp("=", argv[i] + 10)) {
+            if (*(argv[i] + 10) == '=') {
+                tmp = argv[i] + 11;
                 if (*tmp != '\0') {
                     if (strtol (tmp, &endptr, 10) > 0) {
                         set_opt(flag, DELAY_HOTP_AUTH, tmp);
@@ -63,18 +65,6 @@ int is_set(modopt* flag, int field) {
     switch(field) {
         case USE_AUTH_TOK:
             return flag->use_auth_tok;
-        case DELAY_TOTP_AUTH:
-            if (flag->delay_totp > 0) {
-                return 1;
-            } else {
-                 return 0;
-            }
-        case DELAY_HOTP_AUTH:
-            if (flag->delay_hotp > 0) {
-                return 1;
-            } else {
-                return 0;
-            }
         default:
             return 0;
     }

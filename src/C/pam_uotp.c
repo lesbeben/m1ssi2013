@@ -18,9 +18,10 @@
 #include "options.h"
 #include "tools/conv.h"
 
+#define DELAY_TOTP 1
+#define DELAY_HOTP 3
+
 #define OTP_MAX_LENGTH 8
-#define DELAY_HOTP 1
-#define DELAY_TOTP 3
 
 typedef struct {
     uint64_t delay_hotp;
@@ -36,7 +37,6 @@ int _check_totp(pam_handle_t * pamh, otpuser * user, const char * otp, uint64_t 
     int otp_given = atoi(otp);
     long lastAuth = user->params.totp.tps;
     int hasFound = 0;
-
     for (int i = -2; i <= 3 && !hasFound; i++) {
         int delta = (user->params.totp.delay + i) * user->params.totp.quantum;
         long counter = (time(NULL) + delta) / user->params.totp.quantum;
@@ -60,7 +60,8 @@ int _check_totp(pam_handle_t * pamh, otpuser * user, const char * otp, uint64_t 
                 }
             }
         } else {
-            pam_info(pamh, "Veuillez reessayer dans %ld secondes.", delay);
+            pam_info(pamh, "Veuillez reessayer dans %ld secondes.",
+                     (user->params.totp.tplstauth - time(NULL)));
             pam_syslog(pamh, LOG_ERR, "Nouvelle tentative trop rapide.");
             return PAM_AUTH_ERR;
         }
@@ -103,7 +104,8 @@ int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp, uint64_t 
             }
         }
     } else {
-        pam_info(pamh, "Veuillez ressayer dans %ld secondes.", delay);
+        pam_info(pamh, "Veuillez ressayer dans %ld secondes.",
+                 (user->params.hotp.tplstauth - time(NULL)));
         pam_syslog(pamh, LOG_ERR, "Nouvelle tentative trop rapide.");
         return PAM_AUTH_ERR;
     }
@@ -187,18 +189,8 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
     if (fillflags(&modstr, argc, argv) == -1) {
         pam_syslog(pamh, LOG_ERR, "No options");
     }
-    
-    if (is_set(&modstr, DELAY_TOTP_AUTH)) {
-        delay.delay_totp = modstr.delay_totp;
-    } else {
-        delay.delay_totp = DELAY_TOTP;
-    }
-    
-    if (is_set(&modstr, DELAY_HOTP_AUTH)) {
-        delay.delay_hotp = modstr.delay_hotp;
-    } else {
-        delay.delay_hotp = DELAY_HOTP;
-    }
+    delay.delay_totp = modstr.delay_totp;
+    delay.delay_hotp = modstr.delay_hotp;
         
     if (is_set(&modstr, USE_AUTH_TOK)) {
         if ((retval = pam_get_authtok(pamh, PAM_AUTHTOK,
