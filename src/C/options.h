@@ -4,10 +4,19 @@
  *                                                                             *              *
  *                                                                             *
  ******************************************************************************/
+
+#include <string.h>
+#include <stdint.h>
+
+
 #define USE_AUTH_TOK 0
+#define DELAY_TOTP_AUTH 1
+#define DELAY_HOTP_AUTH 2
   
  typedef struct {
      char use_auth_tok; /**< Flag first_pass */
+     uint64_t delay_hotp; /**< Flag first_pass */
+     uint64_t delay_totp; /**< Flag first_pass */
  }modopt;
  
  /** Parse les arguments dans argv. 
@@ -29,10 +38,11 @@
   * 
   * @param[out] flag Structure modopt que l'on souhaite modifier.
   * @param[in] field Le nom de l'option à activer.
+  * @param[in] value La valeur à affecter.
   * 
   * @return Renvoie 0 en cas de succès, -1 sinon.
   */
- int set_opt(modopt *flag, int field);
+ int set_opt(modopt *flag, int field, char* value);
  
  /** Renvoie l'etat de l'option field.
   * 

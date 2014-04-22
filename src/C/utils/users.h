@@ -21,11 +21,13 @@
 typedef union {
     struct {
         uint64_t count;  /**< Le compteur pour hotp. */
+        uint64_t tplstauth; /**< Date derniere tentative authentification.*/
     } hotp;
     struct {
         uint64_t tps; /**< Date derniere authentification.*/
         int delay;    /**< Décalage de l'utilisateur en nombre de quantum.*/
         int quantum; /**< La période de validité d'un otp pour l'utilisateur.*/
+        uint64_t tplstauth; /**< Date derniere tentative authentification.*/
     } totp;
 } otpopt;
 
