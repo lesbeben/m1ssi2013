@@ -22,6 +22,7 @@ typedef union {
     struct {
         uint64_t count;  /**< Le compteur pour hotp. */
         uint64_t tplstauth; /**< Date derniere tentative authentification.*/
+        int nbfail; /**< Nombre de tentative raté.*/
     } hotp;
     struct {
         uint64_t tps; /**< Date derniere authentification.*/

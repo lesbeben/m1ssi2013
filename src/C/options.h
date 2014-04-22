@@ -42,7 +42,7 @@
   * 
   * @return Renvoie 0 en cas de succès, -1 sinon.
   */
- int set_opt(modopt *flag, int field, char* value);
+ int set_opt(modopt *flag, int field, const char* value);
  
  /** Renvoie l'etat de l'option field.
   * 

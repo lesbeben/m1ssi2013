@@ -80,11 +80,8 @@ int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp, uint64_t 
     // Vérification d'un mot de passe + resynch.
     int otp_expected = 0;
     int otp_given = atoi(otp);
-    //Check if banned
-    //if (user->isBanned > 2) {
-    //    pam_syslog(pamh, LOG_ERR, "User banned");
-    //    return PAM_AUTH_ERR;
-    //}
+    uint64_t tmp_delay;
+
     if (user->params.hotp.tplstauth < time(NULL)) {
         for (int i = 0; i < 3; i++) {
             otp_expected = generate_otp(user->passwd, user->params.hotp.count + i,
@@ -95,7 +92,7 @@ int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp, uint64_t 
                 return PAM_AUTH_ERR;
             }
             if (otp_expected == otp_given) {
-                user->isBanned = 0;
+                user->params.hotp.nbfail = 0;
                 user->params.hotp.count += i + 1;
                 updateOTPUser(user);
                 if (unlockFile() != USR_SUCCESS) {
@@ -110,12 +107,15 @@ int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp, uint64_t 
         pam_syslog(pamh, LOG_ERR, "Nouvelle tentative trop rapide.");
         return PAM_AUTH_ERR;
     }
-    if (user->isBanned <= 2) {
-        user->params.totp.tplstauth = time(NULL) + delay;
+    if (user->params.hotp.nbfail <= 2) {
+        tmp_delay = delay;
+    } else if (user->params.hotp.nbfail <= 9) {
+        tmp_delay = delay * 2;
     } else {
-        user->params.totp.tplstauth = time(NULL) + (delay * 2); 
+        tmp_delay = delay * 4;
     }
-    user->isBanned += 1;
+    user->params.hotp.tplstauth = time(NULL) + tmp_delay;
+    user->params.hotp.nbfail += 1;
     updateOTPUser(user);
 
     pam_syslog(pamh, LOG_ERR,"%s failed to log in", user->username);

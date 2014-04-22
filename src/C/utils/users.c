@@ -110,6 +110,13 @@ int readLine(FILE *f, otpuser *user) {
             return USR_ERR_USR_FILE;
         }
         user->params.hotp.tplstauth = atoi(token);
+        token = strtok_r(NULL, SEPARATOR, &saveptr);
+        if (token == NULL) {
+            free(user->username);
+            destroySecret(user->passwd);
+            return USR_ERR_USR_FILE;
+        }
+        user->params.hotp.nbfail = atoi(token);
         break;
 
     case TOTP_METHOD :
@@ -159,11 +166,11 @@ int writeLine (FILE *f, otpuser *user) {
     // On rempli le buffer avec données utilisateur
     switch (user->method) {
     case HOTP_METHOD :
-        if ((snprintf(line,BUFFER_SIZE - 1 ,"%s:%d:%s:%d:%d:%ld%ld\n",user->username, user->method,
+        if ((snprintf(line,BUFFER_SIZE - 1 ,"%s:%d:%s:%d:%d:%ld%ld%d\n",user->username, user->method,
                      getHexRepresentation(user->passwd, bufferSecret,
                                           (2 * (user->passwd->length) + 1)),
                      user->otp_len, user->isBanned,
-                     user->params.hotp.count,user->params.hotp.tplstauth)) < 0) {
+                     user->params.hotp.count,user->params.hotp.tplstauth, user->params.hotp.nbfail)) < 0) {
             return USR_ERR_SYS;
         };
         break;

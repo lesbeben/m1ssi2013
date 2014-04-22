@@ -7,36 +7,34 @@
 
 int fillflags(modopt* flag, int argc, const char** argv) {
     // Initialisation
-    char line[BUFFER_SIZE];
-    char *token;
+    //char line[BUFFER_SIZE];
+    char * endptr;
+    const char *tmp;
     
     for (int i =0; i < argc; i++) {
         if (!strcmp("use_auth_tok", argv[i])) {
             set_opt(flag, USE_AUTH_TOK, NULL);
             continue;
         }
-        strcpy(line, argv[i]);
-        token = strtok(line, SEPARATOR);
-        if (token == NULL) {
-            return -1;
-        }
-        if (!strcmp("delay_totp", token)) {
-            token = strtok(NULL, SEPARATOR);
-            if (token == NULL) {
-                return -1;
-            }
-            if (atoi(token) > 0) {
-                set_opt(flag, DELAY_TOTP_AUTH, token);
+        if (!strncmp("delay_totp", argv[i], 10)) {
+            tmp = argv[i] + 11;
+            if (!strcmp("=", argv[i] + 10)) {
+                if (*tmp != '\0') {
+                    if (strtol (tmp, &endptr, 10) > 0) {
+                        set_opt(flag, DELAY_TOTP_AUTH, tmp);
+                    }
+                }
             }
             continue;
         }
-        if (!strcmp("delay_hotp", token)) {
-            token = strtok(NULL, SEPARATOR);
-            if (token == NULL) {
-                return -1;
-            }
-            if (atoi(token) > 0) {
-                set_opt(flag, DELAY_HOTP_AUTH, token);
+        if (!strncmp("delay_hotp", argv[i], 10)) {
+            tmp = argv[i] + 11;
+            if (!strcmp("=", argv[i] + 10)) {
+                if (*tmp != '\0') {
+                    if (strtol (tmp, &endptr, 10) > 0) {
+                        set_opt(flag, DELAY_HOTP_AUTH, tmp);
+                    }
+                }
             }
             continue;
         }
@@ -44,15 +42,17 @@ int fillflags(modopt* flag, int argc, const char** argv) {
     return 0;
 }
 
-int set_opt(modopt* flag, int field, char* value) {
+int set_opt(modopt* flag, int field, const char* value) {
+    char * endptr;
     switch(field) {
         case USE_AUTH_TOK:
             flag->use_auth_tok = 1;
             break;
         case DELAY_TOTP_AUTH:
-            flag->delay_totp = (uint64_t)(atoi(value));
+            ;
+            flag->delay_totp = (uint64_t)(strtol (value, &endptr, 10));
         case DELAY_HOTP_AUTH:
-            flag->delay_hotp = (uint64_t)(atoi(value));
+            flag->delay_hotp = (uint64_t)(strtol (value, &endptr, 10));
         default:
             return -1;
     }
