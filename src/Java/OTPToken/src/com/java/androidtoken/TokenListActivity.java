@@ -120,12 +120,7 @@ public class TokenListActivity extends ListActivity {
 							if (LocalData.getInstance().getListeToken().size() 
 									== 0) {
 								//Plus de token : en ajouter un.
-								Intent i = new Intent(
-									TokenListActivity.this, 
-									AddTokenActivity.class 
-								);
-								startActivity(i);
-								finish();
+								createToken();
 							}
 						}
 					}
@@ -311,12 +306,7 @@ public class TokenListActivity extends ListActivity {
 					if (LocalData.getInstance().getListeToken().size() 
 							== 0) {
 						//Plus de token : en ajouter un.
-						Intent i = new Intent(
-							TokenListActivity.this, 
-							AddTokenActivity.class 
-						);
-						startActivity(i);
-						finish();
+						createToken();
 					}
 				}
 			}
