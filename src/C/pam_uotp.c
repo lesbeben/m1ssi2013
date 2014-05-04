@@ -18,54 +18,56 @@
 #include "options.h"
 #include "tools/conv.h"
 
+#define DELAY_TOTP 1
+#define DELAY_HOTP 3
+
 #define OTP_MAX_LENGTH 8
 
-/** TODO:
- *  - Gérer la mise à jour de secret/création de compte:
- *    voir ligne pam_sm_chauthtok.
- */
+typedef struct {
+    uint64_t delay_hotp;
+    uint64_t delay_totp;
+}delayAuth;
 
 /** Vérifie que l'otp est valide pour l'utilisateur passé en paramètre.
  *
  */
-int _check_totp(pam_handle_t * pamh, otpuser * user, const char * otp) {
+int _check_totp(pam_handle_t * pamh, otpuser * user, const char * otp, uint64_t delay) {
     // Vérification d'un mot de passe.
     int otp_expected = 0;
     int otp_given = atoi(otp);
     long lastAuth = user->params.totp.tps;
     int hasFound = 0;
-    //Check if banned
-    if (user->isBanned > 2) {
-        pam_syslog(pamh, LOG_ERR, "User banned");
-        return PAM_AUTH_ERR;
-    }
     for (int i = -2; i <= 3 && !hasFound; i++) {
         int delta = (user->params.totp.delay + i) * user->params.totp.quantum;
         long counter = (time(NULL) + delta) / user->params.totp.quantum;
-        if (lastAuth < counter) {
-            otp_expected = generate_otp(user->passwd, counter, user->otp_len);
-            if (otp_expected < OTP_SUCCESS) {
-                pam_syslog(pamh, LOG_ERR, "TOTP generation failed errcode=%d",
-                           otp_expected);
-                unlockFile();
-                return PAM_AUTH_ERR;
-            }
+        if (user->params.totp.tplstauth < time(NULL)) {
+            if (lastAuth < counter) {
+                otp_expected = generate_otp(user->passwd, counter, user->otp_len);
+                if (otp_expected < OTP_SUCCESS) {
+                    pam_syslog(pamh, LOG_ERR, "TOTP generation failed errcode=%d",
+                            otp_expected);
+                    unlockFile();
+                    return PAM_AUTH_ERR;
+                }
 
-            if (otp_expected == otp_given) {
-                hasFound = 1;
-                user->isBanned = 0;
-                user->params.totp.tps = counter;
-                user->params.totp.delay += i;
-                updateOTPUser(user);
-                pam_syslog(pamh, LOG_NOTICE, "%s logged in", user->username);
-                return PAM_SUCCESS;
+                if (otp_expected == otp_given) {
+                    hasFound = 1;
+                    user->params.totp.tps = counter;
+                    user->params.totp.delay += i;
+                    updateOTPUser(user);
+                    pam_syslog(pamh, LOG_NOTICE, "%s logged in", user->username);
+                    return PAM_SUCCESS;
+                }
             }
+        } else {
+            pam_info(pamh, "Veuillez reessayer dans %ld secondes.",
+                     (user->params.totp.tplstauth - time(NULL)));
+            pam_syslog(pamh, LOG_ERR, "Nouvelle tentative trop rapide.");
+            return PAM_AUTH_ERR;
         }
     }
-
-    user->isBanned += 1;
+    user->params.totp.tplstauth = time(NULL) + delay;
     updateOTPUser(user);
-
     pam_syslog(pamh, LOG_NOTICE, "%s failed to log in", user->username);
     if (!hasFound) {
         pam_syslog(pamh, LOG_ERR, "can't synchronize");
@@ -75,36 +77,47 @@ int _check_totp(pam_handle_t * pamh, otpuser * user, const char * otp) {
 
 /** Vérifie que qu'un utilisateur entre le bon OTP.
  */
-int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp) {
+int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp, uint64_t delay) {
     // Vérification d'un mot de passe + resynch.
     int otp_expected = 0;
     int otp_given = atoi(otp);
-    //Check if banned
-    if (user->isBanned > 2) {
-        pam_syslog(pamh, LOG_ERR, "User banned");
+    uint64_t tmp_delay;
+
+    if (user->params.hotp.tplstauth < time(NULL)) {
+        for (int i = 0; i < 3; i++) {
+            otp_expected = generate_otp(user->passwd, user->params.hotp.count + i,
+                                        user->otp_len);
+            if (otp_expected < OTP_SUCCESS) {
+                pam_syslog(pamh, LOG_ERR, "generate_otp failed");
+                unlockFile();
+                return PAM_AUTH_ERR;
+            }
+            if (otp_expected == otp_given) {
+                user->params.hotp.nbfail = 0;
+                user->params.hotp.count += i + 1;
+                updateOTPUser(user);
+                if (unlockFile() != USR_SUCCESS) {
+                    pam_syslog(pamh, LOG_ERR, "can't free lock on users");
+                }
+                pam_syslog(pamh, LOG_NOTICE, "%s logged in", user->username);
+                return PAM_SUCCESS;
+            }
+        }
+    } else {
+        pam_info(pamh, "Veuillez ressayer dans %ld secondes.",
+                 (user->params.hotp.tplstauth - time(NULL)));
+        pam_syslog(pamh, LOG_ERR, "Nouvelle tentative trop rapide.");
         return PAM_AUTH_ERR;
     }
-    for (int i = 0; i < 3; i++) {
-        otp_expected = generate_otp(user->passwd, user->params.hotp.count + i,
-                                    user->otp_len);
-        if (otp_expected < OTP_SUCCESS) {
-            pam_syslog(pamh, LOG_ERR, "generate_otp failed");
-            unlockFile();
-            return PAM_AUTH_ERR;
-        }
-        if (otp_expected == otp_given) {
-            user->isBanned = 0;
-            user->params.hotp.count += i + 1;
-            updateOTPUser(user);
-            if (unlockFile() != USR_SUCCESS) {
-                pam_syslog(pamh, LOG_ERR, "can't free lock on users");
-            }
-            pam_syslog(pamh, LOG_NOTICE, "%s logged in", user->username);
-            return PAM_SUCCESS;
-        }
+    if (user->params.hotp.nbfail <= 2) {
+        tmp_delay = delay;
+    } else if (user->params.hotp.nbfail <= 9) {
+        tmp_delay = delay * 2;
+    } else {
+        tmp_delay = delay * 4;
     }
-
-    user->isBanned += 1;
+    user->params.hotp.tplstauth = time(NULL) + tmp_delay;
+    user->params.hotp.nbfail += 1;
     updateOTPUser(user);
 
     pam_syslog(pamh, LOG_ERR,"%s failed to log in", user->username);
@@ -118,7 +131,7 @@ int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp) {
  *
  * Seule fonction qui devrait vraiment différer entre pam_hotp et pam_totp.
  */
-int _check_otp(pam_handle_t * pamh, const char * username, const char * otp) {
+int _check_otp(pam_handle_t * pamh, const char * username, const char * otp, delayAuth delay) {
     otpuser user;
     user.passwd = NULL;
     user.username = NULL;
@@ -135,10 +148,10 @@ int _check_otp(pam_handle_t * pamh, const char * username, const char * otp) {
     int retval;
     switch(user.method) {
     case HOTP_METHOD:
-        retval = _check_hotp(pamh, &user, otp);
+        retval = _check_hotp(pamh, &user, otp, delay.delay_hotp);
         break;
     case TOTP_METHOD:
-        retval = _check_totp(pamh, &user, otp);
+        retval = _check_totp(pamh, &user, otp, delay.delay_totp);
         break;
     default:
         pam_syslog(pamh, LOG_ERR, "Unknown otp method");
@@ -160,6 +173,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
     const char *otp2;
     char * otp;
     int retval;
+    delayAuth delay;
 
     modopt  modstr;
 
@@ -175,6 +189,9 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
     if (fillflags(&modstr, argc, argv) == -1) {
         pam_syslog(pamh, LOG_ERR, "No options");
     }
+    delay.delay_totp = modstr.delay_totp;
+    delay.delay_hotp = modstr.delay_hotp;
+        
     if (is_set(&modstr, USE_AUTH_TOK)) {
         if ((retval = pam_get_authtok(pamh, PAM_AUTHTOK,
                                       &otp2, "Mot de passe jetable: "))
@@ -208,7 +225,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
         }
     }
 
-    retval = _check_otp(pamh, usrname, otp);
+    retval = _check_otp(pamh, usrname, otp, delay);
     if (is_set(&modstr, USE_AUTH_TOK)) {
         free(otp);
     }
@@ -242,7 +259,9 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
                       int argc, const char **argv) {
     int retval;
     char otp[OTP_MAX_LENGTH + 1];
-
+    delayAuth delay;
+    delay.delay_totp = DELAY_TOTP;
+    delay.delay_hotp = DELAY_HOTP;
 
     // Obtenir le nom d'utilisateur.
     const char * username;
@@ -297,7 +316,7 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
         strncpy(otp, cstotp, OTP_MAX_LENGTH);
         // Suppression de l'otp du cache
         pam_set_item (pamh, PAM_AUTHTOK, NULL);
-        retval = _check_otp (pamh, username, otp);
+        retval = _check_otp (pamh, username, otp, delay);
         if (retval == PAM_SUCCESS) {
             return PAM_SUCCESS;
         }
