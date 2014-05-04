@@ -341,14 +341,14 @@ int updateOTPUser(otpuser* user) {
         fclose(fw);
         return USR_ERR_IO;
     }
-    struct stat s;
-    if (fstat(fileno(f), &s) != 0) {
+    struct stat old_file_stats;
+    if (fstat(fileno(f), &old_file_stats) != 0) {
         return USR_ERR_IO;
     }
-    if (fchmod(fileno(fw), s.st_mode) != 0) {
+    if (fchmod(fileno(fw), old_file_stats.st_mode) != 0) {
         return USR_ERR_IO;
     }
-    if (fchown(fileno(fw), s.st_uid, s.st_gid) != 0) {
+    if (fchown(fileno(fw), old_file_stats.st_uid, old_file_stats.st_gid) != 0) {
         return USR_ERR_IO;
     }
     // Recherche de l'utilisateur dans le fichier
@@ -417,7 +417,14 @@ int removeOTPUser(char* usrname) {
     if (fw == NULL) {
         return USR_ERR_IO;
     }
-    if (fchmod(fileno(fw), S_ISVTX | S_IRWXU) == -1) {
+    struct stat old_file_stats;
+    if (fstat(fileno(f), &old_file_stats) != 0) {
+        return USR_ERR_IO;
+    }
+    if (fchmod(fileno(fw), old_file_stats.st_mode) != 0) {
+        return USR_ERR_IO;
+    }
+    if (fchown(fileno(fw), old_file_stats.st_uid, old_file_stats.st_gid) != 0) {
         return USR_ERR_IO;
     }
 
