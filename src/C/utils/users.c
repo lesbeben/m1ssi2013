@@ -253,16 +253,15 @@ int getOTPUser(const char* usrname, otpuser * user) {
         return USR_ERR_USR_UKN;
     }
     free(buf);
-//     free(pwd);
 
     // Descripteur de fichier sur OTPWD_PATH.
-    FILE * f = fopen(OTPWD_PATH, "r");
-    if (f == NULL) {
+    FILE * user_file = fopen(OTPWD_PATH, "r");
+    if (user_file == NULL) {
         return USR_ERR_IO;
     }
 
     // Recherche de l'utilisateur dans le fichier
-    while((ret = readLine(f, &usr)) == USR_SUCCESS) {
+    while((ret = readLine(user_file, &usr)) == USR_SUCCESS) {
         if (!strcmp(usrname, usr.username)) {
             found = 1;
             *user = usr;
@@ -271,7 +270,7 @@ int getOTPUser(const char* usrname, otpuser * user) {
     }
 
 
-    if (fclose (f) != 0) {
+    if (fclose (user_file) != 0) {
         return USR_ERR_IO;
     }
 
@@ -315,69 +314,69 @@ int updateOTPUser(otpuser* user) {
 //     free(pwd);
 
     // Descripteur de fichier sur OTPWD_PATH.
-    FILE * f = fopen(OTPWD_PATH, "r");
-    if (f == NULL) {
+    FILE * user_file = fopen(OTPWD_PATH, "r");
+    if (user_file == NULL) {
         int fd = open(OTPWD_PATH, O_WRONLY | O_CREAT | O_EXCL, S_IRWXU | S_ISVTX);
         if (fd < 0) {
             return USR_ERR_IO;
         }
 
-        f = fdopen(fd, "w");
-        if (f == NULL) {
+        user_file = fdopen(fd, "w");
+        if (user_file == NULL) {
             close(fd);
             return USR_ERR_IO;
         }
     }
 
     // Descripteur de fichier temporaire.
-    FILE * fw = fopen(SWAP_FILE, "w");
-    if (fw == NULL) {
-        fclose(f);
+    FILE * updated_user_file = fopen(SWAP_FILE, "w");
+    if (updated_user_file == NULL) {
+        fclose(user_file);
         return USR_ERR_IO;
     }
 
-    if (flock(fileno(fw), LOCK_EX) == -1) {
-        fclose(f);
-        fclose(fw);
+    if (flock(fileno(updated_user_file), LOCK_EX) == -1) {
+        fclose(user_file);
+        fclose(updated_user_file);
         return USR_ERR_IO;
     }
     struct stat old_file_stats;
-    if (fstat(fileno(f), &old_file_stats) != 0) {
+    if (fstat(fileno(user_file), &old_file_stats) != 0) {
         return USR_ERR_IO;
     }
-    if (fchmod(fileno(fw), old_file_stats.st_mode) != 0) {
+    if (fchmod(fileno(updated_user_file), old_file_stats.st_mode) != 0) {
         return USR_ERR_IO;
     }
-    if (fchown(fileno(fw), old_file_stats.st_uid, old_file_stats.st_gid) != 0) {
+    if (fchown(fileno(updated_user_file), old_file_stats.st_uid, old_file_stats.st_gid) != 0) {
         return USR_ERR_IO;
     }
     // Recherche de l'utilisateur dans le fichier
-    while((ret = readLine(f, &usr)) == USR_SUCCESS) {
+    while((ret = readLine(user_file, &usr)) == USR_SUCCESS) {
         if (!strcmp(user->username, usr.username)) {
-            if ((ret = writeLine (fw, user)) != USR_SUCCESS) {
-                fclose(f);
-                fclose(fw);
+            if ((ret = writeLine (updated_user_file, user)) != USR_SUCCESS) {
+                fclose(user_file);
+                fclose(updated_user_file);
                 return ret;
             }
             found = 1;
         } else {
-            if ((ret = writeLine (fw, &usr)) != USR_SUCCESS) {
-                fclose(f);
-                fclose(fw);
+            if ((ret = writeLine (updated_user_file, &usr)) != USR_SUCCESS) {
+                fclose(user_file);
+                fclose(updated_user_file);
                 return ret;
             }
         }
     }
 
     if (!found && ret == NO_MORE_USERS) {
-        if ((ret = writeLine(fw, user)) != USR_SUCCESS) {
-            fclose(f);
-            fclose(fw);
+        if ((ret = writeLine(updated_user_file, user)) != USR_SUCCESS) {
+            fclose(user_file);
+            fclose(updated_user_file);
             return ret;
         }
     }
 
-    if (fclose(f) != 0) {
+    if (fclose(user_file) != 0) {
         return USR_ERR_IO;
     }
 
@@ -385,12 +384,12 @@ int updateOTPUser(otpuser* user) {
         return ret;
     }
 
-    if (flock(fileno(fw), LOCK_UN) == -1) {
-        fclose(fw);
+    if (flock(fileno(updated_user_file), LOCK_UN) == -1) {
+        fclose(updated_user_file);
         return USR_ERR_IO;
     }
 
-    if (fclose(fw) != 0) {
+    if (fclose(updated_user_file) != 0) {
         return USR_ERR_IO;
     }
     return USR_SUCCESS;
@@ -406,46 +405,46 @@ int removeOTPUser(char* usrname) {
     int ret;
 
     // Descripteur de fichier sur OTPWD_PATH.
-    FILE * f = fopen(OTPWD_PATH, "r");
-    if (f == NULL) {
+    FILE * user_file = fopen(OTPWD_PATH, "r");
+    if (user_file == NULL) {
         return USR_ERR_IO;
     }
 
 
     // Descripteur de fichier temporaire.
-    FILE * fw = fopen(SWAP_FILE, "w");
-    if (fw == NULL) {
+    FILE * updated_user_file = fopen(SWAP_FILE, "w");
+    if (updated_user_file == NULL) {
         return USR_ERR_IO;
     }
     struct stat old_file_stats;
-    if (fstat(fileno(f), &old_file_stats) != 0) {
+    if (fstat(fileno(user_file), &old_file_stats) != 0) {
         return USR_ERR_IO;
     }
-    if (fchmod(fileno(fw), old_file_stats.st_mode) != 0) {
+    if (fchmod(fileno(updated_user_file), old_file_stats.st_mode) != 0) {
         return USR_ERR_IO;
     }
-    if (fchown(fileno(fw), old_file_stats.st_uid, old_file_stats.st_gid) != 0) {
+    if (fchown(fileno(updated_user_file), old_file_stats.st_uid, old_file_stats.st_gid) != 0) {
         return USR_ERR_IO;
     }
 
-    if (flock(fileno(fw), LOCK_EX) == -1) {
-        fclose(f);
-        fclose(fw);
+    if (flock(fileno(updated_user_file), LOCK_EX) == -1) {
+        fclose(user_file);
+        fclose(updated_user_file);
         return USR_ERR_IO;
     }
 
     // Recherche de l'utilisateur dans le fichier
-    while((ret = readLine(f, &usr)) == USR_SUCCESS) {
+    while((ret = readLine(user_file, &usr)) == USR_SUCCESS) {
         if (strcmp(usrname, usr.username)) {
-            if ((ret = writeLine (fw, &usr)) != USR_SUCCESS) {
-                fclose(f);
-                fclose(fw);
+            if ((ret = writeLine (updated_user_file, &usr)) != USR_SUCCESS) {
+                fclose(user_file);
+                fclose(updated_user_file);
                 return ret;
             }
         }
     }
 
-    if (fclose(f) != 0) {
+    if (fclose(user_file) != 0) {
         return USR_ERR_IO;
     }
 
@@ -453,12 +452,12 @@ int removeOTPUser(char* usrname) {
         return ret;
     }
 
-    if (flock(fileno(fw), LOCK_UN) == -1) {
-        fclose(fw);
+    if (flock(fileno(updated_user_file), LOCK_UN) == -1) {
+        fclose(updated_user_file);
         return USR_ERR_IO;
     }
 
-    if (fclose(fw) != 0) {
+    if (fclose(updated_user_file) != 0) {
         return USR_ERR_IO;
     }
     return USR_SUCCESS;
