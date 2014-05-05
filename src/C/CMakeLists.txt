@@ -24,4 +24,6 @@ set_target_properties(pam_uotp PROPERTIES PREFIX "")
 target_link_libraries(pam_uotp pam otp users m crypto)
 remove_definitions(-fPIC)
 
-install(TARGETS pam_uotp LIBRARY DESTINATION /lib/security)
+install(TARGETS pam_uotp LIBRARY DESTINATION lib/security)
+install(FILES conf/pam_otpasswd DESTINATION /etc/pam.d/ COMPONENT config 
+        RENAME otpasswd)
