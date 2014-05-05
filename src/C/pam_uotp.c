@@ -340,7 +340,7 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
         user.username = strdup(username);
 
         // Demande de la méthode d'authentification
-        if (appdata != NULL && appdata->method[0] == 0) {
+        if (appdata == NULL || appdata->method[0] == 0) {
             if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &retstr,
                                       "Méthode d'authentification (hotp/totp) : ")) != PAM_SUCCESS) {
                 resetOTPUser(&user);
@@ -349,17 +349,25 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
         } else {
             retstr = strndup(appdata->method, 4);
         }
+        if (retstr == NULL) {
+            pam_info(pamh, "Impossible de récupérer la méthode.");
+            return PAM_PERM_DENIED;
+        }
         if (strncasecmp (retstr, "totp", 5) == 0) {
             user.method = TOTP_METHOD;
 
             // Demande du quantum
-            if (appdata != NULL && appdata->quantum == -1) {
+            if (appdata == NULL || appdata->quantum == -1) {
                 char * quantum;
                 if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &quantum,
                                           "Quantum : ")) != PAM_SUCCESS) {
                     free(retstr);
                     resetOTPUser(&user);
                     return retval;
+                }
+                if (quantum == NULL) {
+                    pam_info(pamh, "Impossible de récupérer le quantum.");
+                    return PAM_PERM_DENIED;
                 }
                 char * endptr;
                 user.params.totp.quantum = strtol (quantum, &endptr, 10);
@@ -381,11 +389,16 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
                 }
             }
 
+            // Mise à 0 des pramètres optionnels pour TOTP
             user.params.totp.tps = 0;
+            user.params.totp.delay = 0;
+            user.params.totp.tplstauth = 0;
 
         } else if (strncasecmp (retstr, "hotp", 5) == 0) {
             user.method = HOTP_METHOD;
             user.params.hotp.count = 0;
+            user.params.hotp.nbfail = 0;
+            user.params.hotp.tplstauth = 0;
         } else {
             pam_info(pamh, "Méthode inconnue: %s", retstr);
             free(retstr);
@@ -402,11 +415,15 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
             return PAM_PERM_DENIED;
         }
         // Demande de la longueur des mots de passe générés
-        if (appdata != NULL && appdata->length == -1) {
+        if (appdata == NULL || appdata->length == -1) {
             if ((retval = pam_prompt (pamh, PAM_PROMPT_ECHO_ON, &retstr,
                                       "Taille des mots de passe : ")) != PAM_SUCCESS) {
                 resetOTPUser(&user);
                 return retval;
+            }
+            if (retstr == NULL) {
+                pam_info(pamh, "Impossible de récupérer la taille des OTP.");
+                return PAM_PERM_DENIED;
             }
             char* endptr;
             user.otp_len = (char) strtol (retstr, &endptr, 10);
