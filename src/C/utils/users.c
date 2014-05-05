@@ -22,9 +22,9 @@
  *  <li> Les paramètres supplémentaires relatifs à la méthode d'otp </li>
  * </ul>
  */
-#define OTPWD_PATH "/tmp/otpasswd"
+#define OTPWD_PATH "/var/otpasswd"
 #define SEPARATOR ":"
-#define SWAP_FILE "/tmp/otpasswd~"
+#define SWAP_FILE "/var/otpasswd~"
 #define BUFFER_SIZE 1024
 
 
