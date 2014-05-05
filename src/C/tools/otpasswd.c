@@ -131,7 +131,8 @@ int main(int argc, char * argv[]) {
             }
             exit(EXIT_FAILURE);
         }
-        user = pwd.pw_name;
+        user = strdup(pwd.pw_name);
+        free(pwd_buffer);
     }
 
     struct pam_conv conv = {misc_conv, &app_data}; /** La structure de gestion de conversation avec PAM*/
