@@ -193,6 +193,14 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
     delay.delay_hotp = modstr.delay_hotp;
         
     if (is_set(&modstr, USE_AUTH_TOK)) {
+        char * prev_auth_tok = NULL;
+        if ((retval = pam_get_item(pamh, PAM_AUTHTOK,(void *) &prev_auth_tok))
+            != PAM_SUCCESS) {
+            return retval;
+        }
+        if ((retval = pam_set_item(pamh, PAM_AUTHTOK, NULL)) != PAM_SUCCESS) {
+            return retval;
+        }
         if ((retval = pam_get_authtok(pamh, PAM_AUTHTOK,
                                       &otp2, "Mot de passe jetable: "))
                 != PAM_SUCCESS) {
@@ -216,7 +224,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
         /* Un otp est par définition temporaire on le supprime donc du cache
          * de PAM pour qu'un autre module ne plante pas en récupérant un OTP.
          */
-        pam_set_item(pamh, PAM_AUTHTOK, NULL);
+        pam_set_item(pamh, PAM_AUTHTOK, prev_auth_tok);
     } else {
         if ((retval = pam_prompt(pamh, PAM_PROMPT_ECHO_ON,
                                  &otp, "Mot de passe jetable: "))
