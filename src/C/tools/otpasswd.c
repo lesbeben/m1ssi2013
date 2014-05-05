@@ -5,6 +5,8 @@
 #include <pam_misc.h>
 #include <string.h>
 #include <inttypes.h>
+#include <pwd.h>
+#include <errno.h>
 #include "conv.h"
 
 /** Fonction qui affiche un message d'erreur en fonction du code de retour
@@ -104,6 +106,32 @@ int main(int argc, char * argv[]) {
             parsing_error(argv[0]);
             break;
         }
+    }
+    
+    // Le programme détermine lui même le nom de l'utilisateur appelant.
+    if (user == NULL) {
+        struct passwd pwd;
+        struct passwd * result;
+        int pwd_bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
+        if (pwd_bufsize == -1) {
+            pwd_bufsize = 16384;
+        }
+        char * pwd_buffer = malloc(pwd_bufsize);
+        if (pwd_buffer == NULL) {
+            perror("malloc");
+            exit(EXIT_FAILURE);
+        }
+        int ret = getpwuid_r(getuid(),&pwd, pwd_buffer , pwd_bufsize, &result);
+        if (result == NULL) {
+            if (ret == 0) {
+                fprintf(stderr, "Unknown uid: %d\n", getuid());
+            } else {
+                errno = ret;
+                perror("getpwuid_r");
+            }
+            exit(EXIT_FAILURE);
+        }
+        user = pwd.pw_name;
     }
 
     struct pam_conv conv = {misc_conv, &app_data}; /** La structure de gestion de conversation avec PAM*/
