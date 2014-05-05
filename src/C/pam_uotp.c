@@ -23,15 +23,11 @@
 
 #define OTP_MAX_LENGTH 8
 
-typedef struct {
-    uint64_t delay_hotp;
-    uint64_t delay_totp;
-}delayAuth;
-
 /** Vérifie que l'otp est valide pour l'utilisateur passé en paramètre.
  *
  */
-int _check_totp(pam_handle_t * pamh, otpuser * user, const char * otp, uint64_t delay) {
+int _check_totp(pam_handle_t * pamh, otpuser * user,
+                const char * otp, uint16_t delay) {
     // Vérification d'un mot de passe.
     int otp_expected = 0;
     int otp_given = atoi(otp);
@@ -131,7 +127,8 @@ int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp, uint64_t 
  *
  * Seule fonction qui devrait vraiment différer entre pam_hotp et pam_totp.
  */
-int _check_otp(pam_handle_t * pamh, const char * username, const char * otp, delayAuth delay) {
+int _check_otp(pam_handle_t * pamh, const char * username,
+               const char * otp, modopt * options) {
     otpuser user;
     user.passwd = NULL;
     user.username = NULL;
@@ -148,10 +145,10 @@ int _check_otp(pam_handle_t * pamh, const char * username, const char * otp, del
     int retval;
     switch(user.method) {
     case HOTP_METHOD:
-        retval = _check_hotp(pamh, &user, otp, delay.delay_hotp);
+        retval = _check_hotp(pamh, &user, otp, options->delay_hotp);
         break;
     case TOTP_METHOD:
-        retval = _check_totp(pamh, &user, otp, delay.delay_totp);
+        retval = _check_totp(pamh, &user, otp, options->delay_totp);
         break;
     default:
         pam_syslog(pamh, LOG_ERR, "Unknown otp method");
@@ -173,8 +170,6 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
     const char *otp2;
     char * otp;
     int retval;
-    delayAuth delay;
-
     modopt  modstr;
 
     // Récupération du nom d'utilisateur dans name.
@@ -189,8 +184,12 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
     if (fillflags(&modstr, argc, argv) == -1) {
         pam_syslog(pamh, LOG_ERR, "No options");
     }
-    delay.delay_totp = modstr.delay_totp;
-    delay.delay_hotp = modstr.delay_hotp;
+    
+    if (is_set(&modstr, NULL_OK)) {
+        if (userExists(usrname) == 0) {
+            return PAM_SUCCESS;
+        }
+    }
         
     if (is_set(&modstr, USE_AUTH_TOK)) {
         char * prev_auth_tok = NULL;
@@ -233,7 +232,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
         }
     }
 
-    retval = _check_otp(pamh, usrname, otp, delay);
+    retval = _check_otp(pamh, usrname, otp, &modstr);
     if (is_set(&modstr, USE_AUTH_TOK)) {
         free(otp);
     }
@@ -267,9 +266,10 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
                       int argc, const char **argv) {
     int retval;
     char otp[OTP_MAX_LENGTH + 1];
-    delayAuth delay;
-    delay.delay_totp = DELAY_TOTP;
-    delay.delay_hotp = DELAY_HOTP;
+    modopt options;
+    if (fillflags(&options,argc, argv) == -1) {
+        pam_syslog(pamh, LOG_ERR, "Options invalide détectées.");
+    }
 
     // Obtenir le nom d'utilisateur.
     const char * username;
@@ -324,7 +324,7 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
         strncpy(otp, cstotp, OTP_MAX_LENGTH);
         // Suppression de l'otp du cache
         pam_set_item (pamh, PAM_AUTHTOK, NULL);
-        retval = _check_otp (pamh, username, otp, delay);
+        retval = _check_otp (pamh, username, otp, &options);
         if (retval == PAM_SUCCESS) {
             return PAM_SUCCESS;
         }

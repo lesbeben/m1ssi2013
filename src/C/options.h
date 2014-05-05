@@ -12,11 +12,13 @@
 #define USE_AUTH_TOK 0
 #define DELAY_TOTP_AUTH 1
 #define DELAY_HOTP_AUTH 2
+#define NULL_OK 3
   
  typedef struct {
      char use_auth_tok; /**< Flag first_pass */
      uint64_t delay_hotp; /**< Flag first_pass */
      uint64_t delay_totp; /**< Flag first_pass */
+     char null_ok; /**< Flag NULL OK */
  }modopt;
  
  /** Parse les arguments dans argv. 
