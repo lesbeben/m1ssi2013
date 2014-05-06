@@ -57,20 +57,22 @@ int parse_options(pam_handle_t * pamh, modopt* flag,
         }
         if (!strncmp("delay_hotp", argv[i], 10)) {
             if (*(argv[i] + 10) == '=') {
+                // Pointeur sur la valeur du délai pour hotp.
                 value = argv[i] + 11;
-                if (*value != '\0') {
+                if (*value != '\0') { // La valeur n'est pas nulle.
                     if (set_opt(flag, DELAY_HOTP_AUTH, value) == -1) {
+                        // Erreur lors de la lecture de la valeur de l'option.
                         pam_syslog(pamh, LOG_ERR,
                                    "invalid value for delay_hotp: %s, using default value: %d.",
                                    value, DEF_DELAY_HOTP);
                         flag->delay.hotp =  DEF_DELAY_HOTP;
                     }
-                } else {
+                } else { // Pas de valeur fournie.
                     pam_syslog(pamh, LOG_ERR,
                                "no value specified for delay_hotp, using default value: %d.",
                                DEF_DELAY_HOTP);
                 }
-            } else {
+            } else { // Pas de valeur fournie.
                 pam_syslog(pamh, LOG_ERR,
                            "no value specified for delay_hotp, using default value: %d.",
                            DEF_DELAY_HOTP);
@@ -81,6 +83,7 @@ int parse_options(pam_handle_t * pamh, modopt* flag,
             set_opt(flag, NULL_OK, NULL);
             continue;
         }
+        pam_syslog(pamh, LOG_ERR, "unknown option: %s", argv[i]);
     }
     return OPTIONS_SUCCESS;
 }
