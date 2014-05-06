@@ -163,6 +163,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
     char * otp;
     int retval;
     modopt  modstr;
+    int authtok = PAM_AUTHTOK;
 
     // Récupération du nom d'utilisateur dans name.
     if ((retval = pam_get_user(pamh, &usrname, NULL)) != PAM_SUCCESS) {
@@ -192,7 +193,10 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
         if ((retval = pam_set_item(pamh, PAM_AUTHTOK, NULL)) != PAM_SUCCESS) {
             return retval;
         }
-        if ((retval = pam_get_authtok(pamh, PAM_AUTHTOK,
+        if (flags && PAM_PRELIM_CHECK) {
+            authtok = PAM_OLDAUTHTOK;
+        }
+        if ((retval = pam_get_authtok(pamh, authtok,
                                       &otp2, "Mot de passe jetable: "))
                 != PAM_SUCCESS) {
             return retval;
