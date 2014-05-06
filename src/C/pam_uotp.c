@@ -145,10 +145,10 @@ int _check_otp(pam_handle_t * pamh, const char * username,
     int retval;
     switch(user.method) {
     case HOTP_METHOD:
-        retval = _check_hotp(pamh, &user, otp, options->delay_hotp);
+        retval = _check_hotp(pamh, &user, otp, get_opt(options, DELAY_HOTP_AUTH));
         break;
     case TOTP_METHOD:
-        retval = _check_totp(pamh, &user, otp, options->delay_totp);
+        retval = _check_totp(pamh, &user, otp, get_opt(options, DELAY_TOTP_AUTH));
         break;
     default:
         pam_syslog(pamh, LOG_ERR, "Unknown otp method");
@@ -185,13 +185,13 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
         pam_syslog(pamh, LOG_ERR, "No options");
     }
     
-    if (is_set(&modstr, NULL_OK)) {
+    if (get_opt(&modstr, NULL_OK)) {
         if (userExists(usrname) == 0) {
             return PAM_SUCCESS;
         }
     }
         
-    if (is_set(&modstr, USE_AUTH_TOK)) {
+    if (get_opt(&modstr, USE_AUTH_TOK)) {
         char * prev_auth_tok = NULL;
         if ((retval = pam_get_item(pamh, PAM_AUTHTOK,(void *) &prev_auth_tok))
             != PAM_SUCCESS) {
@@ -233,7 +233,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
     }
 
     retval = _check_otp(pamh, usrname, otp, &modstr);
-    if (is_set(&modstr, USE_AUTH_TOK)) {
+    if (get_opt(&modstr, USE_AUTH_TOK)) {
         free(otp);
     }
     return retval;

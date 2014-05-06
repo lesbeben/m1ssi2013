@@ -57,4 +57,4 @@
   * 
   * @return Renvoie l'état de l'option field depuis la structure flag.
   */
- int is_set(modopt *flag, int field);
+ int get_opt(modopt *flag, int field);
