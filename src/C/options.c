@@ -68,12 +68,16 @@ int set_opt(modopt* flag, int field, const char* value) {
     return -1;
 }
 
-int is_set(modopt* flag, int field) {
+int get_opt(modopt* flag, int field) {
     switch(field) {
         case USE_AUTH_TOK:
             return flag->use_auth_tok;
         case NULL_OK:
             return flag->null_ok;
+        case DELAY_HOTP_AUTH:
+            return flag->delay_hotp;
+        case DELAY_TOTP_AUTH:
+            return flag->delay_totp;
         default:
             return 0;
     }
