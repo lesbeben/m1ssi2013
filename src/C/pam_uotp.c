@@ -45,7 +45,6 @@ int _check_totp(pam_handle_t * pamh, otpuser * user,
                     unlockFile();
                     return PAM_AUTH_ERR;
                 }
-
                 if (otp_expected == otp_given) {
                     hasFound = 1;
                     user->params.totp.tps = counter;
@@ -77,7 +76,6 @@ int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp, uint64_t 
     // Vérification d'un mot de passe + resynch.
     int otp_expected = 0;
     int otp_given = atoi(otp);
-    uint64_t tmp_delay;
 
     if (user->params.hotp.tplstauth < time(NULL)) {
         for (int i = 0; i < 3; i++) {
@@ -88,6 +86,7 @@ int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp, uint64_t 
                 unlockFile();
                 return PAM_AUTH_ERR;
             }
+            
             if (otp_expected == otp_given) {
                 user->params.hotp.nbfail = 0;
                 user->params.hotp.count += i + 1;
@@ -105,14 +104,7 @@ int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp, uint64_t 
         pam_syslog(pamh, LOG_ERR, "Nouvelle tentative trop rapide.");
         return PAM_AUTH_ERR;
     }
-    if (user->params.hotp.nbfail <= 2) {
-        tmp_delay = delay;
-    } else if (user->params.hotp.nbfail <= 9) {
-        tmp_delay = delay * 2;
-    } else {
-        tmp_delay = delay * 4;
-    }
-    user->params.hotp.tplstauth = time(NULL) + tmp_delay;
+    user->params.hotp.tplstauth = time(NULL) + delay;
     user->params.hotp.nbfail += 1;
     updateOTPUser(user);
 
@@ -181,7 +173,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
     }
 
     // Obtention d'un OTP par PAM.
-    if (fillflags(&modstr, argc, argv) == -1) {
+    if (parse_options(pamh, &modstr, argc, argv) == -1) {
         pam_syslog(pamh, LOG_ERR, "No options");
     }
     
@@ -267,7 +259,7 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
     int retval;
     char otp[OTP_MAX_LENGTH + 1];
     modopt options;
-    if (fillflags(&options,argc, argv) == -1) {
+    if (parse_options(pamh, &options,argc, argv) == -1) {
         pam_syslog(pamh, LOG_ERR, "Options invalide détectées.");
     }
 
