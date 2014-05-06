@@ -12,8 +12,8 @@ int fillflags(modopt* flag, int argc, const char** argv) {
     const char *value;
     flag->use_auth_tok = 0;
     flag->null_ok = 0;
-    set_opt(flag, DELAY_TOTP_AUTH, DELAY_TOTP);
-    set_opt(flag, DELAY_HOTP_AUTH, DELAY_HOTP);
+    flag->delay_hotp = (uint64_t)DELAY_HOTP;
+    flag->delay_totp = (uint64_t)DELAY_TOTP;
     
     for (int i =0; i < argc; i++) {
         if (!strcmp("use_auth_tok", argv[i])) {
@@ -25,7 +25,10 @@ int fillflags(modopt* flag, int argc, const char** argv) {
                 value = argv[i] + 11;
                 if (*value != '\0') {
                     if (strtol (value, &endptr, 10) > 0) {
-                        set_opt(flag, DELAY_TOTP_AUTH, value);
+                        if (set_opt(flag, DELAY_TOTP_AUTH, value) == -1) {
+                            flag->delay_hotp = (uint64_t)DELAY_HOTP;
+                            flag->delay_totp = (uint64_t)DELAY_TOTP;
+                        }
                     }
                 }
             }
