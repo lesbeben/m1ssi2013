@@ -13,6 +13,8 @@
 #define DELAY_TOTP_AUTH 1
 #define DELAY_HOTP_AUTH 2
 #define NULL_OK 3
+#define OPTIONS_ERROR -1
+#define OPTIONS_SUCCESS 0
   
  typedef struct {
      char use_auth_tok; /**< Flag first_pass */

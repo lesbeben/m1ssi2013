@@ -47,7 +47,7 @@ int fillflags(modopt* flag, int argc, const char** argv) {
             continue;
         }
     }
-    return 0;
+    return OPTIONS_SUCCESS;
 }
 
 int set_opt(modopt* flag, int field, const char* value) {
@@ -58,14 +58,20 @@ int set_opt(modopt* flag, int field, const char* value) {
             break;
         case DELAY_TOTP_AUTH:
             flag->delay_totp = (uint64_t)(strtol (value, &endptr, 10));
+            if ((flag->delay_totp <= 0) || (*endptr != 0)) {
+                return OPTIONS_ERROR;
+            }
         case DELAY_HOTP_AUTH:
             flag->delay_hotp = (uint64_t)(strtol (value, &endptr, 10));
+            if ((flag->delay_hotp <= 0) || (*endptr != 0)) {
+                return OPTIONS_ERROR;
+            }
         case NULL_OK:
             flag->null_ok = 1;
         default:
-            return -1;
+            return OPTIONS_ERROR;
     }
-    return -1;
+    return OPTIONS_ERROR;
 }
 
 int is_set(modopt* flag, int field) {
@@ -75,7 +81,7 @@ int is_set(modopt* flag, int field) {
         case NULL_OK:
             return flag->null_ok;
         default:
-            return 0;
+            return OPTIONS_SUCCESS;
     }
-    return 0;
+    return OPTIONS_SUCCESS;
 }
