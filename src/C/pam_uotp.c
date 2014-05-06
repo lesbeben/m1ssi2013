@@ -257,7 +257,6 @@ int pam_sm_setcred (pam_handle_t *pamh, int flags,
 int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
                       int argc, const char **argv) {
     int retval;
-    char otp[OTP_MAX_LENGTH + 1];
     modopt options;
     if (parse_options(pamh, &options,argc, argv) == -1) {
         pam_syslog(pamh, LOG_ERR, "Options invalide détectées.");
@@ -277,7 +276,6 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
     // 1er appel de la fonction avec le flag PAM_PRELIM_CHECK.
     // Test si l'utilisateur a un compte actif.
     if (flags & PAM_PRELIM_CHECK) {
-        const char *cstotp;
         // Tout d'abord, qui éxecute le processus courant ?
         if (getuid () == 0) {
             // Si l'utilisateur est root, alors pas de conditions
@@ -297,32 +295,18 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
         default :
             // Une erreur s'est produite
             pam_syslog (pamh, LOG_ERR,
-                        "user doesn't exists in otpasswd file");
+                        "error while accessing users file");
             return PAM_AUTHTOK_ERR;
         }
 
         // Vérifier l'autheticité du propriétaire par une demande
         // d'authentification (pas d'appel à pam_sm_authenticate pour ne pas
         // récupérer une deuxième fois le user)
-        if ((retval = pam_get_authtok (pamh, PAM_AUTHTOK, &cstotp,
-                                       "Mot de passe jetable: ")) != PAM_SUCCESS) {
-            return retval;
+        retval = pam_sm_authenticate(pamh, flags, argc, argv);
+        if (retval != PAM_SUCCESS) {
+            pam_syslog (pamh, LOG_ERR, "user authentication failed");
         }
-
-        if (cstotp == NULL) {
-            return PAM_AUTH_ERR;
-        }
-
-        strncpy(otp, cstotp, OTP_MAX_LENGTH);
-        // Suppression de l'otp du cache
-        pam_set_item (pamh, PAM_AUTHTOK, NULL);
-        retval = _check_otp (pamh, username, otp, &options);
-        if (retval == PAM_SUCCESS) {
-            return PAM_SUCCESS;
-        }
-
-        pam_syslog (pamh, LOG_ERR, "user authentication failed");
-        return PAM_TRY_AGAIN;
+        return retval;
     }
 
     //  2eme appel de la fonction avec le flag PAM_UPDATE_AUTHTOK.
