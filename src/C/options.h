@@ -20,11 +20,11 @@
  typedef struct {
      char use_auth_tok; /**< Flag first_pass */
      union {
-         uint64_t totp;
-         uint64_t hotp;
-     } delay;
+         uint64_t totp; /**< Delai après échec d'authentification totp*/
+         uint64_t hotp; /**< Delai après échec d'authentification hotp*/
+     } delay; /**< Union des delais */
      char null_ok; /**< Flag NULL OK */
- }modopt;
+ } modopt;
  
  /** Parse les arguments dans argv. 
  * 
