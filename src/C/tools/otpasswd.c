@@ -49,7 +49,7 @@ void cleanup(pam_handle_t * pamh, void * data, int error_status) {
 
 void parsing_error(char * prgname) {
     fprintf(stderr, "utilisation: ");
-    fprintf(stderr, "%s [-l login] [-m (hotp|totp)] [-s 16-8] [-q quantum]\n", 
+    fprintf(stderr, "%s [-l login] [-m (hotp|totp)] [-s 6-8] [-q quantum]\n", 
             prgname);
     exit(EXIT_FAILURE);
 }

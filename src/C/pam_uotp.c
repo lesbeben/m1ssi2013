@@ -45,7 +45,6 @@ int _check_totp(pam_handle_t * pamh, otpuser * user,
                     unlockFile();
                     return PAM_AUTH_ERR;
                 }
-
                 if (otp_expected == otp_given) {
                     hasFound = 1;
                     user->params.totp.tps = counter;
@@ -77,7 +76,6 @@ int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp, uint64_t 
     // Vérification d'un mot de passe + resynch.
     int otp_expected = 0;
     int otp_given = atoi(otp);
-    uint64_t tmp_delay;
 
     if (user->params.hotp.tplstauth < time(NULL)) {
         for (int i = 0; i < 3; i++) {
@@ -88,6 +86,7 @@ int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp, uint64_t 
                 unlockFile();
                 return PAM_AUTH_ERR;
             }
+            
             if (otp_expected == otp_given) {
                 user->params.hotp.nbfail = 0;
                 user->params.hotp.count += i + 1;
@@ -105,14 +104,7 @@ int _check_hotp(pam_handle_t * pamh, otpuser * user, const char * otp, uint64_t 
         pam_syslog(pamh, LOG_ERR, "Nouvelle tentative trop rapide.");
         return PAM_AUTH_ERR;
     }
-    if (user->params.hotp.nbfail <= 2) {
-        tmp_delay = delay;
-    } else if (user->params.hotp.nbfail <= 9) {
-        tmp_delay = delay * 2;
-    } else {
-        tmp_delay = delay * 4;
-    }
-    user->params.hotp.tplstauth = time(NULL) + tmp_delay;
+    user->params.hotp.tplstauth = time(NULL) + delay;
     user->params.hotp.nbfail += 1;
     updateOTPUser(user);
 
@@ -171,6 +163,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
     char * otp;
     int retval;
     modopt  modstr;
+    int authtok = PAM_AUTHTOK;
 
     // Récupération du nom d'utilisateur dans name.
     if ((retval = pam_get_user(pamh, &usrname, NULL)) != PAM_SUCCESS) {
@@ -181,7 +174,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
     }
 
     // Obtention d'un OTP par PAM.
-    if (fillflags(&modstr, argc, argv) == -1) {
+    if (parse_options(pamh, &modstr, argc, argv) == -1) {
         pam_syslog(pamh, LOG_ERR, "No options");
     }
     
@@ -200,7 +193,10 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags,
         if ((retval = pam_set_item(pamh, PAM_AUTHTOK, NULL)) != PAM_SUCCESS) {
             return retval;
         }
-        if ((retval = pam_get_authtok(pamh, PAM_AUTHTOK,
+        if (flags && PAM_PRELIM_CHECK) {
+            authtok = PAM_OLDAUTHTOK;
+        }
+        if ((retval = pam_get_authtok(pamh, authtok,
                                       &otp2, "Mot de passe jetable: "))
                 != PAM_SUCCESS) {
             return retval;
@@ -265,9 +261,8 @@ int pam_sm_setcred (pam_handle_t *pamh, int flags,
 int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
                       int argc, const char **argv) {
     int retval;
-    char otp[OTP_MAX_LENGTH + 1];
     modopt options;
-    if (fillflags(&options,argc, argv) == -1) {
+    if (parse_options(pamh, &options,argc, argv) == -1) {
         pam_syslog(pamh, LOG_ERR, "Options invalide détectées.");
     }
 
@@ -285,7 +280,6 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
     // 1er appel de la fonction avec le flag PAM_PRELIM_CHECK.
     // Test si l'utilisateur a un compte actif.
     if (flags & PAM_PRELIM_CHECK) {
-        const char *cstotp;
         // Tout d'abord, qui éxecute le processus courant ?
         if (getuid () == 0) {
             // Si l'utilisateur est root, alors pas de conditions
@@ -305,32 +299,18 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
         default :
             // Une erreur s'est produite
             pam_syslog (pamh, LOG_ERR,
-                        "user doesn't exists in otpasswd file");
+                        "error while accessing users file");
             return PAM_AUTHTOK_ERR;
         }
 
         // Vérifier l'autheticité du propriétaire par une demande
         // d'authentification (pas d'appel à pam_sm_authenticate pour ne pas
         // récupérer une deuxième fois le user)
-        if ((retval = pam_get_authtok (pamh, PAM_AUTHTOK, &cstotp,
-                                       "Mot de passe jetable: ")) != PAM_SUCCESS) {
-            return retval;
+        retval = pam_sm_authenticate(pamh, flags, argc, argv);
+        if (retval != PAM_SUCCESS) {
+            pam_syslog (pamh, LOG_ERR, "user authentication failed");
         }
-
-        if (cstotp == NULL) {
-            return PAM_AUTH_ERR;
-        }
-
-        strncpy(otp, cstotp, OTP_MAX_LENGTH);
-        // Suppression de l'otp du cache
-        pam_set_item (pamh, PAM_AUTHTOK, NULL);
-        retval = _check_otp (pamh, username, otp, &options);
-        if (retval == PAM_SUCCESS) {
-            return PAM_SUCCESS;
-        }
-
-        pam_syslog (pamh, LOG_ERR, "user authentication failed");
-        return PAM_TRY_AGAIN;
+        return retval;
     }
 
     //  2eme appel de la fonction avec le flag PAM_UPDATE_AUTHTOK.
