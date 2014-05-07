@@ -96,12 +96,15 @@ int readLine(FILE *f, otpuser *user) {
     // Dernier token : les paramètres optionnels
     switch (user->method) {
     case HOTP_METHOD :
+        // Le compteur hotp
         token = strtok_r(NULL, SEPARATOR, &saveptr);
         if (token == NULL) {
             free(user->username);
             destroySecret(user->passwd);
             return USR_ERR_USR_FILE;
         }
+        
+        // Date dernière tentative
         user->params.hotp.count = atoi(token);
         token = strtok_r(NULL, SEPARATOR, &saveptr);
         if (token == NULL) {
@@ -110,6 +113,8 @@ int readLine(FILE *f, otpuser *user) {
             return USR_ERR_USR_FILE;
         }
         user->params.hotp.tplstauth = atoi(token);
+        
+        // NOmbre d'échecs
         token = strtok_r(NULL, SEPARATOR, &saveptr);
         if (token == NULL) {
             free(user->username);

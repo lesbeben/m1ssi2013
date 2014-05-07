@@ -6,6 +6,7 @@
  ******************************************************************************/
 
 #include <string.h>
+#include <_pam_types.h>
 #include <stdint.h>
 
 
@@ -18,10 +19,12 @@
   
  typedef struct {
      char use_auth_tok; /**< Flag first_pass */
-     uint64_t delay_hotp; /**< Flag first_pass */
-     uint64_t delay_totp; /**< Flag first_pass */
+     union {
+         uint64_t totp; /**< Delai après échec d'authentification totp*/
+         uint64_t hotp; /**< Delai après échec d'authentification hotp*/
+     } delay; /**< Union des delais */
      char null_ok; /**< Flag NULL OK */
- }modopt;
+ } modopt;
  
  /** Parse les arguments dans argv. 
  * 
@@ -34,7 +37,7 @@
  *
  * @return Renvoie 0 en cas de succès, -1 sinon. 
  */
- int fillflags(modopt *flag, int argc, const char **argv);
+ int parse_options(pam_handle_t * pamh, modopt *flag, int argc, const char **argv);
  
  /** Defini l'option "field" à 1.
   * 
