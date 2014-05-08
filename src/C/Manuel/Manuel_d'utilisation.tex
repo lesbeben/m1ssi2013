@@ -1,0 +1,361 @@
+\documentclass{"../../../res/univ-projet"}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\usepackage{listings}
+\usepackage{amsthm}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+
+\logo{../../../res/logo_univ.png}
+\title{Manuel d'utilisation}
+\author{Adrien \bsc{Smondack}, Claire \bsc{Hardouin}, Damien \bsc{Picard}, Maxime \bsc{Michotte}}
+\projet{M1SSI}
+\projdesc{Projet de génération d'OTP}
+\filiere{M1SSI}
+\version{}
+\signataire{Magali \bsc{Bardet}, Bruno \bsc{Macadré}}
+\date{Janvier 2014}
+
+\begin{document}
+\maketitle
+%-------------------------------------------------------------------------------
+\tableofcontents
+
+\newpage
+
+\part{Installation}
+\label{prereq}
+\section{Prérequis}
+\subsection{Système d'exploitation}
+Le module OTP ne peut être utilisé que sur des systèmes Linux comme Arch Linux, 
+CentOs, RedHat, Ubuntu et bien d'autres.
+
+\subsection{Dépendance}
+Pour que le module puisse être installé correctement, certaines bibliothèques 
+sont nécessaires tels:
+\begin{itemize}
+\item libpam
+\item libmath
+\item libcrypto
+\end{itemize}
+Cmake doit également être installé pour procéder à la compilation du code source.
+\newline
+
+\subsection{Installation des bibliothèques nécessaires à la compilation et à l'exécution du module, et des outils de compilation}
+\textbf{Procédure d'installation sur Arch Linux:}\\
+\begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
+pacman -S pam openssl glibc
+pacman -S cmake make gcc
+\end{lstlisting}
+
+\textbf{Procédure d'installation sur Ubuntu 14.04:}\\
+\begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
+apt-get install libpam0g
+apt-get install libpam0g-dev
+apt-get install libssl-dev
+apt-get install cmake make gcc
+\end{lstlisting}
+
+\textbf{Procédure d'installation sur CentOs 6 / Red Hat:}\\
+\begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
+yum install pam-devel
+yum install openssl-devel
+yum install cmake make gcc
+\end{lstlisting}
+
+%----------------------------------
+\newpage
+
+\section{Installation}
+\subsection{Récupération des fichiers sources}
+Récupérer les fichiers sources à l'adresse suivantes:
+\begin{description}
+\item[mirror 1] \href{https://github.com/lesbeben/m1ssi2013/archive/master.zip}{https://github.com/lesbeben/m1ssi2013/archive/master.zip}\\
+%\textcolor{gray}{https://github.com/lesbeben/m1ssi2013/archive/master.zip}
+
+\item[mirror 2] \href{https://mmiserveur.no-ip.org/project/master.zip}{https://mmiserveur.no-ip.org/project/master.zip}\\
+%\textcolor{gray}{https://mmiserveur.no-ip.org/project/master.zip}
+\end{description}
+
+\begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
+wget https://mmiserveur.no-ip.org/project/master.zip
+\end{lstlisting}
+
+\subsection{Compilation}
+Décompressez l'archive précédemment téléchargée, pour cela placez vous 
+dans le répertoire de téléchargement:
+\begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
+tar -xf master.zip
+\end{lstlisting}
+Nous allons désormais procéder à la compilation du module:
+\begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
+cd m1ssi2013/src/C
+mkdir build
+cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release 
+make
+\end{lstlisting}
+
+Il est important de définir les options du CMake, c'est elles qui permettent une installation dans les
+répertoires adéquat. 
+
+\subsection{Installation}
+Procédons enfin à l'installation du module PAM. L'installation s'adaptera 
+aux options établies lors de l'appel à CMake.
+\begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
+sudo make install
+\end{lstlisting}
+
+\textit{Si des erreurs surviennent lors de cette étape, merci de vous 
+rapporter à la section prérequis\ref{prereq}}
+
+%-------------------------------------------------------------------------------
+
+\newpage
+
+\part{Configuration du système d'authentification}
+\section{Gestion des utilisateurs}
+Les utilisateurs doivent exister sur le système, et être présent dans 
+le fichier des utilisateurs OTP utilisé par notre module qui se trouve 
+dans \verb?/var/otpasswd?. La création d'un utilisateur dans le fichier 
+\verb?/var/otpasswd? se fait via un utilitaire en ligne de commande 
+\verb?otpasswd?. Il existe plusieurs options disponible:
+\newline
+\begin{tabular}{|p{0.2\textwidth}p{0.75\textwidth}|}
+\hline
+\textbf{-l <login>} & Pour fournir le login de l'utilisateur à enregistrer.\\
+\hline
+\textbf{-m <hotp | totp>} & Pour founir la méthode OTP voulu; soit hotp soit totp.\\
+\hline
+\textbf{-s <longueur>} & Pour définir la longueur de l'OTP ( $6 \leq$ longueur $\leq 8$).\\
+\hline
+\textbf{-q <durée>} & Pour définir le quantum dans le cadre d'une authentification utilisant 
+TOTP soit la période durant laquelle l'OTP est valide.\\
+\hline
+\end{tabular}
+%\begin{description}
+%\item[-l <login>] Pour fournir le login de l'utilisateur à enregistrer.
+%\item[-m <hotp | totp>] Pour founir la méthode OTP voulu; soit hotp soit totp.
+%\item[-s <longueur>] Pour définir la longueur de l'OTP (doit être compris entre 6 et 8).
+%\item[-q <durée>] Pour définir le quantum de le cadre d'une authentification utilisant TOTP
+%soit la période durant laquelle l'OTP est valide.
+%\end{description}
+
+Exemple :\\
+Ajout d'un utilisateur (wuna) avec la méthode d'authentification par TOTP, une longueur d'
+OTP égale à 8 et une quantum de 30 sec:
+\begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
+otpasswd -l wuna -m totp -s 8 -q 30
+\end{lstlisting}
+Notons que l'option -q n'a de sens que si c'est la méthode TOTP qui est appelée.\\
+
+Si des informations sont absentes lors de l'appel à l'utilitaire, 
+celui-ci affichera pas à pas les champs à remplir.
+
+\textit{/! $\backslash$ Les utilisateurs définis dans cet utilitaire 
+doivent exister sur le système.}
+
+\section{Rappel sur PAM}
+PAM (Pluggable Authentication Modules) permet de définir différents moyens
+d'authentification de bas niveau dans une API de haut niveau.
+Les modules PAM sont quant à eux des bibliothèques dynamiques. \verb?pam_uotp.so?
+est un module pam qui permet une authentification à base d'OTP.
+
+La version Linux de PAM divise les fonctionnalités du module en différents mécanismes.\\
+Voici une brève explication de ces mécanismes :\\
+Le mécanisme \textbf{auth:} Les modules d'authentification valident les informations d'authentification de l'utilisateur . Cela signifie qu'il vérifie si l'utilisateur peut fournir des informations d'identification valides.\\
+Le mécanisme \textbf{account:} Ces modules sont chargés de décider si le compte qui essaie de se connecter a accès à des ressources.\\
+Le mécanisme \textbf{session:} Ces modules permettent d'établir l'environnement qui sera construit et détruit après la connexion de l'utilisateur ou sa déconnexion. Les fichiers de session peuvent déterminer les commandes qui doivent être exécutées pour préparer l'environnement.\\
+Le mécanisme \textbf{password:} Ces modules sont responsables de la mise à jour des informations d'authentification.
+Les deux premières catégories de modules seront référencées chaque fois qu'un programme effectue authentification réussie par PAM. 
+Les modules de la session seront exécutés si nécessaire, après les deux premiers modules. Les modules de mot de passe sont accessibles sur demande. Notre module PAM permet une authentification ainsi qu'un changement de secret.
+
+\newpage
+
+\subsection{Le principe}
+Le module étant installé, il faut désormais modifier le fichier de 
+configuration du service utilisant PAM sur lequel on souhaite utiliser 
+l'authentification à base d'OTP. Ces fichiers de configuration se situent 
+dans le répertoire \verb?/etc/pam.d/?.
+
+Pour activer ce module il faut modifier \verb?pam_unix.so? par \verb?pam_uotp.so?  
+qui correspond à notre module d'authentification:
+
+\begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
+auth      required      pam_uotp.so 
+\end{lstlisting}
+
+Si l'on veut ajouter l'authentification à base d'OTP en plus du système 
+d'authentification existant, il existe deux solutions, soit placer le module OTP 
+avant le module existant soit le placer après. Le fichier étant lu de haut en bas, 
+cela dépend dans quel ordre on souhaite s'authentifier.\\
+Pour demander l'authentification existante puis une authentification à base d'OTP: 
+\begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
+auth      required      pam_unix.so
+auth      required      pam_uotp.so
+\end{lstlisting}
+\newpage
+Pour demander une authentification à base d'OTP puis l'authentification existante:
+\begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
+auth      required      pam_uotp.so
+auth      required      pam_unix.so
+\end{lstlisting}
+
+
+\subsection{Les options}
+Il existe actuellement plusieurs options que l'on peut définir lors de l'appel du module
+dans les fichiers de configuration vus précédemment; ces options se définissent en fin de 
+ligne après l'appel du module \verb?pam_uotp.so?.
+\newline
+%\vspace{0.2cm}
+\begin{tabular}{|p{0.25\textwidth}p{0.70\textwidth}|}
+\hline
+\textbf{null$\_$ok} & Permet à un utilisateur n'ayant pas initialisé le système de se connecter.\\
+\hline
+\textbf{delay$\_$totp=<valeur>} & Permet de définir le temps d'attente entre 
+chaque tentative infructueuse pour la methode TOTP.\\
+\hline
+\textbf{delay$\_$hotp=<valeur>} & Permet de définir le temps d'attente entre 
+chaque tentative infructueuse pour la methode HOTP.\\
+\hline
+\textbf{use$\_$auth$\_$tok} & Permet de définir une autre méthode pour recueillir 
+les informations login et OTP (utile pour Apache).\\
+\hline
+\end{tabular}
+%\begin{description}
+%\item[null$\_$ok] Permet à un utilisateur n'ayant pas initialisé le système de se connecter.
+%\item[delay$\_$totp=<valeur>] Permet de définir le temps d'attente entre chaque tentative infructueuse pour la methode TOTP.
+%\item[delay$\_$hotp=<valeur>] Permet de définir le temps d'attente entre chaque tentative infructueuse pour la methode HOTP.
+%\item[use$\_$auth$\_$tok] Permet de définir une autre méthode pour recueillir les informations login et OTP (utile pour Apache).
+%\end{description}
+Exemple:
+\begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
+auth   required    pam_uotp.so delay_totp=2 delay_hotp=5 null_ok use_auth_tok
+\end{lstlisting}
+
+Si les options delay$\_$totp=<valeur> et delay$\_$hotp=<valeur> ne sont pas fournies alors
+les valeurs choisies sont celles par défaut soit 1.\\
+L'option null$\_$ok est fortement déconseillée dans le cas d'une utilisation seule de notre module OTP.
+Elle peut cependant devenir intéressante dans le cadre ou l'on gère plusieurs méthodes d'authentification;
+en effet si l'utilisateur n'est pas enregistré dans le fichier des utilisateurs OTP (\verb?/var/otpasswd?)
+alors cette méthode ne sera pas prise en compte. Cette option permet par exemple à des utilisateurs d'utiliser
+une méthode d'authentification à base d'OTP en plus de leur méthode d'authentification par défaut 
+(\textit{login}/\textit{password}), sans contraindre les autres utilisateurs à utiliser la 
+méthode d'authentification à base d'OTP.\\
+
+\newpage
+
+\part{Exemples de configuration}
+\section{SSH}
+Afin d'activer notre module pour le service ssh, il faut modifier le fichier \verb?/etc/pam.d/sshd?.
+\begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
+#%PAM-1.0
+#auth     required  pam_securetty.so     #disable remote root
+auth      include   system-remote-login
+auth      required  pam_uotp.so use_auth_tok null_ok
+account   include   system-remote-login
+password  include   system-remote-login
+session   include   system-remote-login
+\end{lstlisting}
+Ci-dessus un exemple de configuration, ou nous avons passé en commentaire l'authentification utilisant
+\verb?pam_securetty.so? nous avons à la place mis notre module d'authentification à base d'OTP, en rajoutant le 
+module \verb?pam_uotp.so? pour l'authentification.\\
+Il reste désormais à configurer le service ssh pour autoriser PAM comme mécanisme d'authentification, 
+ainsi que le challenge response. Pour cela il faut modifier le fichier \verb?/etc/ssh/sshd_config?
+\begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
+ChallengeResponseAuthentication yes
+UsePAM yes
+\end{lstlisting}
+Ci-dessus les modifications apportées sur le fichier de configuration ssh.\\
+Une fois ces configurations établies, le service ssh fonctionne avec les OTP.
+Vous pouvez procéder à un test pour vérifier:
+\begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
+ssh localhost
+\end{lstlisting}
+
+\section{Apache}
+Pour utiliser notre module sur un serveur Apache, il faut installer un composant rendant PAM utilisable
+sur Apache disponible à l'adresse suivante 
+\href{http://pear.php.net/package/PEAR/download}{http://pear.php.net/package/PEAR/download}.\\
+Ajouter désormais \textbf{extension=pam.so} à votre fichier php.ini.\\
+Enfin aller configurer le fichier de configuration du service PHP pour PAM, \verb?/etc/pam.d/php?
+\begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
+#%PAM-1.0
+auth       required     pam_uotp.so use_auth_tok
+\end{lstlisting}
+
+\newpage
+
+Exemple simple de pages HTML/PHP utilisant notre module d'authentification:
+Formulaire:
+\begin{lstlisting}[language=php]
+/* index.html */
+<!DOCTYPE HTML>
+<html>
+<head>
+        <title>OTP Authentication</title>
+</head>
+<body>
+        <h1>OTP Authentication via PHP</h1>
+        <table>
+        <form name="input" action="https://mmiprod.no-ip.org/login.php" method="post">
+        <tr><th>Username:<td> <input type="text" name="uname" /><br />
+        <tr><th>OTP: <td><input type="password" name="pswd" />
+        <tr><th colspan="2"><input type="submit" value="Submit" />
+        </table>
+        </form>
+</body>
+</html> 
+\end{lstlisting}
+
+Authentification utilisant PAM:
+\begin{lstlisting}[language=php]
+/* login.php */
+<!DOCTYPE HTML>
+<html>
+<head>
+<title> Authentication Page:</title>
+</head>
+  <body>
+<?php echo "<h1>Authentication Page:</h1>"; ?>
+ <br>
+    <?php
+      $uname = $_POST['uname'];
+      $pswd = $_POST['pswd'];
+     if ( pam_auth( $uname, $pswd, &$error, false) ) {
+        echo "<h3>You are authenticated!</h3>";
+      } else {
+        echo "<h3>Authentication Failed!</h3>";
+      } ?>
+  </body>
+</html> 
+\end{lstlisting}
+
+\newpage
+
+\section{Gestionnaire de connexion}
+Afin d'activer notre module pour le service de gestionnaire de connexion, il faut modifier le fichier \verb?/etc/pam.d/system-auth?
+et passer en commentaire la ligne:\\
+\verb?auth      required  pam_unix.so     try_first_pass nullok?\\
+puis ajouter en tête du fichier la ligne suivante:\\
+\verb?auth      required  pam_uotp.so?
+\begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
+auth      required  pam_uotp.so
+#auth     required  pam_unix.so     try_first_pass nullok
+auth      optional  pam_permit.so
+auth      required  pam_env.so
+
+account   required  pam_unix.so
+account   optional  pam_permit.so
+account   required  pam_time.so
+
+password  required  pam_unix.so     try_first_pass nullok sha512 shadow
+password  optional  pam_permit.so
+
+session   required  pam_limits.so
+session   required  pam_unix.so
+session   optional  pam_permit.so
+\end{lstlisting}
+%-------------------------------------------------------------------------------
+\end{document}
+ 
