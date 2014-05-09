@@ -8,7 +8,7 @@ add_definitions(--std=c99 -Wall -Werror)
 # Les deux libs statiques à générer
 add_library(otp STATIC otp.c otp.h utils.c utils.h secret.h)
 add_library(users STATIC users.c secret.c)
-find_package(OpenSSL REQUIRED)
+#find_package(OpenSSL REQUIRED)
 IF(${CMAKE_BUILD_TYPE} MATCHES Debug)
  #   find_package(Check REQUIRED)
 # Création des tests
