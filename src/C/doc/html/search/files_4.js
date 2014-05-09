@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['totp_2eh',['totp.h',['../totp_8h.html',1,'']]]
+  ['users_2eh',['users.h',['../users_8h.html',1,'']]],
+  ['utils_2eh',['utils.h',['../utils_8h.html',1,'']]]
 ];

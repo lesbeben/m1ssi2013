@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.6"/>
+<meta name="generator" content="Doxygen 1.8.7"/>
 <title>OTP: Référence de la structure otpuser</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -38,7 +38,7 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Généré par Doxygen 1.8.6 -->
+<!-- Généré par Doxygen 1.8.7 -->
 <script type="text/javascript">
 var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
 </script>
@@ -115,30 +115,64 @@ $(document).ready(function(){initNavTree('structotpuser.html','');});
 Champs de données</h2></td></tr>
 <tr class="memitem:a9b20c006bd90a09e1465fb668700e81d"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structotpuser.html#a9b20c006bd90a09e1465fb668700e81d">username</a></td></tr>
 <tr class="separator:a9b20c006bd90a09e1465fb668700e81d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adcc9a19ad3119f823a658f6a49a24e64"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structotpuser.html#adcc9a19ad3119f823a658f6a49a24e64">method</a></td></tr>
-<tr class="separator:adcc9a19ad3119f823a658f6a49a24e64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae16a2e07e3ca49c3c4bd592efbf1b5ed"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structotpuser.html#ae16a2e07e3ca49c3c4bd592efbf1b5ed">method</a></td></tr>
+<tr class="separator:ae16a2e07e3ca49c3c4bd592efbf1b5ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2dabc49a341cc10820838f308862bfb1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="secret_8h.html#ad603bade8e4595117694a292eadcf1ab">secret</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structotpuser.html#a2dabc49a341cc10820838f308862bfb1">passwd</a></td></tr>
 <tr class="separator:a2dabc49a341cc10820838f308862bfb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab694e97f3642bc0f8a3f93eb95312f3f"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structotpuser.html#ab694e97f3642bc0f8a3f93eb95312f3f">otp_len</a></td></tr>
+<tr class="separator:ab694e97f3642bc0f8a3f93eb95312f3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a496ef550d1b9de85a80c31807eb5a3b2"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structotpuser.html#a496ef550d1b9de85a80c31807eb5a3b2">isBanned</a></td></tr>
+<tr class="separator:a496ef550d1b9de85a80c31807eb5a3b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e75c36bb0bbe111f116292f1764190c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="unionotpopt.html">otpopt</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structotpuser.html#a8e75c36bb0bbe111f116292f1764190c">params</a></td></tr>
 <tr class="separator:a8e75c36bb0bbe111f116292f1764190c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
 <div class="textblock"><p>Structure permettant de représenter un utilisateur en mémoire. </p>
 
-<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00027">27</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
+<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00037">37</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
 </div><h2 class="groupheader">Documentation des champs</h2>
-<a class="anchor" id="adcc9a19ad3119f823a658f6a49a24e64"></a>
+<a class="anchor" id="a496ef550d1b9de85a80c31807eb5a3b2"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int method</td>
+          <td class="memname">char isBanned</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indique si l'utilisateur à le droit de tenter de s'authentifier </p>
+
+<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00042">42</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae16a2e07e3ca49c3c4bd592efbf1b5ed"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char method</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>La méthode d'OTP de l'utilisateur. </p>
 
-<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00029">29</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
+<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00039">39</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab694e97f3642bc0f8a3f93eb95312f3f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char otp_len</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>La taille des OTP à générer. </p>
+
+<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00041">41</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
 
 </div>
 </div>
@@ -151,9 +185,9 @@ Champs de données</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Les paramètres optionels pour l'authentification. </p>
+<p>Les paramètres optionnels pour l'authentification. </p>
 
-<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00031">31</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
+<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00044">44</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
 
 </div>
 </div>
@@ -168,7 +202,7 @@ Champs de données</h2></td></tr>
 </div><div class="memdoc">
 <p>Le secret de l'utilisateur. </p>
 
-<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00030">30</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
+<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00040">40</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
 
 </div>
 </div>
@@ -183,7 +217,7 @@ Champs de données</h2></td></tr>
 </div><div class="memdoc">
 <p>Le nom de l'utilisateur. </p>
 
-<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00028">28</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
+<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00038">38</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
 
 </div>
 </div>

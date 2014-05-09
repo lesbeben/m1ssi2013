@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.6"/>
+<meta name="generator" content="Doxygen 1.8.7"/>
 <title>OTP: Référence du fichier utils/users.h</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -38,7 +38,7 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Généré par Doxygen 1.8.6 -->
+<!-- Généré par Doxygen 1.8.7 -->
 <script type="text/javascript">
 var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
 </script>
@@ -109,7 +109,9 @@ $(document).ready(function(){initNavTree('users_8h.html','');});
 <div class="title">Référence du fichier users.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="secret_8h_source.html">secret.h</a>&quot;</code><br/>
+<div class="textblock"><code>#include &quot;<a class="el" href="secret_8h_source.html">secret.h</a>&quot;</code><br />
+<code>#include &lt;stdint.h&gt;</code><br />
+<code>#include &lt;sys/types.h&gt;</code><br />
 </div>
 <p><a href="users_8h_source.html">Aller au code source de ce fichier.</a></p>
 <table class="memberdecls">
@@ -122,21 +124,37 @@ Structures de données</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:aa3e6e2b308c471bef2a0f9dfd7b76c1c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#aa3e6e2b308c471bef2a0f9dfd7b76c1c">USR_SUCCESS</a>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:aa3e6e2b308c471bef2a0f9dfd7b76c1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09af096ef659c8f110e902f7944e1533"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#a09af096ef659c8f110e902f7944e1533">USR_ERR_SYS</a>&#160;&#160;&#160;-1</td></tr>
+<tr class="separator:a09af096ef659c8f110e902f7944e1533"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a325523ef69786fbd9589e7ec39e740c6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#a325523ef69786fbd9589e7ec39e740c6">USR_ERR_IO</a>&#160;&#160;&#160;-2</td></tr>
+<tr class="separator:a325523ef69786fbd9589e7ec39e740c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af52d9a6233acc5258150fd52d2e62105"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#af52d9a6233acc5258150fd52d2e62105">USR_ERR_USR_UKN</a>&#160;&#160;&#160;-3</td></tr>
+<tr class="separator:af52d9a6233acc5258150fd52d2e62105"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59e5f46af0f17293cf5fdf3a2ec91746"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#a59e5f46af0f17293cf5fdf3a2ec91746">USR_ERR_USR_FILE</a>&#160;&#160;&#160;-4</td></tr>
+<tr class="separator:a59e5f46af0f17293cf5fdf3a2ec91746"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae613966ed336a92ca05fe3185be9004a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#ae613966ed336a92ca05fe3185be9004a">USR_ERR_PARAM</a>&#160;&#160;&#160;-5</td></tr>
+<tr class="separator:ae613966ed336a92ca05fe3185be9004a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e45ef2ed84fafd4d48908efeec8cf8b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#a9e45ef2ed84fafd4d48908efeec8cf8b">NO_MORE_USERS</a>&#160;&#160;&#160;-6</td></tr>
+<tr class="separator:a9e45ef2ed84fafd4d48908efeec8cf8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a63e24656e8284fd47ab8911ac5bb814c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#a63e24656e8284fd47ab8911ac5bb814c">TOTP_METHOD</a>&#160;&#160;&#160;0</td></tr>
 <tr class="separator:a63e24656e8284fd47ab8911ac5bb814c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0079afc4715db197e1d020120c52f003"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#a0079afc4715db197e1d020120c52f003">HOTP_METHOD</a>&#160;&#160;&#160;1</td></tr>
 <tr class="separator:a0079afc4715db197e1d020120c52f003"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad864fc8f72b46e83229349fb173afa0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#ad864fc8f72b46e83229349fb173afa0e">OTPWD_PATH</a>&#160;&#160;&#160;&quot;/tmp/otpasswd&quot;</td></tr>
-<tr class="separator:ad864fc8f72b46e83229349fb173afa0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Fonctions</h2></td></tr>
-<tr class="memitem:afebe1894bf39039a315ff6d482c0d0be"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#afebe1894bf39039a315ff6d482c0d0be">getOTPUser</a> (char *usrname, <a class="el" href="structotpuser.html">otpuser</a> *user)</td></tr>
-<tr class="separator:afebe1894bf39039a315ff6d482c0d0be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3585185cecb46d10e36d491b57515a6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#aa3585185cecb46d10e36d491b57515a6">getOTPUser</a> (const char *usrname, <a class="el" href="structotpuser.html">otpuser</a> *user)</td></tr>
+<tr class="separator:aa3585185cecb46d10e36d491b57515a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a666dc67d04a34a1212ee4c1088c869"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#a2a666dc67d04a34a1212ee4c1088c869">updateOTPUser</a> (<a class="el" href="structotpuser.html">otpuser</a> *user)</td></tr>
 <tr class="separator:a2a666dc67d04a34a1212ee4c1088c869"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa595e4a0bc1208525bab7cb07069f873"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#aa595e4a0bc1208525bab7cb07069f873">destroyOTPUser</a> (char *usrname)</td></tr>
-<tr class="separator:aa595e4a0bc1208525bab7cb07069f873"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7562cba053fd28a01b6e7cd34e3c8eb2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#a7562cba053fd28a01b6e7cd34e3c8eb2">userExists</a> (const char *username)</td></tr>
+<tr class="separator:a7562cba053fd28a01b6e7cd34e3c8eb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9fdb393a5b51a9a92b07fba6ef2a2f3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#ad9fdb393a5b51a9a92b07fba6ef2a2f3">removeOTPUser</a> (char *usrname)</td></tr>
+<tr class="separator:ad9fdb393a5b51a9a92b07fba6ef2a2f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fcacc20a8d04c8b9d7c4dedcd89eaad"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#a8fcacc20a8d04c8b9d7c4dedcd89eaad">resetOTPUser</a> (<a class="el" href="structotpuser.html">otpuser</a> *user)</td></tr>
+<tr class="separator:a8fcacc20a8d04c8b9d7c4dedcd89eaad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abb78f9c59e326eb90c7ad0aaa912fac1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#abb78f9c59e326eb90c7ad0aaa912fac1">lockFile</a> ()</td></tr>
 <tr class="separator:abb78f9c59e326eb90c7ad0aaa912fac1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4dc4cd2e43da46ba9767c8cd478e0b61"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="users_8h.html#a4dc4cd2e43da46ba9767c8cd478e0b61">unlockFile</a> ()</td></tr>
@@ -153,31 +171,21 @@ Fonctions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00006">6</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
+<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00017">17</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad864fc8f72b46e83229349fb173afa0e"></a>
+<a class="anchor" id="a9e45ef2ed84fafd4d48908efeec8cf8b"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define OTPWD_PATH&#160;&#160;&#160;&quot;/tmp/otpasswd&quot;</td>
+          <td class="memname">#define NO_MORE_USERS&#160;&#160;&#160;-6</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Répertoire destiné a accueillir les données d'authentification utilisateurs.</p>
-<p>Dans ce répertoire nous trouverons un fichier par utilisateur contenant: </p>
-<ul>
-<li>
-La méthode d'otp choisie par l'utilisateur.  </li>
-<li>
-Le secret de l'utilisateur  </li>
-<li>
-Les paramètres supplémentaires relatifs à la méthode d'otp  </li>
-</ul>
 
-<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00017">17</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
+<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00014">14</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
 
 </div>
 </div>
@@ -191,45 +199,103 @@ Les paramètres supplémentaires relatifs à la méthode d'otp  </li>
       </table>
 </div><div class="memdoc">
 
-<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00005">5</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
+<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00016">16</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
 
 </div>
 </div>
-<h2 class="groupheader">Documentation des fonctions</h2>
-<a class="anchor" id="aa595e4a0bc1208525bab7cb07069f873"></a>
+<a class="anchor" id="a325523ef69786fbd9589e7ec39e740c6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int destroyOTPUser </td>
-          <td>(</td>
-          <td class="paramtype">char *&#160;</td>
-          <td class="paramname"><em>usrname</em></td><td>)</td>
-          <td></td>
+          <td class="memname">#define USR_ERR_IO&#160;&#160;&#160;-2</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Libère les ressources associées à un utilisateur.</p>
-<p>Cette fonction permet d'encapsuler le type otpuser et de proposer une libération des ressources simplifiée. Elle DOIT libérer toutes les ressources associées à l'utilisateur dans la RAM.</p>
-<dl class="params"><dt>Paramètres</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">user</td><td>un pointeur vers un otpuser.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section pre"><dt>Précondition</dt><dd>user != NULL</dd></dl>
-<dl class="section return"><dt>Renvoie</dt><dd>retourne 0, ou -1 en cas d'erreur. </dd></dl>
+
+<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00010">10</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="afebe1894bf39039a315ff6d482c0d0be"></a>
+<a class="anchor" id="ae613966ed336a92ca05fe3185be9004a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define USR_ERR_PARAM&#160;&#160;&#160;-5</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00013">13</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a09af096ef659c8f110e902f7944e1533"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define USR_ERR_SYS&#160;&#160;&#160;-1</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00009">9</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a59e5f46af0f17293cf5fdf3a2ec91746"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define USR_ERR_USR_FILE&#160;&#160;&#160;-4</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00012">12</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="af52d9a6233acc5258150fd52d2e62105"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define USR_ERR_USR_UKN&#160;&#160;&#160;-3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00011">11</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aa3e6e2b308c471bef2a0f9dfd7b76c1c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define USR_SUCCESS&#160;&#160;&#160;0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Définition à la ligne <a class="el" href="users_8h_source.html#l00008">8</a> du fichier <a class="el" href="users_8h_source.html">users.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des fonctions</h2>
+<a class="anchor" id="aa3585185cecb46d10e36d491b57515a6"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int getOTPUser </td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
+          <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>usrname</em>, </td>
         </tr>
         <tr>
@@ -245,9 +311,8 @@ Les paramètres supplémentaires relatifs à la méthode d'otp  </li>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Obtient les informations de l'utilisateur dont le login est usrname.</p>
-<p>Cette fonction doit aller lire les informations dans le fichier correspondant à l'utilisateur puis remplir la structure passée en paramètre.</p>
-<p>Si le fichier est introuvable on indiquera une erreur en retournant NULL. </p>
+<p>Obtient les informations de l'utilisateur dont le nom de connexion est "usrname".</p>
+<p>Cette fonction doit aller lire le fichier des utilisateurs. Si il trouve une ligne correspondant au nom de l'utilisateur il remplira alors la structure passée en paramètre. Sinon il indiquera l'erreur qu'il aura rencontré.</p>
 <dl class="params"><dt>Paramètres</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">usrname</td><td>Le nom de l'utilisateur à rechercher.</td></tr>
@@ -257,7 +322,8 @@ Les paramètres supplémentaires relatifs à la méthode d'otp  </li>
 <dl class="section pre"><dt>Précondition</dt><dd>usrname != NULL </dd>
 <dd>
 usrname se termine par un NULL-byte.</dd></dl>
-<dl class="section return"><dt>Renvoie</dt><dd>0 si tout s'est bien passé, -1 sinon. </dd></dl>
+<dl class="section post"><dt>Postcondition</dt><dd>user contient les données relative à l'utilisateur.</dd></dl>
+<dl class="section return"><dt>Renvoie</dt><dd>USR_SUCCESS si tout s'est bien passé, une valeur négative sinon. </dd></dl>
 
 </div>
 </div>
@@ -274,8 +340,62 @@ usrname se termine par un NULL-byte.</dd></dl>
       </table>
 </div><div class="memdoc">
 <p>Place un verrou sur le fichier OTPWD_PATH.</p>
-<p>Si le fichier était vérouillé alors l'appel est bloquant sinon l'appel verrouille le fichier et continue.</p>
-<dl class="section return"><dt>Renvoie</dt><dd>retourne 0, ou -1 en cas d'erreur. </dd></dl>
+<p>Si le fichier était verrouillé alors l'appel est bloquant sinon l'appel verrouille le fichier et continue.</p>
+<dl class="section return"><dt>Renvoie</dt><dd>retourne USR_SUCCESS ou une valeur négative en cas d'erreur. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ad9fdb393a5b51a9a92b07fba6ef2a2f3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int removeOTPUser </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>usrname</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Supprime un utilisateur du fichier.</p>
+<p>Cette fonction parcourt le fichier des utilisateurs afin de supprimer l'entrée correspondant à l'utilisateur donné en paramètre.</p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">usrname</td><td>le nom de l'utilisateur à supprimer.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section pre"><dt>Précondition</dt><dd>usrname != NULL<ul>
+<li></li>
+</ul>
+</dd></dl>
+<dl class="section return"><dt>Renvoie</dt><dd>retourne USR_SUCCESS, ou une valeur négative en cas d'erreur. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a8fcacc20a8d04c8b9d7c4dedcd89eaad"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int resetOTPUser </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structotpuser.html">otpuser</a> *&#160;</td>
+          <td class="paramname"><em>user</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Libère les ressources occupées par la structure, ne libère PAS la structure.</p>
+<p>Cette fonction libère les ressources occupées par la structure passée en paramètre. Elle ne doit pas libérer la structure elle-même.</p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">user</td><td>un pointeur vers la structure user à nettoyer.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>USR_SUCCESS en cas de réussite, une valeur négative sinon. </dd></dl>
 
 </div>
 </div>
@@ -292,8 +412,8 @@ usrname se termine par un NULL-byte.</dd></dl>
       </table>
 </div><div class="memdoc">
 <p>Enlève le verrou sur le fichier OTPWD_PATH.</p>
-<p>Si le fichier était verouillé alors l'appel deverouille le fichier et continue.</p>
-<dl class="section return"><dt>Renvoie</dt><dd>retourne 0, ou -1 en cas d'erreur. </dd></dl>
+<p>Si le fichier était verrouillé alors l'appel déverrouille le fichier et continue.</p>
+<dl class="section return"><dt>Renvoie</dt><dd>retourne USR_SUCCESS, ou une valeur négative en cas d'erreur. </dd></dl>
 
 </div>
 </div>
@@ -311,15 +431,41 @@ usrname se termine par un NULL-byte.</dd></dl>
       </table>
 </div><div class="memdoc">
 <p>Enregistre les informations d'un utilisateur.</p>
-<p>Cette fonction permet de mettre à jour les informations d'un utilisateur dans le fichier OTPWD_PATH. Si ces informations n'existent pas alors elles doivent être créées.</p>
+<p>Cette fonction permet de mettre à jour les informations d'un utilisateur dans le fichier OTPWD_PATH. Si ces informations n'existent pas alors elles seront créées.</p>
 <dl class="params"><dt>Paramètres</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">user</td><td>La structure utilisateur à enregistrer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">user</td><td>La structure utilisateur à enregistrer.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section pre"><dt>Précondition</dt><dd>user.username != NULL;</dd></dl>
-<dl class="section return"><dt>Renvoie</dt><dd>-1 en cas d'erreur. 0 en cas de succès. </dd></dl>
+<dl class="section pre"><dt>Précondition</dt><dd>user.username != NULL; </dd></dl>
+<dl class="section post"><dt>Postcondition</dt><dd>le fichier des utilisateurs a été mis à jour avec les information de user</dd></dl>
+<dl class="section return"><dt>Renvoie</dt><dd>USR_SUCCESS si tout s'est bien passé une valeur négative sinon. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a7562cba053fd28a01b6e7cd34e3c8eb2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int userExists </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>username</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Indique si un utilisateur existe.</p>
+<p>Parcourt le fichiers des utilisateurs pour trouver si un utilisateur existe. si une entrée au nom de l'utilisateur existe alors la fonction retournera 1, sinon elle retournera 0.</p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">username</td><td>le nom de l'utilisateur recherché.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>1 si l'utilisateur existe, 0 si il n'existe pas ou une valeur négative en cas d'erreur. </dd></dl>
 
 </div>
 </div>

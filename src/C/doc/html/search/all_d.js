@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['texttosecret',['textToSecret',['../secret_8h.html#a3a4d4e078902cbd7b5f4d4b02a59d82e',1,'secret.h']]],
-  ['totp_2eh',['totp.h',['../totp_8h.html',1,'']]],
-  ['totp_5fmethod',['TOTP_METHOD',['../users_8h.html#a63e24656e8284fd47ab8911ac5bb814c',1,'users.h']]]
+  ['removeotpuser',['removeOTPUser',['../users_8h.html#ad9fdb393a5b51a9a92b07fba6ef2a2f3',1,'users.h']]],
+  ['resetotpuser',['resetOTPUser',['../users_8h.html#a8fcacc20a8d04c8b9d7c4dedcd89eaad',1,'users.h']]]
 ];

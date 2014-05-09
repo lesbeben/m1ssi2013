@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['params',['params',['../structotpuser.html#a8e75c36bb0bbe111f116292f1764190c',1,'otpuser']]],
-  ['passwd',['passwd',['../structotpuser.html#a2dabc49a341cc10820838f308862bfb1',1,'otpuser']]]
+  ['length',['length',['../structconv__data.html#a21ecf18111de4f308950f00ed2d3c576',1,'conv_data::length()'],['../structsecret__struct.html#a9f59b34b1f25fe00023291b678246bcc',1,'secret_struct::length()']]]
 ];

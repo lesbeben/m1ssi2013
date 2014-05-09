@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['method',['method',['../structotpuser.html#adcc9a19ad3119f823a658f6a49a24e64',1,'otpuser']]]
+  ['isbanned',['isBanned',['../structotpuser.html#a496ef550d1b9de85a80c31807eb5a3b2',1,'otpuser']]]
 ];
