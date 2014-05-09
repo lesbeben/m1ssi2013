@@ -16,7 +16,7 @@
 #define TOTP_METHOD 0
 #define HOTP_METHOD 1
 
-/** Union de tout les paramètres supplémentaire possibles.
+/** Union de tout les paramètres optionnels possibles.
  */
 typedef union {
     struct {
@@ -25,7 +25,7 @@ typedef union {
         int nbfail; /**< Nombre de tentative raté.*/
     } hotp;
     struct {
-        uint64_t tps; /**< Date derniere authentification.*/
+        uint64_t tps; /**< Dernier compteur utilisé.*/
         int delay;    /**< Décalage de l'utilisateur en nombre de quantum.*/
         int quantum; /**< La période de validité d'un otp pour l'utilisateur.*/
         uint64_t tplstauth; /**< Date derniere tentative authentification.*/

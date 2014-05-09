@@ -13,13 +13,30 @@
 #include "users.h"
 #include "secret.h"
 
-/** Répertoire destiné a accueillir les données d'authentification utilisateurs.
- *
- * Dans ce répertoire nous trouverons un fichier par utilisateur contenant:
+/** Fichier contenant les enregistrements des utilisateur.
+ * 
+ * Ce fichier contient une ligne par utilisateur avec:
  * <ul>
- *  <li> La méthode d'otp choisie par l'utilisateur. </li>
+ *  <li> Le nom d'utilisateur </li>
+ *  <li> La méthode d'authentification </li>
  *  <li> Le secret de l'utilisateur </li>
- *  <li> Les paramètres supplémentaires relatifs à la méthode d'otp </li>
+ *  <li> La longueur des otp a générer </li>
+ *  <li> L'état de banissement de l'utilisateur </li>
+ *  <li> 
+ *      Les paramètres optionnels selon la méthode d'authentification <br/>
+ *      Pour TOTP: <ul>
+ *          <li>Le dernier compteur utilisé.</li>
+ *          <li>Le décalage entre le token et le module en nombre de
+ *              quantum.</li>
+ *          <li>Le quantum, durée de validité d'un otp</li>
+ *          <li>Date dernière authentification en UTC</li>
+ *      </ul>
+ *      Pour HOTP: <ul>
+ *          <li>Le compteur pour générer le prochain OTP</li>
+ *          <li>Date du dernier échec d'authentification</li>
+ *          <li>Nombre d'échecs successifs</li>
+ *      </ul>
+ * </li>
  * </ul>
  */
 #define OTPWD_PATH "/var/otpasswd"
@@ -46,7 +63,7 @@ int readLine(FILE *f, otpuser *user) {
         return NO_MORE_USERS;
     }
 
-    // Premier token : le username.
+    // Premier token : le nom d'utilisateur.
     token = strtok_r(line, SEPARATOR, &saveptr);
     if (token == NULL) {
         return USR_ERR_USR_FILE;
