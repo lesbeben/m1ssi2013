@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['magenta',['MAGENTA',['../test_8c.html#a6f699060902f800f12aaae150f3a708e',1,'test.c']]]
+  ['totp_5fmethod',['TOTP_METHOD',['../users_8h.html#a63e24656e8284fd47ab8911ac5bb814c',1,'users.h']]]
 ];

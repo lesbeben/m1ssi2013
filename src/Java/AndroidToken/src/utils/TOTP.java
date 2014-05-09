@@ -17,7 +17,7 @@ public class TOTP extends OTPGenerator {
 	public static final int DEFAULT_QUANTUM = 30;
 
 	/**
-	 * La valeur qui permet la conversion de millisecondes à secondes
+	 * La valeur qui permet la conversion de millisecondes à secondes.
 	 */
 	public static final int TO_SEC = 1000;
 
@@ -47,7 +47,7 @@ public class TOTP extends OTPGenerator {
 	 */
 	public TOTP(ISecret key, int digits, int quantum) {
 		super(digits);
-		if (key == null) {
+		if (key == null || quantum <= 0) {
 			throw new IllegalArgumentException("key");
 		}
 		this.key = key;

@@ -1,5 +1,14 @@
 var searchData=
 [
-  ['texttosecret',['textToSecret',['../secret_8h.html#a3a4d4e078902cbd7b5f4d4b02a59d82e',1,'secret.h']]],
-  ['totp_2eh',['totp.h',['../totp_8h.html',1,'']]]
+  ['options_2eh',['options.h',['../options_8h.html',1,'']]],
+  ['options_5ferror',['OPTIONS_ERROR',['../options_8h.html#af4ff76fe10b9de8a32ccdeef679858a1',1,'options.h']]],
+  ['options_5fsuccess',['OPTIONS_SUCCESS',['../options_8h.html#afe159fcb63bf2396e868d2633133f94e',1,'options.h']]],
+  ['otp_2eh',['otp.h',['../otp_8h.html',1,'']]],
+  ['otp_5ferr_5fextract',['OTP_ERR_EXTRACT',['../otp_8h.html#a44f6b416af6cdb08aff87b73f4ea5d86',1,'otp.h']]],
+  ['otp_5ferr_5fhmac',['OTP_ERR_HMAC',['../otp_8h.html#a4523fd4eff5d28b2a228523cb285a3ec',1,'otp.h']]],
+  ['otp_5ferr_5fparam',['OTP_ERR_PARAM',['../otp_8h.html#a89cf3cda10725ee670dd63052c62f0f6',1,'otp.h']]],
+  ['otp_5flen',['otp_len',['../structotpuser.html#ab694e97f3642bc0f8a3f93eb95312f3f',1,'otpuser']]],
+  ['otp_5fsuccess',['OTP_SUCCESS',['../otp_8h.html#ab765682e349d36717f8c0e6de492aacf',1,'otp.h']]],
+  ['otpopt',['otpopt',['../unionotpopt.html',1,'']]],
+  ['otpuser',['otpuser',['../structotpuser.html',1,'']]]
 ];

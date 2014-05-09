@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">OTPToken</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="tokenType">Type Token</string>
+    <string name="tokenName">Nom</string>
+    <string name="tokenSerial">Clé</string>
+    <string name="tokenOtp">Longueur d\'OTP</string>
+    <string name="tokenOtpQuantum">Quantum</string>
+    <string name="tokenTypeSpinnerPrompt">Ajouter le type de token</string>
+    <string name="tokenOtpSpinnerPrompt">Ajouter la Longueur d\'OTP</string>
+    <string name="tokenOtpQuantumPrompt">Ajouter le quatum de temps</string>
+    <string name="tokenAddComplete">Terminer</string>
+    <string name="btnOK">OK</string>
+    <string name="pinChangeNew1">Nouveau PIN</string>
+    <string name="pinChangeNew2">Confirmer le PIN</string>
+    <string name="pinChangeSubmit">Enregistrer</string>
+    <string name="pinAlertInvalidPin">PIN Invalide</string>
+    <string name="pinAlertNewPinsDifferent">Les valeurs rentrées ne sont pas les mêmes</string>
+    <string name="pinAlertNewPinBlank">Le nouveau PIN est nécessaire</string>
+    <string name="synchAlert">Erreur lors de la synchronisation</string>
+    <string name="pinRemoveExistingPin">Entrer votre PIN</string>
+    <string name="pinRemoveSubmit">Supprimer</string>
+    <string name="pinChangeExistingPin">Entrez l\'ancien PIN</string>
+    <string name="mainLogin">Login</string>
+    <string name="loginEditPinEmpty">Veuillez entrer votre PIN</string>
+    <string name="loginPin">Entrez votre PIN</string>
+    <string name="cancel">Annuler</string>
+    <string name="confirmDelete">Voulez vous supprimer ce token?</string>
+    <string name="toastDeleted">Token Supprimé</string>
+    <string name="toastAdded">Token Ajouté</string>
+    <string name="otpDialogTitle">One Time Password</string>
+    <string name="menu_add_token">Ajouter un Token</string>
+    <string name="menu_sync">Synchroniser l\'horloge</string>
+    <string name="menu_pin_change">Changer votre PIN</string>
+    <string name="menu_delete_token">Supprimer un Token</string>
+    <string name="tokenAddDialogNoName">Ajoutez un nom à votre token</string>
+    <string name="tokenAddDialogNoSerial">Ajouter la clé de votre token</string>
+    <string name="tokenAddDialogNameAreadyExist">Veuillez changer le nom de votre token, ce nom existe déja</string>
+    <string name="tokenAddDialogSerialNotHEX">Veuillez rentrer une clé en format hexadecimal</string>
+    <string name="tokenAddDialogSerialInvalidLen">Veuillez rentrer une clé de longueur paire</string>
+    
+</resources>

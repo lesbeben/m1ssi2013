@@ -58,27 +58,7 @@ secret createSecret(int length) {
         return NULL;
     }
 
-    // Descripteur de fichier sur /dev/urandom.
-    int fd = open("/dev/urandom", O_RDONLY);
-    if (fd == -1) {
-        destroySecret(res);
-        return NULL;
-    }
-
-    // Code de retour d'appels système, nombre d'octets lus.
-    int ret = read(fd,res->buffer, res->length);
-    if (ret != res->length) {
-        destroySecret(res);
-        return NULL;
-    }
-
-    // Fermeture du descripteur sur /dev/urandom.
-    ret = close(fd);
-    if (ret == -1) {
-        destroySecret(res);
-        return NULL;
-    }
-
+    memset(res->buffer, 0, res->length);
     return res;
 }
 
@@ -101,7 +81,7 @@ secret createRandomSecret(int length) {
         return NULL;
     }
 
-    // Descripteur de fichier sur /dev/urandom.
+    // Descripteur de fichier sur /dev/random.
     int fd = open("/dev/random", O_RDONLY);
     if (fd == -1) {
         destroySecret(res);
@@ -110,21 +90,17 @@ secret createRandomSecret(int length) {
 
     int totalRead = 0;
     int ret = 0;
-    // On lit sur /dev/random jusqu'a ce qu'on ait notre compte d'octet.
-    // /dev/random est un fichier particulier qui contient des octets dépendants
-    // de l'état du système, une lecture sur ce fichier peut retourner un nombre
-    // d'octets inférieur a celui attendu il faut donc vérifier que l'on a bien
-    // le bon nombre d'octets et relancer la lecture si il n'y a pas eu d'erreur.
+    // Boucle de lecture de res->length octets dans /dev/random.
     while (totalRead < res->length) {
         ret = read(fd, res->buffer + totalRead, res->length - totalRead);
-        if (ret != res->length) {
+        if (ret < 0) {
             destroySecret(res);
             return NULL;
         }
         totalRead += ret;
     }
 
-    // Fermeture du descripteur sur /dev/urandom.
+    // Fermeture du descripteur sur /dev/random.
     ret = close(fd);
     if (ret == -1) {
         destroySecret(res);
@@ -230,7 +206,8 @@ char * getHexRepresentation(secret key, char * buffer, int length) {
     // Remplissage du buffer avec les caractères hexadécimaux.
     for (int i = 0; i < key->length; i++) {
         if (snprintf(buffer + (2 * i), length, "%02x",
-                     (unsigned int) (unsigned char) (key->buffer[i])) < 0);
+                     (unsigned int) (unsigned char) (key->buffer[i])) < 0)
+            return NULL;
     }
 
     // Terminaison de la chaîne de caractères dans buffer.

@@ -10,8 +10,9 @@
  */
 typedef struct {
     int length; /**< La taille du secret en octet, toujours supérieur à 0*/
-    char * buffer; /**< Le pointeur vers les octets du tableau,
-                        normalement non NULL. */
+    char * buffer; /**< pointeur vers un buffer
+                        contenant les octets du secret.
+                        NULL si le buffer n'est pas alloué */
 } secret_struct;
 
 /** Type permettant de représenter un secret. Ce type permet d'«encapsuler»
@@ -19,25 +20,24 @@ typedef struct {
  */
 typedef secret_struct * secret;
 
-/** Crée un "objet" secret rempli avec des length octets pseudo aléatoires.
+/** Crée un "objet" secret rempli avec "length" octets nuls.
  * 
- * Cette fonction se base sur le fichier /dev/urandom pour générer de 
- * l'aléatoire ce qui est plus rapide mais moins fiable que /dev/random.
+ * Cette fonction créée un secret avec des octets initialisés à 0.
  * @param[in] length la taille du secret en octets.
  * @pre la taille ne peut pas être négative.
  *
- * @return L'adresse d'un nouveau secret.
+ * @return L'adresse d'un nouveau secret. NULL en cas d'erreur.
  */
 secret createSecret(int length);
 
-/** Crée un "objet" secret rempli avec des length octets aléatoire.
+/** Crée un "objet" secret rempli avec "length" octets aléatoires.
  * 
  * Cette fonction utilise le fichier /dev/random pour générer de l'aléatoire.<br/>
  * Elle est donc plus fiable mais beaucoup plus lente que createSecret.
  * @param[in] length la taille du secret en octets.
  * @pre la taille ne peut pas être négative.
  *
- * @return L'adresse d'un nouveau secret.
+ * @return L'adresse d'un nouveau secret. NULL en cas d'erreur.
  */
 secret createRandomSecret(int length);
 
@@ -61,7 +61,7 @@ secret createRandomSecret(int length);
  */
 secret hexToSecret(char * buffer);
 
-/** Créée un secret a partir d'une chaîne de caractères.
+/** Crée un secret à partir d'une chaîne de caractères.
  * 
  * Cette fonction va utiliser les octets pointés par buffer comme nouveau 
  * secret. <br/>
@@ -76,10 +76,10 @@ secret hexToSecret(char * buffer);
  */
 secret textToSecret(char * buffer);
 
-/** Libères les ressources associés à un secret.
+/** Libère les ressources associés à un secret.
  * 
- * Cette fonction désallouera les espace mémoires correspondant aux octets du 
- * secret ainsi qu'a la structure secret. <br/>
+ * Cette fonction désallouera les ressources mémoire correspondant aux octets du
+ * secret ainsi qu'à la structure secret. <br/>
  * Par mesure de sécurité ces octets auront été mis à zéro avant libération.
  * @param[in] key le secret dont on veut libérer les ressources.
  * @pre key != NULL
@@ -99,7 +99,7 @@ int getLength(secret key);
 
 /** Donne une représentation hexadécimale du secret.
  * 
- * Cette fonction va remplir le buffer passé en paramêtre avec length octets
+ * Cette fonction va remplir le buffer passé en paramètre avec length octets
  * afin de donner une représentation hexadécimale du secret. <br/>
  * Si length octet ne sont pas suffisant pour représenter le secret alors la 
  * fonction renverra une erreur.
@@ -122,12 +122,12 @@ int getLength(secret key);
  */
 char * getHexRepresentation(secret key, char * buffer, int length);
 
-/** Donne une représentation hexadécimale du secret.
+/** Donne une représentation textuelle du secret.
  * 
- * Cette fonction va convertir chaque octet du secret en une paire de caractères
- * héxadécimaux et les inscrires dans le buffer.<br/>
+ * Cette fonction va convertir chaque octet du secret en un caractère.<br/>
  * Si la longueur passée en paramètre n'est pas suffisante alors la fonction
  * indiquera une erreur.
+ * 
  * @param[in] key le secret que l'on veut représenter.
  * @param[in] length le nombre d'octet modifiables dans le buffer.
  * @param[out] buffer le buffer destiné à contenir la représentation du secret.

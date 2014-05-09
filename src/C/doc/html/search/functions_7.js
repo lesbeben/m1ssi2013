@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['textcolor',['textcolor',['../test_8c.html#aa45f163d8f0ec94273c3191801f33d87',1,'test.c']]],
-  ['texttosecret',['textToSecret',['../secret_8c.html#a3a4d4e078902cbd7b5f4d4b02a59d82e',1,'textToSecret(char *buffer):&#160;secret.c'],['../secret_8h.html#a3a4d4e078902cbd7b5f4d4b02a59d82e',1,'textToSecret(char *buffer):&#160;secret.c']]]
+  ['removeotpuser',['removeOTPUser',['../users_8h.html#ad9fdb393a5b51a9a92b07fba6ef2a2f3',1,'users.h']]],
+  ['resetotpuser',['resetOTPUser',['../users_8h.html#a8fcacc20a8d04c8b9d7c4dedcd89eaad',1,'users.h']]]
 ];

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string-array name="tokenType">
+<item>HOTP Token</item>
+<item>TOTP Token</item>
+</string-array>
+<string-array name="otpLength">
+<item>6</item>
+<item>7</item>
+<item>8</item>
+</string-array>
+<string-array name="otpQuantum">
+<item>10</item>
+<item>15</item>
+<item>30</item>
+<item>60</item>
+<item>120</item>
+</string-array>
+</resources>

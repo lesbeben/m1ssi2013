@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tokenListRelatedLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="5sp" >
+
+    <ImageView
+        android:id="@+id/ivTokenIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5sp"
+        android:layout_marginTop="10sp" />
+
+    <TextView
+        android:id="@+id/tokenrowtextname"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_toRightOf="@+id/ivTokenIcon"
+        android:textSize="15sp" >
+    </TextView>
+
+
+
+    <TextView
+        android:id="@+id/tokenrowtextmethod"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tokenrowtextname"
+        android:layout_below="@+id/tokenrowtextname"
+        android:textSize="15sp" />
+
+</RelativeLayout>
+
+   <!--  <TextView
+        android:id="@+id/tokenrowtextmethod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/ivTokenIcon"
+        android:paddingLeft="5sp"
+        android:textSize="12sp" /> -->

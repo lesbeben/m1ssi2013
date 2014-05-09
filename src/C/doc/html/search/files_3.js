@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['totp_2eh',['totp.h',['../totp_8h.html',1,'']]]
+  ['secret_2eh',['secret.h',['../secret_8h.html',1,'']]]
 ];

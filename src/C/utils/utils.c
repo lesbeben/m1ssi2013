@@ -24,6 +24,9 @@ char* HMAC_SHA1(uint64_t count, secret key, char* buffer) {
         temporarySecret = (unsigned char *)key->buffer;
     } else {
         temporarySecret = malloc(HMAC_KEY_LENGTH * sizeof(char));
+        if (temporarySecret == NULL) {
+            return NULL;
+        }
         memset(temporarySecret, 0, HMAC_KEY_LENGTH);
         if (key->length > 64) {
             SHA1((unsigned char *)key->buffer, key->length, temporarySecret);

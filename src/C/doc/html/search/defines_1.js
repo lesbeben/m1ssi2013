@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['is_5feven',['IS_EVEN',['../macros_8h.html#ace957c0ec0957075011c4db46c6edc50',1,'macros.h']]],
-  ['is_5fodd',['IS_ODD',['../macros_8h.html#a8dd26d1a8c0ceb8c3ec552ebf6e36c3a',1,'macros.h']]]
+  ['hmac_5fsha1_5flength',['HMAC_SHA1_LENGTH',['../utils_8h.html#a2668b1c995a191f16efc5341a368886e',1,'utils.h']]],
+  ['hotp_5fmethod',['HOTP_METHOD',['../users_8h.html#a0079afc4715db197e1d020120c52f003',1,'users.h']]]
 ];

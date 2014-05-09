@@ -1,0 +1,36 @@
+#####################################################
+## I | Generating a random file from otp generator ##
+#####################################################
+
+The file otp_prng.c contains the source code of a small program to generate
+random file using otp generators.
+To generate a file, you just need to compile the program using make and the
+given makefile. Make sure to have openssl lib installed.
+
+Once the program is compiled, you can execute it with a simple command line such
+as : ./otp_prng 21F452EFCA3B 1000000
+   where  - 21F452EFCA3B is a hexadecimal seed for the generator, representing a
+                      key for an HOTP generator,
+          - 1000000 is the number of 3 bytes block to generate,
+
+The output of the program will be stored in a file called generated_bin. Do not
+try to open this file since it contains random data which are not meant to be
+human readable.
+
+#####################################################
+## II | Testing the randomness of generated values ##
+#####################################################
+
+The file created thanks to otp_prng can be used to test the randomness of the
+otp generator. To do so, you can use any randomness testing tool.
+We chose to use die harder testing suite. This common tool can be downloaded and
+installed from your favorite linux distribution repositories.
+          ex : yaourt -S dieharder (you must have enabled AUR repositories)
+
+You can then launch a test with another simple command line such as :
+    dieharder -a -g 201 -f generated_bin
+ or dieharder -a -g 201 -f generated_bin -D default -D histogram -D description
+    for more information.
+
+Executed test are highly configurable. Please read dieharder man page to get a
+description of all possible options.
