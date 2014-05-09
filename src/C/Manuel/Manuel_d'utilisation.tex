@@ -191,13 +191,10 @@ TOTP:
 \end{itemize}
 \end{itemize}
 
-Exemple:
-\begin{verbatim}
-wuna:1:74657374:8:0:0:0:0
-\end{verbatim}
+Exemple: \verb?wuna:1:74657374:8:0:0:0:0?\\
 
-/!\ Il est important de configurer les droits sur ce fichiers correctement, car il détient les utilisateurs et
-leurs secrets qui sont enregistrés en clair.
+\textit{/!$\backslash$ Il est important de configurer les droits sur ce fichier correctement, car il détient les utilisateurs et
+leurs secrets qui sont enregistrés en clair.}
 
 
 \section{Rappel sur PAM}
@@ -215,15 +212,13 @@ Le mécanisme \textbf{password:} Ces modules sont responsables de la mise à jou
 Les deux premières catégories de modules seront référencées chaque fois qu'un programme effectue authentification réussie par PAM.
 Les modules de la session seront exécutés si nécessaire, après les deux premiers modules. Les modules de mot de passe sont accessibles sur demande. Notre module PAM permet une authentification ainsi qu'un changement de secret.
 
-\newpage
-
 \subsection{Le principe}
 Le module étant installé, il faut désormais modifier le fichier de 
 configuration du service utilisant PAM sur lequel on souhaite utiliser 
 l'authentification à base d'OTP. Ces fichiers de configuration se situent 
 dans le répertoire \verb?/etc/pam.d/?.
 
-Pour activer ce module il faut modifier \verb?pam_unix.so? par \verb?pam_uotp.so?  
+Pour activer ce module il faut remplacer \verb?pam_unix.so? par \verb?pam_uotp.so?  
 qui correspond à notre module d'authentification:
 
 \begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
@@ -239,13 +234,14 @@ Pour demander l'authentification existante puis une authentification à base d'O
 auth      required      pam_unix.so
 auth      required      pam_uotp.so
 \end{lstlisting}
-\newpage
+
 Pour demander une authentification à base d'OTP puis l'authentification existante:
 \begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
 auth      required      pam_uotp.so
 auth      required      pam_unix.so
 \end{lstlisting}
 
+\newpage 
 
 \subsection{Les options}
 Il existe actuellement plusieurs options que l'on peut définir lors de l'appel du module
@@ -318,6 +314,8 @@ Vous pouvez procéder à un test pour vérifier:
 ssh localhost
 \end{lstlisting}
 
+\newpage
+
 \section{Apache}
 Pour utiliser notre module sur un serveur Apache, il faut installer un composant rendant PAM utilisable
 sur Apache disponible à l'adresse suivante 
@@ -328,8 +326,6 @@ Enfin, il faut configurer le fichier de configuration du service PHP pour PAM, \
 #%PAM-1.0
 auth       required     pam_uotp.so use_auth_tok
 \end{lstlisting}
-
-\newpage
 
 Exemple simple de pages HTML/PHP utilisant notre module d'authentification:
 Formulaire:
