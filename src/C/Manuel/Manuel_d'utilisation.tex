@@ -25,7 +25,7 @@
 
 \part{Installation}
 \section{Présentation générale}
-Le module PAM OTP est un module utilisable par PAM (Pluggable Authentication Modules), 
+Le module \verb?uotp.so? est un module utilisable par PAM (Pluggable Authentication Modules), 
 il est donc pris en charge par tout les services fonctionnant avec ce mécanisme. Il permet 
 une authentification à base de mots de passe jetables via deux méthodes, HOTP et TOTP.
 
@@ -101,8 +101,13 @@ cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
 make
 \end{lstlisting}
 
-Il est important de définir les options du CMake, c'est elles qui permettent une installation dans les
-répertoires adéquat. 
+Il est important de définir les options du CMake, ce sont elles qui permettent une installation dans les
+répertoires adéquat.
+\begin{description}
+\item[-DCMAKE$\_$INSTALL$\_$PREFIX] Indique le répertoire d'installation de base. 
+\footnote{Avec \verb?/usr? les binaires seront situés dans \verb?/usr/bin?}
+\item[-DCMAKE$\_$BUILD$\_$TYPE] Détermine les options de compilation.
+\end{description}
 
 \subsection{Installation}
 Procédons enfin à l'installation du module PAM. L'installation s'adaptera 
@@ -168,10 +173,10 @@ est un module pam qui permet une authentification à base d'OTP.
 
 La version Linux de PAM divise les fonctionnalités du module en différents mécanismes.\\
 Voici une brève explication de ces mécanismes :\\
-Le mécanisme \textbf{auth:} Les modules d'authentification valident les informations d'authentification de l'utilisateur . Cela signifie qu'il vérifie si l'utilisateur peut fournir des informations d'identification valides.\\
-Le mécanisme \textbf{account:} Ces modules sont chargés de décider si le compte qui essaie de se connecter a accès à des ressources.\\
+Le mécanisme \textbf{auth:} Les modules d'authentification valident les informations d'authentification de l'utilisateur . Cela signifie qu'il vérifie si l'utilisateur fourni des informations d'identification valides.\\
+Le mécanisme \textbf{account:} Ces modules sont chargés de vérifier la validité d'un compte utilisateur.\\
 Le mécanisme \textbf{session:} Ces modules permettent d'établir l'environnement qui sera construit et détruit après la connexion de l'utilisateur ou sa déconnexion. Les fichiers de session peuvent déterminer les commandes qui doivent être exécutées pour préparer l'environnement.\\
-Le mécanisme \textbf{password:} Ces modules sont responsables de la mise à jour des informations d'authentification.
+Le mécanisme \textbf{password:} Ces modules sont responsables de la mise à jour des informations d'authentification.\\
 Les deux premières catégories de modules seront référencées chaque fois qu'un programme effectue authentification réussie par PAM. 
 Les modules de la session seront exécutés si nécessaire, après les deux premiers modules. Les modules de mot de passe sont accessibles sur demande. Notre module PAM permet une authentification ainsi qu'un changement de secret.
 
@@ -238,9 +243,9 @@ Exemple:
 auth   required    pam_uotp.so delay_totp=2 delay_hotp=5 null_ok use_auth_tok
 \end{lstlisting}
 
-Si les options delay$\_$totp=<valeur> et delay$\_$hotp=<valeur> ne sont pas fournies alors
+Si les options \verb?delay_totp=<valeur>? et \verb?delay_hotp=<valeur>? ne sont pas fournies alors
 les valeurs choisies sont celles par défaut soit 1.\\
-L'option null$\_$ok est fortement déconseillée dans le cas d'une utilisation seule de notre module OTP.
+L'option \verb?null_ok? est fortement déconseillée dans le cas d'une utilisation seule de notre module OTP.
 Elle peut cependant devenir intéressante dans le cadre ou l'on gère plusieurs méthodes d'authentification;
 en effet si l'utilisateur n'est pas enregistré dans le fichier des utilisateurs OTP (\verb?/var/otpasswd?)
 alors cette méthode ne sera pas prise en compte. Cette option permet par exemple à des utilisateurs d'utiliser
@@ -283,7 +288,7 @@ Pour utiliser notre module sur un serveur Apache, il faut installer un composant
 sur Apache disponible à l'adresse suivante 
 \href{http://pear.php.net/package/PEAR/download}{http://pear.php.net/package/PEAR/download}.\\
 Ajouter désormais \textbf{extension=pam.so} à votre fichier php.ini.\\
-Enfin aller configurer le fichier de configuration du service PHP pour PAM, \verb?/etc/pam.d/php?
+Enfin configurer le fichier de configuration du service PHP pour PAM, \verb?/etc/pam.d/php?
 \begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
 #%PAM-1.0
 auth       required     pam_uotp.so use_auth_tok
