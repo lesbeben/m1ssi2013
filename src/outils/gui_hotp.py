@@ -24,7 +24,6 @@ class QOtpToken(QWidget):
         hbox = QHBoxLayout()
         hbox.addWidget(QLabel("Secret: "))
         self.secret = QLineEdit()
-        self.secret.setEchoMode(QLineEdit.Password)
         hbox.addWidget(self.secret)
         vbox.addLayout(hbox)
 
