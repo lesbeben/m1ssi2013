@@ -28,7 +28,7 @@
  
  /** Parse les arguments dans argv. 
  * 
- * Remplie la structure modopt passé en paramètre d'après le
+ * Remplit la structure modopt passé en paramètre d'après le
  * contenu de l'argv.
  * 
  * @param[out] flag Structure modopt à remplir.
@@ -39,7 +39,7 @@
  */
  int parse_options(pam_handle_t * pamh, modopt *flag, int argc, const char **argv);
  
- /** Defini l'option "field" à 1.
+ /** Definit l'option "field" à 1.
   * 
   * Passe l'option field à 1 dans la structure flag.
   * 

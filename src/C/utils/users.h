@@ -49,7 +49,7 @@ typedef struct {
  * 
  * Cette fonction doit aller lire le fichier des utilisateurs. Si il trouve une
  * ligne correspondant au nom de l'utilisateur il remplira alors la structure
- * passée paramètre. Sinon il indiquera l'erreur qu'il aura rencontré.
+ * passée en paramètre. Sinon il indiquera l'erreur qu'il aura rencontré.
  * 
  * @param[in] usrname Le nom de l'utilisateur à rechercher.
  * 
@@ -80,7 +80,7 @@ int updateOTPUser(otpuser * user);
 
 /** Indique si un utilisateur existe.
  * 
- * Parcours le fichiers des utilisateurs pour trouver si un utilisateur existe.
+ * Parcourt le fichiers des utilisateurs pour trouver si un utilisateur existe.
  * si une entrée au nom de l'utilisateur existe alors la fonction retournera
  * 1, sinon elle retournera 0.
  * 
@@ -93,7 +93,7 @@ int userExists(const char * username);
 
 /** Supprime un utilisateur du fichier.
  * 
- * Cette fonction parcours le fichier des utilisateurs afin de supprimer 
+ * Cette fonction parcourt le fichier des utilisateurs afin de supprimer 
  * l'entrée correspondant à l'utilisateur donné en paramètre.
  *
  * @param[in] usrname le nom de l'utilisateur à supprimer.
@@ -108,7 +108,7 @@ int removeOTPUser(char* usrname);
 /** Libère les ressources occupées par la structure, ne libère PAS la structure.
  * 
  * Cette fonction libère les ressources occupées par la structure passée en 
- * paramètre. Elle ne doit pas libérer la structure elle même.
+ * paramètre. Elle ne doit pas libérer la structure elle-même.
  * 
  * @param[in] user un pointeur vers la structure user à nettoyer.
  * 
@@ -119,7 +119,7 @@ int resetOTPUser(otpuser * user);
 
 /** Place un verrou sur le fichier OTPWD_PATH.
 
- * Si le fichier était vérouillé alors l'appel est bloquant
+ * Si le fichier était verrouillé alors l'appel est bloquant
  * sinon l'appel verrouille le fichier et continue.
  * 
  * @return retourne USR_SUCCESS ou une valeur négative en cas d'erreur.
@@ -130,7 +130,7 @@ int lockFile();
 
 /** Enlève le verrou sur le fichier OTPWD_PATH.
  * 
- * Si le fichier était verouillé alors l'appel deverouille le
+ * Si le fichier était verrouillé alors l'appel déverrouille le
  * fichier et continue.
  * 
  * @return retourne USR_SUCCESS, ou une valeur négative en cas d'erreur.

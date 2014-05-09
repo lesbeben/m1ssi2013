@@ -9,7 +9,7 @@
  * Fichier d'en-tête de fonctions outils pour générer des OTP avec HMAC.
  */
 
-/** Rempli le buffer passé en paramêtre avec le HMAC du secret.
+/** Remplit le buffer passé en paramêtre avec le HMAC du secret.
  * D'après l'algorithme donné par la RFC 2104
  * @param[in] count le compteur passé à hmac pour générer un OTP.
  * @param[in] key la clé secrète pour générer un OTP.
@@ -21,8 +21,8 @@
  * @pre buffer fait 160 (20 * 8 * sizeof(char)) bits.
  * @post buffer contient la valeur correspondant à
  *       SHA1(key ^ opad . SHA1(key ^ ipad . count))
- *       où ^ est le XOR bit à bits (^ en C)
- *       où . est la concaténation.
+ *       <br/>où ^ est le XOR bit à bits (^ en C)
+ *       <br/>et . est la concaténation.
  *
  * @return l'adresse de buffer en cas de succès; NULL sinon.
  */

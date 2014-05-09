@@ -17,9 +17,9 @@
 /** Génère un mot de passe à partir du secret en utilisant un compteur.
  * 
  * Cette fonction va générer un OTP à partir d'un secret et d'un compteur. <br/>
- * Pour deux couples (secret, compteur) identique la valeur retournée devrait 
+ * Pour deux couples (secret, compteur) identiques la valeur retournée devrait 
  * être la même. <br/>
- * Il ne devrait pas être possible de retrouver les parmètres à partir
+ * Il ne devrait pas être possible de retrouver les paramètres à partir
  * de la sortie de la fonction.
  * 
  * L'algorithme complet est disponible dans la 
@@ -30,7 +30,7 @@
  * 
  * @param[in] key le secret utilisé pour générer un OTP.
  * @param[in] counter le compteur permettant de générer un OTP.
- * @param[in] len la longueure de l'OTP a générer.
+ * @param[in] len la longueur de l'OTP a générer.
  * 
  * @pre secret != NULL.
  * @pre counter > 0.
