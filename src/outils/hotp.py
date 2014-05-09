@@ -3,7 +3,7 @@ import hmac
 
 class Hotp_Generator():
     def __init__(self, secret):
-        self.__secret = secret.encode()
+        self.__secret = bytes.fromhex(secret)
 
     def get_otp(self):
         # Création d'un objet permettant de calculer hmac_sha1
@@ -43,7 +43,7 @@ class Hotp_Generator():
 
     @secret.setter
     def secret(self, value):
-        self.__secret = value.encode()
+        self.__secret = bytes.fromhex(value)
 
 if __name__ == "__main__":
     gen = Hotp_Generator("12345678901234567890")
