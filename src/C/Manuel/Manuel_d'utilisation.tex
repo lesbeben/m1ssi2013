@@ -14,7 +14,6 @@
 \filiere{M1SSI}
 \version{}
 \signataire{Magali \bsc{Bardet}, Bruno \bsc{Macadré}}
-\date{Janvier 2014}
 
 \begin{document}
 \maketitle
@@ -26,18 +25,18 @@
 \part{Installation}
 \section{Présentation générale}
 Le module \verb?uotp.so? est un module utilisable par PAM (Pluggable Authentication Modules), 
-il est donc pris en charge par tout les services fonctionnant avec ce mécanisme. Il permet 
+il est donc pris en charge par tous les services fonctionnant avec ce mécanisme. Il permet 
 une authentification à base de mots de passe jetables via deux méthodes, HOTP et TOTP.
 
 \label{prereq}
 \section{Prérequis}
 \subsection{Système d'exploitation}
 Le module OTP ne peut être utilisé que sur des systèmes Linux comme Arch Linux, 
-CentOs, RedHat, Ubuntu et bien d'autres.
+CentOs, RedHat, Ubuntu,...
 
-\subsection{Dépendance}
+\subsection{Dépendances}
 Pour que le module puisse être installé correctement, certaines bibliothèques 
-sont nécessaires tels:
+sont nécessaires telles:
 \begin{itemize}
 \item libpam
 \item libmath
@@ -73,7 +72,7 @@ yum install cmake make gcc
 
 \section{Installation}
 \subsection{Récupération des fichiers sources}
-Récupérer les fichiers sources à l'adresse suivantes:
+Récupérez les fichiers sources à l'adresse suivantes:
 \begin{description}
 \item[mirror 1] \href{https://github.com/lesbeben/m1ssi2013/archive/master.zip}{https://github.com/lesbeben/m1ssi2013/archive/master.zip}\\
 %\textcolor{gray}{https://github.com/lesbeben/m1ssi2013/archive/master.zip}
@@ -87,7 +86,7 @@ wget https://mmiserveur.no-ip.org/project/master.zip
 \end{lstlisting}
 
 \subsection{Compilation}
-Décompressez l'archive précédemment téléchargée, pour cela placez vous 
+Décompressez l'archive précédemment téléchargée, pour cela placez-vous 
 dans le répertoire de téléchargement:
 \begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
 tar -xf master.zip
@@ -102,7 +101,7 @@ make
 \end{lstlisting}
 
 Il est important de définir les options du CMake, ce sont elles qui permettent une installation dans les
-répertoires adéquat.
+répertoires adéquats.
 \begin{description}
 \item[-DCMAKE$\_$INSTALL$\_$PREFIX] Indique le répertoire d'installation de base. 
 \footnote{Avec \verb?/usr? les binaires seront situés dans \verb?/usr/bin?}
@@ -125,7 +124,7 @@ rapporter à la section prérequis\ref{prereq}}
 
 \part{Configuration du système d'authentification}
 \section{Gestion des utilisateurs}
-Les utilisateurs doivent exister sur le système, et être présent dans 
+Les utilisateurs doivent exister sur le système, et être présents dans 
 le fichier des utilisateurs OTP utilisé par notre module qui se trouve 
 dans \verb?/var/otpasswd?. La création d'un utilisateur dans le fichier 
 \verb?/var/otpasswd? se fait via un utilitaire en ligne de commande 
@@ -135,7 +134,7 @@ dans \verb?/var/otpasswd?. La création d'un utilisateur dans le fichier
 \hline
 \textbf{-l <login>} & Pour fournir le login de l'utilisateur à enregistrer.\\
 \hline
-\textbf{-m <hotp | totp>} & Pour founir la méthode OTP voulu; soit hotp soit totp.\\
+\textbf{-m <hotp | totp>} & Pour founir la méthode OTP voulue; soit HOTP soit TOTP.\\
 \hline
 \textbf{-s <longueur>} & Pour définir la longueur de l'OTP ( $6 \leq$ longueur $\leq 8$).\\
 \hline
@@ -169,15 +168,15 @@ doivent exister sur le système.}
 PAM (Pluggable Authentication Modules) permet de définir différents moyens
 d'authentification de bas niveau dans une API de haut niveau.
 Les modules PAM sont quant à eux des bibliothèques dynamiques. \verb?pam_uotp.so?
-est un module pam qui permet une authentification à base d'OTP.
+est un module PAM qui permet une authentification à base d'OTP.
 
 La version Linux de PAM divise les fonctionnalités du module en différents mécanismes.\\
 Voici une brève explication de ces mécanismes :\\
-Le mécanisme \textbf{auth:} Les modules d'authentification valident les informations d'authentification de l'utilisateur . Cela signifie qu'il vérifie si l'utilisateur fourni des informations d'identification valides.\\
+Le mécanisme \textbf{auth:} Les modules d'authentification valident les informations d'authentification de l'utilisateur . Cela signifie qu'il vérifie si l'utilisateur fournit des informations d'identification valides.\\
 Le mécanisme \textbf{account:} Ces modules sont chargés de vérifier la validité d'un compte utilisateur.\\
 Le mécanisme \textbf{session:} Ces modules permettent d'établir l'environnement qui sera construit et détruit après la connexion de l'utilisateur ou sa déconnexion. Les fichiers de session peuvent déterminer les commandes qui doivent être exécutées pour préparer l'environnement.\\
 Le mécanisme \textbf{password:} Ces modules sont responsables de la mise à jour des informations d'authentification.\\
-Les deux premières catégories de modules seront référencées chaque fois qu'un programme effectue authentification réussie par PAM. 
+Les deux premières catégories de modules seront référencées chaque fois qu'un programme effectue authentification réussie par PAM.
 Les modules de la session seront exécutés si nécessaire, après les deux premiers modules. Les modules de mot de passe sont accessibles sur demande. Notre module PAM permet une authentification ainsi qu'un changement de secret.
 
 \newpage
@@ -271,7 +270,7 @@ Ci-dessus un exemple de configuration, ou nous avons passé en commentaire l'aut
 \verb?pam_securetty.so? nous avons à la place mis notre module d'authentification à base d'OTP, en rajoutant le 
 module \verb?pam_uotp.so? pour l'authentification.\\
 Il reste désormais à configurer le service ssh pour autoriser PAM comme mécanisme d'authentification, 
-ainsi que le challenge response. Pour cela il faut modifier le fichier \verb?/etc/ssh/sshd_config?
+ainsi que le challenge/response. Pour cela il faut modifier le fichier \verb?/etc/ssh/sshd_config?
 \begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
 ChallengeResponseAuthentication yes
 UsePAM yes
@@ -287,8 +286,8 @@ ssh localhost
 Pour utiliser notre module sur un serveur Apache, il faut installer un composant rendant PAM utilisable
 sur Apache disponible à l'adresse suivante 
 \href{http://pear.php.net/package/PEAR/download}{http://pear.php.net/package/PEAR/download}.\\
-Ajouter désormais \textbf{extension=pam.so} à votre fichier php.ini.\\
-Enfin configurer le fichier de configuration du service PHP pour PAM, \verb?/etc/pam.d/php?
+Il faut ensuite ajouter \textbf{extension=pam.so} à votre fichier php.ini.\\
+Enfin, il faut configurer le fichier de configuration du service PHP pour PAM, \verb?/etc/pam.d/php?
 \begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
 #%PAM-1.0
 auth       required     pam_uotp.so use_auth_tok
