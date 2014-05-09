@@ -125,6 +125,7 @@ rapporter à la section prérequis\ref{prereq}}
 
 \part{Configuration du système d'authentification}
 \section{Gestion des utilisateurs}
+\subsection{Création utilisateur}
 Les utilisateurs doivent exister sur le système, et être présent dans 
 le fichier des utilisateurs OTP utilisé par notre module qui se trouve 
 dans \verb?/var/otpasswd?. La création d'un utilisateur dans le fichier 
@@ -164,6 +165,41 @@ celui-ci affichera pas à pas les champs à remplir.
 
 \textit{/! $\backslash$ Les utilisateurs définis dans cet utilitaire 
 doivent exister sur le système.}
+
+\subsubsection{Stockage des utilisateurs}
+Les utilisateurs sont enregistrés dans le fichier \verb?/var/otpasswd?.
+Ce fichier est créé lors de l'appel à l'utilitaire cité précédemment (\verb?otpasswd?).
+Les utilisateurs sont enregistrés avec les champs suivant séparés par des ":":
+\begin{itemize}
+\item Nom d'utilisateur (Chaîne de caractères).
+\item Méthode utilisé (Entier)
+\item Secret (Chaîne de caractères hexadécimale).
+\item Longueur OTP (Entier compris entre 6 et 8).
+\item \'{E}tat de bannissement (Entier 0 ou 1).
+\item Paramètre optionnel selon la méthode.\\
+HOTP:
+\begin{itemize}
+\item Compteur (Entier).
+\item Date dernière tentative d'authentification en temps UTC (Entier).
+\item Nombre d'échecs successifs (Entier).
+\end{itemize}
+TOTP:
+\begin{itemize}
+\item Dernier compteur utilisé (Entier).
+\item Décalage entre le token et le module (Entier).
+\item Quantum, temps de validé de l'OTP (Entier).
+\item Date dernière tentative d'authentification en temps UTC (Entier).
+\end{itemize}
+\end{itemize}
+
+Exemple:
+\begin{verbatim}
+wuna:1:74657374:8:0:0:0:0
+\end{verbatim}
+
+/!\ Il est important de configurer les droits sur ce fichiers correctement, car il détient les utilisateurs et
+leurs secrets qui sont enregistrés en clair.
+
 
 \section{Rappel sur PAM}
 PAM (Pluggable Authentication Modules) permet de définir différents moyens
