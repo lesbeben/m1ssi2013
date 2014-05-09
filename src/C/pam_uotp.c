@@ -12,6 +12,7 @@
 #include <sys/syslog.h>
 #include <string.h>
 #include <strings.h>
+#include <pwd.h>
 
 #include "utils/otp.h"
 #include "utils/users.h"
@@ -262,6 +263,7 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
                       int argc, const char **argv) {
     int retval;
     modopt options;
+
     if (parse_options(pamh, &options,argc, argv) == -1) {
         pam_syslog(pamh, LOG_ERR, "Options invalide détectées.");
     }
@@ -286,6 +288,30 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
             // supplémentaires, l'utilisateur à l'autorité
             return PAM_SUCCESS;
         }
+        
+        /* Si l'utilisateur appelant n'est pas l'utilisateur ciblé, la demande
+         * de secret échouera.
+         */
+        size_t bufsize = sysconf(_SC_GETPW_R_SIZE_MAX);
+        struct passwd pwd;
+        struct passwd * result;
+        if (bufsize == -1) {
+            bufsize = 16384;
+        }
+        char * buf = malloc(bufsize);
+        if (buf == NULL) {
+            return USR_ERR_SYS;
+        }
+        getpwnam_r(username, &pwd, buf, bufsize, &result);
+        if (result == NULL) {
+            free(buf);
+            return USR_ERR_USR_UKN;
+        }
+        if (pwd.pw_uid != getuid()) {
+            pam_info(pamh, "unable to ask a secret for %s", username);
+            return PAM_TRY_AGAIN;
+        }
+        free(buf);
 
         switch (retval = userExists (username)) {
         case 0 :
@@ -310,7 +336,7 @@ int pam_sm_chauthtok (pam_handle_t *pamh, int flags,
         if (retval != PAM_SUCCESS) {
             pam_syslog (pamh, LOG_ERR, "user authentication failed");
         }
-        return retval;
+        return PAM_TRY_AGAIN;
     }
 
     //  2eme appel de la fonction avec le flag PAM_UPDATE_AUTHTOK.
