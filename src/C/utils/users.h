@@ -86,8 +86,8 @@ int updateOTPUser(otpuser * user);
  * 
  * @param[in] username le nom de l'utilisateur recherché.
  * 
- * @return 1 si l'utilisateur existe, 0 si il n'existe pas ou -1 en cas 
- * d'erreur.
+ * @return 1 si l'utilisateur existe, 0 si il n'existe pas ou une valeur
+ * négative en cas d'erreur.
  */
 int userExists(const char * username);
 
@@ -133,7 +133,7 @@ int lockFile();
  * Si le fichier était verouillé alors l'appel deverouille le
  * fichier et continue.
  * 
- * @return retourne 0, ou -1 en cas d'erreur.
+ * @return retourne USR_SUCCESS, ou une valeur négative en cas d'erreur.
  *
  */
 int unlockFile();
