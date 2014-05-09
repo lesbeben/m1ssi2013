@@ -20,7 +20,7 @@ typedef struct {
  */
 typedef secret_struct * secret;
 
-/** Crée un "objet" secret rempli avec des length octets NULS.
+/** Crée un "objet" secret rempli avec "length" octets nuls.
  * 
  * Cette fonction créée un secret avec des octets initialisés à 0.
  * @param[in] length la taille du secret en octets.
@@ -30,7 +30,7 @@ typedef secret_struct * secret;
  */
 secret createSecret(int length);
 
-/** Crée un "objet" secret rempli avec des length octets aléatoire.
+/** Crée un "objet" secret rempli avec "length" octets aléatoires.
  * 
  * Cette fonction utilise le fichier /dev/random pour générer de l'aléatoire.<br/>
  * Elle est donc plus fiable mais beaucoup plus lente que createSecret.
@@ -61,7 +61,7 @@ secret createRandomSecret(int length);
  */
 secret hexToSecret(char * buffer);
 
-/** Créée un secret a partir d'une chaîne de caractères.
+/** Crée un secret à partir d'une chaîne de caractères.
  * 
  * Cette fonction va utiliser les octets pointés par buffer comme nouveau 
  * secret. <br/>
@@ -76,10 +76,10 @@ secret hexToSecret(char * buffer);
  */
 secret textToSecret(char * buffer);
 
-/** Libères les ressources associés à un secret.
+/** Libère les ressources associés à un secret.
  * 
- * Cette fonction désallouera les espace mémoires correspondant aux octets du 
- * secret ainsi qu'a la structure secret. <br/>
+ * Cette fonction désallouera les ressources mémoire correspondant aux octets du
+ * secret ainsi qu'à la structure secret. <br/>
  * Par mesure de sécurité ces octets auront été mis à zéro avant libération.
  * @param[in] key le secret dont on veut libérer les ressources.
  * @pre key != NULL
@@ -99,7 +99,7 @@ int getLength(secret key);
 
 /** Donne une représentation hexadécimale du secret.
  * 
- * Cette fonction va remplir le buffer passé en paramêtre avec length octets
+ * Cette fonction va remplir le buffer passé en paramètre avec length octets
  * afin de donner une représentation hexadécimale du secret. <br/>
  * Si length octet ne sont pas suffisant pour représenter le secret alors la 
  * fonction renverra une erreur.
