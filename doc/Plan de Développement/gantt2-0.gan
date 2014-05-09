@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?><project name="OTP" company="" webLink="https://github.com/lesbeben/m1ssi2013" view-date="2014-01-01" view-index="0" gantt-divider-location="481" resource-divider-location="300" version="2.0" locale="fr">
+    <description/>
+    <view zooming-state="default:8" id="gantt-chart">
+        <field id="tpd3" name="Nom" width="43" order="0"/>
+        <field id="tpd4" name="Date de début" width="12" order="1"/>
+        <field id="tpd5" name="Date de fin" width="11" order="2"/>
+        <field id="tpc0" name="Charges (jours-hommes)" width="15" order="3"/>
+        <field id="tpc1" name="Charges effectives (jours-hommes)" width="16" order="4"/>
+        <option id="taskLabelUp" value="name"/>
+        <option id="taskLabelDown" value="length"/>
+        <option id="taskLabelRight" value=""/>
+    </view>
+    <view id="resource-table">
+        <field id="0" name="Nom" width="50" order="0"/>
+        <field id="1" name="Rôle par défaut" width="50" order="1"/>
+    </view>
+    <!-- -->
+    <calendars>
+        <day-types>
+            <day-type id="0"/>
+            <day-type id="1"/>
+            <calendar id="1" name="default">
+                <default-week sun="1" mon="0" tue="0" wed="0" thu="0" fri="0" sat="1"/>
+                <only-show-weekends value="true"/>
+                <overriden-day-types/>
+                <days/>
+            </calendar>
+        </day-types>
+    </calendars>
+    <tasks empty-milestones="true">
+        <taskproperties>
+            <taskproperty id="tpd0" name="type" type="default" valuetype="icon"/>
+            <taskproperty id="tpd1" name="priority" type="default" valuetype="icon"/>
+            <taskproperty id="tpd2" name="info" type="default" valuetype="icon"/>
+            <taskproperty id="tpd3" name="name" type="default" valuetype="text"/>
+            <taskproperty id="tpd4" name="begindate" type="default" valuetype="date"/>
+            <taskproperty id="tpd5" name="enddate" type="default" valuetype="date"/>
+            <taskproperty id="tpd6" name="duration" type="default" valuetype="int"/>
+            <taskproperty id="tpd7" name="completion" type="default" valuetype="int"/>
+            <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
+            <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
+            <taskproperty id="tpc0" name="Charges (jours-hommes)" type="custom" valuetype="int"/>
+            <taskproperty id="tpc1" name="Charges effectives (jours-hommes)" type="custom" valuetype="int"/>
+        </taskproperties>
+        <task id="0" name="Réalisation de l'état de l'art" color="#006666" meeting="false" start="2013-11-22" duration="61" complete="100" expand="true">
+            <depend id="157" type="2" difference="0" hardness="Rubber"/>
+            <customproperty taskproperty-id="tpc0" value="413"/>
+            <customproperty taskproperty-id="tpc1" value="413"/>
+            <task id="1" name="Étude du système OTP de base" color="#009999" meeting="false" start="2013-11-22" duration="21" complete="100" priority="4" expand="true">
+                <depend id="18" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="18" name="Rédaction du rapport OTP" color="#00cccc" meeting="false" start="2013-12-13" duration="29" complete="100" expand="true">
+                <depend id="34" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="11" name="Étude du système OTPW" color="#009999" meeting="false" start="2013-11-22" duration="21" complete="100" expand="true">
+                <depend id="21" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="21" name="Rédaction du rapport OTPW" color="#00cccc" meeting="false" start="2013-12-13" duration="29" complete="100" expand="true">
+                <depend id="34" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="14" name="Étude du système POTP" color="#009999" meeting="false" start="2013-11-22" duration="21" complete="100" expand="true">
+                <depend id="24" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="24" name="Rédaction du rapport POTP" color="#00cccc" meeting="false" start="2013-12-13" duration="29" complete="100" expand="true">
+                <depend id="34" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="5" name="Étude des systèmes HOTP, TOTP" color="#009999" meeting="false" start="2013-11-22" duration="21" complete="100" expand="true">
+                <depend id="27" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="27" name="Rédaction du rapport HOTP, TOTP" color="#00cccc" meeting="false" start="2013-12-13" duration="29" complete="100" expand="true">
+                <depend id="34" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="34" name="Rédaction du rapport global" color="#33ccff" meeting="false" start="2014-01-11" duration="11" complete="100" expand="true"/>
+        </task>
+        <task id="157" name="Présentation de l'état de l'art aux clients" color="#ff0000" meeting="true" start="2014-01-23" duration="0" complete="100" expand="true">
+            <depend id="40" type="2" difference="0" hardness="Rubber"/>
+            <depend id="91" type="2" difference="0" hardness="Rubber"/>
+        </task>
+        <task id="29" name="Implémentation des tokens" color="#000066" meeting="false" start="2014-01-25" duration="81" complete="94" expand="true">
+            <task id="91" name="Implémentation des algorithmes de calcul des OTP" color="#0033cc" meeting="false" start="2014-01-25" duration="22" complete="100" expand="true">
+                <depend id="164" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="72"/>
+                <customproperty taskproperty-id="tpc1" value="72"/>
+            </task>
+            <task id="164" name="Rédaction de la documentation OTP JAVA" color="#9999ff" meeting="false" start="2014-02-16" duration="2" complete="100" expand="true">
+                <depend id="119" type="2" difference="0" hardness="Rubber"/>
+            </task>
+            <task id="99" name="Implémentation de la gestion des tokens" color="#0033cc" meeting="false" start="2014-02-20" duration="18" complete="100" expand="true">
+                <depend id="220" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="60"/>
+                <customproperty taskproperty-id="tpc1" value="60"/>
+            </task>
+            <task id="220" name="Rédaction de la documentation token Android" color="#9999ff" meeting="false" start="2014-03-10" duration="2" complete="100" expand="true">
+                <depend id="151" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="105" name="Création du GUI pour le token" color="#0033cc" meeting="false" start="2014-03-12" duration="20" complete="100" expand="true">
+                <depend id="107" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="60"/>
+                <customproperty taskproperty-id="tpc1" value="60"/>
+            </task>
+            <task id="107" name="Déploiement du token sur smartphone" color="#0033cc" meeting="false" start="2014-04-01" duration="11" complete="100" expand="true">
+                <depend id="217" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="15"/>
+                <customproperty taskproperty-id="tpc1" value="30"/>
+            </task>
+            <task id="146" name="Validation de l'itération" color="#ff6600" meeting="false" start="2014-04-12" duration="4" complete="0" expand="true">
+                <depend id="111" type="2" difference="0" hardness="Strong"/>
+            </task>
+        </task>
+        <task id="255" name="Rdv avec le cleint" color="#ff6600" meeting="true" start="2014-02-06" duration="0" complete="100" expand="true"/>
+        <task id="119" name="Rdv avec le client" color="#ff6600" meeting="true" start="2014-02-20" duration="0" complete="100" expand="true">
+            <depend id="92" type="2" difference="0" hardness="Strong"/>
+            <depend id="99" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="151" name="Rdv avec le client" color="#ff6600" meeting="true" start="2014-03-12" duration="0" complete="100" expand="true">
+            <depend id="102" type="2" difference="0" hardness="Strong"/>
+            <depend id="105" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="217" name="Rdv avec le client" color="#ff6600" meeting="true" start="2014-04-12" duration="0" complete="0" expand="true">
+            <depend id="146" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="263" name="Gestion des associations PAM-token" color="#003300" meeting="false" start="2014-04-16" duration="24" complete="80" expand="true">
+            <task id="111" name="Création d'utilitaires en ligne de commande" color="#009900" meeting="false" start="2014-04-16" duration="13" complete="90" expand="true">
+                <customproperty taskproperty-id="tpc0" value="39"/>
+            </task>
+            <task id="112" name="Mise à jour du secret via PAM" color="#009900" meeting="false" start="2014-04-25" duration="13" complete="83" expand="true">
+                <depend id="238" type="2" difference="0" hardness="Rubber"/>
+                <customproperty taskproperty-id="tpc0" value="91"/>
+            </task>
+            <task id="238" name="Rédaction de la documentation Module PAM" color="#33ff33" meeting="false" start="2014-05-08" duration="2" complete="0" expand="true">
+                <depend id="113" type="2" difference="0" hardness="Rubber"/>
+            </task>
+        </task>
+        <task id="101" name="Module PAM" color="#660066" meeting="false" start="2014-01-25" duration="90" complete="95" expand="true">
+            <task id="40" name="Implémentation des algorithmes de calcul des OTP" color="#990099" meeting="false" start="2014-01-25" duration="22" complete="100" expand="true">
+                <depend id="232" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="96"/>
+                <customproperty taskproperty-id="tpc1" value="72"/>
+            </task>
+            <task id="232" name="Rédaction de la documentation OTP C" color="#cc00cc" meeting="false" start="2014-02-16" duration="2" complete="100" expand="true">
+                <depend id="119" type="2" difference="0" hardness="Rubber"/>
+            </task>
+            <task id="92" name="Implémentation de la gestion des utilisateurs" color="#990099" meeting="false" start="2014-02-20" duration="18" complete="100" expand="true">
+                <depend id="235" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="80"/>
+                <customproperty taskproperty-id="tpc1" value="60"/>
+            </task>
+            <task id="235" name="Rédaction de la documentation Fonctions C" color="#cc00cc" meeting="false" start="2014-03-10" duration="2" complete="100" expand="true">
+                <depend id="151" type="2" difference="0" hardness="Rubber"/>
+            </task>
+            <task id="102" name="Implémentation des fonctions d'authentification de PAM" color="#990099" meeting="false" start="2014-03-12" duration="40" complete="100" expand="true">
+                <depend id="108" type="2" difference="0" hardness="Rubber"/>
+                <customproperty taskproperty-id="tpc0" value="80"/>
+            </task>
+            <task id="108" name="Validation de l'itération" color="#ff6600" meeting="false" start="2014-04-21" duration="4" complete="0" expand="true">
+                <depend id="112" type="2" difference="0" hardness="Strong"/>
+            </task>
+        </task>
+        <task id="265" name="Finalisations" color="#666600" meeting="false" start="2014-05-10" duration="15" complete="0" expand="true">
+            <task id="113" name="Test Finaux / Crash test" color="#cccc00" meeting="false" start="2014-05-10" duration="7" complete="0" expand="true">
+                <depend id="243" type="2" difference="0" hardness="Strong"/>
+                <customproperty taskproperty-id="tpc0" value="49"/>
+            </task>
+            <task id="243" name="Rédaction du rapport de tests" color="#ffff66" meeting="false" start="2014-05-17" duration="2" complete="0" expand="true">
+                <depend id="245" type="2" difference="0" hardness="Rubber"/>
+            </task>
+            <task id="245" name="Rédaction du manuel d'utilisation" color="#ffff66" meeting="false" start="2014-05-19" duration="2" complete="0" expand="true">
+                <depend id="248" type="2" difference="0" hardness="Strong"/>
+            </task>
+            <task id="248" name="Rédaction du rapport de projet" color="#ffff66" meeting="false" start="2014-05-21" duration="4" complete="0" expand="true"/>
+        </task>
+    </tasks>
+    <resources>
+        <resource id="0" name="Adrien Smondack" function="Default:1" contacts="adrien.smondack@etu.univ-rouen.fr" phone="0659985282"/>
+        <resource id="1" name="Benjamin Zigh" function="1" contacts="benjamin.zigh@etu.univ-rouen.fr" phone="0627458251"/>
+        <resource id="7" name="Maxime Michotte" function="2" contacts="maxime.michotte@etu.univ-rouen.fr" phone="0642341119"/>
+        <resource id="8" name="Damien Picard" function="4" contacts="damien.picard1@etu.univ-rouen.fr" phone="0671813430"/>
+        <resource id="9" name="Tayewo-John-Yves Adegoloye" function="5" contacts="tayewo-john-yves.adegoloye@etu.univ-rouen.fr" phone="0603866278"/>
+        <resource id="10" name="Gaetan Ferry" function="SoftwareDevelopment:4" contacts="gaetan.ferry@etu.univ-rouen.fr" phone="0649526241"/>
+        <resource id="11" name="Claire Hardouin" function="3" contacts="claire.hardouin@etu.univ-rouen.fr" phone="0658799100"/>
+        <resource id="12" name="Toute l'équipe" function="Default:0" contacts="" phone=""/>
+    </resources>
+    <allocations>
+        <allocation task-id="1" resource-id="0" function="Default:1" responsible="false" load="100.0"/>
+        <allocation task-id="18" resource-id="0" function="Default:1" responsible="false" load="100.0"/>
+        <allocation task-id="235" resource-id="0" function="Default:1" responsible="false" load="100.0"/>
+        <allocation task-id="40" resource-id="0" function="Default:1" responsible="false" load="100.0"/>
+        <allocation task-id="92" resource-id="0" function="Default:1" responsible="false" load="100.0"/>
+        <allocation task-id="102" resource-id="0" function="Default:1" responsible="false" load="100.0"/>
+        <allocation task-id="5" resource-id="1" function="SoftwareDevelopment:3" responsible="false" load="100.0"/>
+        <allocation task-id="27" resource-id="1" function="SoftwareDevelopment:3" responsible="false" load="100.0"/>
+        <allocation task-id="111" resource-id="1" function="1" responsible="false" load="100.0"/>
+        <allocation task-id="255" resource-id="1" function="1" responsible="false" load="100.0"/>
+        <allocation task-id="119" resource-id="1" function="1" responsible="false" load="100.0"/>
+        <allocation task-id="151" resource-id="1" function="1" responsible="false" load="100.0"/>
+        <allocation task-id="217" resource-id="1" function="1" responsible="false" load="100.0"/>
+        <allocation task-id="164" resource-id="1" function="1" responsible="false" load="100.0"/>
+        <allocation task-id="220" resource-id="1" function="1" responsible="false" load="100.0"/>
+        <allocation task-id="245" resource-id="1" function="1" responsible="false" load="100.0"/>
+        <allocation task-id="248" resource-id="1" function="1" responsible="false" load="100.0"/>
+        <allocation task-id="91" resource-id="1" function="1" responsible="false" load="100.0"/>
+        <allocation task-id="99" resource-id="1" function="1" responsible="false" load="100.0"/>
+        <allocation task-id="105" resource-id="1" function="1" responsible="false" load="100.0"/>
+        <allocation task-id="107" resource-id="1" function="1" responsible="false" load="100.0"/>
+        <allocation task-id="5" resource-id="7" function="SoftwareDevelopment:3" responsible="false" load="100.0"/>
+        <allocation task-id="27" resource-id="7" function="SoftwareDevelopment:3" responsible="false" load="100.0"/>
+        <allocation task-id="255" resource-id="7" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="119" resource-id="7" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="151" resource-id="7" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="217" resource-id="7" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="235" resource-id="7" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="245" resource-id="7" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="248" resource-id="7" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="40" resource-id="7" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="92" resource-id="7" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="102" resource-id="7" function="2" responsible="false" load="100.0"/>
+        <allocation task-id="11" resource-id="8" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
+        <allocation task-id="21" resource-id="8" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
+        <allocation task-id="232" resource-id="8" function="4" responsible="false" load="100.0"/>
+        <allocation task-id="238" resource-id="8" function="4" responsible="false" load="100.0"/>
+        <allocation task-id="40" resource-id="8" function="4" responsible="false" load="100.0"/>
+        <allocation task-id="92" resource-id="8" function="4" responsible="false" load="100.0"/>
+        <allocation task-id="102" resource-id="8" function="4" responsible="false" load="100.0"/>
+        <allocation task-id="14" resource-id="9" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
+        <allocation task-id="24" resource-id="9" function="SoftwareDevelopment:2" responsible="false" load="100.0"/>
+        <allocation task-id="111" resource-id="9" function="5" responsible="false" load="100.0"/>
+        <allocation task-id="220" resource-id="9" function="5" responsible="false" load="100.0"/>
+        <allocation task-id="91" resource-id="9" function="5" responsible="false" load="100.0"/>
+        <allocation task-id="99" resource-id="9" function="5" responsible="false" load="100.0"/>
+        <allocation task-id="105" resource-id="9" function="5" responsible="false" load="100.0"/>
+        <allocation task-id="107" resource-id="9" function="5" responsible="false" load="100.0"/>
+        <allocation task-id="5" resource-id="10" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="27" resource-id="10" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="111" resource-id="10" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="164" resource-id="10" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="243" resource-id="10" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="91" resource-id="10" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="99" resource-id="10" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="105" resource-id="10" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="107" resource-id="10" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="14" resource-id="11" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="24" resource-id="11" function="SoftwareDevelopment:4" responsible="false" load="100.0"/>
+        <allocation task-id="232" resource-id="11" function="3" responsible="false" load="100.0"/>
+        <allocation task-id="238" resource-id="11" function="3" responsible="false" load="100.0"/>
+        <allocation task-id="243" resource-id="11" function="3" responsible="false" load="100.0"/>
+        <allocation task-id="40" resource-id="11" function="3" responsible="false" load="100.0"/>
+        <allocation task-id="92" resource-id="11" function="3" responsible="false" load="100.0"/>
+        <allocation task-id="102" resource-id="11" function="3" responsible="false" load="100.0"/>
+        <allocation task-id="157" resource-id="12" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="112" resource-id="12" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="113" resource-id="12" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="34" resource-id="12" function="Default:0" responsible="false" load="100.0"/>
+    </allocations>
+    <vacations/>
+    <taskdisplaycolumns>
+        <displaycolumn property-id="tpd2" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd7" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd6" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd10" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd11" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd1" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd9" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd8" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd0" order="-1" width="75" visible="false"/>
+        <displaycolumn property-id="tpd3" order="0" width="205" visible="true"/>
+        <displaycolumn property-id="tpd4" order="1" width="57" visible="true"/>
+        <displaycolumn property-id="tpd5" order="2" width="55" visible="true"/>
+        <displaycolumn property-id="tpc0" order="3" width="74" visible="true"/>
+        <displaycolumn property-id="tpc1" order="4" width="75" visible="true"/>
+    </taskdisplaycolumns>
+    <previous/>
+    <roles roleset-name="Default"/>
+    <roles roleset-name="SoftwareDevelopment"/>
+    <roles>
+        <role id="1" name="MOA"/>
+        <role id="2" name="Assistant MOA"/>
+        <role id="3" name="Assistant Testeur"/>
+        <role id="4" name="Responsable Technique"/>
+        <role id="5" name="Responsable Android"/>
+    </roles>
+</project>

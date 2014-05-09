@@ -4,6 +4,8 @@
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
 \usepackage{textcomp}
+\usepackage[toc,page]{appendix} 
+\usepackage{listings}
 
 \logo{../../res/logo_univ.png}
 \title{Cahier de recettes}
@@ -11,12 +13,14 @@
 \projet{M1SSI}
 \projdesc{Projet de génération d'OTP}
 \filiere{M1SSI}
-\version{2.0}
+\version{2.1}
 \relecteur{Maxime \bsc{Michotte}}
 \signataire{\bsc{Bardet} Magali}
-\date{Janvier 2014}
+\date{Avril 2014}
 
-\histentry{2.0}{16/01/2014}{Version pour la revue de lancement.}
+\histentry{2.1}{08/04/2014}{Explicitation des tests d'aléatoirité}
+\histentry{2.0}{20/02/2014}{Version post état de l'art.}
+\histentry{1.2}{16/01/2014}{Version pour la revue de lancement.}
 \histentry{1.1}{15/12/2013}{Version relue et corrigée.}
 \histentry{1.0}{29/11/2013}{Version initiale.}
 
@@ -30,28 +34,36 @@
       \item Générer des mots de passe jetables.
     \end{itemize}
 
-    \item Serveur :
+    \item Module PAM :
     \begin{itemize}
+      \item Se brancher sur n'importe quel serveur utilisant PAM.
       \item Authentifier des utilisateurs.
       \item Stocker et ajouter des paramètres utilisateurs.
       \item Gérer la synchronisation des deux parties.
     \end{itemize}
   \end{itemize}
 
-  Les objets à tester sont le token et le vérifieur, et plus précisément leurs composantes logicielles. L'ensemble des tests sera réalisé dans un contexte \og{}en 
+  Les objets à tester sont le token et le vérifieur (ici le module PAM), et plus précisément leurs
+  composantes logicielles. L'ensemble des tests sera réalisé dans un contexte \og{}en 
   production\fg{} ou en simulant celui-ci.
   
-  Dans l'éventualité où des tests seraient à effectuer sur des composantes Android, ceux-ci seraient effectués sur un terminal mobile Samsung Galaxy ACE.
+  Les tests qui seront à effectuer pour les composantes Android seront effectués sur un terminal
+  mobile Samsung Galaxy ACE.
   
   \section{Documents applicables et de références.}
   \begin{tabular}{p{1,5cm}>{\raggedright\arraybackslash}p{13cm}}
-    {[ANS10]} & {ANSSI. Référentiel général de sécurité. \href{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}, 2010.}
+    {[ANS10]} & {ANSSI. Référentiel général de sécurité. 
+    \href{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}
+    {http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}, 2010.}
     \tabularnewline
     \\
-    {[MvOV97]} & {Alfred J. Menezes, Paul C. van Oorschot, and Scott A. Vanstone. Handbook of applied cryptography. CRC Press Series on Discrete Mathematics and its Applications. CRC Press, Boca Raton, FL, 1997. With a foreword by Ronald L.Rivest.}
+    {[MvOV97]} & {Alfred J. Menezes, Paul C. van Oorschot, and Scott A. Vanstone. Handbook of applied
+    cryptography. CRC Press Series on Discrete Mathematics and its Applications. CRC Press, Boca
+    Raton, FL, 1997. With a foreword by Ronald L.Rivest.}
     \tabularnewline
     \\
-    {[RFC98]} & {A One-Time Password System. \href{http://tools.ietf.org/html/rfc2289}{http://tools.ietf.org/html/rfc2289}, 1998.}
+    {[RFC98]} & {A One-Time Password System. \href{http://tools.ietf.org/html/rfc2289}
+    {http://tools.ietf.org/html/rfc2289}, 1998.}
     \tabularnewline
     \\
     {[RFC05]} & {HOTP:An HMAC-Based One-Time Password Algorithm \href{http://tools.ietf.org/html/rfc4226}{http://tools.ietf.org/html/rfc4226}, 2005.}
@@ -66,7 +78,7 @@
     {[RFC11]} & {TOTP: Time-Based One-Time Password Algorithm \href{http://tools.ietf.org/html/rfc6238}{http://tools.ietf.org/html/rfc6238}, 2011.}
     \tabularnewline
     \\
-    {[goo]} & {Google Authentificator \href{https://code.google.com/p/google-authenticator/}{https://code.google.com/p/google-authenticator/}.}
+    {[goo]} & {Google Authenticator \href{https://code.google.com/p/google-authenticator/}{https://code.google.com/p/google-authenticator/}.}
     \tabularnewline
     \\
   \end{tabular}
@@ -77,17 +89,22 @@
   indépendamment. Les tests sur Android seront réalisés sur un terminal mobile muni d'un processeur mono-cœur ARM v6 cadencé à 832MHz, disposant de 278 Mo de mémoire et tournant sur un 
   système d'exploitation Android 2.3.6.
   
+  Afin de tester le module PAM, nous le brancherons sur plusieurs applications compatibles. Nous 
+utiliserons en pratique un gestionnaire de login (Slim, GDM, KDM ...) ainsi que le logiciel openSSH.
+Ces applications seront installées à la fois sur des machines personnelles et sur un serveur dont les 
+spécification techniques seront détaillées ultérieurement.
+  
   Dans l'ensemble, les tests seront effectués sur des configurations modestes afin d'assurer la performance sur la plupart des machines actuelles et futures.
   
-  Les données utilisées pour les tests seront une succession de valeurs de mots de passe jetable successivement correctes, erronées et incohérentes.
+  Les données utilisées pour les tests seront une succession de valeurs de mots de passe jetables successivement correctes, erronées et incohérentes.
   
   \section{Responsabilités}
-  La création des procédures de test est laissée aux soins des responsables qualité de l'équipe. Ces procédures seront exécutés conformément au fonctionnement d'eXtreme Programming. A savoir : les tests sont exécutés tout au long du développement par les équipes. Chaque équipe travaillant au développement d'un composant est chargé de tester celui-ci continuellement et de publier les résultats de ceux-ci.
+  La création des procédures de test est laissée aux soins des responsables qualité de l'équipe. Ces procédures seront exécutées conformément au fonctionnement d'eXtreme Programming. A savoir : les tests sont exécutés tout au long du développement par les équipes. Chaque équipe travaillant au développement d'un composant est chargée de tester celui-ci continuellement et de publier les résultats des tests.
   
   Afin d'assurer l'appropriation collective du code source, toute l'équipe peut signaler une anomalie révélée au cours du développement : soit elle est résolue par le même acteur, soit l'acteur transmet les résultats 
 des tests à une autre équipe afin que celle-ci travaille à la réparation de l'anomalie.
   
-  \`A tout moment une équipe peut reporter des anomalies dans une procédure de test. Dans ce cas, les responsables techniques travailleront à améliorer la procédure incriminée et diffuseront les mises à jour à l'ensemble de l'équipe.
+  À tout moment une équipe peut reporter des anomalies dans une procédure de test. Dans ce cas, les responsables techniques travailleront à améliorer la procédure incriminée et diffuseront les mises à jour à l'ensemble de l'équipe.
   
   \section{Stratégie de test}
   Les procédures de tests seront effectués avant le début de la réalisation de chaque composante (token, client, serveur). Toute composante testée qui serait non conforme ferait l'objet d'un 
@@ -113,17 +130,22 @@ des tests à une autre équipe afin que celle-ci travaille à la réparation de 
    \item Ajout d'une entrée au journal de test précisant la date du test, la référence du mémo, la référence de l'objet testé ainsi que la référence de l'exigence de 
    qualité contrariée.
    \item Diffusion de la note à l'équipe de développement.
-   \item Une personne est désigné pour corriger l'anomalie.
-   \item La personne vérifie la porté de l'anomalie, puis la corrige.
+   \item Une personne est désignée pour corriger l'anomalie.
+   \item La personne vérifie la portée de l'anomalie, puis la corrige.
    \item Une deuxième personne vérifie que l'anomalie est bien corrigée.
    \item Une fois le feu vert donné, établir une contre-note portant le même identifiant et précisant les raisons supposées 
    de l'anomalie ainsi que les contremesures mises en place.
   \end{itemize}
-\newpage
+  
+  Dans la pratique, la gestions des anomalies sera faite à l'aide de l'outil \emph{issue tracker} de
+  la plate-forme d'hébergement Github. Cet outil permet la création de files de discussion associées à un bug
+  de l'application. Il laisse aussi la possibilité aux collaborateurs du projet de prendre en charge 
+  une \emph{issue} particulière. L'ensemble des \emph{issues} ouvertes est conservé par Github ainsi
+  que les files de discussion associés permettant de parcourir l'historique des bugs du projet.
+
   \section{Procédures de test}  
   \begin{center}
     %---------------------------------------Test N° 1------------------------------------------------------------------------------
-    \vfill
     \begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
       \hline
       \multicolumn{3}{|l|}{Objet testé : Token} & \multicolumn{2}{c|}{Version : 1.1}\\ \hline
@@ -140,29 +162,16 @@ des tests à une autre équipe afin que celle-ci travaille à la réparation de 
     
     \begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
       \hline
-      \multicolumn{3}{|l|}{Objet testé : Serveur} & \multicolumn{2}{c|}{Version : 1.0}\\ \hline
-      \multicolumn{5}{|l|}{Objectif de test : Mesurer le temps de réponse du serveur}\\ \hline
+      \multicolumn{3}{|l|}{Objet testé : Module PAM} & \multicolumn{2}{c|}{Version : 2.1}\\ \hline
+      \multicolumn{5}{|l|}{Objectif de test : Mesurer le temps de vérification du module}\\ \hline
       \multicolumn{3}{|l|}{Procédure n° 2} & \multicolumn{2}{p{3cm}|}{Pré-requis : EP\_01}\\ \hline
       \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
       \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
-      1 & Pinger le serveur & Récupérer le temps t de communication avec le serveur & - & - \\
-      2 & Tenter une connexion avec un OTP valide & Réponse : Accepté; Temps < 2t + 1s & EQ\_02; EQ\_04 &  OK \\
-      3 & Tenter une connexion avec un OTP invalide & Réponse : Refusé; Temps < 2t + 1s & EQ\_02; EQ\_04 & OK\\ \hline
-    \end{tabular}
-    \vfill
-    %---------------------------------------Test N° 3------------------------------------------------------------------------------
-    
-    \begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
+      1 & Ecrire un script utilisant la fonction de vérification du mot de passe & - & - & - \\ 
+      2 & Appeler le script sur un otp valide et passer l'exécutable dans la commande time &
+            Temps < 2s & EQ\_02 & OK \\
+      3 & Réitérer l'opération avec un otp invalide & Temps < 2s & EQ\_02 & OK \\
       \hline
-      \multicolumn{3}{|l|}{Objet testé : Serveur} & \multicolumn{2}{c|}{Version : 1.1}\\ \hline
-      \multicolumn{5}{|l|}{Objectif de test : Tester la résistance du serveur à la charge}\\ \hline
-      \multicolumn{3}{|l|}{Procédure n° 3} & \multicolumn{2}{p{3cm}|}{Pré-requis : test 2, EP\_01}\\ \hline
-      \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
-      \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
-      1 & Pinger le serveur & Récupérer le temps t de communication avec le serveur & - & - \\
-      2 & Générer 100 000 valeurs aléatoires au format d'un OTP & - & - & -\\
-      3 & Pour chaque valeur démarrer un client pré-associés & - & - & -\\ \hline
-      4 & Pour chaque client tenter l'authentification & Pour chaque client temps < 2t + 1s & EQ\_03 & OK\\ \hline
     \end{tabular}
     \vfill
     %---------------------------------------Test N° 4------------------------------------------------------------------------------
@@ -189,7 +198,7 @@ des tests à une autre équipe afin que celle-ci travaille à la réparation de 
     %---------------------------------------Test N° 5------------------------------------------------------------------------------
     \begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
       \hline
-      \multicolumn{3}{|l|}{Objet testé : Serveur} & \multicolumn{2}{c|}{Version : 1.1}\\ \hline
+      \multicolumn{3}{|l|}{Objet testé : Module PAM} & \multicolumn{2}{c|}{Version : 2.1}\\ \hline
       \multicolumn{5}{|l|}{Objectif de test : Mot de passe utilisable une seule fois}\\ \hline
       \multicolumn{3}{|l|}{Procédure n° 5} & \multicolumn{2}{p{3cm}|}{Pré-requis : EP\_01}\\ \hline
       \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
@@ -202,7 +211,7 @@ des tests à une autre équipe afin que celle-ci travaille à la réparation de 
     %---------------------------------------Test N° 6------------------------------------------------------------------------------
     \begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
       \hline
-      \multicolumn{3}{|l|}{Objet testé : Serveur} & \multicolumn{2}{c|}{Version : 1.1}\\ \hline
+      \multicolumn{3}{|l|}{Objet testé : Module PAM} & \multicolumn{2}{c|}{Version : 1.1}\\ \hline
       \multicolumn{5}{|l|}{Objectif de test : Processus de resynchronisation}\\ \hline
       \multicolumn{3}{|l|}{Procédure n° 6} & \multicolumn{2}{p{3cm}|}{Pré-requis : EF\_04 }\\ \hline
       \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
@@ -214,7 +223,7 @@ des tests à une autre équipe afin que celle-ci travaille à la réparation de 
      %---------------------------------------Test N° 7------------------------------------------------------------------------------
     \begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
       \hline
-      \multicolumn{3}{|l|}{Objet testé : Serveur} & \multicolumn{2}{c|}{Version : 1.1}\\ \hline
+      \multicolumn{3}{|l|}{Objet testé : Module PAM} & \multicolumn{2}{c|}{Version : 1.1}\\ \hline
       \multicolumn{5}{|l|}{Objectif de test : Résistance aux attaques exhaustives}\\ \hline
       \multicolumn{3}{|l|}{Procédure n° 7} & \multicolumn{2}{p{3cm}|}{Pré-requis : EQ\_04 }\\ \hline
       \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
@@ -229,30 +238,138 @@ des tests à une autre équipe afin que celle-ci travaille à la réparation de 
       \multicolumn{5}{|l|}{Répéter 1 à 3 : $N$ fois.}\\
       \hline
       4 & Calculer $P = \frac{cpt}{N}$ & $P < \frac{1}{100000}$ & EP\_04 & OK \\ \hline 
-    \end{tabular}  
+    \end{tabular}
+    \vskip 2.2cm 
+	%---------------------------------------Test N° 8------------------------------------------------------------------------------
+	\begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
+      \hline
+      \multicolumn{3}{|l|}{Objet testé : Générateur d'OTP} & \multicolumn{2}{c|}{Version : 2.1}\\ \hline
+      \multicolumn{5}{|l|}{Objectif de test : Non prédictibilité des OTPs}\\ \hline
+      \multicolumn{3}{|l|}{Procédure n° 8} & \multicolumn{2}{p{3cm}|}{Pré-requis : EP\_01 }\\ \hline
+      \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
+      \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
+      1 & Générer un fichier aléatoire generated\_bin en utilisant l'utilitaire développé *& Fichier généré & - & - \\
+      2 & Appeler dieharder -a -g 201 -f generated\_bin -D default -D histogram -D description pour générer un rapport
+      	& Rapport généré & - & - \\
+      3 & Analyser le rapport & Au moins 70\% des tests passent & EP\_03 & OK \\
+      \hline
+    \end{tabular} 
+    
+	* Le code de l'utilitaire est donné en annexe.
+	
+	
+	\vskip 2.2cm
+	\begin{tabular}{|c|p{5cm}|p{5cm}|p{1.5cm}|p{1.5cm}|}
+      \hline
+      \multicolumn{3}{|l|}{Objet testé : Module PAM} & \multicolumn{2}{c|}{Version : 2.1}\\ \hline
+      \multicolumn{5}{|l|}{Objectif de test : Asociation des utilisateurs}\\ \hline
+      \multicolumn{3}{|l|}{Procédure n° 9} & \multicolumn{2}{p{3cm}|}{Pré-requis : EP\_01, EQ\_04 }\\ \hline
+      \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
+      \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
+      1 & Utiliser l'utilitaire d'association pour le login "login" & Clef privée K générée & - & - \\
+      2 & Générer un OTP pour la clef privée K & Un OTP est retourné & - & - \\
+      3 & Tenter une authentification avec le login "login" et l'OTP généré & Authentification réussie & EF\_02 & OK \\      
+      \hline
+    \end{tabular} 
+	 
   \end{center}
-  
   \section{Couverture de tests}
   \begin{center}
-    \begin{tabular}{|p{3cm}|p{4cm}|p{3cm}|p{5cm}|}
+    \begin{tabular}{|p{2.8cm}|p{4.2cm}|p{3cm}|p{5cm}|}
       \hline
       Id Exigence STB & Méthode de vérification & Procédure utilisée & Commentaire\\ \hline
-      EF\_02 & Associer un token au serveur. & 
-      & Le test de cette exigence dépend de l'implémentation de la méthode d'OTP. Elle sera détaillée dans une prochaine version.\\ \hline
+      EF\_02 & Associer un token au serveur. & Procédure N° 9 & \\ \hline
       EF\_03 & Demander un OTP au token et vérifier la validité de cet OTP & Procédure N° 1, 5 & \\ \hline
       EF\_04 & Vérifier qu'il y a connexion avec un OTP valide et qu'on est rejeté avec un OTP invalide. & Procédure N° 2 & \\ \hline
-      EF\_05 & Vérifier que les OTP de la fenêtre de resynchronistation sont accepter. & Procédure N° 6 & \\ \hline
+      EF\_05 & Vérifier que les OTP de la fenêtre de resynchronistation sont acceptés. & Procédure N° 6 & \\ \hline
       EP\_01 & Demander un OTP au token et vérifier la validité de cet OTP & Procédure N° 1, 5 & \\ \hline
       EP\_02 & Tester deux fois le même OTP & Procédure N° 5 & \\ \hline
-      EP\_03 & Utilisation d'un logiciel \og{}die hard\fg{} pour vérifier l'aléatoirité des mots de passe. &  
-      & Ce test, nécessitant l'utilisation d'un \og{}die hard\fg{}, requiert une étude préalable et ne peut être détaillé.\\ \hline
+      EP\_03 & Utilisation d'un logiciel \og{}die hard\fg{} pour vérifier l'aléatoirité des mots de passe. & Procédure 	N° 8 & Pour exécuter cette procédure, il est nécessaire de compiler l'utilitaire de génération de fichier aléatoire\\ \hline
       EP\_04 & Tester des OTP jusqu'à réussite de l'attaque ou rejet par l'application. & Procédure N° 7 & \\ \hline
       EP\_05 & Rejouer 2 fois le même OTP & Procédure N° 5 & \\ \hline
       EQ\_01 & Mesurer le temps de génération d'un OTP. & Procédure N° 1 & \\ \hline
       EQ\_02 & Mesurer le temps d'exécution du serveur. & Procédure N° 2 & \\ \hline
-      EQ\_03 & Effectuer 100 000 demandes simultanées. & Procédure N° 3 & \\ \hline
       EQ\_04 & Vérifier qu'il y a connexion avec un OTP valide et qu'on est rejeté avec un OTP invalide. & Procédure N° 2, 5 & \\ \hline
       EQ\_05 & Vérifier qu'il n'y a pas plus de 10Ko de mémoire utilisés en plus après la génération. & Procédure N° 4 & \\ \hline
     \end{tabular}  
   \end{center}
+	
+	\newpage
+	\begin{appendices}
+	\chapter{Génération du fichier aléatoire}
+		\lstset{language=C}
+		\begin{lstlisting}
+#define _GNU_SOURCE
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+
+#include "../utils/otp.h"
+#include "../utils/secret.h"
+
+int main(int argc, char *argv[]) {
+    /*
+     * Parameters validation.
+     */
+    if (argc != 3) {
+        printf(
+            "Usage : %s seed nb len\n",
+            argv[0]
+            );
+        printf("\tseed : The hexadecimal seed for generation\n");
+        printf("\tnb : The number of values to generate.\n");
+        exit(EXIT_SUCCESS);
+    }
+    long nb = strtol(argv[2], NULL, 10);
+    if (nb <= 0) {
+        printf("Invalid argument %s. nb must be a number.\n", argv[2]);
+        exit(EXIT_SUCCESS);
+    }
+    long len = 8;
+    /*
+     * Seed validation
+     */
+    char *arg = argv[1];
+    for (int i = 0; i < strlen(arg); i++) {
+        char c[2];
+        snprintf(c, 2, "%c", arg[i]);
+        if (strcasestr("abcdef0123456789", c) == NULL) {
+            printf("Seed must be an hexadecimal string.\n");
+            exit(EXIT_SUCCESS);
+        }
+    }
+    /*
+     * Generation loop.
+     */
+    secret s = hexToSecret(argv[1]);
+    int fd = open(
+        "generated_bin",
+        O_CREAT | O_TRUNC | O_WRONLY,
+        S_IRUSR | S_IWUSR);
+    if (fd == -1) {
+        perror("Opening generated.bin");
+        exit(EXIT_FAILURE);
+    }
+    for (int i = 0; i < nb; i++) {
+        int value = generate_otp(s, i, len);
+    /*
+     * Write exclude extra 0 at the begining comming from the sign bit and
+     * from the fact that otp < 10^8 whereas an int is 2^32.
+     */
+        if (write(fd, ((char *) &value), sizeof(int) - 1) == -1) {
+            perror("writing");
+            close(fd);
+            exit(EXIT_FAILURE);
+        }
+    }
+    close(fd);
+    exit(EXIT_SUCCESS);
+}
+		\end{lstlisting}
+	\end{appendices}  
 \end{document}

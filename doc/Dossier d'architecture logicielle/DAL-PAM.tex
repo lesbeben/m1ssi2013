@@ -17,9 +17,9 @@
 \version{2.1a}
 \relecteur{Adrien \bsc{Smondack}}
 \signataire{\bsc{Bardet} Magali}
-\date{Février 2014}
+\date{Avril 2014}
 
-\histentry{2.1a}{08/04/2014}{Version
+\histentry{2.1a}{04/04/2014}{Version PAM}
 \histentry{2.0}{18/02/2014}{Version post état de l'art}
 \histentry{1.2}{16/01/2014}{Version pour la revue de lancement}
 \histentry{1.1}{15/12/2013}{Ajout des modifications demandées par le client}
@@ -136,12 +136,12 @@ que sur certains systèmes de type UNIX.\\
 \hline
 PR-L\_001 &
 Bibliothèque PAM > 1.0 &
-Le développement d'un module PAM suppose la présence des bibliothèque permettant
+Le développement d'un module PAM suppose la présence des bibliothèques permettant
 le fonctionnement de PAM sur le système. \\
 \hline
 PR-L\_002 &
 Bibliothèque OpenSSL avec SHA1 &
-Les algorithme retenus sont basé sur la fonction de hachage SHA1. Pourra être réimplémenté \\
+Les algorithmes retenus sont basés sur la fonction de hachage SHA1. Pourra être réimplémenté. \\
 \hline
 PR-L\_003 &
 Bibliothèque math &
@@ -149,7 +149,7 @@ Cette bibliothèque est utilisée pour la fonction d'exponentiation. \\
 \hline
 PR-L\_004 &
 Framework de test unitaire C Check &
-Nécessaire à la compilation des tests réalisés avec ce framework.\\
+Nécessaire pour la compilation des tests réalisés avec ce framework.\\
 \hline
 \end{tabular}
 
@@ -164,11 +164,11 @@ Nécessaire à la compilation des tests réalisés avec ce framework.\\
 \subsection{Gestion des secrets}
 \subsubsection{Rôle}
 Avant de générer un mot de passe jetable il faut que les applications se mettent
-d'accord sur un secret. Pour une implémentation en C, avoir une structure de donnée
-plus évoluée qu'un simple buffer permet de s'épargner une gestion fastidieuse de secret.
+d'accord sur un secret. Pour une implémentation en C, avoir une structure de données
+plus évoluée qu'un simple buffer permet de s'épargner une gestion fastidieuse des secrets.
 
 \subsubsection{Services offert}
-Ce module fourni une structure de données appelée \verb?secret? qui permet de représenter
+Ce module fournit une structure de données appelée \verb?secret? qui permet de représenter
 un secret en mémoire.
 
 Ce module fourni des fonctions de création de secret.
@@ -183,28 +183,28 @@ Ainsi que deux fonctions pour obtenir des représentations différentes du secre
 char * getHexRepresentation(secret key, char * buffer, int length);
 char * getTextRepresentation(secret key, char * buffer, int length);
 \end{lstlisting}
-Une fonction pour obtenir des informations relative au secret.
+Une fonction pour obtenir des informations relatives au secret.
 \begin{lstlisting}
 int getLength(secret key);
 \end{lstlisting}
-Une fonction pour libérer les ressources associées au secret en machines.
+Une fonction pour libérer les ressources associées au secret en machine.
 \begin{lstlisting}
 int destroySecret(secret key);
 \end{lstlisting}
 
 \subsubsection{Procédé de développement}
-On commencera par définir la structure de donnée, comment on représente le secret dans la mémoire
+On commencera par définir la structure de données, comment on représente le secret dans la mémoire
 puis on développera toutes les fonctions en conséquences.
 
 \subsubsection{Taille et complexité}
 Cette fonction consiste majoritairement en de la manipulation de buffer et de la conversion d'un
-format de donnée en un autre. L'équipe supposée habituée a ces tâche le développement devrait être 
+format de données en un autre. L'équipe étant supposée habituée à ces tâches le développement devrait être 
 rapide.
 
 \subsection{Générateur d'OTP}
 Les implémentations retenues après études des RFC sont TOTP et HOTP. TOTP
 n'étant qu'une variante d'HOTP seul un générateur d'HOTP sera programmé.
-on fera varié ses paramètres afin d'obtenir un générateur de TOTP.
+on fera varier ses paramètres afin d'obtenir un générateur de TOTP.
 
 \subsubsection{Rôle}
 Le rôle de cette partie du projet est de générer des mots de passes jetables
@@ -221,7 +221,7 @@ int generate_otp(secret s, uint64_t counter, int len);
 
 
 \subsubsection{Procédé de développement}
-On commencera par implémenter les fonctions utilitaires qui ne seront pas accessible en
+On commencera par implémenter les fonctions utilitaires qui ne seront pas accessibles en
 dehors du module. Ensuite nous implémenterons la génération d'OTP.
 
 \subsubsection{Taille et complexité}
@@ -229,7 +229,7 @@ C'est l'une des parties nouvelles et cruciale du projet. Non seulement car il n'
 a que peu de moyen de vérifier que le générateur d'OTP fonctionne réellement. Et
 qu'il faut en plus être compatible avec les RFC HOTP et TOTP.
 
-De plus un certain nombre de modifications peuvent être apportée a posteriori comme 
+De plus un certain nombre de modifications peuvent être apportées a posteriori comme 
 l'indépendance vis a vis des bibliothèques OpenSSL et libmath.
 
 \subsection{Le module PAM}
@@ -238,7 +238,7 @@ Le but de ce composant est de fournir un module pour PAM et permettre de s'authe
 à l'aide de mots de passe jetables.
 
 \subsubsection{Services offerts}
-Ce module permettra d'intégrer une authentification par otp dans un service utilisant PAM
+Ce module permettra d'intégrer une authentification par OTP dans un service utilisant PAM
 en insérant la ligne:
 \begin{verbatim}
 auth required pam_otp.so
@@ -248,8 +248,9 @@ Il sera aussi possible de gérer la mise à jour du secret en insérant la ligne
 password required pam_otp.so
 \end{verbatim}
 
+
 \subsubsection{Procédé de développement}
-On commencera par fournir les fonction minimale du module, c'est à dire l'authentification. Viendra
+On commencera par fournir la fonction minimale du module, c'est à dire l'authentification. Viendra
 ensuite la mise à jour de secret puis la gestion des éventuelles options.
 
 \subsubsection{Taille et complexité}
@@ -260,7 +261,7 @@ la technologie ensuite il suffira de développer les quelques fonctions que le m
 \subsection{Justification des choix techniques}
 On utilisera le langage C pour développer le module C qui est le langage recommandé par
 les développeurs de PAM. On utilisera aussi la bibliothèque OpenSSL pour SHA1 et la libmath
-pour la fonction puissance. Ces deux bibliothèques pourront ensuite remplacée par une implémentation
+pour la fonction puissance. Ces deux bibliothèques pourront ensuite être remplacées par une implémentation
 de ces deux fonction propre à notre projet.
 
 %---------------------------------------------------------------------------------        
@@ -270,17 +271,15 @@ La demande de secret sera permise grâce a l'implémentation des fonctions requi
 module. Par exemple une fois l'application configurée pour déléguer la gestion de secret au
 module l'application pourra faire appel à ces fonctions.
 \newline
-% TODO: Graphique explicatif de la gestion de secret.
 \includegraphics[width=\textwidth]{../graphics/association.jpg}
 
 \section{Authentification}
-L'authentification sera fournie par le module pam. Une application qui fait appel à PAM pour gérer
-les authentification pourra donc être configurer pour utiliser des mots de passe jetables.
+L'authentification sera fournie par le module PAM. Une application qui fait appel à PAM pour gérer
+les authentifications pourra donc être configurée pour utiliser des mots de passe jetables.
 
 Typiquement lors d'une connexion en SSH si le serveur est configuré pour utiliser PAM et que le module
-d'authentification par OTP est dans la liste pour gérer l'authentification alors un otp sera demandé
-à l'utilisateur. Le module pam décidera de la validité du mot de passe.
-% TODO: Graphique explicatif de l'authentification
+d'authentification par OTP est dans la liste pour gérer l'authentification alors un OTP sera demandé
+à l'utilisateur. Le module PAM décidera de la validité du mot de passe.
 \newline
 \includegraphics[width=\textwidth]{../graphics/authentification.jpg}
 \end{document}
