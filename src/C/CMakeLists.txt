@@ -1,7 +1,7 @@
 # Nom susceptible de changer.
 project (OTP C)
 
-cmake_minimum_required (VERSION 2.6)
+cmake_minimum_required (VERSION 2.8.5)
 
 # Flag de compilation communs.
 add_definitions(--std=c99 -Wall -Werror -fPIC)
