@@ -35,8 +35,8 @@ Le module OTP peut être théoriquement utilisé sur tout les systèmes prenant 
 que sur des systèmes Linux notamment Arch Linux, CentOs et Ubuntu. 
 
 \subsection{Dépendances}
-Pour que le module puisse être installé correctement, certaines bibliothèques 
-sont nécessaires telles:
+Pour que le module puisse être installé correctement, le framework de test Check est nécessaire
+ainsi que certaines bibliothèques telles:
 \begin{itemize}
 \item libpam
 \item libmath
@@ -50,6 +50,7 @@ Cmake doit également être installé pour procéder à la compilation du code s
 \begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
 pacman -S pam openssl glibc
 pacman -S cmake make gcc
+pacman -S check
 \end{lstlisting}
 
 \textbf{Procédure d'installation sur Ubuntu 14.04:}\\
@@ -58,6 +59,7 @@ apt-get install libpam0g
 apt-get install libpam0g-dev
 apt-get install libssl-dev
 apt-get install cmake make gcc
+apt-get install check
 \end{lstlisting}
 
 \textbf{Procédure d'installation sur CentOs 6 / Red Hat:}\\

@@ -16,7 +16,7 @@
 \date{Avril 2014}
 
 \histentry{2.1}{08/04/14}{Version de fin d'itération}
-\histentry{2.0}{12/02/2014}{Nouvelle version initiale}
+\histentry{2.0}{12/02/2014}{Version post état de l'art}
 \histentry{1.4}{16/01/2014}{Version pour la revue de lancement.}
 \histentry{1.3}{15/12/2013}{Ajout des modifications demandées par le client}
 \histentry{1.2}{04/12/2013}{Ajout des exigences correspondant au CdR}
@@ -51,8 +51,9 @@ utilisant des mots de passe jetables ainsi que leurs domaines de fonctionnement.
         \begin{itemize}
             \item Système sûr et fonctionnel.
             \item État de l'art le plus exhaustif possible.
-            \item Implémentation d'un module PAM\footnote{Pluggable Authentication Modules (cf section 2)} sous GNU/Linux pour l'authentification à base de HOTP sur les systèmes compatibles.
-            \item Implémentation d'un module PAM\footnote{Pluggable Authentication Modules (cf section 2)} sous GNU/Linux pour l'authentification à base de TOTP sur les systèmes compatibles.
+            \item Implémentation d'un module PAM\footnote{Pluggable Authentication Modules (cf section 2)\label{refPAM}} 
+            sous GNU/Linux pour l'authentification à base de HOTP sur les systèmes compatibles.
+            \item Implémentation d'un module PAM\ref{refPAM} sous GNU/Linux pour l'authentification à base de TOTP sur les systèmes compatibles.
             \item Implémentation d'un token sur Android pour la génération HOTP.
             \item Implémentation d'un token sur Android pour la génération TOTP.
             \item (Optionnel) Implémentation d'un token sur JavaCard pour la génération HOTP.
@@ -67,11 +68,7 @@ utilisant des mots de passe jetables ainsi que leurs domaines de fonctionnement.
 {\label{[sujet]}[sujet]} & {Expression du besoin client: Étude et implémentation des systèmes d'authentification utilisant des mots de passe jetables.}
 \tabularnewline
 \\
-<<<<<<< HEAD
-{[goo]} & {Google Authenticator \href{https://code.google.com/p/google-authenticator/}{https://code.google.com/p/google-authenticator/}.}
-=======
 {\label{[ANS10]}[ANS10]} & {ANSSI. Référentiel général de sécurité. \href{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}{http://www.ssi.gouv.fr/fr/reglementation-ssi/referentiel-general-de-securite}, 2010.}
->>>>>>> gdp
 \tabularnewline
 \\
 {\label{[MvOV97]}[MvOV97]} & {Alfred J. Menezes, Paul C. van Oorschot, and Scott A. Vanstone. Handbook of applied cryptography. CRC Press Series on Discrete Mathematics and its Applications. CRC Press, Boca Raton, FL, 1997. With a foreword by Ronald L.Rivest.}
@@ -161,7 +158,8 @@ L'authentification permet de valider la légitimité d'un utilisateur; ce protoc
 entre un mot de passe à travers l'interface du client. Le client se charge alors de se connecter au serveur (distant ou local) afin de procéder à un test de validation du mot de passe; si celui-ci
 est accepté alors le client est authentifié sinon il peut réessayer un mot de passe, au bout de \verb$n$ tentatives celui-ci est rejeté.
 \\
-\fiche{Re-Synchronisation}{Utilisateur}{Mise en accord du token et du serveur}{Le token est associé au seveur}
+\fiche{Re-Synchronisation}{Module PAM}{Mise en accord du token et du module PAM}{Le module PAM tente de prendre en 
+compte le décalage pour l'authentification}
 {Perte de la synchronisation}{Synchronisation retrouvée}{../graphics/resynchronisation.jpg}{Ne peut pas re-synchroniser}
 
 \vspace{0.5cm}
@@ -190,6 +188,8 @@ le module PAM tente une resynchronisation.
     EP\_06 & Respect des RFC (RFC2289, RFC4226, RFC4256, RFC4793, RFC6238) & Indispensable\\
     \hline
     EP\_06 & Le module est compatible avec toutes les versions de PAM & Indispensable\\
+    \hline
+    EP\_07 & Possibilité de fixer le délai (en secondes) entre deux tentatives d'authentification\\
     \hline
 \end{tabular}
 
