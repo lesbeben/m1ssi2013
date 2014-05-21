@@ -13,12 +13,12 @@
 \projet{M1SSI}
 \projdesc{Projet de génération d'OTP}
 \filiere{M1SSI}
-\version{2.0}
+\version{2.1}
 \relecteur{Maxime \bsc{Michotte}}
 \signataire{\bsc{Bardet} Magali}
-\date{Février 2014}
+\date{Avril 2014}
 
-\histentry{2.1}{08/04/2014}{Explicitation des tests d'aléatoire}
+\histentry{2.1}{08/04/2014}{Explicitation des tests d'aléatoirité}
 \histentry{2.0}{20/02/2014}{Version post état de l'art.}
 \histentry{1.2}{16/01/2014}{Version pour la revue de lancement.}
 \histentry{1.1}{15/12/2013}{Version relue et corrigée.}
@@ -47,7 +47,7 @@
   composantes logicielles. L'ensemble des tests sera réalisé dans un contexte \og{}en 
   production\fg{} ou en simulant celui-ci.
   
-  Les tests qui seront à effectuer pour les composantes Androïd seront effectués sur un terminal
+  Les tests qui seront à effectuer pour les composantes Android seront effectués sur un terminal
   mobile Samsung Galaxy ACE.
   
   \section{Documents applicables et de références.}
@@ -248,9 +248,9 @@ des tests à une autre équipe afin que celle-ci travaille à la réparation de 
       \multicolumn{3}{|l|}{Procédure n° 8} & \multicolumn{2}{p{3cm}|}{Pré-requis : EP\_01 }\\ \hline
       \multicolumn{1}{|c|}{N°} & \multicolumn{1}{c|}{Actions} & \multicolumn{1}{c|}{Résultats attendus} & 
       \multicolumn{1}{c|}{Exigence} & \multicolumn{1}{c|}{OK/KO}\\ \hline
-      1 & Générer un fichier aléatoire generated\_bin en utilisant l'utilitaire développé *& fichier générer & - & - \\
+      1 & Générer un fichier aléatoire generated\_bin en utilisant l'utilitaire développé *& Fichier généré & - & - \\
       2 & Appeler dieharder -a -g 201 -f generated\_bin -D default -D histogram -D description pour générer un rapport
-      	& Rapport générer & - & - \\
+      	& Rapport généré & - & - \\
       3 & Analyser le rapport & Au moins 70\% des tests passent & EP\_03 & OK \\
       \hline
     \end{tabular} 
@@ -372,5 +372,4 @@ int main(int argc, char *argv[]) {
 }
 		\end{lstlisting}
 	\end{appendices}  
-  
 \end{document}
