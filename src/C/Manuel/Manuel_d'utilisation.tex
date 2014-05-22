@@ -36,7 +36,7 @@ Le module OTP peut être théoriquement utilisé sur tout les systèmes prenant 
 que sur des systèmes Linux notamment Arch Linux, CentOs et Ubuntu. 
 
 \subsection{Dépendances}
-Pour que le module puisse être installé correctement, le framework de test Check est nécessaire
+Pour que le module puisse être installé correctement, le framework de test Check\footnote{Nécessite une version supérieure à la 2.8.5} est nécessaire
 ainsi que certaines bibliothèques telles:
 \begin{itemize}
 \item libpam
@@ -44,7 +44,6 @@ ainsi que certaines bibliothèques telles:
 \item libcrypto
 \end{itemize}
 Cmake doit également être installé pour procéder à la compilation du code source.
-\newline
 
 \subsection{Installation des bibliothèques nécessaires à la compilation et à l'exécution du module, et des outils de compilation}
 \textbf{Procédure d'installation sur Arch Linux:}\\
@@ -64,6 +63,7 @@ apt-get install check
 \end{lstlisting}
 
 \textbf{Procédure d'installation sur CentOs 6 / Red Hat:}\\
+\textit{/!$\backslash$ La version Cmake dans les dépôts de base de CentOs est trop ancienne.}
 \begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
 yum install pam-devel
 yum install openssl-devel
@@ -290,7 +290,7 @@ méthode d'authentification à base d'OTP.\\
 
 \newpage
 
-\part[Exemples de configuration]{Exemples de configuration\footnote{Les exemples de configurations suivants ont été fait sur Archlinux.}}
+\part[Exemples de configuration]{Exemples de configuration\footnote{Les exemples de configurations suivants ont été fait sur la distribution Archlinux.}}
 \section{SSH}
 Afin d'activer notre module pour le service ssh, il faut modifier le fichier \verb?/etc/pam.d/sshd?.
 \begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
