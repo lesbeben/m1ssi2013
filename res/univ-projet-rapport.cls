@@ -57,7 +57,7 @@
 \usepackage[table]{xcolor}
 
 % gestion bibliography
-\usepackage{natbib}
+\usepackage[numbers]{natbib}
 
 % entête et pagination
 \makeatletter
