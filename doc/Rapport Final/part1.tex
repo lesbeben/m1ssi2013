@@ -1,23 +1,138 @@
 \chapter{L'authentification}
 
+	Ce chapitre passe en revue le concept global d'authentification et ses 
+	différentes formes. Cette partie n'a pas pour but d'être exhaustive mais de 
+	rappeler le contexte du projet, pour de plus amples détails nous vous 
+	renvoyons à l'état de l'art sur les systèmes d'authentification par OTP édité 
+	en Janvier 2014.
 
 \section{Qu'est-ce que l'authentification?}
 
+	L'authentification est une mesure de sécurité visant à s'assurer que la 
+	personne demandant un service est bien celle qu'elle prétend être. 
+	L'authentification auprès d'un système informatique se fait par 
+	l'intermédiaire d'une empreinte pouvant prendre plusieurs formes :
+	
+	\begin{description}
+		\item[mémorielle :] Généralement un mot de passe;
+		\item[matérielle :] Carte à puce, clé, etc.;
+		\item[corporelle :] digitale, rétinienne, vocale, etc;
+		\item[réactionnelle :] une geste que la personne peut reproduire (ex: une 
+		signature).
+	\end{description}
+
+	L'ensemble de ces facteurs peut être combiné pour créer un système 
+	d'authentification forte, par exemple deux mots de passe ou un mot de passe et
+	une empreinte vocale.
+	
+	L'authentification dite forte est basée sur la concaténation d'au moins deux 
+	facteurs d'empreinte. On en dénombre trois grandes familles :
+	
+	\begin{itemize}
+		\item One Time Password (OTP);
+		\item Certificat numérique;
+		\item Biométrie.
+	\end{itemize}
+
 \subsection{L'authentification classique}
+	
+	L'authentification par login \/ mot de passe est la méthode d'authentification
+	la plus répandue sur les systèmes informatique, en particulier sur les 
+	services Web. Le principe reposant sur une identification classique (je donne
+	mon nom, mon pseudo ou mon adresse mail) et le partage d'un secret (une 
+	information partagée entre moi et le serveur). généralement un mot de passe.
+	
+	Cette méthode d'authentification est relativement fiable pour les systèmes de 
+	base. En revanche elle n'est pas infaillible. Outre les méthodes d'usurpation 
+	d'identité basée sur le \emph{social engineering} (hameçonnage, écoute 
+	électronique, etc), les attaques dites "par re-jeu" permettent de récupérer le
+	mot de passe d'un utilisateur en vue d'une utilisation ultérieure. Ceci 
+	compromet sensiblement la sécurité des données de l'utilisateur authentique ou
+	de ses ressources.
 
 \subsection{L'authentification par mot de passe jetable (OTP)}
 
+	Ce type d'authentification est très efficace contre les attaques par re-jeu 
+	puisque chaque mot de passe n'est utilisable qu'une seule fois. Ainsi, un 
+	attaquant parvenant à récupérer un mot de passe ne pourra s'en servir plus 
+	tard pour usurper l'identité de l'utilisateur.
+	
+	Le principe est simple :
+	\begin{itemize}
+		\item Un utilisateur souhaitant se connecter sur un service via un système 
+		OTP dispose d'un outil lui permettant de générer un mot de passe jetable;
+		\item Cet outil et le serveur partagent un secret généré lors de la création 
+		du compte utilisateur, servant de base pour le calcul du mot de passe jetable;
+		\item L'utilisateur renseigne son login et le mot de passe;
+		\item Le serveur vérifie le mot de passe en ré-appliquant les calculs 
+		précédents. S'il trouve le même résultat, l'utilisateur est authentifié.
+	\end{itemize}
+	
+	La sécurité des mots de passe générés repose sur la non-réversibilité de la 
+	fonction de hachage utilisée, rendant la prédiction des prochains mots de 
+	passe extrêmement difficile.
+
 \subsection{L'authentification cryptographique}
+
+	Authentification par certificat...
 
 \subsection{Récapitulatif}
 
+	...
+	
+	Les systèmes OTP garantissent une protection efficace contre toute tentatives 
+	d'usurpation d'identité. En revanche ils ne protègent pas l'utilisateur contre
+	d'autres types d'attaque tels que le vol de session ou l'espionnage.
+	
+	...
+	
 
 \section{Étude approfondie des OTP}
 
+	Plusieurs entités interviendront lors de l'étude des systèmes OTP:
+	
+	\begin{description}
+		\item[L'utilisateur :] le sujet de l'authentification;
+		\item[Le client :] un logiciel doté d'une interface utilisateur ou un site 
+		web permettant une authentification auprès d'un serveur adapté;
+		\item[Le serveur :] l'entité qui permet d'authentifier un utilisateur, 
+		contient une base de données contenant des informations utilisateur (login, 
+		dernier mot de passe utilisé, ...) et dispose d'une routine permettant de 
+		vérifier l'authenticité de celui-ci avec le mot de passe jetable qu'il lui a 
+		fourni;
+		\item[Le token :] élément physique ou logiciel permettant de générer un mot 
+		de passe jetable pour un utilisateur;
+		\item[Un attaquant :] Hacker, malware, etc... Une entité cherchant à usurper 
+		l'identité de l'utilisateur vis à vis du serveur en récupérant ses 
+		informations de connexion ou son accès au service sans ces informations.
+	\end{description}
+
 \subsection{OTP aujourd'hui}
+	
+	Les utilisations de systèmes OTP sont variées, aussi bien dans le domaine 
+	personnel que professionnel.
+	
+	On retrouve des cas concrets d'utilisation dans des logiciels tels que Google 
+	Authenticator, OATH Toolkit, LinOTP, DropBox, Microsoft Authenticator, RedHat 
+	FreeOT, etc. ainsi que des site web comme Amazon ou GitHub.
 
 \subsection{Les différents types d'OTP}
 
+	Le système OTP de base est maintenant obsolète et donc inutilisé. Cependant de
+	nombreuses autres méthodes ont été développées. Parmi celles que nous avons 
+	étudié, nous en avons retenu deux : TOTP et HOTP.
+
 \subsection{Comparatif}
 
+	...
+
 \subsection{Conclusion}
+
+	Les méthodes étudiées sont les plus courantes car elles offrent une résistance
+	satisfaisante aux 	attaques exhaustives et par collision et ne présentent 
+	aucune faille de sécurité notable du moment que les préconisations sont 
+	respectées. De plus, ces méthodes sont très simple d'utilisation, un avantage
+	non négligeable pour le non initiés. 
+	
+	Nous avons donc un bon compromis entre efficacité et simplicité ainsi qu'une 
+	pérennité importante.
