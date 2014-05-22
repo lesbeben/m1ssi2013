@@ -1,24 +1,11 @@
-<<<<<<< HEAD
-<?xml version="1.0" encoding="UTF-8"?><project name="OTP" company="" webLink="https://github.com/lesbeben/m1ssi2013" view-date="2013-12-01" view-index="2" gantt-divider-location="481" resource-divider-location="300" version="2.0" locale="fr">
-    <description/>
-    <view zooming-state="default:8" id="gantt-chart">
-        <field id="tpd3" name="Nom" width="44" order="0"/>
-        <field id="tpd4" name="Date de début" width="12" order="1"/>
-        <field id="tpd5" name="Date de fin" width="11" order="2"/>
-        <field id="tpc0" name="Charges (jours-hommes)" width="15" order="3"/>
-        <field id="tpc1" name="Charges effectives (jours-hommes)" width="16" order="4"/>
-=======
-<?xml version="1.0" encoding="UTF-8"?><project name="OTP" company="" webLink="https://github.com/lesbeben/m1ssi2013" view-date="2014-02-10" view-index="0" gantt-divider-location="481" resource-divider-location="300" version="2.0" locale="fr">
+<?xml version="1.0" encoding="UTF-8"?><project name="OTP" company="" webLink="https://github.com/lesbeben/m1ssi2013" view-date="2014-02-24" view-index="0" gantt-divider-location="527" resource-divider-location="300" version="2.0" locale="fr">
     <description/>
     <view zooming-state="default:7" id="gantt-chart">
-        <field id="tpd3" name="Nom" width="43" order="0"/>
-        <field id="tpd4" name="Date de début" width="12" order="1"/>
-        <field id="tpd5" name="Date de fin" width="11" order="2"/>
+        <field id="tpd3" name="Nom" width="41" order="0"/>
+        <field id="tpd4" name="Date de début" width="13" order="1"/>
+        <field id="tpd5" name="Date de fin" width="12" order="2"/>
         <field id="tpc0" name="Charges (jours-hommes)" width="16" order="3"/>
         <field id="tpc1" name="Charges effectives (jours-hommes)" width="16" order="4"/>
-        <option id="taskLabelUp" value=""/>
-        <option id="taskLabelDown" value=""/>
->>>>>>> 6bead237b24919cc8bb70c8536ed5ca6c181229a
         <option id="taskLabelLeft" value="name"/>
         <option id="taskLabelRight" value="resources"/>
     </view>
@@ -88,11 +75,7 @@
             <depend id="40" type="2" difference="0" hardness="Rubber"/>
             <depend id="91" type="2" difference="0" hardness="Rubber"/>
         </task>
-<<<<<<< HEAD
-        <task id="29" name="Implémentation des tokens" color="#000066" meeting="false" start="2014-01-25" duration="81" complete="91" expand="true">
-=======
         <task id="29" name="Implémentation des tokens" color="#000066" meeting="false" start="2014-01-25" duration="81" complete="100" expand="true">
->>>>>>> 6bead237b24919cc8bb70c8536ed5ca6c181229a
             <task id="91" name="Implémentation des algorithmes de calcul des OTP" color="#0033cc" meeting="false" start="2014-01-25" duration="22" complete="100" expand="true">
                 <depend id="164" type="2" difference="0" hardness="Strong"/>
                 <customproperty taskproperty-id="tpc0" value="72"/>
@@ -114,20 +97,12 @@
                 <customproperty taskproperty-id="tpc0" value="60"/>
                 <customproperty taskproperty-id="tpc1" value="60"/>
             </task>
-<<<<<<< HEAD
-            <task id="107" name="Déploiement du token sur smartphone" color="#0033cc" meeting="false" start="2014-04-01" duration="11" complete="76" expand="true">
-=======
             <task id="107" name="Déploiement du token sur smartphone" color="#0033cc" meeting="false" start="2014-04-01" duration="11" complete="100" expand="true">
->>>>>>> 6bead237b24919cc8bb70c8536ed5ca6c181229a
                 <depend id="217" type="2" difference="0" hardness="Strong"/>
                 <customproperty taskproperty-id="tpc0" value="15"/>
                 <customproperty taskproperty-id="tpc1" value="30"/>
             </task>
-<<<<<<< HEAD
-            <task id="146" name="Validation de l'itération" color="#ff6600" meeting="false" start="2014-04-12" duration="4" complete="0" expand="true">
-=======
             <task id="146" name="Validation de l'itération" color="#ff6600" meeting="false" start="2014-04-12" duration="4" complete="100" expand="true">
->>>>>>> 6bead237b24919cc8bb70c8536ed5ca6c181229a
                 <depend id="111" type="2" difference="0" hardness="Strong"/>
             </task>
         </task>
@@ -143,31 +118,22 @@
         <task id="217" name="Rdv avec le client" color="#ff6600" meeting="true" start="2014-04-12" duration="0" complete="0" expand="true">
             <depend id="146" type="2" difference="0" hardness="Strong"/>
         </task>
-<<<<<<< HEAD
-        <task id="263" name="Gestion des associations PAM-token" color="#003300" meeting="false" start="2014-04-16" duration="24" complete="21" expand="true">
-            <task id="111" name="Création d'utilitaires en ligne de commande" color="#009900" meeting="false" start="2014-04-16" duration="13" complete="0" expand="true">
-                <customproperty taskproperty-id="tpc0" value="39"/>
-            </task>
-            <task id="112" name="Mise à jour du secret via PAM" color="#009900" meeting="false" start="2014-04-25" duration="13" complete="47" expand="true">
-=======
         <task id="263" name="Gestion des associations PAM-token" color="#003300" meeting="false" start="2014-04-16" duration="24" complete="100" expand="true">
             <task id="111" name="Création d'utilitaires en ligne de commande" color="#009900" meeting="false" start="2014-04-16" duration="13" complete="100" expand="true">
                 <customproperty taskproperty-id="tpc0" value="39"/>
             </task>
             <task id="112" name="Mise à jour du secret via PAM" color="#009900" meeting="false" start="2014-04-25" duration="13" complete="100" expand="true">
->>>>>>> 6bead237b24919cc8bb70c8536ed5ca6c181229a
                 <depend id="238" type="2" difference="0" hardness="Rubber"/>
                 <customproperty taskproperty-id="tpc0" value="91"/>
             </task>
             <task id="238" name="Rédaction de la documentation Module PAM" color="#33ff33" meeting="false" start="2014-05-08" duration="2" complete="100" expand="true">
-                <depend id="113" type="2" difference="0" hardness="Rubber"/>
+                <depend id="266" type="2" difference="0" hardness="Strong"/>
             </task>
         </task>
-<<<<<<< HEAD
-        <task id="101" name="Module PAM" color="#660066" meeting="false" start="2014-01-25" duration="90" complete="81" expand="true">
-=======
-        <task id="101" name="Module PAM" color="#660066" meeting="false" start="2014-01-25" duration="90" complete="95" expand="true">
->>>>>>> 6bead237b24919cc8bb70c8536ed5ca6c181229a
+        <task id="266" name="Remise du livrable final" color="#ff0000" meeting="true" start="2014-05-10" duration="0" complete="0" expand="true">
+            <depend id="113" type="2" difference="0" hardness="Strong"/>
+        </task>
+        <task id="101" name="Module PAM" color="#660066" meeting="false" start="2014-01-25" duration="90" complete="100" expand="true">
             <task id="40" name="Implémentation des algorithmes de calcul des OTP" color="#990099" meeting="false" start="2014-01-25" duration="22" complete="100" expand="true">
                 <depend id="232" type="2" difference="0" hardness="Strong"/>
                 <customproperty taskproperty-id="tpc0" value="96"/>
@@ -184,15 +150,11 @@
             <task id="235" name="Rédaction de la documentation Fonctions C" color="#cc00cc" meeting="false" start="2014-03-10" duration="2" complete="100" expand="true">
                 <depend id="151" type="2" difference="0" hardness="Rubber"/>
             </task>
-<<<<<<< HEAD
-            <task id="102" name="Implémentation des fonctions d'authentification de PAM" color="#990099" meeting="false" start="2014-03-12" duration="40" complete="70" expand="true">
-=======
             <task id="102" name="Implémentation des fonctions d'authentification de PAM" color="#990099" meeting="false" start="2014-03-12" duration="40" complete="100" expand="true">
->>>>>>> 6bead237b24919cc8bb70c8536ed5ca6c181229a
                 <depend id="108" type="2" difference="0" hardness="Rubber"/>
                 <customproperty taskproperty-id="tpc0" value="80"/>
             </task>
-            <task id="108" name="Validation de l'itération" color="#ff6600" meeting="false" start="2014-04-21" duration="4" complete="0" expand="true">
+            <task id="108" name="Validation de l'itération" color="#ff6600" meeting="false" start="2014-04-21" duration="4" complete="100" expand="true">
                 <depend id="112" type="2" difference="0" hardness="Strong"/>
             </task>
         </task>
@@ -209,6 +171,8 @@
             </task>
             <task id="248" name="Rédaction du rapport de projet" color="#ffff66" meeting="false" start="2014-05-21" duration="4" complete="0" expand="true"/>
         </task>
+        <task id="277" name="Rendu du rapport de projet" color="#ff0000" meeting="true" start="2014-05-28" duration="0" complete="0" expand="true"/>
+        <task id="275" name="Soutenance de projet" color="#ff0000" meeting="true" start="2014-06-02" duration="0" complete="0" expand="true"/>
     </tasks>
     <resources>
         <resource id="0" name="Adrien Smondack" function="Default:1" contacts="adrien.smondack@etu.univ-rouen.fr" phone="0659985282"/>
@@ -290,6 +254,9 @@
         <allocation task-id="112" resource-id="12" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="113" resource-id="12" function="Default:0" responsible="false" load="100.0"/>
         <allocation task-id="34" resource-id="12" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="275" resource-id="12" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="277" resource-id="12" function="Default:0" responsible="false" load="100.0"/>
+        <allocation task-id="266" resource-id="12" function="Default:0" responsible="false" load="100.0"/>
     </allocations>
     <vacations/>
     <taskdisplaycolumns>
@@ -302,19 +269,11 @@
         <displaycolumn property-id="tpd9" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd8" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd0" order="-1" width="75" visible="false"/>
-<<<<<<< HEAD
-        <displaycolumn property-id="tpd3" order="0" width="211" visible="true"/>
-        <displaycolumn property-id="tpd4" order="1" width="58" visible="true"/>
-        <displaycolumn property-id="tpd5" order="2" width="56" visible="true"/>
-        <displaycolumn property-id="tpc0" order="3" width="75" visible="true"/>
-        <displaycolumn property-id="tpc1" order="4" width="77" visible="true"/>
-=======
-        <displaycolumn property-id="tpd3" order="0" width="203" visible="true"/>
-        <displaycolumn property-id="tpd4" order="1" width="57" visible="true"/>
-        <displaycolumn property-id="tpd5" order="2" width="54" visible="true"/>
-        <displaycolumn property-id="tpc0" order="3" width="74" visible="true"/>
-        <displaycolumn property-id="tpc1" order="4" width="74" visible="true"/>
->>>>>>> 6bead237b24919cc8bb70c8536ed5ca6c181229a
+        <displaycolumn property-id="tpd3" order="0" width="215" visible="true"/>
+        <displaycolumn property-id="tpd4" order="1" width="69" visible="true"/>
+        <displaycolumn property-id="tpd5" order="2" width="66" visible="true"/>
+        <displaycolumn property-id="tpc0" order="3" width="87" visible="true"/>
+        <displaycolumn property-id="tpc1" order="4" width="86" visible="true"/>
     </taskdisplaycolumns>
     <previous/>
     <roles roleset-name="Default"/>
