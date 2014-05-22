@@ -1,0 +1,402 @@
+\documentclass[xcolor=table]{beamer}
+
+\mode<presentation> {
+\usetheme{Madrid}
+}
+
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc} 
+\usepackage[french]{babel}
+
+\usepackage{multirow}
+\usepackage[table]{xcolor}
+
+\title[M1SSI]{Authentification \`{a} base d'OTP}
+
+\institute[Université de Rouen] {
+Université de Rouen \\
+\medskip
+}
+\date{\today}
+
+\AtBeginSubsection[] 
+{ 
+\begin{frame}  
+\frametitle{Plan} 
+\tableofcontents[currentsubsection,hideothersubsections,subsectionstyle=show/shaded]
+\end{frame}
+} 
+
+%------------------------------------------
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{Table des matières}
+\tableofcontents
+\end{frame}
+
+%------------------------------------------------
+\section{Introduction}
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{L'équipe}
+\begin{block}{Le chef}
+Adrien \bsc{Smondack}.
+\end{block}
+\begin{block}{La technique}
+Yves \bsc{Adegoloye} et Damien \bsc{Picard}.
+\end{block}
+\begin{block}{La qualité}
+Claire \bsc{Hardouin} et Gaëtan \bsc{Ferry}.
+\end{block}
+\begin{block}{La MOA}
+Maxime \bsc{Michotte} et Benjamin \bsc{Zigh}.
+\end{block}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Le projet}
+
+\begin{block}{Clients}
+\begin{description}
+\item[Magali \bsc{Bardet}:] Enseignante-Chercheuse à l'université de Rouen.\\
+\item[Bruno \bsc{Macadré}:] Ingénieur Système à l'université de Rouen.
+\end{description}
+\end{block}
+
+\begin{block}{Sujet}
+Création d'un système d'authentification à base de mots de passe jetables.
+\end{block}
+\end{frame}
+
+
+
+
+%------------------------------------------------
+\section{Présentation du concept}
+%------------------------------------------------
+\subsection{L'authentification}
+\begin{frame}
+\frametitle{Authentification}
+\begin{block}{Principe de base}
+L'utilisation d'une empreinte produite à partir d'un facteur, permettant d'identifier un utilisateur.
+\end{block}
+\begin{block}{Les types de facteurs}
+\begin{description}
+\item[Mémoriel:] Mot de passe, phrase de passe...
+\item[Matériel:] Clé USB, certificat numérique, carte à puce...
+\item[Corporel:] Empreinte digitale, pupille, voix...
+\item[Réactionnel:] Signature, challenge...
+\end{description}
+\end{block}
+\end{frame}
+
+
+\subsection{L'authentification classique}
+\begin{frame}
+\frametitle{Principe de base}
+\end{frame}
+
+\begin{frame}
+\frametitle{Exemples courants}
+\end{frame}
+
+
+
+\subsection{L'authentification par OTP}
+
+\begin{frame}
+\frametitle{Description OTP}
+\begin{block}{Définition}
+    Un OTP est un mot de passe jetable, c'est à dire qu'il satisfait les deux 
+  critères suivants:
+  \begin{itemize}
+    \item Il n'est pas prévisible
+    \item Il n'est valide que pour une unique session.
+  \end{itemize}
+\end{block}
+
+\begin{block}{Utilité}
+  \begin{itemize}
+    \item Permettre une authentification à 2 facteurs (mi-forte).
+    \item Éviter les attaques par rejeu.
+  \end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Exemples courants}
+
+\end{frame}
+
+\subsection{L'authentification cryptographique}
+\begin{frame}
+\frametitle{Principe}
+\end{frame}
+
+\begin{frame}
+\frametitle{Utilisation}
+\end{frame}
+
+\subsection{Récapitulatif}
+\begin{frame}
+\frametitle{Avantages/inconvénients}
+\end{frame}
+
+
+\section{La mise en œuvre}
+
+\subsection{Demande du client}
+
+\begin{frame}
+\frametitle{Le livrable}
+\begin{block}{État de l'art} 
+Un état de l'art comprenant au moins trois protocoles OTP étudiés.
+\begin{description}
+ \item[OTP] Protocole de base.
+ \item[HOTP] Protocole utilisant la fonction HMAC et un compteur de 
+  synchronisation.
+ \item[TOTP] Protocole reprenant HOTP avec le temps comme compteur.
+ \item[EAP-POTP] Architecture pour s'authentifier sur \verb?IEEE 802.1x?. 
+ \item[OTPW] Protocole basé sur l'état de la machine et la fonction de hachage RipeMD-160.
+\end{description}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Le livrable}
+\begin{block}{Application}
+    L'application se ferait sur les protocole qui auraient été retenus après l'étude de 
+  l'état de l'art et comporterait pour chaque protocole:
+  \begin{itemize}
+    \item Un serveur d'authentification
+    \item Un client d'authentification
+    \item Un token\footnote[1]{Programme permettant à l'utilisateur d'obtenir un 
+      OTP pour s'authentifier.}\footnote[2]{Tout les protocoles ne 
+      nécessitent pas de tokens.} Android
+    \item Un token Linux
+  \end{itemize}
+\end{block}
+
+\end{frame}
+
+%------------------------------------------------
+\subsection{L'état de l'art}
+%------------------------------------------------
+\begin{frame}
+\frametitle{Formation des équipes de travail}
+\begin{block}{Équipes de recherche}
+  \begin{itemize}
+    \item POTP
+    \begin{itemize}
+      \item Tayewo-John-Yves \bsc{Adegoloye}
+      \item Claire \bsc{Hardouin}
+    \end{itemize}
+    \item HOTP - TOTP
+    \begin{itemize}
+      \item Gaëtan \bsc{Ferry}
+      \item Maxime \bsc{Michotte}
+      \item Benjamin \bsc{Zigh}
+    \end{itemize}
+    \item OTPW - OTP
+    \begin{itemize}
+      \item Damien \bsc{Picard}
+      \item Adrien \bsc{Smondack}
+    \end{itemize}
+  \end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{La méthode}
+\end{frame}
+
+\begin{frame}
+\frametitle{Le bilan: OTP}
+\begin{block}{HOTP}
+
+\end{block}
+\begin{block}{TOTP}
+
+\end{block}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Le bilan: livrables}
+\begin{block}{Module PAM}
+\begin{itemize}
+\item Facilité d'installation sur de nombreux systèmes.
+\item Compatibilité avec les authentifications existantes.
+\end{itemize}
+\end{block}
+
+\begin{block}{App Android}
+\begin{itemize}
+\item Grande réserve d'utilisateurs.
+\item Facilement transportable.
+\end{itemize}
+\end{block} 
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\Huge{Démonstration}
+\end{center}
+\end{frame}
+
+
+%------------------------------------------------
+\subsection{Organisation du développement}
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{Méthodologie}
+\begin{center}
+\Huge Agile (adapté)
+\normalsize
+\begin{block}{Les grands principes}
+\begin{itemize}
+ \item Test Driven Development (XP).
+ \item Intégration continue et Refactoring (XP).
+ \item Appropriation collective du code (XP).
+ \item Réunions client régulières et adaptabilité.
+\end{itemize}
+\end{block}
+\end{center}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Répartition}
+\begin{block}{Équipes de développement}
+  \begin{itemize}
+    \item Module PAM
+    \begin{itemize}
+      \item Claire \bsc{Hardouin}
+      \item Damien \bsc{Picard}
+      \item Adrien \bsc{Smondack}
+      \item Maxime \bsc{Michotte}
+    \end{itemize}
+    \item App Android
+    \begin{itemize}
+      \item Gaëtan \bsc{Ferry}
+      \item Benjamin \bsc{Zigh}
+      \item Tayewo-John-Yves \bsc{Adegoloye}
+    \end{itemize}
+  \end{itemize}
+\end{block}
+\end{frame}
+
+
+
+
+%------------------------------------------------
+\subsection{Aspect technique}
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{Langages}
+\begin{block}{Technologies utilisées}
+\begin{itemize}
+  \item Pour le module PAM, le C est obligatoire.
+  \item Pour le token Android, Java est recommandé. 
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Tests et vérifications}
+  \begin{itemize}
+   \item Procédures de tests écrites au début du développement de chaque composante. (Test Driven Development)
+   \item Tests exécutés par les équipes de développement tout au long du processus de création.
+   \item  Lorsque des anomalies sont détectées lors des tests, la procédure est la suivante:
+    \begin{itemize}
+     \item Création d'une note / mémo précisant l'anomalie rencontrée.
+     \item Ajout d'une entrée au journal de test précisant la date du test.
+     \item Diffusion de la note à l'équipe de développement pour correction.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+
+
+\subsection{Le module PAM}
+\begin{frame}
+\frametitle{PAM: Architecture logicielle}
+\begin{figure}
+ \includegraphics[scale=0.3]{../graphics/architecture.png} 
+ \caption{Schéma de l'architecture logicielle}
+\end{figure}
+
+\end{frame}
+\begin{frame}
+\frametitle{Des choses...}
+\end{frame}
+
+
+\subsection{L'app Android}
+\begin{frame}
+\frametitle{Android: Architecture logicielle}
+\begin{figure}
+ \includegraphics[scale=0.3]{../graphics/architecture.png} 
+ \caption{Schéma de l'architecture logicielle}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Des choses...}
+\end{frame}
+
+\subsection{Licence}
+\begin{frame}
+\frametitle{Les différentes licences}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{La licence choisie}
+
+\end{frame}
+
+%------------------------------------------------
+\section{Conclusion}
+%------------------------------------------------
+\begin{frame}  
+\frametitle{Plan} 
+\tableofcontents[currentsection,hideothersubsections]
+\end{frame}
+
+\begin{frame}
+\frametitle{Résultat des tests finaux}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Enseignements tirés du projet}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Améliorations possibles}
+\end{frame}
+
+\begin{frame}
+\frametitle{Conclusion}
+\end{frame}
+
+
+
+
+%------------------------------------------------
+\end{document}
