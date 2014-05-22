@@ -6,6 +6,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[francais]{babel}
 
+
 \logo{../../../res/logo_univ.png}
 \title{Manuel d'utilisation du module PAM}
 \author{Adrien \bsc{Smondack}, Claire \bsc{Hardouin}, Damien \bsc{Picard}, Maxime \bsc{Michotte}}
@@ -67,6 +68,7 @@ apt-get install check
 yum install pam-devel
 yum install openssl-devel
 yum install cmake make gcc
+yum install check
 \end{lstlisting}
 
 %----------------------------------
@@ -288,7 +290,7 @@ méthode d'authentification à base d'OTP.\\
 
 \newpage
 
-\part{Exemples de configuration}
+\part[Exemples de configuration]{Exemples de configuration\footnote{Les exemples de configurations suivants ont été fait sur Archlinux.}}
 \section{SSH}
 Afin d'activer notre module pour le service ssh, il faut modifier le fichier \verb?/etc/pam.d/sshd?.
 \begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
