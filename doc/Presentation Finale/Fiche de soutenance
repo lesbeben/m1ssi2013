@@ -1,0 +1,50 @@
+Fiche de soutenance
+
+
+
+
+slide 1 - Annonce contexte soutenance
+
+slide 2 - 	Annonce plan, 4 parties :
+				intro - présentation équipe + cliebr + sujet
+				1ere partie - présentation du concept général d'authentification + contexte du projet "pourquoi notre projet est interessant"
+				2eme partie - mise en oeuvre, englobera la gestion de projet ainsi que sa réalisation et finalisation
+				Conclusion sur les résultats
+
+
+
+
+
+---- Intro ----
+
+slide 3 - 	Présentation des membres (désignés par leur prénom)
+slide 4 - 	Le projet est à l'origine de la demande de nos deux clients Mme Bardet et M Macadré ci-présent, respectivement enseignante-chercheuse et ingénieur système à l'université de rouen. L'objet de la demande étant l'étude et l'implémentation de système d'auth à base de mot de passe jetables.
+
+
+
+
+
+---- Présentation du concept ----
+
+
+silde 5 - 	-- Authentification --
+
+slide 6 - 	L'authentification est une mesure de sécurité visant à s'assurer que la personne demandant un service est bien celle qu'elle prétend être.
+			Elle se fait par l'intermédiaire d'une empreinte produite par un facteur :
+				mémorielle - Généralement un mot de passe;
+				matérielle - Carte à puce, clé, certificat, etc.;
+				corporelle - digitale, rétinienne, vocale, etc;
+				réactionnelle - une geste que la personne peut reproduire (ex: une signature).
+
+
+
+slide 7 -	-- Authentification classique --
+
+slide 8 -	Le concept d'authentification est simple. Nous avons un utilisateur souhaitant exploiter un service réclamant une authentification, il envoie alors une empreinte que le service vérifie (soit lui même, soit par une tierce-entité).
+slide 9 - 	Les exemples les plus courants sont ...
+
+
+
+slide 10 -	-- Authentification par OTP --
+
+silde 11 -	
