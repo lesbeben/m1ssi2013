@@ -100,15 +100,13 @@ Nous allons désormais procéder à la compilation du module:
 cd m1ssi2013/src/C
 mkdir build
 cd build
-cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release 
+cmake .. -DCMAKE_BUILD_TYPE=Release 
 make
 \end{lstlisting}
 
 Il est important de définir les options du CMake, ce sont elles qui permettent une installation dans les
 répertoires adéquats.
 \begin{description}
-\item[-DCMAKE$\_$INSTALL$\_$PREFIX] Indique le répertoire d'installation de base. 
-\footnote{Avec \verb?/usr? les binaires seront situés dans \verb?/usr/bin?}
 \item[-DCMAKE$\_$BUILD$\_$TYPE] Détermine les options de compilation.
 \end{description}
 
@@ -290,7 +288,7 @@ méthode d'authentification à base d'OTP.\\
 
 \newpage
 
-\part[Exemples de configuration]{Exemples de configuration\footnote{Les exemples de configurations suivants ont été fait sur la distribution Archlinux.}}
+\part[Exemples de configuration]{Exemples de configuration\footnote{Les exemples de configurations suivants ont été fait sur la distribution Archlinux à la date du 23/05/2014.}}
 \section{SSH}
 Afin d'activer notre module pour le service ssh, il faut modifier le fichier \verb?/etc/pam.d/sshd?.
 \begin{lstlisting}[language=bash, backgroundcolor=\color{black}, basicstyle=\color{white}]
