@@ -1,0 +1,189 @@
+\documentclass{"../../res/univ-projet"}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\usepackage[T1]{fontenc}
+\usepackage[francais]{babel}
+\usepackage{textcomp}
+\usepackage[toc,page]{appendix} 
+\usepackage{listings}
+
+\logo{../../res/logo_univ.png}
+\title{Rapport de tests}
+\author{\bsc{Ferry} Gaetan}
+\projet{M1SSI}
+\projdesc{Projet de génération d'OTP}
+\filiere{M1SSI}
+\version{1.0}
+\signataire{\bsc{Bardet} Magali}
+\date{Avril 2014}
+
+\histentry{1.0}{29/11/2013}{Version initiale.}
+
+\begin{document}
+  \maketitle
+  
+	\section{Validation du temps de génération}
+	L'exigence du client concernant le temps de génération des mots de passes
+	jetables était que celui ci ne devait pas dépasser la seconde.
+	La procédure de test numéro 1 décrite dans le cahier de recette devait
+	vérifier cette contrainte.
+	
+	Ce test est exécute comme prévu sur un appareil Android aux performances
+	minimales. On obtient, pour 100 mots de passes jetables, un temps de
+	génération de 52 ms.
+	
+	L'exigence du client est donc respectée.
+	\begin{center}	
+		\begin{tabular}{| p{6cm} | p{6cm} | p{2cm} |}
+			\hline
+			\cellcolor{lightgray} Exigence & \cellcolor{lightgray} Résultat & 
+			\cellcolor{lightgray} Validité \\ \hline
+		
+			Temps pour 100 mots de passes : 100 s & Temps pour 100 mots de passes : 52 ms & 
+			\cellcolor{green} OK \\ \hline
+		\end{tabular}
+	\end{center}
+	
+  
+	\section{Temps de vérification du module}  
+    L'exigence du client concernant le temps de vérification des mots de passes par le
+    module PAM était que celui ci ne devait pas dépasser 2 secondes. La procédure de test
+    numéro 2 devait vérifier cette contrainte.
+    
+    Ce test est exécuté comme prévu sur une machine personnelle munie d'une architecture
+    grand publique. On obtient un temps de vérification inférieur au 1/100 s.
+    
+    L'exigence du client est donc respectée.
+	\begin{center}	
+		\begin{tabular}{| p{6cm} | p{6cm} | p{2cm} |}
+			\hline
+			\cellcolor{lightgray} Exigence & \cellcolor{lightgray} Résultat & 
+			\cellcolor{lightgray} Validité \\ \hline
+		
+			Temps de vérification : 2 s & Temps de vérification : 1/100 s & 
+			\cellcolor{green} OK \\ \hline
+		\end{tabular}
+	\end{center}
+    
+	\section{Quantité de mémoire utilisée pour la génération}    
+	L'exigence du client concernant la quantité de mémoire nécessaire à la génération du mot de passe
+	était que celle ci ne devait pas dépasser 10 Ko. La procédure de test numéro 4 devait vérifier
+	cette contrainte.
+	
+	Ce test est exécuté sur l'appareil Android de test. On obtient une consommation mémoire pour une 
+	génération de mot de passe en dehors du contexte de l'application, dans lequel la présence des
+	templates d'activity charge plus avant la mémoire, une consommation mémoire de 7 Ko.
+	
+	L'exigence du client est donc respectée.
+	\begin{center}	
+		\begin{tabular}{| p{6cm} | p{6cm} | p{2cm} |}
+			\hline
+			\cellcolor{lightgray} Exigence & \cellcolor{lightgray} Résultat & 
+			\cellcolor{lightgray} Validité \\ \hline
+		
+			Mémoire utilisée : 10 Ko & Mémoire utilisée : 7Ko & \cellcolor{green} OK \\ \hline
+		\end{tabular}
+	\end{center}
+	
+	\section{Utilisation unique des mots de passe}
+	Le système d'authentification par mot de passe jetable impose qu'un mot de passe ne peut pas être
+	utilisé plus d'une fois. La procédure de test numéro 5 devait vérifier le respect de ce principe.
+	
+	Ce test est exécute sur la machine grand public via le module PAM mis en place sur un serveur SSH. On
+	vérifie ainsi que la réutilisation des mots de passe, et donc les attaques par rejeu, n'est pas possible
+	avec notre méthode d'authentification.
+	
+	Le principe du système est donc respecté.
+	\begin{center}	
+		\begin{tabular}{| p{6cm} | p{6cm} | p{2cm} |}
+			\hline
+			\cellcolor{lightgray} Exigence & \cellcolor{lightgray} Résultat & 
+			\cellcolor{lightgray} Validité \\ \hline
+		
+			Pas de réutilisation possible& Pas de réutilisation possible & \cellcolor{green} OK \\ \hline
+		\end{tabular}
+	\end{center}
+    
+	\section{Resynchronisation des utilisateurs}
+	Les spécifications des méthodes d'authentification par mot de passe jetable implantées indiquent qu'un
+	utilisateur doit pouvoir utiliser un mot de passe qui n'est pas celui attendu si celui se situe dans un 
+	intervalle limité de mots de passes passés (non utilisés) ou a venir. Ce système garantit le confort
+	d'utilisation du système. La procédure numéro 6 devait vérifier le respect de ce principe.
+	
+	Ce test est exécute sur la machine grand public via le module PAM mis en place sur un serveur SSH. On 
+	vérifie alors que la fonction de resynchronisation est bien fonctionnelle sur notre module de vérification.
+
+	Cette spécification est donc respectée.
+	\begin{center}	
+		\begin{tabular}{| p{6cm} | p{6cm} | p{2cm} |}
+			\hline
+			\cellcolor{lightgray} Exigence & \cellcolor{lightgray} Résultat & 
+			\cellcolor{lightgray} Validité \\ \hline
+		
+			Resynchronisation possible & Resynchronisation possible & \cellcolor{green} OK \\ \hline
+		\end{tabular}
+	\end{center}
+	
+	\section{Résistance aux attaques exhaustives}
+	Afin d'assurer la sécurité du système d'authentification, il doit être improbable de s'authentifier sur le 
+	service grâce à une attaque par force brute. La procédure numéro 7 devait vérifier cette résistance. Les
+	deux méthodes d'OTP utilisées ne se	comportant pas de la même manière du point de vu de la force brute, le
+	test à été exécute indépendamment sur chacune d'entre elles.
+	
+	Ce test est exécute sur la machine grand public via le module PAM mis en place sur un serveur SSH. Malgré 
+	tous les efforts mis en œuvre pour s'authentifier par force brute n'ont pas aboutis.
+	
+	L'exigence du client est donc respectée.
+	\begin{center}	
+		\begin{tabular}{| p{4cm} | p{4cm} | p{4cm} | p{2cm} |}
+			\hline
+			\cellcolor{lightgray} Exigence & \cellcolor{lightgray} Résultat OTP & 
+			\cellcolor{lightgray} Résultat OTP & \cellcolor{lightgray} Validité \\ \hline
+		
+			Attaque exhaustive improbable & Attaque exhaustive échouée & Attaque exhaustive échouée &
+			\cellcolor{green} OK \\ \hline
+		\end{tabular}
+	\end{center}
+    
+	\section{Non prédictibilité des mots de passes jetables}
+	Afin d'assurer la sécurité du système d'authentification, il faut qu'un attaquant potentiel ne puisse pas deviner
+	l'OTP à fournir, même en ayant observer un nombre quelconque d'authentification précédente. La procédure numéro 8
+	devait vérifier cette contrainte de sécurité.
+	
+	Ce test peut être exécuté sur n'importe quelle machine pouvant compiler le programme de génération définit dans le
+	cahier de recette et installer et exécuter le programme dieharder. On obtient un taux de réussite aux tests 
+	d'aléatoire de 71%.
+	
+	L'exigence de sécurité est donc vérifiée.
+    
+    \begin{center}	
+		\begin{tabular}{| p{6cm} | p{6cm} | p{2cm} |}
+			\hline
+			\cellcolor{lightgray} Exigence & \cellcolor{lightgray} Résultat & 
+			\cellcolor{lightgray} Validité \\ \hline
+		
+			Taux de réussite aux tests : 70\% & Taux de réussite aux tests : 71\% & \cellcolor{green} OK \\ \hline
+		\end{tabular}
+	\end{center}
+	
+	\section{Association des utilisateurs}
+	Une des étapes essentielles au fonctionnement du système d'authentification par mot de passe jetable est
+	l'association d'un utilisateur au service requérant une authentification. Cette fonctionnalité devait être validée
+	grâce à la procédure numéro 9.
+	
+	Le test est réalisé sur la machine grand publique via le module PAM installé sur le service SSH. Il permet de 
+	vérifier que la fonction d'association est fonctionnelle.
+	
+	L'exigence de fonctionnalité est vérifiée.
+    
+    \begin{center}	
+		\begin{tabular}{| p{6cm} | p{6cm} | p{2cm} |}
+			\hline
+			\cellcolor{lightgray} Exigence & \cellcolor{lightgray} Résultat & 
+			\cellcolor{lightgray} Validité \\ \hline
+		
+			Association possible & Association possible & \cellcolor{green} OK \\ \hline
+		\end{tabular}
+	\end{center}
+	
+\end{document}
