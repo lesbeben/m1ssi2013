@@ -79,7 +79,7 @@ Création d'un système d'authentification à base de mots de passe jetables.
 
 
 %------------------------------------------------
-\section{Présentation du concept}
+\section{Concepts fondamentaux}
 %------------------------------------------------
 \subsection{L'authentification}
 \begin{frame}
@@ -101,10 +101,12 @@ L'utilisation d'une empreinte produite à partir d'un facteur, permettant d'iden
 \subsection{L'authentification classique}
 \begin{frame}
 \frametitle{Principe de base}
+\includegraphics[scale=0.24]{../graphics/authsimple.png}
 \end{frame}
 
 \begin{frame}
-\frametitle{Exemples courants}
+\frametitle{Exemple}
+\includegraphics[scale=0.21]{../graphics/auth-mdp.png}
 \end{frame}
 
 
@@ -112,7 +114,7 @@ L'utilisation d'une empreinte produite à partir d'un facteur, permettant d'iden
 \subsection{L'authentification par OTP}
 
 \begin{frame}
-\frametitle{Description OTP}
+\frametitle{Principe}
 \begin{block}{Définition}
     Un OTP est un mot de passe jetable, c'est à dire qu'il satisfait les deux 
   critères suivants:
@@ -131,7 +133,13 @@ L'utilisation d'une empreinte produite à partir d'un facteur, permettant d'iden
 \end{frame}
 
 \begin{frame}
-\frametitle{Exemples courants}
+\frametitle{Exemples}
+\begin{center}
+\includegraphics[scale=0.2]{../graphics/googleauth.png}
+\hspace{1em}
+\includegraphics[scale=0.405]{../graphics/blizzardauth.jpg}
+\end{center}
+
 
 \end{frame}
 
@@ -146,7 +154,7 @@ L'utilisation d'une empreinte produite à partir d'un facteur, permettant d'iden
 
 \subsection{Récapitulatif}
 \begin{frame}
-\frametitle{Avantages/inconvénients}
+\frametitle{Récapitulatif}
 \end{frame}
 
 
@@ -155,7 +163,7 @@ L'utilisation d'une empreinte produite à partir d'un facteur, permettant d'iden
 \subsection{Demande du client}
 
 \begin{frame}
-\frametitle{Le livrable}
+\frametitle{Le livrable 1/2}
 \begin{block}{État de l'art} 
 Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 \begin{description}
@@ -170,7 +178,7 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 \end{frame}
 
 \begin{frame}
-\frametitle{Le livrable}
+\frametitle{Le livrable 2/2}
 \begin{block}{Application}
     L'application se ferait sur les protocole qui auraient été retenus après l'étude de 
   l'état de l'art et comporterait pour chaque protocole:
