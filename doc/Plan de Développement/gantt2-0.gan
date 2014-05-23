@@ -1,17 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="OTP" company="" webLink="https://github.com/lesbeben/m1ssi2013" view-date="2014-02-24" view-index="0" gantt-divider-location="527" resource-divider-location="300" version="2.0" locale="fr">
+<?xml version="1.0" encoding="UTF-8"?><project name="OTP" company="" webLink="https://github.com/lesbeben/m1ssi2013" view-date="2014-02-01" view-index="0" gantt-divider-location="394" resource-divider-location="257" version="2.0" locale="fr">
     <description/>
-    <view zooming-state="default:7" id="gantt-chart">
-        <field id="tpd3" name="Nom" width="41" order="0"/>
+    <view zooming-state="default:8" id="gantt-chart">
+        <field id="tpd3" name="Nom" width="58" order="0"/>
         <field id="tpd4" name="Date de début" width="13" order="1"/>
-        <field id="tpd5" name="Date de fin" width="12" order="2"/>
-        <field id="tpc0" name="Charges (jours-hommes)" width="16" order="3"/>
-        <field id="tpc1" name="Charges effectives (jours-hommes)" width="16" order="4"/>
+        <field id="tpd5" name="Date de fin" width="13" order="2"/>
+        <field id="tpc0" name="Charges (jours-hommes)" width="6" order="3"/>
+        <field id="tpc1" name="Charges effectives (jours-hommes)" width="7" order="4"/>
         <option id="taskLabelLeft" value="name"/>
         <option id="taskLabelRight" value="resources"/>
     </view>
     <view id="resource-table">
-        <field id="0" name="Nom" width="50" order="0"/>
-        <field id="1" name="Rôle par défaut" width="50" order="1"/>
+        <field id="0" name="Nom" width="93" order="0"/>
+        <field id="1" name="Rôle par défaut" width="6" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -121,10 +121,12 @@
         <task id="263" name="Gestion des associations PAM-token" color="#003300" meeting="false" start="2014-04-16" duration="24" complete="100" expand="true">
             <task id="111" name="Création d'utilitaires en ligne de commande" color="#009900" meeting="false" start="2014-04-16" duration="13" complete="100" expand="true">
                 <customproperty taskproperty-id="tpc0" value="39"/>
+                <customproperty taskproperty-id="tpc1" value="36"/>
             </task>
             <task id="112" name="Mise à jour du secret via PAM" color="#009900" meeting="false" start="2014-04-25" duration="13" complete="100" expand="true">
                 <depend id="238" type="2" difference="0" hardness="Rubber"/>
                 <customproperty taskproperty-id="tpc0" value="91"/>
+                <customproperty taskproperty-id="tpc1" value="91"/>
             </task>
             <task id="238" name="Rédaction de la documentation Module PAM" color="#33ff33" meeting="false" start="2014-05-08" duration="2" complete="100" expand="true">
                 <depend id="266" type="2" difference="0" hardness="Strong"/>
@@ -153,23 +155,25 @@
             <task id="102" name="Implémentation des fonctions d'authentification de PAM" color="#990099" meeting="false" start="2014-03-12" duration="40" complete="100" expand="true">
                 <depend id="108" type="2" difference="0" hardness="Rubber"/>
                 <customproperty taskproperty-id="tpc0" value="80"/>
+                <customproperty taskproperty-id="tpc1" value="40"/>
             </task>
             <task id="108" name="Validation de l'itération" color="#ff6600" meeting="false" start="2014-04-21" duration="4" complete="100" expand="true">
                 <depend id="112" type="2" difference="0" hardness="Strong"/>
             </task>
         </task>
-        <task id="265" name="Finalisations" color="#666600" meeting="false" start="2014-05-10" duration="15" complete="0" expand="true">
-            <task id="113" name="Test Finaux / Crash test" color="#cccc00" meeting="false" start="2014-05-10" duration="7" complete="0" expand="true">
+        <task id="265" name="Finalisations" color="#666600" meeting="false" start="2014-05-10" duration="15" complete="69" expand="true">
+            <task id="113" name="Test Finaux / Crash test" color="#cccc00" meeting="false" start="2014-05-10" duration="7" complete="100" expand="true">
                 <depend id="243" type="2" difference="0" hardness="Strong"/>
                 <customproperty taskproperty-id="tpc0" value="49"/>
+                <customproperty taskproperty-id="tpc1" value="49"/>
             </task>
             <task id="243" name="Rédaction du rapport de tests" color="#ffff66" meeting="false" start="2014-05-17" duration="2" complete="0" expand="true">
                 <depend id="245" type="2" difference="0" hardness="Rubber"/>
             </task>
-            <task id="245" name="Rédaction du manuel d'utilisation" color="#ffff66" meeting="false" start="2014-05-19" duration="2" complete="0" expand="true">
+            <task id="245" name="Rédaction du manuel d'utilisation" color="#ffff66" meeting="false" start="2014-05-19" duration="2" complete="100" expand="true">
                 <depend id="248" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="248" name="Rédaction du rapport de projet" color="#ffff66" meeting="false" start="2014-05-21" duration="4" complete="0" expand="true"/>
+            <task id="248" name="Rédaction du rapport de projet" color="#ffff66" meeting="false" start="2014-05-21" duration="4" complete="34" expand="true"/>
         </task>
         <task id="277" name="Rendu du rapport de projet" color="#ff0000" meeting="true" start="2014-05-28" duration="0" complete="0" expand="true"/>
         <task id="275" name="Soutenance de projet" color="#ff0000" meeting="true" start="2014-06-02" duration="0" complete="0" expand="true"/>
@@ -269,11 +273,11 @@
         <displaycolumn property-id="tpd9" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd8" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd0" order="-1" width="75" visible="false"/>
-        <displaycolumn property-id="tpd3" order="0" width="215" visible="true"/>
-        <displaycolumn property-id="tpd4" order="1" width="69" visible="true"/>
-        <displaycolumn property-id="tpd5" order="2" width="66" visible="true"/>
-        <displaycolumn property-id="tpc0" order="3" width="87" visible="true"/>
-        <displaycolumn property-id="tpc1" order="4" width="86" visible="true"/>
+        <displaycolumn property-id="tpd3" order="0" width="230" visible="true"/>
+        <displaycolumn property-id="tpd4" order="1" width="53" visible="true"/>
+        <displaycolumn property-id="tpd5" order="2" width="52" visible="true"/>
+        <displaycolumn property-id="tpc0" order="3" width="26" visible="true"/>
+        <displaycolumn property-id="tpc1" order="4" width="29" visible="true"/>
     </taskdisplaycolumns>
     <previous/>
     <roles roleset-name="Default"/>
