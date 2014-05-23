@@ -11,8 +11,8 @@
 \usepackage{multirow}
 \usepackage[table]{xcolor}
 
-\title[M1SSI]{Authentification \`{a} base d'OTP}
-
+\title{Authentification \`{a} base d'OTP}
+\author{M1SSI}
 \institute[Université de Rouen] {
 Université de Rouen \\
 \medskip
@@ -126,7 +126,7 @@ L'utilisation d'une empreinte produite à partir d'un facteur, permettant d'iden
 
 \begin{block}{Utilité}
   \begin{itemize}
-    \item Permettre une authentification à 2 facteurs (mi-forte).
+    \item Permettre une authentification à 2 facteurs (forte).
     \item Éviter les attaques par rejeu.
   \end{itemize}
 \end{block}
@@ -146,15 +146,43 @@ L'utilisation d'une empreinte produite à partir d'un facteur, permettant d'iden
 \subsection{L'authentification cryptographique}
 \begin{frame}
 \frametitle{Principe}
+\includegraphics[scale=0.24]{../graphics/authcrypt.png}
 \end{frame}
 
 \begin{frame}
 \frametitle{Utilisation}
+\begin{block}{SSH}
+Il est possible de se connecter via SSH en employant des clés RSA.
+\end{block}
+
+\begin{block}{HTTPS}
+Les clés publiques, gérées par des PKIs\footnote{Public Key Infrastructures}, son utilisées pour authentifier les serveurs de façon sécurisée sur internet.
+\end{block}
 \end{frame}
 
 \subsection{Récapitulatif}
 \begin{frame}
 \frametitle{Récapitulatif}
+%\begin{center}
+%\begin{tabular}{|c|c|c|c|}
+%\hline
+%  & Classique & OTP & Crypto \\ \hline
+%Rejeu & O & N & N \\ \hline
+%MITM & O& O& N\\ \hline
+%\end{tabular}
+%\end{center}
+\begin{block}{Classique}
+Vulnérable aux attaques par rejeu et aux attaques de type MITM\footnote{Man In The Middle}.
+\end{block}
+
+\begin{block}{OTP}
+Protégé contre les attaques par rejeu.
+\end{block}
+
+\begin{block}{Cryptographique}
+Protégée contre les attaques par rejeu et MITM.
+\end{block}
+
 \end{frame}
 
 
@@ -183,12 +211,9 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
     L'application se ferait sur les protocole qui auraient été retenus après l'étude de 
   l'état de l'art et comporterait pour chaque protocole:
   \begin{itemize}
-    \item Un serveur d'authentification
-    \item Un client d'authentification
+    \item Un module d'authentification.
     \item Un token\footnote[1]{Programme permettant à l'utilisateur d'obtenir un 
-      OTP pour s'authentifier.}\footnote[2]{Tout les protocoles ne 
-      nécessitent pas de tokens.} Android
-    \item Un token Linux
+      OTP pour s'authentifier.}
   \end{itemize}
 \end{block}
 
@@ -201,7 +226,7 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 \frametitle{Formation des équipes de travail}
 \begin{block}{Équipes de recherche}
   \begin{itemize}
-    \item POTP
+    \item EAP-POTP
     \begin{itemize}
       \item Tayewo-John-Yves \bsc{Adegoloye}
       \item Claire \bsc{Hardouin}
@@ -223,14 +248,25 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 
 \begin{frame}
 \frametitle{La méthode}
+\begin{block}{Le canevas}
+
+\end{block}
 \end{frame}
 
 \begin{frame}
 \frametitle{Le bilan: OTP}
 \begin{block}{HOTP}
-
+\begin{itemize}
+\item Basé sur HMAC\footnote{Hashed Message Authentication Code}.
+\item Plus facile à utiliser pour le client.
+\end{itemize}
 \end{block}
+
 \begin{block}{TOTP}
+\begin{itemize}
+\item Basé sur HOTP, emploie HMAC.
+\item Le standard de l'industrie, employé par la plupart des méthodes OTP grand public.
+\end{itemize}
 
 \end{block}
 \end{frame}
@@ -240,7 +276,7 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 \frametitle{Le bilan: livrables}
 \begin{block}{Module PAM}
 \begin{itemize}
-\item Facilité d'installation sur de nombreux systèmes.
+\item Facilité d'installation sur de nombreux systèmes (Linux, SSH, Apache...).
 \item Compatibilité avec les authentifications existantes.
 \end{itemize}
 \end{block}
@@ -249,6 +285,7 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 \begin{itemize}
 \item Grande réserve d'utilisateurs.
 \item Facilement transportable.
+\item Système \og libre \fg{}. 
 \end{itemize}
 \end{block} 
 \end{frame}
@@ -275,6 +312,7 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
  \item Intégration continue et Refactoring (XP).
  \item Appropriation collective du code (XP).
  \item Réunions client régulières et adaptabilité.
+ \item Réunions d'équipe régulières.
 \end{itemize}
 \end{block}
 \end{center}
@@ -362,7 +400,24 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 \end{frame}
 
 \begin{frame}
-\frametitle{Des choses...}
+\frametitle{Compatibilité}
+
+\end{frame}
+\begin{frame}
+\frametitle{Bibliothèque OTP}
+\end{frame}
+
+\begin{frame}
+\frametitle{Sécurité des données}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Interface Utilisateur}
+\end{frame}
+
+\begin{frame}
+\frametitle{Synchronisation d'horloge}
 \end{frame}
 
 \subsection{Licence}
