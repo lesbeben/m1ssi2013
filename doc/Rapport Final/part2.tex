@@ -79,10 +79,28 @@ Tout au long du projet la gestion de projet a permis une meilleure coordination 
 
 Cette approche méthodique a était bénéfique à tous les niveaux du projets (communication, prévision, développement...), elle définit un cadre nécessaire à l'accomplissement du projet.
 
-
-
 \section{Le Module PAM}
 %faire les sous sections (voir Damien)
 
-\section{L'App Android}
-%faire les sous sections
+\section{L'application Android}
+\subsection{La bibliothèque de calcul}
+Afin que le token soit en mesure de générer des mots de passe jetables, il était
+nécessaire de développer une suite de fonctions de calcul. De plus, ces fonctions devait
+être cohérentes avec celle écrites pour la vérification dans le module PAM.
+
+La bibliothèque est découpée en trois partie distinctes tel que décrites sur la figure
+\ref{fig:umlLib}. On trouve donc un ensemble de quatre classes formant la partie calcul
+des mots de passe jetables, un deuxième de deux classes formant une couche d'abstraction
+pour la gestion des secrets cryptographiques et enfin une dernière classe utilitaire 
+contenant des fonctions nécessaires aux protocoles HOTP et TOTP.
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.4]{../graphics/uml_lib.jpg}
+  \caption{Architecture de la bibliothèque de calcul}
+  \label{fig:umlLib}
+\end{figure}
+
+\subsection{Architecture de l'application}
+\subsection{Sécurisation}
+\subsection{Interface}
