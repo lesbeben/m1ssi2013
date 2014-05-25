@@ -402,8 +402,77 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 
 \end{frame}
 \begin{frame}
-\frametitle{Des choses...}
+\frametitle{Gestion de secrets}
+Développement d'une bibliothèque chargée de la représentation des secrets en mémoire.
+\begin{itemize}
+  \item Structure en mémoire.
+  \item Gestion de ressources mémoire.
+  \item Création aléatoire.
+  \item Création à partir d'une entrée utilisateur.
+  \item Représentation dans différente bases.
+\end{itemize}
+
+Permet de faciliter la gestion de la mémoire.
 \end{frame}
+
+\begin{frame}
+\frametitle{Génération de mots de passe jetable}
+développement d'une bibliothèque permettant de générer des mots de passe selon un secret
+et un compteur.
+\begin{itemize}
+\item Permet de générer selon les méthodes HOTP et TOTP.
+\item Implémentation respectant la RFC 4226.
+\item Repose sur la bibliothèque de gestion des secrets.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}  
+\frametitle{Gestion des utilisateurs}
+Bibliothèque permettant d'enregistrer les utilisateur dans un fichier.
+\begin{itemize}
+  \item Structure en mémoire.
+  \item Enregistrement.
+  \item Lecture.
+  \item Gestion ressources en mémoire.
+\end{itemize}
+
+Niveau d'abstraction supplémentaire.
+\end{frame}
+
+\begin{frame}
+\frametitle{L'interface de programmation pour module PAM}
+\begin{itemize}
+  \item Un module est écrit en langage C.
+  \item Doit implémenter une ou plusieurs fonctions correspondant chacune à une fonctionnalités.
+  \item Doit être compilé comme une bibliothèque partagée.
+  \item L'interface de programmation permet d'interagir avec l'utilisateur.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Développement du mécanisme d'authentification}
+\begin{itemize}
+\item Implémentation de la fonction \verb?pam\_sm\_authenticate? dans le module.
+\item Repose sur les bibliothèque de génération de mots de passe jetable et de gestion
+des utilisateurs.
+\item Implémente les mécaniques de vérification de mots de passe jetable et de resynchronisation.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Gestion de la mise à jour des données utilisateurs}
+\begin{itemize}
+  \item Implémentation de la fonction \verb?pam\_sm\_chauthtok? dans le module.
+  \item Repose sur le mécanisme d'authentification et les bibliothèques de gestion
+  d'utilisateurs et de secrets.
+  \item Facilite la création de secrets pour les utilisateurs.
+  \item Accessible via un utilitaire en ligne de commande.
+\end{itemize}
+
+\end{frame}
+
 
 
 \subsection{L'app Android}
