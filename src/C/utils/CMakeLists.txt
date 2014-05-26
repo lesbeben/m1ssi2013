@@ -12,9 +12,11 @@ add_library(users STATIC users.c secret.c)
 #IF(${CMAKE_BUILD_TYPE} MATCHES Debug)
  #   find_package(Check REQUIRED)
 # Création des tests
+if (CMAKE_BUILD_TYPE MATCHES Debug)
 add_executable(test-usr test-usr.c users.c secret.c)
 target_link_libraries(test-usr check)
 
 add_executable(test-gen test-gen.c utils.c utils.h secret.c secret.h)
 target_link_libraries(test-gen otp crypto m)
+endif(CMAKE_BUILD_TYPE MATCHES Debug)
 #ENDIF(${CMAKE_BUILD_TYPE} MATCHES Debug)
