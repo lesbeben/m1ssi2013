@@ -1,184 +1,241 @@
 \chapter{L'authentification}
 
-	Ce chapitre passe en revue le concept global d'authentification et ses 
-	différentes formes. Cette partie n'a pas pour but d'être exhaustive mais de 
-	rappeler le contexte du projet, pour de plus amples détails nous vous 
-	renvoyons à l'état de l'art sur les systèmes d'authentification par OTP édité 
-	en Janvier 2014. Celui ci est disponible sur le dépôt de source en ligne du projet.
+	Ce chapitre passe en revue le concept global d'authentification et ses
+	différentes formes. Cette partie n'a pas pour but d'être exhaustive mais
+	de rappeler le contexte du projet, pour de plus amples détails nous vous
+	renvoyons à l'état de l'art sur les systèmes d'authentification par OTP
+	édité en Janvier 2014. Celui-ci est disponible sur le dépôt de source en
+	ligne du projet.
 
+%------------------------------------------------------------------------------
 \section{Qu'est-ce que l'authentification?}
 
-	L'authentification est une mesure de sécurité visant à s'assurer que la 
-	personne demandant un service est bien celle qu'elle prétend être. 
-	L'authentification auprès d'un système informatique se fait par 
-	l'intermédiaire d'une empreinte pouvant prendre plusieurs formes :
-	
+	L'authentification est une mesure de sécurité visant à s'assurer que la
+	personne demandant un service est bien celle qu'elle prétend être.
+	L'authentification auprès d'un système informatique se fait par
+	l'intermédiaire d'un facteur pouvant prendre plusieurs formes :
+
 	\begin{description}
-		\item[mémorielle :] Généralement un mot de passe;
-		\item[matérielle :] Carte à puce, clé, etc.;
-		\item[corporelle :] Empreinte digitale, image rétinienne, vocale, etc;
-		\item[réactionnelle :] un geste que la personne peut reproduire (ex: une 
+		\item[Mémoriel :] Généralement un mot de passe;
+		\item[Matériel :] Carte à puce, clé, etc.;
+		\item[Corporel :] Empreinte digitale, rétinienne, vocale, etc;
+		\item[Réactionnel :] Un geste que la personne peut reproduire (ex: une
 		signature).
 	\end{description}
 
-	L'ensemble de ces facteurs peut être combiné pour créer un système 
-	d'authentification forte, par exemple token et mot de passe (matérielle / mémorielle)
-	ou 	un mot de passe et une empreinte vocale (mémorielle / corporelle).
-	
-	L'authentification dite forte est basée sur la concaténation d'au moins deux 
-	facteurs d'empreinte. On en dénombre trois grandes familles :
-	
-	\begin{itemize}
-		\item One Time Password (OTP);
-		\item Certificat numérique;
-		\item Biométrie.
-	\end{itemize}
+	L'authentification dite forte est basée sur la concaténation d'au moins
+	deux facteurs différents (deux mots de passe n'est pas considéré comme une
+	authentification forte). On trouvera par exemple des systèmes demandant
+	l'emploi d'un jeton et d'un mot de passe (matériel / mémoriel) ou d'un mot
+	de passe et d'une empreinte vocale (mémoriel / corporel).
 
 \subsection{L'authentification classique}
-	
-	L'authentification par login \/ mot de passe est la méthode d'authentification
-	la plus répandue sur les systèmes informatique. On la retrouve sur la plupart des
-	services, qu'il soit hors ligne ou sur un réseau. Le principe repose sur une
-  identification classique (echange d'un nom, d'un pseudo ou d'une adresse mail) et le
-  partage d'un secret - une information uniquement connue de l'utilisateur et du service
-  - généralement un mot de passe.
-	
-	Cette méthode d'authentification est suffisante pour les systèmes de base peu
-	sensibles et ne requérant pas un haut niveau de sécurité.	En revanche le niveau de 
-	sécurité offert n'est pas optimal. En effet, outre les méthodes d'attaque basées sur 
-	le \emph{social engineering} (hameçonnage, écoute électronique, etc), 
-	l'authentification par login et mot de passe est sensible aux attaques dites "par 
-	re-jeu" durant laquelle un attaquant récupère le mot de passe d'un utilisateur en vue
-	d'une	réutilisation ultérieure, compromettant la sécurité des données ou des ressources
-	de l'utilisateur authentique.
+
+	L'authentification par login / mot de passe est la méthode
+	d'authentification la plus répandue sur les systèmes informatique. On la
+	retrouve sur la plupart des services, qu'ils soientt hors ligne ou sur un
+	réseau. Le principe repose sur une identification classique (échange d'un
+	nom, d'un pseudo ou d'une adresse mail) et le partage d'un secret - une
+	information uniquement connue de l'utilisateur et du service -
+	généralement un mot de passe.
+
+	Cette méthode d'authentification est suffisante pour les systèmes de base
+	peu sensibles et ne requérant pas un haut niveau de sécurité.	En
+	revanche le niveau de sécurité offert n'est pas optimal. En effet, outre
+	les méthodes d'attaque basées sur le \emph{social engineering} (
+	hameçonnage, écoute électronique, etc), l'authentification par login et
+	mot de passe est sensible aux attaques dites "par re-jeu" durant laquelle
+	un attaquant récupère le mot de passe d'un utilisateur en vue d'une
+	réutilisation ultérieure, compromettant la sécurité des données ou des
+	ressources de l'utilisateur authentique.
 
 \subsection{L'authentification par mot de passe jetable (OTP)}
 
-	Ce type d'authentification est très efficace contre les attaques par re-jeu vues 
-	précédemment puisque chaque mot de passe n'est utilisable qu'une seule fois. Ainsi, un 
-	attaquant parvenant à observer un mot de passe lors d'une authentification ne pourra
-	s'en servir plus tard pour usurper l'identité de l'utilisateur. 
-	
+	Ce type d'authentification est très efficace contre les attaques par re-
+	jeu vues précédemment puisque chaque mot de passe n'est utilisable qu'une
+	seule fois. Ainsi, un attaquant parvenant à observer un mot de passe lors
+	d'une authentification ne pourra s'en servir plus tard pour usurper
+	l'identité de l'utilisateur.
+
 	Le principe de cette méthode d'authentification est simple :
 	\begin{itemize}
-		\item Un utilisateur souhaitant se connecter sur un service via un système 
-		OTP dispose d'un outil (\emph{token}, voir plus loin) lui permettant de générer 
-		un mot de passe jetable;
-		\item Cet outil et le serveur partagent un secret généré lors de la création 
-		du compte utilisateur, servant de base pour le calcul des mots de passe jetables;
-		\item L'utilisateur renseigne son identifiant et le mot de passe généré;
-		\item Le serveur vérifie le mot de passe en effectuant les même calculs que le 
-		\emph{token}. S'il trouve le même résultat, l'utilisateur est authentifié.
+		\item Un utilisateur souhaitant se connecter sur un service via un
+		système OTP dispose d'un outil (un \emph{token} : voir plus loin) lui
+		permettant de générer un mot de passe jetable;
+
+		\item Ce \emph{token} et le serveur partagent un secret généré lors de
+		la création du compte utilisateur, servant de base pour le calcul des
+		mots de passe jetables;
+		\item L'utilisateur renseigne son identifiant et le mot de passe
+		généré;
+		\item Le serveur vérifie le mot de passe en effectuant les mêmes
+		calculs que le \emph{token}. S'il trouve le même résultat,
+		l'utilisateur est authentifié.
 	\end{itemize}
-	
-	L'empreinte utilisée ici est un empreinte matérielle, appelée \emph{token}, servant à
-	générer les mots de passe jetable. Utilisé tel quel, ce principe ne constitue pas une
-	méthode d'authentification forte puisqu'on n'utilise qu'un unique facteur. Pour réparer,
-	ce tort, un deuxième type d'empreinte doit être utilisé. On peut par exemple choisir de
-	protéger le token par un mot de passe.
-	
-	La sécurité des mots de passe générés repose sur leur non prédictibilité. En effet,
-	un attaquant potentiel doit être incapable de prédire le prochain mot de passe à
-	utiliser, même si il à déjà observer plusieurs authentification d'un utilisateur sur 
-	un service.
+
+	Le facteur utilisé ici est le \emph{token}, un facteur matériel servant à
+	générer les mots de passe jetables. Utilisé tel quel, ce principe ne
+	constitue pas une méthode d'authentification forte puisqu'on n'utilise
+	qu'un unique facteur. Pour réparer ce tort, un deuxième type de facteur
+	doit être utilisé. On peut par exemple choisir de protéger le token par un
+	mot de passe.
+
+	La sécurité des mots de passe générés repose sur leur non prédictibilité.
+	En effet, un attaquant potentiel doit être incapable de prédire le
+	prochain mot de passe à utiliser, même s'il a déjà observé plusieurs
+	authentification d'un utilisateur sur un service.
 
 \subsection{L'authentification cryptographique}
 
-	Les systèmes d'authentification dits "cryptographique" représente le niveau supérieur
-	d'authentification pour les utilisateur. Ils sont utilisés dans toutes les situations
-	ou la sécurité des authentifications est primordiale. On les retrouve donc dans les 
-	protocoles sécurisés du web tels que le bien connu HTTPS, reposant sur l'utilisation de
-	certificats numériques.
-	
-	Les système d'authentification cryptographiques doivent vérifier respecter les
+	Les systèmes d'authentification dits "cryptographique" représentent le
+	niveau supérieur d'authentification pour les utilisateurs. Ils sont
+	utilisés dans toutes les situations où la sécurité des authentifications
+	est primordiale. On les retrouve donc dans les protocoles sécurisés du web
+	tels que le bien connu HTTPS, reposant sur l'utilisation de certificats
+	numériques.
+
+	Les systèmes d'authentification cryptographiques doivent vérifier les
 	contraintes suivantes \cite{Auth} :
 	\begin{itemize}
-	  \item[1] si Alice et Bob sont honnêtes, l'authentification d'Alice par Bob doit
-	  déboucher sur une acceptation.
-	  \item[2] si Charlie écoute des authentifications d'Alice auprès de Bob, il ne doit
-	  pas pouvoir se faire passer pour Alice auprès de Bob
-	  \item[3] si Charlie est capable de faire exécuter à Alice le protocole 
-	  d'authentification (i.e. de faire en sorte qu'Alice s'authentifie auprès de lui),
-	  alors il ne peut toujours pas se faire passer pour Alice auprès de Bob.
+	  \item[1] Si Alice et Bob sont honnêtes, l'authentification d'Alice par
+	  Bob doit déboucher sur une acceptation.
+	  \item[2] Si Charlie écoute des authentifications d'Alice auprès de Bob,
+	  il ne doit pas pouvoir se faire passer pour Alice auprès de Bob.
+	  \item[3] Si Charlie est capable de faire exécuter à Alice le protocole
+	  d'authentification (i.e. de faire en sorte qu'Alice s'authentifie auprès
+	  de lui), alors il ne peut toujours pas se faire passer pour Alice auprès
+	  de Bob.
 	\end{itemize}
 
-  Ces contraintes impliquent que les systèmes d'authentification par mot de passe jetable
-  (sauf dans certain cas particuliers) ne peuvent pas être considérés comme
-  cryptographiques. 
-  
-  
+  Ces contraintes impliquent que les systèmes d'authentification par mot de
+  passe jetable (sauf dans certain cas particuliers) ne peuvent pas être
+  considérés comme cryptographiques.
+
 \subsection{Récapitulatif}
 
-	Les trois méthodes d'authentifications étudiées ci-avant ne fournissent pas un niveau
-	équivalent de sécurité. Pour illustrer ces différences, nous pouvons reprendre les
-	contraintes nécessaires pour un système cryptographiques. 
-	
-	Nous avons vu que pour qu'un système soit qualifié de cryptographique il devait 
-	respecter trois contraintes. Les systèmes d'authentification cryptographiques respectent
-	les trois contraintes. Ce sont les systèmes les plus puissant que nous avons vu. Les
-	systèmes à mots de passe jetables respectent quant a eux les deux première contraintes
-	uniquement.
-	
-	En effet, si un attaquant parvient à forcer un utilisateur à s'authentifier auprès de
-	lui, il sera en mesure de réutiliser les mots de passes ainsi obtenus pour
-	s'authentifier à son tour sur le service authentique. Ces systèmes offre donc un niveau
-	moindre de sécurité. Ils sont cependant plus performant que les systèmes
-	d'authentification par login / mot de passe qui ne respectent que la première des trois
-	contraintes. C'est en fait l'illustration du fait que ce dernier système est sensible 
-	aux attaques par re-jeu.
-	
-	Au final, les systèmes d'authentification par mot de passe jetable que nous avons étudié
-	dans le cadre de ce projet, représente un bon compromis entre la faible solution que
-	constituent les mots de passe classiques et les systèmes cryptographiques. Ils sont en 
-	effet plus sécurisant que les mots de passes standards et plus simple à mettre en place
-	que les systèmes cryptographiques.	
+	Les trois méthodes d'authentifications étudiées ci-avant ne fournissent
+	pas un niveau équivalent de sécurité. Pour illustrer ces différences, nous
+	pouvons reprendre les contraintes nécessaires pour un système
+	cryptographiques.
 
+	Nous avons vu que, pour qu'un système soit qualifié de cryptographique, il
+	devait respecter trois contraintes. Les systèmes d'authentification
+	cryptographiques respectent les trois contraintes. Ce sont les systèmes
+	les plus puissants que nous avons vu. Les systèmes à mots de passe
+	jetables respectent quant à eux les deux premières contraintes uniquement.
+
+	En effet, si un attaquant parvient à forcer un utilisateur à
+	s'authentifier auprès de lui, il sera en mesure de réutiliser les mots de
+	passes ainsi obtenus pour s'authentifier à son tour sur le service
+	authentique. Ces systèmes offrent donc un niveau moindre de sécurité. Ils
+	sont cependant plus performant que les systèmes d'authentification par
+	login / mot de passe qui ne respectent que la première des trois
+	contraintes. C'est en fait l'illustration du fait que ce dernier système
+	est sensible aux attaques par re-jeu.
+
+	Au final, les systèmes d'authentification par mot de passe jetable que
+	nous avons étudié dans le cadre de ce projet représentent un bon compromis
+	entre la faible solution que constituent les mots de passe classiques et
+	les systèmes cryptographiques. Ils sont en effet plus sécurisant que les
+	mots de passe standards et plus simple à mettre en place que les systèmes
+	cryptographiques, tout en prevenant la plupart des attaques passives.
+
+%------------------------------------------------------------------------------
 \section{Étude approfondie des OTP}
 
 	Plusieurs entités interviendront lors de l'étude des systèmes OTP:
-	
+
 	\begin{description}
 		\item[L'utilisateur :] le sujet de l'authentification;
-		\item[Le client :] un logiciel doté d'une interface utilisateur ou un site 
-		web permettant une authentification auprès d'un serveur adapté;
-		\item[Le serveur :] l'entité qui permet d'authentifier un utilisateur, 
-		contient une base de données contenant des informations utilisateur (login, 
-		dernier mot de passe utilisé, ...) et dispose d'une routine permettant de 
-		vérifier l'authenticité de celui-ci avec le mot de passe jetable qu'il lui a 
-		fourni;
-		\item[Le token :] élément physique ou logiciel permettant de générer un mot 
-		de passe jetable pour un utilisateur;
-		\item[Un attaquant :] Hacker, malware, etc... Une entité cherchant à usurper 
-		l'identité de l'utilisateur vis à vis du serveur en récupérant ses 
-		informations de connexion ou son accès au service sans ces informations.
+		\item[Le client :] un logiciel doté d'une interface utilisateur ou un
+		site web permettant une authentification auprès d'un serveur adapté;
+		\item[Le serveur :] l'entité qui permet d'authentifier un utilisateur,
+		contient une base de données contenant des informations utilisateur (
+		login, dernier mot de passe utilisé, ...) et dispose d'une routine
+		permettant de vérifier l'authenticité de celui-ci avec le mot de passe
+		jetable qu'il lui a fourni;
+		\item[Le token :] élément physique ou logiciel permettant de générer
+		un mot de passe jetable pour un utilisateur;
+		\item[Un attaquant :] hacker, malware, etc... Une entité cherchant à
+		usurper l'identité de l'utilisateur vis à vis du serveur en récupérant
+		ses informations de connexion ou son accès au service sans ces
+		informations.
 	\end{description}
 
 \subsection{OTP aujourd'hui}
-	
-	Les utilisations de systèmes OTP sont variées, aussi bien dans le domaine 
-	personnel que professionnel.
-	
-	On retrouve des cas concrets d'utilisation dans des logiciels tels que Google 
-	Authenticator, OATH Toolkit, LinOTP, DropBox, Microsoft Authenticator, RedHat 
-	FreeOT, etc. ainsi que des site web comme Amazon ou GitHub.
 
-\subsection{Les différents types d'OTP}
+	Les utilisations de systèmes OTP sont variées, aussi bien dans le domaine
+	personnel que professionnel. La popularité croissante des systèmes OTP
+	s'explique par sa simplicité de mise en œuvre et son efficacité en terme
+	de sécurité.
 
-	Le système OTP de base est maintenant obsolète et donc inutilisé. Cependant de
-	nombreuses autres méthodes ont été développées. Parmi celles que nous avons 
-	étudié, nous en avons retenu deux : TOTP et HOTP.
+	On retrouve des cas concrets d'utilisation dans des sites web comme Amazon
+	ou GitHub ainsi que dans des logiciels tels que :
+
+	\begin{itemize}
+		\item Google Authenticator;
+		\item OATH Toolkit;
+		\item LinOTP;
+		\item DropBox;
+		\item Microsoft	Authenticator;
+		\item RedHat FreeOT;
+		\item etc.
+	\end{itemize}
+
+\subsection{Les différents types de protocole OTP}
+
+	Le protocole d'OTP de base date de 1995. Depuis, de nombreuses autres
+	implémentations ont été développées, parmi lesquelles :
+
+	\begin{description}
+		\item[OTP :] Protocole standard basé sur l'utilisation de fonctions de
+		hachage;
+		\item[HOTP :] Extension du principe standard d'OTP reposant sur
+		l'utilisation du mécanisme d'authentification de message HMAC, utilise
+		un compteur de synchronisation lors du calcul des mots de passe
+		jetables;
+		\item[TOTP :] Système similaire à HOTP, emploit le temps comme
+		compteur;
+		\item[OTPW :] Les mots de passe sont précalculés, l'authentification
+		se fait par question/réponse;
+	\end{description}
 
 \subsection{Comparatif}
+\subsubsection{Fonctionnement}
+	%tableau
 
-	...
+\subsubsection{Sécurité}
+	OTP : Pas de faille connue, outre les attaques actives de type espionnage
+	et brute force.
+
+	HOTP : Aucune faille connue, mis à part celles héritées d'OTP.
+
+	TOTP : Idem, les attaques de type brute force sont fortement limité à cause du quantum et du time-out.
+
+	OTPW : préfixe facilement identifiable.
+
+\subsubsection{Pérennité}
+
+	OTP standard : Système obsolète, remplacé par des protocoles plus simples
+	et performants
+	HOTP : Pas de faille de sécurité référencée, le système de calcul est
+	pérenne.
+	TOTP : perennité équivalente à celle de HOTP car basée sur ce dernier.
+	OTPW : la perennité du système est équivalente à la fonction de hachage.
+	Cependant, nécessite une intervention manuelle pour réinitialiser le
+	système.
+
 
 \subsection{Conclusion}
 
-	Les méthodes étudiées sont les plus courantes car elles offrent une résistance
-	satisfaisante aux attaques exhaustives et par collision et ne présentent 
-	aucune faille de sécurité notable du moment que les préconisations sont 
-	respectées. De plus, ces méthodes sont très simple d'utilisation, un avantage
-	non négligeable pour le non initiés. 
-	
-	Nous avons donc un bon compromis entre efficacité et simplicité ainsi qu'une 
-	pérennité importante.
+	-- faire un point sur les avantages et inconvenient de chacun --
+
+	Les méthodes étudiées sont les plus courantes car elles offrent une
+	résistance satisfaisante aux attaques exhaustives et ne présentent aucune
+	faille de sécurité notable. De plus, ces méthodes sont très simple
+	d'utilisation, un avantage non négligeable pour le non initiés.
+
+	Nous avons donc un bon compromis entre efficacité et simplicité ainsi
+	qu'une pérennité importante.
+
+%------------------------------------------------------------------------------
