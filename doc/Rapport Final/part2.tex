@@ -1,7 +1,6 @@
 \chapter{Mise en œuvre}
 \section{La demande du client}
 
-
 \section{La gestion de projet dans le projet}
 
 \subsection{Communication au sein du projet}
@@ -124,16 +123,62 @@ Elle a pour but de fournir une couche d'abstraction pour simplifier l'utilisatio
 qui peut s'avérer inconfortable dès lors que ces derniers mesures plusieurs dizaines de 
 caractère hexadécimaux.
 
-On pourra donc grâce à ces deux classe créer des secrets initialisable depuis des données 
-binaires brutes, des représentations hexadécimales ou encore depuis des données aléatoires.
-De la même manière, il sera possible de récupérer un secret sous représentation binaire ou 
-sous la forme d'une chaine de caractère hexadécimaux.
+On pourra donc grâce à ces deux classe créer des secrets pouvant être initialisés depuis des
+données binaires brutes, des représentations hexadécimales ou encore depuis des données
+aléatoires. De la même manière, il sera possible de récupérer un secret sous représentation
+binaire ou sous la forme d'une chaine de caractère hexadécimaux.
 
 \subsubsection{Fonctions utilitaires}
 Enfin la dernière partie de la bibliothèque de calcul déclare des fonctions utilitaires 
-nécessaires aux calculs des mots de passes jetables.
+nécessaires aux calculs des mots de passes jetables. Concrètement, on y retrouve la
+définition de la fonction HMAC\cite{HMAC} ainsi que des deux algorithmes de troncature et 
+de conversion définis dans la rfc 4226.
 
+L'ensemble de ces fonctions est utilisé dans la classe abstraite \emph{OTPGenerator} pour la
+génération des mots de passe jetables.
 
 \subsection{Architecture de l'application}
+
 \subsection{Sécurisation}
+La sécurisation de l'application est essentielle à la sécurité de l'ensemble du projet. En
+effet, c'est elle qui va garantir que l'authentification mise en place est bien une
+"authentification forte" grâce à l'ajout d'un facteur supplémentaire. L'enjeu de cette 
+partie est de garantir les 3 points suivant : 
+
+
+\begin{itemize}
+  \item[1 -] Un utilisateur honnête doit pouvoir déverrouiller l'application en utilisant 
+  sont PIN. Il doit ensuite être en mesure de générer des mots de passe jetable en utilisant
+  un de ses \emph{tokens} ou utiliser n'importe quelle autre fonctionnalités à sa
+  disposition.
+  \item[2 -] Un attaquant qui ne connaitrait pas le PIN de l'utilisateur ne doit pas être en
+  mesure de déverrouiller l'application et donc de générer des mots de passes jetables en
+  utilisant les \emph{tokens} de l'utilisateur.
+  \item[3 -] Un attaquant qui ne connaitrait pas le PIN de l'utilisateur ne doit pas être en
+  mesure, en parcourant le système de fichier de l'appareil, d'obtenir les clefs secrètes
+  de génération.
+\end{itemize}
+
+La solution retenue consiste en la mise en place d'un PIN de déverrouillage de l'application.
+Ce PIN, demandé à chaque démarrage de l'application, sera dans un premier temps haché par la
+fonction SHA-1 en utilisant comme sel le \emph{device id} de l'appareil hôte. L'empreinte 
+obtenue est alors comparée avec celle enregistrée lors de la création du PIN dans un fichier
+local. Si les deux valeurs sont cohérente, le PIN est alors utilisé pour déchiffrer le
+fichier local contenant les informations relatives aux différents \emph{tokens} de
+l'utilisateur. L'application devient alors pleinement utilisable.
+
+Afin d'assurer une sécurité optimale des clefs de l'utilisateur, le chiffrement utilisé pour
+le fichier local des \emph{tokens} est AES-256. Ainsi, on garantit que même après accès au
+fichier sensible de l'application, un attaquant ne pourra virtuellement jamais accéder aux
+clefs secrètes qui y sont stockés. De la même manière, le fait que le PIN de déverrouillage
+soit stocké sous la forme d'un haché, implique que même après accès au fichier de stockage du
+PIN, l'attaquant ne pourra pas déduire le PIN de l'utilisateur et donc la clef AES de
+déchiffrement du fichier de \emph{token}.
+
+
 \subsection{Interface}
+
+
+
+
+
