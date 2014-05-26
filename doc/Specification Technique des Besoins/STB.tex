@@ -51,9 +51,9 @@ utilisant des mots de passe jetables ainsi que leurs domaines de fonctionnement.
         \begin{itemize}
             \item Système sûr et fonctionnel.
             \item État de l'art le plus exhaustif possible.
-            \item Implémentation d'un module PAM\footnote{Pluggable Authentication Modules (cf section 2)\label{refPAM}} 
+            \item Implémentation d'un module PAM{\footnote{Pluggable Authentication Modules (cf section 2)\label{refPAM}}}
             sous GNU/Linux pour l'authentification à base de HOTP sur les systèmes compatibles.
-            \item Implémentation d'un module PAM\ref{refPAM} sous GNU/Linux pour l'authentification à base de TOTP sur les systèmes compatibles.
+            \item Implémentation d'un module PAM$^{\ref{refPAM}}$ sous GNU/Linux pour l'authentification à base de TOTP sur les systèmes compatibles.
             \item Implémentation d'un token sur Android pour la génération HOTP.
             \item Implémentation d'un token sur Android pour la génération TOTP.
             \item (Optionnel) Implémentation d'un token sur JavaCard pour la génération HOTP.
@@ -115,19 +115,25 @@ utilisant des mots de passe jetables ainsi que leurs domaines de fonctionnement.
     EF\_05 & Re-synchronisation & Module PAM & Indispensable\\
     \hline
 \end{tabular}\
-
-\begin{figure}[h]
+\newpage
+\begin{figure}[h!]
   \centering
   \includegraphics[scale=0.5]{../graphics/diagramme1.png}
   \caption{Schéma Macroscopique du Projet}
   \setlength{\parindent}{1cm}
-  \begin{flushleft}
-  Nous (l'équipe) commencerons par une étude de la \href{http://tools.ietf.org/html/rfc2289}{RFC2289} et toutes les RFC basées sur celle-ci
+  %\begin{flushleft}
+  %Nous (l'équipe) commencerons par une étude de la \href{http://tools.ietf.org/html/rfc2289}{RFC2289} et toutes les RFC basées sur celle-ci
+  %soit, \href{http://tools.ietf.org/html/rfc4226}{RFC4226}, \href{http://tools.ietf.org/html/rfc4256}{RFC4256}, 
+  %\href{http://tools.ietf.org/html/rfc4793}{RFC4793}, \href{http://tools.ietf.org/html/rfc6238}{RFC6238} afin de fournir un état de l'art le plus exhaustif possible. Une fois celui-ci terminé nous passerons à
+ % l'implémentation des meilleurs protocoles retenus. Suivant la méthodologie eXtreme Programming, nous développerons par groupes, basant nos itérations sur des tests unaires créés préalablement pour chaque module.
+  %\end{flushleft}
+\end{figure}
+Nous (l'équipe) commencerons par une étude de la \href{http://tools.ietf.org/html/rfc2289}{RFC2289} et toutes les RFC basées sur celle-ci
   soit, \href{http://tools.ietf.org/html/rfc4226}{RFC4226}, \href{http://tools.ietf.org/html/rfc4256}{RFC4256}, 
   \href{http://tools.ietf.org/html/rfc4793}{RFC4793}, \href{http://tools.ietf.org/html/rfc6238}{RFC6238} afin de fournir un état de l'art le plus exhaustif possible. Une fois celui-ci terminé nous passerons à
   l'implémentation des meilleurs protocoles retenus. Suivant la méthodologie eXtreme Programming, nous développerons par groupes, basant nos itérations sur des tests unaires créés préalablement pour chaque module.
-  \end{flushleft}
-\end{figure}
+
+  
 
 \clearpage
 
@@ -142,14 +148,14 @@ demande à travers son application un secret au serveur. Le serveur génère le 
 \vspace{1cm}
 
 
-\fiche{Génération de l'OTP par le token}{Utilisateur}{L'utilisateur demande au token un nouvel OTP qui lui est retourné}{Le token est lié au serveur}{L'utilisateur demande un OTP}{OTP généré}{../graphics/generation.jpg}{Null}
+\fiche{Génération de l'OTP par le token}{Utilisateur}{L'utilisateur demande au token un nouvel OTP qui lui est retourné}{Le token est lié au serveur}{L'utilisateur demande un OTP}{OTP généré}{../graphics/generation.jpg}{}
 
 \vspace{0.5cm}
 
 
 Ce protocole décrit la Génération de l'OTP par le token suite à une demande de l'utilisateur.
 \\
-\fiche{Authentification}{Utilisateur}{L'utilisateur tente de s'authentifier}{L'utilisateur possède un OTP}{L'utilisateur donne le mot de passe au serveur}{Utilisateur authentifié ou rejeté}{../graphics/authentification.jpg}{Crash du serveur}
+\fiche{Authentification}{Utilisateur}{L'utilisateur tente de s'authentifier}{L'utilisateur possède un OTP}{L'utilisateur donne le mot de passe au serveur}{Utilisateur authentifié ou rejeté}{../graphics/authentification.jpg}{}
 
 \vspace{0.5cm}
 
@@ -160,7 +166,7 @@ est accepté alors le client est authentifié sinon il peut réessayer un mot de
 \\
 \fiche{Re-Synchronisation}{Module PAM}{Mise en accord du token et du module PAM}{Le module PAM tente de prendre en 
 compte le décalage pour l'authentification}
-{Perte de la synchronisation}{Synchronisation retrouvée}{../graphics/resynchronisation.jpg}{Ne peut pas re-synchroniser}
+{Perte de la synchronisation}{Réussite ou échec (après dépassement de la fenêtre) de la vérification de l'OTP}{../graphics/resynchronisation.jpg}{}
 
 \vspace{0.5cm}
 
