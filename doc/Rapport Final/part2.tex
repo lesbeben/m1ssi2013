@@ -76,11 +76,118 @@ On y voit bien la situation de chaque acteur et donc à qui s'adresser selon la 
 
 Tout au long du projet la gestion de projet a permis une meilleure coordination au sein de l'équipe, de limiter la perte de temps dû aux digressions.
 
-Cette approche méthodique a était bénéfique à tous les niveaux du projets (communication, prévision, développement...), elle définit un cadre nécessaire à l'accomplissement du projet.
+Cette approche méthodique a était bénéfique à tous les niveaux du projets 
+(communication, prévision, développement...), elle définit un cadre nécessaire à 
+l'accomplissement du projet.%faire les sous sections (voir Damien)
 
 \section{Le Module PAM}
-%faire les sous sections (voir Damien)
+\subsection{Pourquoi un module PAM ?}
+La première solution d'implémentation envisagée était de reprogrammer un
+serveur d'authentification complet. Cette solution posait deux problème:
+\begin{enumerate}
+  \item L'implémentation d'un protocole de communication.
+  \item Inutilisable pour d'autres services en l'état.
+\end{enumerate}
 
+L'implémentation d'un module PAM résout ces deux problèmes, il est utilisable
+par de nombreux services et le protocole de communication est du ressort du
+service qui va utiliser le module. Cela a eu pour conséquence de réduire le
+temps de développement et d'augmenter les possibilité offertes.
+
+\subsection{Programmation de bibliothèques utilitaires}
+Avant de débuter la programmation du module PAM il était nécessaire de créer
+quelques bibliothèques utilitaires. Nombre d'entre elles permettront
+d'abstraire la gestion de la mémoire et d'offrir une vision de plus haut niveau
+du langage. De plus cet étape permettait un travail collaboratif simplifié.
+
+La méthodologie pour le développement était la suivante:
+\begin{itemize}
+  \item Rédaction des fichiers d'en-tête contenant les prototypes et la 
+  documentation des fonctions à implémenter. 
+  \item Rédaction des éventuels test unitaires.
+  \item Implémentation des fonctions.
+  \item Exécution des tests, en cas d'échec retour à l'étape développement.
+\end{itemize}
+
+\subsubsection{Bibliothèque de gestion de secret}
+Cette bibliothèque est chargée de gérer la représentation de secrets en mémoire.
+Un secret est une suite d'octet partagée avec le token. Celui ci peut être 
+représentée comme une suite de caractères \verb?ASCII? ou hexadécimale.
+
+Dans cette bibliothèque nous trouverons:
+\begin{itemize}
+  \item une structure \verb?secret?, qui consiste en un pointeur sur un tableau 
+  d'octets et une longueur codée sur un entier.
+  \item Des fonctions de création chargée d'allouer l'espace mémoire requis en
+  fonction du nombre d'octets désirés ou d'une entrée utilisateur.
+  \item Des fonction chargé de représenter un secret dans différentes bases
+  sous la forme de chaînes de caractères.
+  \item Une fonction permettant d'effacer un secret de la mémoire et de 
+  libérer les ressources.
+\end{itemize}
+
+\subsubsection{Bibliothèque de calcul de mot de passe jetable}
+Cette bibliothèque est chargé d'implémenter l'algorithme de génération de mot
+passe jetable tel que décrit dans la RFC 4226\cite{HOTPrfc}. Elle ne fourni
+qu'une fonction de génération. Pour générer un HOTP on lui passera un compteur
+arbitraire. Pour générer un TOTP on lui passera le temps en tant que compteur.
+
+\subsubsection{Bibliothèque de gestion des utilisateurs}
+Cette bibliothèque est chargé d'abstraire la gestion des utilisateur, ces
+derniers ainsi que leurs informations sont enregistrés dans un fichier texte
+brut.
+
+Nous nous sommes donc dotés des outils suivants:
+\begin{itemize}
+  \item Une structure en mémoire représentant un utilisateur et ses 
+  informations.
+  \item Une fonction d'enregistrement d'une structure dans le fichier.
+  \item Une fonction permettant d'obtenir une structure utilisateur du fichier 
+  à partir d'un nom d'utilisateur.
+  \item Deux fonctions pour poser et libérer un verrou sur le fichier.
+  \item Une fonction permettant de gérer les ressources mémoires.\\
+\end{itemize}
+
+Les fonction de gestion de verrouillage sont la pour gérer les accès concurrents 
+au fichier des utilisateurs. Il faut prévoir que ces fonction seront appelées 
+dans un module chargé par différent service. Et donc sans ce verrou il devenait 
+impossible de garantir qu'un OTP ne puisse pas être utilisé deux fois, Si deux 
+processus lisent les information au même moment et permette l'authentification 
+alors un OTP fonctionnera plusieurs fois.
+
+\subsection{Programmation avec PAM}
+\subsubsection{Fonction d'authentification}
+Cette fonction permet d'authentifier un utilisateur. Chaque service configuré
+pour utiliser le module exécutera cette fonction. Elle implémentera les 
+mécaniques de vérification telles que décrites dans les RFC ainsi que les 
+mécaniques de resynchronisation.
+\paragraph{HOTP}
+Pour HOTP la vérification de l'otp courant correspondant au compteur 
+$n$\footnote{Strictement positif.\label{int}} la vérification s'effectuera sur 
+$k$ $^{\ref{int}}$ otp, c'est à dire qu'elle va comparer l'otp fourni aux otp de 
+compteur $n$ à $n+k$ inclus. En cas de succès on enregistrera le compteur 
+courant comme nouveau compteur, c'est la phase de resynchronisation.
+\paragraph{TOTP}
+Pour TOTP la vérification de l'otp courant correspondant à un temps $t$ avec un 
+quantum $q$ se fera sur les otp $(t / q) - 2 * q$ à $(t / q) + 3 *q$ avec un 
+pas de $q$.
+%-------------------------------------------------------------------------------
+\subsubsection{Fonction d'initialisation de secret}
+Cette fonction permet d'implémenter la demande d'initialisation de secret.
+C'est cette fonction qui sera appelé lorsqu'un service configuré pour utiliser
+le module fera une demande de renouvellement de secret. Cette fonction demandera
+à l'utilisateur de s'authentifier si c'est possible puis demandera les nouvelles
+information d'authentification, c'est à dire:
+\begin{itemize}
+  \item La méthode d'authentification.\hfill\textbf{totp ou hotp}
+  \item Le quantum si la méthode est totp.\hfill \textbf{un entier positif}
+  \item La longueur des otp générés.
+  \hfill\textbf{entiers compris entre 6 et 8 inclus}
+\end{itemize}
+Une fois ces information fourni le secret sera affiché. Cela implique que le 
+renouvellement de secret doit se faire lorsque la connexion est sûre.
+
+%-------------------------------------------------------------------------------
 \section{L'application Android}
 \subsection{La bibliothèque de calcul}
 Afin que le token soit en mesure de générer des mots de passe jetables, il était
