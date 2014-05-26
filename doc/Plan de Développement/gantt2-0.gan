@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="OTP" company="" webLink="https://github.com/lesbeben/m1ssi2013" view-date="2014-02-01" view-index="0" gantt-divider-location="394" resource-divider-location="257" version="2.0" locale="fr">
+<?xml version="1.0" encoding="UTF-8"?><project name="OTP" company="" webLink="https://github.com/lesbeben/m1ssi2013" view-date="2013-11-01" view-index="0" gantt-divider-location="394" resource-divider-location="257" version="2.0" locale="fr">
     <description/>
     <view zooming-state="default:8" id="gantt-chart">
         <field id="tpd3" name="Nom" width="58" order="0"/>
@@ -10,8 +10,8 @@
         <option id="taskLabelRight" value="resources"/>
     </view>
     <view id="resource-table">
-        <field id="0" name="Nom" width="93" order="0"/>
-        <field id="1" name="Rôle par défaut" width="6" order="1"/>
+        <field id="0" name="Nom" width="64" order="0"/>
+        <field id="1" name="Rôle par défaut" width="35" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -161,19 +161,19 @@
                 <depend id="112" type="2" difference="0" hardness="Strong"/>
             </task>
         </task>
-        <task id="265" name="Finalisations" color="#666600" meeting="false" start="2014-05-10" duration="15" complete="69" expand="true">
+        <task id="265" name="Finalisations" color="#666600" meeting="false" start="2014-05-10" duration="15" complete="86" expand="true">
             <task id="113" name="Test Finaux / Crash test" color="#cccc00" meeting="false" start="2014-05-10" duration="7" complete="100" expand="true">
                 <depend id="243" type="2" difference="0" hardness="Strong"/>
                 <customproperty taskproperty-id="tpc0" value="49"/>
                 <customproperty taskproperty-id="tpc1" value="49"/>
             </task>
-            <task id="243" name="Rédaction du rapport de tests" color="#ffff66" meeting="false" start="2014-05-17" duration="2" complete="0" expand="true">
+            <task id="243" name="Rédaction du rapport de tests" color="#ffff66" meeting="false" start="2014-05-17" duration="2" complete="100" expand="true">
                 <depend id="245" type="2" difference="0" hardness="Rubber"/>
             </task>
             <task id="245" name="Rédaction du manuel d'utilisation" color="#ffff66" meeting="false" start="2014-05-19" duration="2" complete="100" expand="true">
                 <depend id="248" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="248" name="Rédaction du rapport de projet" color="#ffff66" meeting="false" start="2014-05-21" duration="4" complete="34" expand="true"/>
+            <task id="248" name="Rédaction du rapport de projet" color="#ffff66" meeting="false" start="2014-05-21" duration="4" complete="50" expand="true"/>
         </task>
         <task id="277" name="Rendu du rapport de projet" color="#ff0000" meeting="true" start="2014-05-28" duration="0" complete="0" expand="true"/>
         <task id="275" name="Soutenance de projet" color="#ff0000" meeting="true" start="2014-06-02" duration="0" complete="0" expand="true"/>
