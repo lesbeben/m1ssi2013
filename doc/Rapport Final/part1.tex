@@ -201,30 +201,72 @@
 	\end{description}
 
 \subsection{Comparatif}
-\subsubsection{Fonctionnement}
-	%tableau
+\subsubsection{Génération et partage du secret}
+
+	\begin{description}
+		\item[OTP :]
+		\item[HOTP :]
+		\item[TOTP :]
+		\item[OTPW :]
+	\end{description}
+
+\subsubsection{Génération d'un mot de passe jetable}
+
+	\begin{description}
+		\item[OTP :]
+		\item[HOTP :]
+		\item[TOTP :]
+		\item[OTPW :]
+	\end{description}
+
+\subsubsection{Soumission et protocole de vérification}
+
+	\begin{description}
+		\item[OTP :]
+		\item[HOTP :]
+		\item[TOTP :]
+		\item[OTPW :]
+	\end{description}
+
+\subsubsection{Synchronisation}
+	\begin{tabular}{p{3cm} | p{8cm} | p{4cm} |}
+		\hline
+		& \cellcolor{gray} Élement de synchronisation & Perte possible? \\
+		\hline
+		OTP &  &  \\
+		\hline
+		HOTP &  &  \\
+		\hline
+		TOTP &  &  \\
+		\hline
+		OTPW &  &  \\
+		\hline
+	\end{tabular}
 
 \subsubsection{Sécurité}
-	OTP : Pas de faille connue, outre les attaques actives de type espionnage
-	et brute force.
 
-	HOTP : Aucune faille connue, mis à part celles héritées d'OTP.
-
-	TOTP : Idem, les attaques de type brute force sont fortement limité à cause du quantum et du time-out.
-
-	OTPW : préfixe facilement identifiable.
+	\begin{description}
+		\item[OTP :] Pas de faille connue, outre les attaques actives de type
+		espionnage et brute force.
+		\item[HOTP :] Aucune faille connue, mis à part celles héritées d'OTP.
+		\item[TOTP :] Idem, les attaques de type brute force sont fortement
+		limité à cause du quantum et du time-out.
+		\item[OTPW :] Préfixe facilement identifiable.
+	\end{description}
 
 \subsubsection{Pérennité}
 
-	OTP standard : Système obsolète, remplacé par des protocoles plus simples
-	et performants
-	HOTP : Pas de faille de sécurité référencée, le système de calcul est
-	pérenne.
-	TOTP : perennité équivalente à celle de HOTP car basée sur ce dernier.
-	OTPW : la perennité du système est équivalente à la fonction de hachage.
-	Cependant, nécessite une intervention manuelle pour réinitialiser le
-	système.
-
+	\begin{description}
+		\item[OTP :] Système obsolète, remplacé par des protocoles plus simples
+		et performants;
+		\item[HOTP :] Pas de faille de sécurité référencée, le système de
+		calcul est pérenne;
+		\item[TOTP :] Perennité équivalente à celle de HOTP car basée sur ce
+		dernier;
+		\item[OTPW :] La perennité du système est équivalente à la fonction de
+		hachage. Cependant, nécessite une intervention manuelle pour
+		réinitialiser le système.
+	\end{description}
 
 \subsection{Conclusion}
 
