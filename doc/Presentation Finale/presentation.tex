@@ -479,7 +479,7 @@ des utilisateurs.
 \begin{frame}
 \frametitle{Android: Architecture logicielle}
 \begin{figure}
- \includegraphics[scale=0.3]{../graphics/architecture.png} 
+ \includegraphics[scale=0.3]{../graphics/archi-android.jpg} 
  \caption{Schéma de l'architecture logicielle}
 \end{figure}
 
@@ -487,34 +487,62 @@ des utilisateurs.
 
 \begin{frame}
 \frametitle{Compatibilité}
-
+\begin{block}{API Android}
+Level 10: Compatbile avec Android 2.3.X et supérieur.
+\end{block}
+\begin{block}{Prérequis Matériels}
+\begin{itemize}
+\item CPU: 700Mhz minimum.
+\item Ram: 128Mo minimum.
+\end{itemize}
+\end{block}
 \end{frame}
+
+
 \begin{frame}
 \frametitle{Bibliothèque OTP}
+\begin{figure}
+ \includegraphics[scale=0.3]{../graphics/libotp-android.jpg} 
+ \caption{Bibliothèque de génération d'OTP}
+\end{figure}
 \end{frame}
 
 \begin{frame}
 \frametitle{Sécurité des données}
-
+\begin{itemize}
+\item Code Pin.
+\item Haché du Pin dans un fichier.
+\item Nettoyage des fichiers.
+\end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Interface Utilisateur}
+\includegraphics[scale=0.33]{../graphics/enterpin.png}
+\hspace{1em}
+\includegraphics[scale=0.33]{../graphics/firstotp.png}
+\hspace{1em}
+\includegraphics[scale=0.33]{../graphics/menu.png}
 \end{frame}
 
 \begin{frame}
 \frametitle{Synchronisation d'horloge}
+On a eu des problemes avec la synchro d'horloge, manifeste, etc...
 \end{frame}
 
 \subsection{Licence}
 \begin{frame}
 \frametitle{Les différentes licences}
-
+\begin{itemize}
+\item GPL
+\item BSD
+\item Creative Commons
+\end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{La licence choisie}
-
+\Huge Creative Commons
 \end{frame}
 
 %------------------------------------------------
@@ -526,18 +554,54 @@ des utilisateurs.
 \end{frame}
 
 \begin{frame}
-\frametitle{Résultat des tests finaux}
+\frametitle{Résultat des tests finaux 1/2}
+\begin{block}{Temps requis pour générer 100 mots de passe}
+\begin{itemize}
+\item Attendu: \textless  100s
+\item Obtenu: 52ms
+\end{itemize}
+\end{block}
+\begin{block}{Temps requis pour vérifier 1 mot de passe}
+\begin{itemize}
+\item Attendu:\textless  2s
+\item Obtenu: 1/100s
+\end{itemize}
+\end{block}
+\begin{block}{Mémoire utilisée pour générer un mot de passe}
+\begin{itemize}
+\item Attendu: \textless  10ko
+\item Obtenu: 7ko
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Résultat des tests finaux 2/2}
+\begin{itemize}
+\item Résistant au rejeu.
+\item Résistant aux attaques exhaustives.
+\item Non prédictible.
+\end{itemize}
 
 \end{frame}
 
 \begin{frame}
 \frametitle{Enseignements tirés du projet}
-
+\begin{itemize}
+\item Maitrise de PAM.
+\item API Android.
+\item Gestion de projet.
+\end{itemize}
 \end{frame}
 
 
 \begin{frame}
 \frametitle{Améliorations possibles}
+\begin{itemize}
+\item HOTP en challenge/response.
+\item Token sur Java Card.
+\end{itemize}
 \end{frame}
 
 \begin{frame}
