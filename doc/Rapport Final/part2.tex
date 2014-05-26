@@ -208,6 +208,39 @@ contenant des fonctions nécessaires aux protocoles HOTP et TOTP.
   \label{fig:umlLib}
 \end{figure}
 
+\subsubsection{Générateur d'OTP}
+La première des trois partie définit les générateur d'OTP en eux même. Il sont répartis en
+deux catégorie, correspondant aux deux méthode de génération implémentées, les générateur
+TOTP et les générateur HOTP. Du fait que la spécification du protocole TOTP découle de celle
+de celui d'HOTP, ces deux types d'objet sont très similaire dans leur fonctionnement. Les 
+parties communes des deux classes sont donc factorisées dans une classe abstraite. On
+retrouve donc explicitées dans cette classe les méthodes pour récupérer le nombre de chiffre
+composant les OTP ainsi que celle pour générer ces derniers. En effet, il est possible de 
+déclarer cette méthode à cette endroit en déportant la récupération du paramètre "compteur"
+dans les classes inférieures. De ce fait, chacune des classes HOTP et TOTP défini sa
+méthode \emph{getCounter} qui dans un cas retournera l'incrément du compteur synchronisé et 
+dans l'autre la valeur $ timestamp / quantum $ définie dans la rfc 4226\cite{TOTP}. 
+
+Le fonctionnement général des générateurs d'OTP est définit dans l'interface de
+programmation IOTP. Cette interface reprend globalement le contenu des rfc 4226 et 6238.
+
+\subsubsection{Gestion des secrets utilisateurs}
+La deuxième partie formant l'abstraction des secrets cryptographiques est composée d'une 
+interface de programmation, \emph{ISecret}, et d'une classe l'implémentant, \emph{Secret}.
+Elle a pour but de fournir une couche d'abstraction pour simplifier l'utilisation des secrets 
+qui peut s'avérer inconfortable dès lors que ces derniers mesures plusieurs dizaines de 
+caractère hexadécimaux.
+
+On pourra donc grâce à ces deux classe créer des secrets initialisable depuis des données 
+binaires brutes, des représentations hexadécimales ou encore depuis des données aléatoires.
+De la même manière, il sera possible de récupérer un secret sous représentation binaire ou 
+sous la forme d'une chaine de caractère hexadécimaux.
+
+\subsubsection{Fonctions utilitaires}
+Enfin la dernière partie de la bibliothèque de calcul déclare des fonctions utilitaires 
+nécessaires aux calculs des mots de passes jetables.
+
+
 \subsection{Architecture de l'application}
 \subsection{Sécurisation}
 \subsection{Interface}
