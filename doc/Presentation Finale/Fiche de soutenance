@@ -1,152 +1,205 @@
-Fiche de soutenance
+Fiches de soutenance
 
 
+slide 1 -
+          Annonce contexte soutenance
 
-
-slide 1 - Annonce contexte soutenance
-
-slide 2 - 	Annonce plan, 4 parties :
-				intro - présentation équipe + client + sujet
-				1ere partie - présentation du concept général d'authentification + contexte du projet "pourquoi notre projet est interessant"
-				2eme partie - mise en oeuvre, englobera la gestion de projet ainsi que sa réalisation et finalisation
-				Conclusion sur les résultats
-
-
+slide 2 -
+          Annonce plan, 4 parties :
+				    intro - présentation équipe + client + sujet
+			      1ere partie - présentation du concept général d'authentification + contexte du projet "pourquoi notre projet est interessant"
+			      2eme partie - mise en oeuvre, englobera la gestion de projet ainsi que sa réalisation et finalisation
+			      Conclusion sur les résultats
 
 
 
 ---- Intro ----
 
-slide 3 - 	Présentation des membres (désignés par leur prénom)
+slide 3 -
+          Présentation des membres (désignés par leur prénom)
 
-slide 4 - 	Le projet est à l'origine de la demande de nos deux clients Mme Bardet et M Macadré ci-présent, 
-            respectivement enseignante-chercheuse et ingénieur système à l'université de rouen. 
-            L'objet de la demande étant l'étude et l'implémentation de système d'auth à base de mot de passe jetables.
+slide 4 -
+          Le projet est à l'origine de la demande de nos deux clients Mme Bardet et M Macadré ci-présent, respectivement enseignante-chercheuse et ingénieur système à l'université de Rouen.
+          L'objet de la demande étant l'étude et l'implémentation de système d'auth à base de mot de passe jetables.
 
 
 
 ---- Présentation du concept ----
 
-
 silde 5 - 	-- Authentification --
 
-slide 6 - 	L'authentification est une mesure de sécurité visant à s'assurer que la personne demandant un service 
-            est bien celle qu'elle prétend être.
-			      Elle se fait par l'intermédiaire d'une empreinte produite par un facteur :
-				    mémorielle - Généralement un mot de passe;
-				    matérielle - Carte à puce, clé, certificat, etc.;
-				    corporelle - digitale, rétinienne, vocale, etc;
-				    réactionnelle - une geste que la personne peut reproduire (ex: une signature).
+slide 6 -
+          L'authentification est une mesure de sécurité visant à s'assurer que la personne demandant un service est bien celle qu'elle prétend être.
+		      Elle se fait par l'intermédiaire d'une empreinte produite par un facteur :
+			      - Mémorielle     Généralement un mot de passe;
+			      - Matérielle     Carte à puce, clé, certificat, etc.;
+			      - Corporelle     Digitale, rétinienne, vocale, etc;
+			      - Réactionnelle  Une geste que la personne peut reproduire (ex: une signature).
 
 
-slide 7 -	-- Authentification classique --
+slide 7 -	  -- Authentification classique --
 
-slide 8 -	Le concept d'authentification est simple. Nous avons un utilisateur souhaitant exploiter un service réclamant 
-          une authentification, il envoie alors une empreinte que le service vérifie (soit lui même, soit par une 
-          tierce-entité).
+slide 8 -
+          Le concept d'authentification est simple. Nous avons un utilisateur souhaitant exploiter un service réclamant une authentification, il envoie alors une empreinte que le service vérifie (soit lui même, soit par une tierce-entité).
 
-slide 9 - 	Les exemples les plus courants sont ...
+slide 9 -
+          Un exemple typique sur le site de l'université de Rouen : la page de login permettant d'accéder à l'ENT.
 
 
 slide 10 -	-- Authentification par OTP --
 
-slide 11 -	Un OTP est un mot de passe jetable qui n'est donc utilisable qu'une seule fois, il permet ainsi de prévenir 
-            les attaques par rejeu; Attaque qui consiste à recupérer le mot de passe pour une utilisation ultérieure.
-            L'intérêt des otp est qu'ils ne sont pas prédictible. Même en ayant écouté un nombre quelconque fini 
-            d'authentification entre deux parties un attaquant ne pourra pas s'authentifier.
-            L'autre avantage du système OTP est qu'il permet une authentification forte, L'authentification dite forte 
-            est basée sur la concaténation d'au moins deux facteurs d'empreinte.
-            
-slide 12 -	Nous pouvons voir ici deux exemples: le premier le google authenticator et le battlenet Mobile 
-            authenticator.
-            
-           
-slide 13 -	-- L'authentification cryptographique -- 
+slide 11 -
+          Un OTP est un mot de passe jetable qui n'est donc utilisable qu'une seule fois, il permet ainsi de prévenir les attaques par rejeu; Attaque qui consiste à recupérer le mot de passe pour une utilisation ultérieure.
+          L'intérêt des otp est qu'ils ne sont pas prédictible. Même en ayant écouté un nombre quelconque fini d'authentification entre deux parties un attaquant ne pourra pas s'authentifier.
+          L'autre avantage du système OTP est qu'il permet une forte, L'authentification dite forte est basée sur la concaténation d'au moins deux facteurs d'empreinte.
 
-slide 14 - 	Le principe ( A developper)
+slide 12 -
+          Nous pouvons voir ici deux exemples: le premier le google authenticator et le battlenet Mobile authenticator.
 
-slide 15 - voici un cas d'utilisation de ce principe.
+
+slide 13 -	-- L'authentification cryptographique --
+
+slide 14 -
+          L'authentification cryptographique consiste à ajouter une composante aléatoire.
+
+slide 15 -
+          Deux exemples concrets sont SSH et HTTPS.
+          A developper
 
 
 slide 16 - 	-- Récapitulatif --
 
-slide 17 - A developper
+slide 17 -
+          Au final, un protocole d'authentification classique ne permet que de déboucher sur une acceptation ou un refus, il ne protège pas notre utilisateur contre les attaques par re-jeu ou de type MITM.
+          Un système OTP protège contre ce premier type d'attaque. Si on l'applique à un des protocoles vu dans le slide précédent (ex : SSH), on préviens également les attaques de type MITM.
 
 
 
 ---- La mise en oeuvre ----
 
-
 slide 18 -  -- Demande du client --
-            
-slide 19 - 	La demande de nos clients était clairement annoncé, elle se décompose en deux livrables; le premier étant
-            l'état de l'art, étude et comparatif des systèmes OTP existant débouchant sur le choix de l'implémentation.
-            On peut voir ici l'étude des protocoles étudiés: (Regarder Tableau)
-               - OTP       étant le protocole de base
-               - HOTP      ajout de la fonction HMAC et un compteur de synchronisation.
-               - TOTP      est une variante de HOTP ou l'on utilise le temps comme compteur.
-               - EAP-POTP  architecture pour s'authentifier sur les normes IEEE 802.1x.
-               - OTPW      Protocole qui se base sur l'état de la machine et la fonction de hachage RIPEMD-160
-               
-slide 20 - 	Le deuxième livrable est l'implémentation des protocoles retenus après état de l'art.
-            implémentation du token permettant la génération des OTP.
-            implémentation d'un mécanisme d'authentification par OTP.
-            
-            
-slide 21 -	-- Etat de l'art -- 
 
-slide 22 - 	Nous avons séparé les taches en 3 parties, et nous avons fixé des reunion toutes les deux semaines
-            pour nous présenter l'avancement des recherches sur chaques sujets et ainsi mutualiser les connaissances.
-               
-slide 23 -	A développer 
+slide 19 -
+          La demande de nos clients était clairement annoncé, elle se décompose en deux livrables; le premier étant l'état de l'art, étude et comparatif des systèmes OTP existant débouchant sur le choix de l'implémentation.
+          On peut voir ici l'étude des protocoles étudiés: (Regarder Tableau)
+            - OTP       étant le protocole de base
+            - HOTP      ajout de la fonction HMAC et un compteur de synchronisation.
+            - TOTP      est une variante de HOTP ou l'on utilise le temps comme compteur.
+            - EAP-POTP  architecture pour s'authentifier sur les normes IEEE 802.1x.
+            - OTPW      Protocole qui se base sur l'état de la machine et la fonction de hachage RIPEMD-160
 
-slide 24 -	A développer (HOTP et TOTP car les plus utilisés)
+slide 20 -
+          Le deuxième livrable est l'implémentation des protocoles retenus après état de l'art :
+            - Implémentation du token permettant la génération des OTP.
+            - Implémentation d'un mécanisme d'authentification par OTP.
 
-slide 25 -	A l'issue de l'état de l'art, et en accord avec le cahier des charge, nous avons décidé d'implémenter ces 
-						mécanisme par l'intermédiaire d'un module PAM et d'une application Android. 
-						Plutot que de creer un service unique et peu compatible, le module PAM permet de le rendre extensible car 
-						utilisable théoriquement sur la majorité des système utilisant PAM, cependant nous ne l'avons testé que sur 
-						les systèmes linux.
-						Le choix d'Android est une exigeance du client
-						
-slide 26 -  J'attire votre attention sur la deuxième projection
+
+slide 21 -	-- Etat de l'art --
+
+slide 22 -
+          Nous avons séparé les taches en 3 axes, et nous avons fixé des réunion toutes les deux semaines pour nous présenter l'avancement des recherches sur chaques sujets et ainsi mutualiser les connaissances.
+
+slide 23 -
+          Afin d'organiser le travail, un canevas à été mit au point par le responsable qualité. Autrement dit un squelette de document détaillant tous les aspects à étudier sur les protocoles.
+          Tous nos documents sont au format LaTeX.
+
+slide 24 -
+          A développer (HOTP et TOTP car les plus utilisés)
+
+slide 25 -
+          A l'issue de l'état de l'art, et en accord avec le cahier des charge, nous avons décidé d'implémenter ces mécanismes par l'intermédiaire d'un module PAM et d'une application Android.
+					Plutot que de creer un service unique et peu compatible, le module PAM permet de le rendre extensible car utilisable théoriquement sur la majorité des système utilisant PAM, cependant nous ne l'avons testé que sur les systèmes linux.
+					Le choix d'Android est une exigeance du client
+
+slide 26 -
+          J'attire votre attention sur la deuxième projection
 
 
 slide 27 - -- Organisation du développement --
 
-slide 28 -	Les méthodes agiles de gestion de projet tournent essentiellement autour d'XP (eXtremePrograming), c'est 
-						à dire un intégration continue et régulièrement testée afin d'assurer un qualité persistante.
-						De plus, des réunions régulières avec le client nous ont permit, d'une part, de s'assurer que les demandes 
-						de celui-ci sont respectées, et d'autre part de garder à l'oeil ses réclamations.
-						
-slide 29 -	Dans la mesure ou plusieurs outils sont communs aux deux principaux éléments de notre projet : à savoir le 
-						module PAM et l'appli Android, nous avons décider de les développer en parallèle. Ceci nous permettait 
-						d'assurer la compatibilté entre les deux produits aux fur et à mesure de leur développement.
-						La répartition s'est fait par affinité en fonction des compétences et connaissances requises.
+slide 28 -
+          Les méthodes agiles de gestion de projet tournent essentiellement autour d'XP (eXtremePrograming), c'est à dire un intégration continue et régulièrement testée afin d'assurer un qualité persistante.
+					De plus, des réunions régulières avec le client nous ont permit, d'une part, de s'assurer que les demandes de celui-ci sont respectées, et d'autre part de garder à l'oeil ses réclamations.
 
-						
+slide 29 -
+          Dans la mesure ou plusieurs outils sont communs aux deux principaux éléments de notre projet : à savoir le module PAM et l'appli Android, nous avons décider de les développer en parallèle. Ceci nous permettait d'assurer la compatibilté entre les deux produits aux fur et à mesure de leur développement.
+					La répartition s'est fait par affinité en fonction des compétences et connaissances requises.
+
+
 slide 30 -	-- Aspect technique --
 
-slide 31 -	Afin de pouvoir générer les fichiers indispensables pour créer un module, le choix du langage C s'est avéré 
-						nécessaire et incontournable.
-						Pour Android, le Java était le choix le plus logique, car le plus recommandé.
-						
-slide 32 -	A toi de jouer chef
+slide 31 -
+          Afin de pouvoir générer les fichiers indispensables pour créer un module, le choix du langage C s'est avéré nécessaire et incontournable.
+					Pour Android, le Java était le choix le plus logique, car le plus recommandé.
+
+slide 32 -
+          Impro de M.Ferry
+
 
 slide 33 - -- Le module PAM --
 
-slide 34 - architecture logicielle: notre module pam utilise deux bibliothèques, une permettant la génération des OTP et
-           l'autre la gestion des utilisateurs dans un fichier de texte brut.
-           
-slide 35- 
+slide 34 -
+          Architecture logicielle : notre module pam utilise deux bibliothèques, une permettant la génération des OTP et            l'autre la gestion des utilisateurs dans un fichier de texte brut.
 
-slide licence- Celle ci permet 
-                  Attribution (indiquer les auteurs et source / indiquer les modifications effectuées)
-                  + Pas d’Utilisation Commerciale 
+slide 35 -
+
+
+slide 36 -
+
+
+slide 37 -
+
+
+slide 38 -
+
+
+slide 39 -
+
+
+slide 40 -
+
+
+slide 41 -  -- L'app Android --
+
+slide 42 -
+
+
+slide 43 -
+
+
+slide 44 -
+
+
+slide 45 -
+
+
+slide 46 -
+
+
+slide 47 -
+
+
+slide 48 -  -- Licence --
+
+slide 49 -
+
+
+slide 50 -
+
+
+slide 51 -  -- Conclusion --
+
+slide 52 -
+          Celle ci permet :
+            Attribution (indiquer les auteurs et source / indiquer les modifications effectuées)
+                  + Pas d’Utilisation Commerciale
                   + Partage dans les mêmes conditions
-               
-               Le titulaire des droits autorise l’exploitation de l’œuvre originale à des fins non commerciales, 
-               ainsi que la création d’œuvres dérivées, à condition qu’elles soient distribuées sous une 
-               licence identique à celle qui régit l’œuvre originale.
-               
-slide conclusion:
+            Le titulaire des droits autorise l’exploitation de l’œuvre originale à des fins non commerciales, ainsi que la création d’œuvres dérivées, à condition qu’elles soient distribuées sous une licence identique à celle qui régit l’œuvre originale.
+
+slide 53 -
+
+
+slide 54 -
+
+
+slide 55 -
