@@ -224,7 +224,7 @@
 
 \subsubsection{Génération d'un mot de passe jetable}
 
-	\begin{tabular}{| p{3cm} | p{6cm} | p{6cm}}
+	\begin{tabular}{| p{3cm} | p{6cm} | p{6cm} |}
 		\hline
 		& \cellcolor{gray} Calcul & \cellcolor{gray} Forme du mot de passe
 		jetable \\
@@ -236,7 +236,7 @@
 		courte de chiffres (6 à 8 caractères) \\
 		\hline
 		TOTP & Hashé du secret + composante temporelle, puis phase de
-		troncature & uite courte de chiffres (6 à 8 caractères) \\
+		troncature & Suite courte de chiffres (6 à 8 caractères) \\
 		\hline
 		OTPW & Mot de passe jetables pré-calculés & Chaîne de caractères \\
 		\hline
@@ -244,7 +244,7 @@
 
 \subsubsection{Soumission et protocole de vérification}
 
-	\begin{tabular}{| p{3cm} | p{12cm}}
+	\begin{tabular}{| p{3cm} | p{12cm} |}
 		\hline
 		OTP & Le serveur hache l'OTP transmis, si le haché correspond au
 		dernier OTP utilisé alors le serveur accepte et stocke l'OTP transmis
@@ -267,7 +267,7 @@
 
 \subsubsection{Synchronisation}
 
-	\begin{tabular}{| p{3cm} | p{4cm} | p{8cm} |}
+	\begin{tabular}{| p{3cm} | p{5cm} | p{7cm} |}
 		\hline
 		& \cellcolor{gray} Élement de synchronisation & \cellcolor{gray} Perte
 		possible? \\
@@ -285,7 +285,7 @@
 
 \subsubsection{Réinitialisation}
 
-	\begin{tabular}{| p{3cm} | p{12cm}}
+	\begin{tabular}{| p{3cm} | p{12cm} |}
 		\hline
 		OTP & Oui car le nombre d'OTP générés par le secret est limité par le
 		nombre de hachage \\
@@ -301,7 +301,7 @@
 
 \subsubsection{Sécurité}
 
-	\begin{tabular}{| p{3cm} | p{12cm}}
+	\begin{tabular}{| p{3cm} | p{12cm} |}
 		\hline
 		OTP & Pas de faille connue, outre les attaques actives de type
 		espionnage et brute force \\
@@ -318,7 +318,7 @@
 
 \subsubsection{Pérennité}
 
-	\begin{tabular}{| p{3cm} | p{12cm}}
+	\begin{tabular}{| p{3cm} | p{12cm} |}
 		\hline
 		OTP & Le système peut être considéré comme obsolète car les fonctions
 		de hachage préconisées dans sa RFC le sont \\
@@ -338,7 +338,7 @@
 
 \subsection{Conclusion}
 
-	\begin{tabular}{| p{3cm} | p{6cm} | p{6cm}}
+	\begin{tabular}{| p{3cm} | p{6cm} | p{6cm} |}
 		\hline
 		& \cellcolor{gray} Avantages & \cellcolor{gray} Inconvénients /
 		Limites \\
@@ -346,9 +346,8 @@
 		OTP & Résistance au attaques par re-jeu & Périssable. De plus coup en
 		calcul peut être important pour les premiers OTP \\
 		\hline
-		HOTP &
-		'un des protocoles les plus utilisés $\Rightarrow$ token compatibles
-		avec de nombreux services & Rien de particulier \\
+		HOTP & L'un des protocoles les plus utilisés $\Rightarrow$ token
+		compatibles avec de nombreux services & Rien de particulier \\
 		\hline
 		TOTP & Synchronisation plus solide et fiable grâce au temps & Rien de
 		particulier \\
@@ -360,8 +359,8 @@
 
 	Les méthodes étudiées sont les plus courantes car elles offrent une
 	résistance satisfaisante aux attaques exhaustives et ne présentent aucune
-	faille de sécurité notable. Notre choix ne se basra donc pas sur ce critère
-	.
+	faille de sécurité notable. Notre choix ne se basera donc pas sur ce
+	critère.
 
 	Le choix se portera donc sur la simplicité d'utilisation et la performance
 	de calcul des OTP. De ce point de vu, on élimine le protocole OTP
