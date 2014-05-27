@@ -184,7 +184,7 @@
 
 \subsection{Les différents types de protocole OTP}
 
-	Le protocole d'OTP de base date de 1995. Depuis, de nombreuses autres
+	Le protocole d'OTP de base date de 1998. Depuis, de nombreuses autres
 	implémentations ont été développées, parmi lesquelles :
 
 	\begin{description}
@@ -203,81 +203,176 @@
 \subsection{Comparatif}
 \subsubsection{Génération et partage du secret}
 
-	\begin{description}
-		\item[OTP :]
-		\item[HOTP :]
-		\item[TOTP :]
-		\item[OTPW :]
-	\end{description}
+	\begin{tabular}{| p{3cm} | p{6cm} | p{6cm} |}
+		\hline
+		& \cellcolor{gray} Génération & \cellcolor{gray} Partage \\
+		\hline
+		OTP & Manuelle, secret transmit en clair par l'utilisateur lors de la
+		création du token & Seul le token connait le secret \\
+		\hline
+		HOTP & Deux méthodes : déterministe ou aléatoire + initialisation d'un
+		compteur de synchronisation & Entre le token et le serveur \\
+		\hline
+		TOTP & Deux méthodes : déterministe ou aléatoire & Entre le token et
+		le serveur \\
+		\hline
+		OTPW & Préfixe manuel, suffixe aléatoire. Une liste d'otp est générée
+		immédiatement & La liste d'otp est transmise à l'utilisateur et le
+		serveur conserve une seconde liste contenant les hashés \\
+		\hline
+	\end{tabular}
 
 \subsubsection{Génération d'un mot de passe jetable}
 
-	\begin{description}
-		\item[OTP :]
-		\item[HOTP :]
-		\item[TOTP :]
-		\item[OTPW :]
-	\end{description}
+	\begin{tabular}{| p{3cm} | p{6cm} | p{6cm}}
+		\hline
+		& \cellcolor{gray} Calcul & \cellcolor{gray} Forme du mot de passe
+		jetable \\
+		\hline
+		OTP & 3 phases de calculs, le secret est haché un certain nombre de
+		fois, le dernier est transmis au serveur & Chaîne de 24 caractères \\
+		\hline
+		HOTP & Hashé du secret + compteur, puis phase de troncature & Suite
+		courte de chiffres (6 à 8 caractères) \\
+		\hline
+		TOTP & Hashé du secret + composante temporelle, puis phase de
+		troncature & uite courte de chiffres (6 à 8 caractères) \\
+		\hline
+		OTPW & Mot de passe jetables pré-calculés & Chaîne de caractères \\
+		\hline
+	\end{tabular}
 
 \subsubsection{Soumission et protocole de vérification}
 
-	\begin{description}
-		\item[OTP :]
-		\item[HOTP :]
-		\item[TOTP :]
-		\item[OTPW :]
-	\end{description}
+	\begin{tabular}{| p{3cm} | p{12cm}}
+		\hline
+		OTP & Le serveur hache l'OTP transmis, si le haché correspond au
+		dernier OTP utilisé alors le serveur accepte et stocke l'OTP transmis
+		comme dernier utilisé \\
+		\hline
+		HOTP & Le token calcule un OTP et l'envoi au serveur. Le serveur
+		effectue le même calcul avec son compteur, si les résultats obtenus
+		correspondent alors l'authentification est validée et le compteur est
+		incrémenté des deux côtés (token et serveur) \\
+		\hline
+		TOTP & Même procédé que HOTP sans compteur puisqu'ici c'est le temps
+		qui est prit en compte dans le calcul $\Rightarrow$ période de
+		validité (quantum) \\
+		\hline
+		OTPW & Question / réponse : le serveur donne un numéro, l'utilisateur
+		envoi l'OTP correspondant de sa liste. Le serveur hache ce mot de
+		passe et vérifie la correpondance dans sa propre liste\\
+		\hline
+	\end{tabular}
 
 \subsubsection{Synchronisation}
-	\begin{tabular}{p{3cm} | p{8cm} | p{4cm} |}
+
+	\begin{tabular}{| p{3cm} | p{4cm} | p{8cm} |}
 		\hline
-		& \cellcolor{gray} Élement de synchronisation & Perte possible? \\
+		& \cellcolor{gray} Élement de synchronisation & \cellcolor{gray} Perte
+		possible? \\
 		\hline
-		OTP &  &  \\
+		OTP & Aucun & Non \\
 		\hline
-		HOTP &  &  \\
+		HOTP & Le compteur & Oui, si décalage trop important entre les
+		compteurs \\
 		\hline
-		TOTP &  &  \\
+		TOTP & L'horloge système & Oui, si modification de l'horloge \\
 		\hline
-		OTPW &  &  \\
+		OTPW & Aucun & Non \\
+		\hline
+	\end{tabular}
+
+\subsubsection{Réinitialisation}
+
+	\begin{tabular}{| p{3cm} | p{12cm}}
+		\hline
+		OTP & Oui car le nombre d'OTP générés par le secret est limité par le
+		nombre de hachage \\
+		\hline
+		HOTP & Non \\
+		\hline
+		TOTP & Non \\
+		\hline
+		OTPW & Oui car le nombre d'OTP générés par le préfixe est déterminé
+		lors de la génération \\
 		\hline
 	\end{tabular}
 
 \subsubsection{Sécurité}
 
-	\begin{description}
-		\item[OTP :] Pas de faille connue, outre les attaques actives de type
-		espionnage et brute force.
-		\item[HOTP :] Aucune faille connue, mis à part celles héritées d'OTP.
-		\item[TOTP :] Idem, les attaques de type brute force sont fortement
-		limité à cause du quantum et du time-out.
-		\item[OTPW :] Préfixe facilement identifiable.
-	\end{description}
+	\begin{tabular}{| p{3cm} | p{12cm}}
+		\hline
+		OTP & Pas de faille connue, outre les attaques actives de type
+		espionnage et brute force \\
+		\hline
+		HOTP & Aucune faille connue, mis à part celles héritées d'OTP \\
+		\hline
+		TOTP & Idem, de plus les attaques de type brute force sont fortement
+		limitées à cause du quantum et du time-out \\
+		\hline
+		OTPW & Préfixe facilement identifiable, favorise les attaques
+		exhaustives. Sensible aux attaques de type "race for the last key" \\
+		\hline
+	\end{tabular}
 
 \subsubsection{Pérennité}
 
-	\begin{description}
-		\item[OTP :] Système obsolète, remplacé par des protocoles plus simples
-		et performants;
-		\item[HOTP :] Pas de faille de sécurité référencée, le système de
-		calcul est pérenne;
-		\item[TOTP :] Perennité équivalente à celle de HOTP car basée sur ce
-		dernier;
-		\item[OTPW :] La perennité du système est équivalente à la fonction de
-		hachage. Cependant, nécessite une intervention manuelle pour
-		réinitialiser le système.
-	\end{description}
+	\begin{tabular}{| p{3cm} | p{12cm}}
+		\hline
+		OTP & Le système peut être considéré comme obsolète car les fonctions
+		de hachage préconisées dans sa RFC le sont \\
+		\hline
+		HOTP & Le système de calcul est	pérenne car les faiblesses de la
+		fonction de hachage utilisée ne l'affectent pas. De plus la fonction
+		de hachage est facilement remplacable \\
+		\hline
+		TOTP & Perennité équivalente à celle de HOTP car basée sur ce dernier
+		\\
+		\hline
+		OTPW & La perennité du système repose sur celle de la fonction de
+		hachage. Si elle devient obsolète, elle peut facilement être remplacée
+		\\
+		\hline
+	\end{tabular}
 
 \subsection{Conclusion}
 
-	-- faire un point sur les avantages et inconvenient de chacun --
+	\begin{tabular}{| p{3cm} | p{6cm} | p{6cm}}
+		\hline
+		& \cellcolor{gray} Avantages & \cellcolor{gray} Inconvénients /
+		Limites \\
+		\hline
+		OTP & Résistance au attaques par re-jeu & Périssable. De plus coup en
+		calcul peut être important pour les premiers OTP \\
+		\hline
+		HOTP &
+		'un des protocoles les plus utilisés $\Rightarrow$ token compatibles
+		avec de nombreux services & Rien de particulier \\
+		\hline
+		TOTP & Synchronisation plus solide et fiable grâce au temps & Rien de
+		particulier \\
+		\hline
+		OTPW & Liste de suffixe figée mais inexploitable si l'attaquant ne
+		connait pas le préfixe & Périssable \\
+		\hline
+	\end{tabular}
 
 	Les méthodes étudiées sont les plus courantes car elles offrent une
 	résistance satisfaisante aux attaques exhaustives et ne présentent aucune
-	faille de sécurité notable. De plus, ces méthodes sont très simple
-	d'utilisation, un avantage non négligeable pour le non initiés.
+	faille de sécurité notable. Notre choix ne se basra donc pas sur ce critère
+	.
 
-	Nous avons donc un bon compromis entre efficacité et simplicité ainsi
-	qu'une pérennité importante.
+	Le choix se portera donc sur la simplicité d'utilisation et la performance
+	de calcul des OTP. De ce point de vu, on élimine le protocole OTP
+	standard, ne laissant plus que OTPW, HOTP et TOTP.
+
+	OTPW offre une performance de calcul optimale puisque tous les mots de
+	passe jetables sont précalculés. Cependant ce protocole souffre du
+	problème de réinitialisation, nous l'avons donc éliminé.
+
+	Le deux méthodes restantes offrent un bon compromis entre efficacité et
+	simplicité ainsi qu'une pérennité importante. Nous implémenterons donc HOTP
+	et TOTP.
 
 %------------------------------------------------------------------------------
