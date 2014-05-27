@@ -210,7 +210,7 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 \begin{frame}
 \frametitle{Outils utilisés}
 
-\begin{block}{dépôt git}
+\begin{block}{Dépôt git}
 Gestion des versions et travail collaboratif.
 \end{block}
 
@@ -218,17 +218,16 @@ Gestion des versions et travail collaboratif.
 Suivi des erreurs et des problèmes rencontrés.
 \end{block}
 
-\begin{block}{Latex}
-Rédaction de la documentation.
+\begin{block}{LaTeX}
+Rédaction des rapports et de la présentation.
 \end{block}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Outils utilisés}
-\begin{block}{Le gantt}
-\includegraphics[scale=0.21]{../graphics/gantt2-0.png}
-\end{block}
+\frametitle{Outils utilisés: Gantt}
+
+\includegraphics[scale=0.25]{../graphics/gantt2-0.png}
 \end{frame}
 
 \subsection{État de l'art}
@@ -400,8 +399,11 @@ Notre application est compatible avec les modules Google.
 
 \subsection{Problèmes rencontrés}
 \begin{frame}{Problèmes rencontrés: Gestion}
-\begin{block}{Péritonite}
-Pas de javacard
+\begin{block}{Chef de projet hospitalisé}
+\begin{itemize}
+\item Absent pendant 6 semaines.
+\item Token Java Card supprimé.
+\end{itemize}
 \end{block}
 
 \end{frame}
@@ -411,14 +413,14 @@ Pas de javacard
 \frametitle{Problèmes rencontrés au développement}
 \begin{block}{Module PAM}
 \begin{itemize}
-\item Attaque exhaustive.
+\item Possibilité d'attaque exhaustive.
 \end{itemize}
 \end{block}
 
-\begin{block}{Androïd}
+\begin{block}{Android}
 \begin{itemize}
-\item manifeste
-\item Synchronisation
+\item Gestion des permissions via le manifeste.
+\item Synchronisation du temps sur les anciennes versions.
 \end{itemize}
 
 \end{block}
@@ -450,10 +452,13 @@ Pas de javacard
 
 \begin{frame}
 \frametitle{Résultat des tests finaux}
-\begin{itemize}
-\item Résistant au rejeu.
-\item Résistant aux attaques exhaustives.
-\end{itemize}
+\begin{block}{Résistant au rejeu}
+Évidemment.
+\end{block}
+\begin{block}{Résistant aux attaques exhaustives}
+Pire des cas: un an pour générer toutes les valeurs (avec le temps mort).
+\end{block}
+
 
 \end{frame}
 
@@ -461,9 +466,9 @@ Pas de javacard
 \begin{frame}
 \frametitle{La licence choisie}
 \begin{center}
-\Huge Creative Commons
+\includegraphics[scale=0.7]{../graphics/licence.jpg}
 \end{center}
-%A étoffer + logos
+
 
 \end{frame}
 
@@ -480,8 +485,8 @@ Pas de javacard
 \begin{itemize}
 \item Maitrise de PAM.
 \item API Android.
-\item OTP
-\item Outils cryptographique
+\item OTP.
+\item Outils cryptographiques.
 \item Gestion de projet.
 \end{itemize}
 \end{frame}
@@ -489,10 +494,16 @@ Pas de javacard
 
 \begin{frame}
 \frametitle{Améliorations possibles}
-\begin{itemize}
-\item HOTP en challenge/response.
-\item Token sur Java Card.
-\end{itemize}
+
+\begin{block}{HOTP en question/réponse}
+Utilisation d'un aléas à la place du compteur incrémental.
+\end{block}
+
+\begin{block}{Token sur Java Card}
+Peut-être en M2...
+\end{block}
+
+
 \end{frame}
 
 \begin{frame}
