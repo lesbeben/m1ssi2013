@@ -119,8 +119,9 @@
   nécessaire à l'accomplissement du projet en fixant des exigences en terme de
   qualité et de contenu des livrables.
 
-\newpage
 
+\newpage
+%------------------------------------------------------------------------------
 \section{Le Module PAM}
 \subsection{Pourquoi un module PAM ?}
 La première solution d'implémentation envisagée était de reprogrammer un
@@ -143,8 +144,8 @@ du langage. De plus cet étape permettait un travail collaboratif simplifié.
 
 La méthodologie pour le développement était la suivante:
 \begin{itemize}
-  \item Rédaction des fichiers d'en-tête contenant les prototypes et la 
-  documentation des fonctions à implémenter. 
+  \item Rédaction des fichiers d'en-tête contenant les prototypes et la
+  documentation des fonctions à implémenter.
   \item Rédaction des éventuels test unitaires.
   \item Implémentation des fonctions.
   \item Exécution des tests, en cas d'échec retour à l'étape développement.
@@ -152,18 +153,18 @@ La méthodologie pour le développement était la suivante:
 
 \subsubsection{Bibliothèque de gestion de secret}
 Cette bibliothèque est chargée de gérer la représentation de secrets en mémoire.
-Un secret est une suite d'octet partagée avec le token. Celui ci peut être 
+Un secret est une suite d'octet partagée avec le token. Celui ci peut être
 représentée comme une suite de caractères \verb?ASCII? ou hexadécimale.
 
 Dans cette bibliothèque nous trouverons:
 \begin{itemize}
-  \item une structure \verb?secret?, qui consiste en un pointeur sur un tableau 
+  \item une structure \verb?secret?, qui consiste en un pointeur sur un tableau
   d'octets et une longueur codée sur un entier.
   \item Des fonctions de création chargée d'allouer l'espace mémoire requis en
   fonction du nombre d'octets désirés ou d'une entrée utilisateur.
   \item Des fonction chargé de représenter un secret dans différentes bases
   sous la forme de chaînes de caractères.
-  \item Une fonction permettant d'effacer un secret de la mémoire et de 
+  \item Une fonction permettant d'effacer un secret de la mémoire et de
   libérer les ressources.
 \end{itemize}
 
@@ -180,37 +181,37 @@ brut.
 
 Nous nous sommes donc dotés des outils suivants:
 \begin{itemize}
-  \item Une structure en mémoire représentant un utilisateur et ses 
+  \item Une structure en mémoire représentant un utilisateur et ses
   informations.
   \item Une fonction d'enregistrement d'une structure dans le fichier.
-  \item Une fonction permettant d'obtenir une structure utilisateur du fichier 
+  \item Une fonction permettant d'obtenir une structure utilisateur du fichier
   à partir d'un nom d'utilisateur.
   \item Deux fonctions pour poser et libérer un verrou sur le fichier.
   \item Une fonction permettant de gérer les ressources mémoires.\\
 \end{itemize}
 
-Les fonction de gestion de verrouillage sont la pour gérer les accès concurrents 
-au fichier des utilisateurs. Il faut prévoir que ces fonction seront appelées 
-dans un module chargé par différent service. Et donc sans ce verrou il devenait 
-impossible de garantir qu'un OTP ne puisse pas être utilisé deux fois, Si deux 
-processus lisent les information au même moment et permette l'authentification 
+Les fonction de gestion de verrouillage sont la pour gérer les accès concurrents
+au fichier des utilisateurs. Il faut prévoir que ces fonction seront appelées
+dans un module chargé par différent service. Et donc sans ce verrou il devenait
+impossible de garantir qu'un OTP ne puisse pas être utilisé deux fois, Si deux
+processus lisent les information au même moment et permette l'authentification
 alors un OTP fonctionnera plusieurs fois.
 
 \subsection{Programmation avec PAM}
 \subsubsection{Fonction d'authentification}
 Cette fonction permet d'authentifier un utilisateur. Chaque service configuré
-pour utiliser le module exécutera cette fonction. Elle implémentera les 
-mécaniques de vérification telles que décrites dans les RFC ainsi que les 
+pour utiliser le module exécutera cette fonction. Elle implémentera les
+mécaniques de vérification telles que décrites dans les RFC ainsi que les
 mécaniques de resynchronisation.
 \paragraph{HOTP}
-Pour HOTP la vérification de l'otp courant correspondant au compteur 
-$n$\footnote{Strictement positif.\label{int}} la vérification s'effectuera sur 
-$k$ $^{\ref{int}}$ otp, c'est à dire qu'elle va comparer l'otp fourni aux otp de 
-compteur $n$ à $n+k$ inclus. En cas de succès on enregistrera le compteur 
+Pour HOTP la vérification de l'otp courant correspondant au compteur
+$n$\footnote{Strictement positif.\label{int}} la vérification s'effectuera sur
+$k$ $^{\ref{int}}$ otp, c'est à dire qu'elle va comparer l'otp fourni aux otp de
+compteur $n$ à $n+k$ inclus. En cas de succès on enregistrera le compteur
 courant comme nouveau compteur, c'est la phase de resynchronisation.
 \paragraph{TOTP}
-Pour TOTP la vérification de l'otp courant correspondant à un temps $t$ avec un 
-quantum $q$ se fera sur les otp $((t - 2 * q) / q) $ à $((t + 3 * q) / q) $ avec un 
+Pour TOTP la vérification de l'otp courant correspondant à un temps $t$ avec un
+quantum $q$ se fera sur les otp $((t - 2 * q) / q) $ à $((t + 3 * q) / q) $ avec un
 pas de $1$.
 %-------------------------------------------------------------------------------
 \subsubsection{Fonction d'initialisation de secret}
@@ -225,10 +226,11 @@ information d'authentification, c'est à dire:
   \item La longueur des otp générés.
   \hfill\textbf{entiers compris entre 6 et 8 inclus}
 \end{itemize}
-Une fois ces information fourni le secret sera affiché. Cela implique que le 
+Une fois ces information fourni le secret sera affiché. Cela implique que le
 renouvellement de secret doit se faire lorsque la connexion est sûre.
 
-%-------------------------------------------------------------------------------
+\newpage
+%------------------------------------------------------------------------------
 \section{L'application Android}
 \subsection{La bibliothèque de calcul}
 Afin que le token soit en mesure de générer des mots de passe jetables, il était
@@ -238,7 +240,7 @@ nécessaire de développer une suite de fonctions de calcul. De plus, ces foncti
 La bibliothèque est découpée en trois partie distinctes tel que décrites sur la figure
 \ref{fig:umlLib}. On trouve donc un ensemble de quatre classes formant la partie calcul
 des mots de passe jetables, un deuxième de deux classes formant une couche d'abstraction
-pour la gestion des secrets cryptographiques et enfin une dernière classe utilitaire 
+pour la gestion des secrets cryptographiques et enfin une dernière classe utilitaire
 contenant des fonctions nécessaires aux protocoles HOTP et TOTP.
 
 \begin{figure}
@@ -252,23 +254,23 @@ contenant des fonctions nécessaires aux protocoles HOTP et TOTP.
 La première des trois partie définit les générateur d'OTP en eux même. Il sont répartis en
 deux catégorie, correspondant aux deux méthode de génération implémentées, les générateur
 TOTP et les générateur HOTP. Du fait que la spécification du protocole TOTP découle de celle
-de celui d'HOTP, ces deux types d'objet sont très similaire dans leur fonctionnement. Les 
+de celui d'HOTP, ces deux types d'objet sont très similaire dans leur fonctionnement. Les
 parties communes des deux classes sont donc factorisées dans une classe abstraite. On
 retrouve donc explicitées dans cette classe les méthodes pour récupérer le nombre de chiffre
-composant les OTP ainsi que celle pour générer ces derniers. En effet, il est possible de 
+composant les OTP ainsi que celle pour générer ces derniers. En effet, il est possible de
 déclarer cette méthode à cette endroit en déportant la récupération du paramètre "compteur"
 dans les classes inférieures. De ce fait, chacune des classes HOTP et TOTP défini sa
-méthode \emph{getCounter} qui dans un cas retournera l'incrément du compteur synchronisé et 
-dans l'autre la valeur $ timestamp / quantum $ définie dans la rfc 4226\cite{TOTP}. 
+méthode \emph{getCounter} qui dans un cas retournera l'incrément du compteur synchronisé et
+dans l'autre la valeur $ timestamp / quantum $ définie dans la rfc 4226\cite{TOTP}.
 
 Le fonctionnement général des générateurs d'OTP est définit dans l'interface de
 programmation IOTP. Cette interface reprend globalement le contenu des rfc 4226 et 6238.
 
 \subsubsection{Gestion des secrets utilisateurs}
-La deuxième partie formant l'abstraction des secrets cryptographiques est composée d'une 
+La deuxième partie formant l'abstraction des secrets cryptographiques est composée d'une
 interface de programmation, \emph{ISecret}, et d'une classe l'implémentant, \emph{Secret}.
-Elle a pour but de fournir une couche d'abstraction pour simplifier l'utilisation des secrets 
-qui peut s'avérer inconfortable dès lors que ces derniers mesures plusieurs dizaines de 
+Elle a pour but de fournir une couche d'abstraction pour simplifier l'utilisation des secrets
+qui peut s'avérer inconfortable dès lors que ces derniers mesures plusieurs dizaines de
 caractère hexadécimaux.
 
 On pourra donc grâce à ces deux classe créer des secrets pouvant être initialisés depuis des
@@ -277,9 +279,9 @@ aléatoires. De la même manière, il sera possible de récupérer un secret sou
 binaire ou sous la forme d'une chaine de caractère hexadécimaux.
 
 \subsubsection{Fonctions utilitaires}
-Enfin la dernière partie de la bibliothèque de calcul déclare des fonctions utilitaires 
+Enfin la dernière partie de la bibliothèque de calcul déclare des fonctions utilitaires
 nécessaires aux calculs des mots de passes jetables. Concrètement, on y retrouve la
-définition de la fonction HMAC\cite{HMACrfc} ainsi que des deux algorithmes de troncature et 
+définition de la fonction HMAC\cite{HMACrfc} ainsi que des deux algorithmes de troncature et
 de conversion définis dans la rfc 4226.
 
 L'ensemble de ces fonctions est utilisé dans la classe abstraite \emph{OTPGenerator} pour la
@@ -287,8 +289,8 @@ génération des mots de passe jetables.
 
 \subsection{Architecture de l'application}
 
-L'application est architecturée autour de sept écrans principaux représentant chacune une 
-action réalisable par l'utilisateur. 
+L'application est architecturée autour de sept écrans principaux représentant chacune une
+action réalisable par l'utilisateur.
 
 \subsubsection{Splash screen}
 La première phase de l'application constituée par l'écran de \emph{splash screen} n'est pas à proprement parler un outil pour l'utilisateur. Elle permet
@@ -299,9 +301,9 @@ de connexion (ou de création de PIN en cas de première connexion).
 
 \subsubsection{Écran de PIN}
 Il existe deux écrans relatifs aux entrées de PIN de l'utilisateur. Le premier permet la création
-du PIN, et donc l'enregistrement de ce dernier dans le fichier local approprié. Le second permet 
+du PIN, et donc l'enregistrement de ce dernier dans le fichier local approprié. Le second permet
 simplement la connexion de l'utilisateur et le déverrouillage de l'application\ref{secu}. Ces deux
-écrans dirige l'utilisateur vers l'écran de listing des \emph{tokens} 
+écrans dirige l'utilisateur vers l'écran de listing des \emph{tokens}
 
 
 \begin{figure}
@@ -315,12 +317,12 @@ simplement la connexion de l'utilisateur et le déverrouillage de l'application\
 \label{secu}
 La sécurisation de l'application est essentielle à la sécurité de l'ensemble du projet. En
 effet, c'est elle qui va garantir que l'authentification mise en place est bien une
-"authentification forte" grâce à l'ajout d'un facteur supplémentaire. L'enjeu de cette 
-partie est de garantir les 3 points suivant : 
+"authentification forte" grâce à l'ajout d'un facteur supplémentaire. L'enjeu de cette
+partie est de garantir les 3 points suivant :
 
 
 \begin{itemize}
-  \item[1 -] Un utilisateur honnête doit pouvoir déverrouiller l'application en utilisant 
+  \item[1 -] Un utilisateur honnête doit pouvoir déverrouiller l'application en utilisant
   sont PIN. Il doit ensuite être en mesure de générer des mots de passe jetable en utilisant
   un de ses \emph{tokens} ou utiliser n'importe quelle autre fonctionnalités à sa
   disposition.
@@ -334,7 +336,7 @@ partie est de garantir les 3 points suivant :
 
 La solution retenue consiste en la mise en place d'un PIN de déverrouillage de l'application.
 Ce PIN, demandé à chaque démarrage de l'application, sera dans un premier temps haché par la
-fonction SHA-1 en utilisant comme sel le \emph{device id} de l'appareil hôte. L'empreinte 
+fonction SHA-1 en utilisant comme sel le \emph{device id} de l'appareil hôte. L'empreinte
 obtenue est alors comparée avec celle enregistrée lors de la création du PIN dans un fichier
 local. Si les deux valeurs sont cohérente, le PIN est alors utilisé pour déchiffrer le
 fichier local contenant les informations relatives aux différents \emph{tokens} de
