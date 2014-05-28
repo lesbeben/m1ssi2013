@@ -65,7 +65,7 @@ Maxime \bsc{Michotte} et Benjamin \bsc{Zigh}.
 \begin{block}{Clients}
 \begin{description}
 \item[Magali \bsc{Bardet}:] Enseignante-Chercheuse à l'université de Rouen.\\
-\item[Bruno \bsc{Macadré}:] Ingénieur Système à l'université de Rouen.
+\item[Bruno \bsc{Macadré}:] Ingénieur d'études à l'université de Rouen.
 \end{description}
 \end{block}
 
@@ -81,7 +81,7 @@ Création d'un système d'authentification à base de mots de passe jetables.
 \end{frame}
 
 \begin{frame}
-\frametitle{Problème authentification classique}
+\frametitle{Problème avec l'authentification classique}
 \includegraphics[scale=0.24]{../graphics/authsimple1.png}
 \end{frame}
 
@@ -96,7 +96,7 @@ Création d'un système d'authentification à base de mots de passe jetables.
 \end{frame}
 
 \begin{frame}
-\frametitle{Résolution problème via authentification OTP}
+\frametitle{Résolution du problème via authentification OTP}
 \includegraphics[scale=0.24]{../graphics/authsimple2.png}
 \end{frame}
 
@@ -104,10 +104,10 @@ Création d'un système d'authentification à base de mots de passe jetables.
 \begin{frame}
 \frametitle{Avantages de l'OTP}
 \begin{block}{Définition}
-    Un OTP est un mot de passe jetable, c'est à dire qu'il satisfait les deux 
+    Un OTP est un mot de passe jetable, c'est-à-dire qu'il satisfait les deux 
   critères suivants:
   \begin{itemize}
-    \item Il n'est pas prévisible
+    \item Il n'est pas prévisible.
     \item Il n'est valide que pour une unique session.
   \end{itemize}
 \end{block}
@@ -132,7 +132,12 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
 \end{block}
 \begin{block}{Équipes de recherche}
   \begin{itemize}
-    \item EAP-POTP
+      \item OTP - OTPW
+    \begin{itemize}
+      \item Damien \bsc{Picard}
+      \item Adrien \bsc{Smondack}
+    \end{itemize}
+    \item EAP-POTP (WiFi)
     \begin{itemize}
       \item Tayewo-John-Yves \bsc{Adegoloye}
       \item Claire \bsc{Hardouin}
@@ -142,11 +147,6 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
       \item Gaëtan \bsc{Ferry}
       \item Maxime \bsc{Michotte}
       \item Benjamin \bsc{Zigh}
-    \end{itemize}
-    \item OTPW - OTP
-    \begin{itemize}
-      \item Damien \bsc{Picard}
-      \item Adrien \bsc{Smondack}
     \end{itemize}
   \end{itemize}
 \end{block}
@@ -158,7 +158,7 @@ Un état de l'art comprenant au moins trois protocoles OTP étudiés.
     Pour chaque protocole validé par l'état de l'art:
   \begin{itemize}
     \item Un module d'authentification.
-    \item Un token\footnote[1]{Programme permettant à l'utilisateur d'obtenir un 
+    \item Un token\footnote[1]{Élément permettant à l'utilisateur d'obtenir un 
       OTP pour s'authentifier.}
   \end{itemize}
 \end{block}
@@ -222,6 +222,10 @@ Suivi des erreurs et des problèmes rencontrés.
 Rédaction des rapports et de la présentation.
 \end{block}
 
+\begin{block}{JUnit et Check}
+Tests unitaires: détaillés plus tard.
+\end{block}
+
 \end{frame}
 
 \begin{frame}
@@ -254,7 +258,7 @@ Rédaction des rapports et de la présentation.
 \begin{block}{HOTP}
 \begin{itemize}
 \item Basé sur la fonction HMAC\footnote{Hashed Message Authentication Code}.
-\item Compteur incrémental géré par le client.
+\item Compteur incrémenté automatiquement à chaque génération/authentification.
 \end{itemize}
 \end{block}
 
@@ -343,7 +347,7 @@ Rédaction des rapports et de la présentation.
 \begin{frame}
 \frametitle{Android: Compatibilité}
 \begin{block}{API Android}
-Level 10: Compatbile avec Android 2.3.X et supérieur.
+Level 10: Compatible avec Android 2.3.X et supérieur.
 \end{block}
 \begin{block}{Prérequis Matériels}
 \begin{itemize}
@@ -369,7 +373,7 @@ Notre application est compatible avec les modules Google.
 \begin{itemize}
 \item Code Pin pour protéger l'accès à l'application.
 \item Haché du Pin (avec un sel) dans un fichier.
-\item OTP stocké dans un fichier chiffré en AES-256.
+\item Paramètres de génération stockés dans un fichier chiffré en AES-256.
 \item Nettoyage des fichiers à la désinstallation.
 \end{itemize}
 \end{frame}
@@ -413,7 +417,7 @@ Notre application est compatible avec les modules Google.
 \frametitle{Problèmes rencontrés au développement}
 \begin{block}{Module PAM}
 \begin{itemize}
-\item Possibilité d'attaque exhaustive.
+\item Bannissement changé en temps mort pour éviter les attaques exhaustives.
 \end{itemize}
 \end{block}
 
@@ -453,7 +457,7 @@ Notre application est compatible avec les modules Google.
 \begin{frame}
 \frametitle{Résultat des tests finaux}
 \begin{block}{Résistant au rejeu}
-Évidemment.
+Notre application respecte les RFC.
 \end{block}
 \begin{block}{Résistant aux attaques exhaustives}
 Pire des cas: un an pour générer toutes les valeurs (avec le temps mort).
