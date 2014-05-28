@@ -1,26 +1,23 @@
 \chapter{Conclusion}
 
-\section{Enseignements tirés du projet}
-
-\subsection{OTP}
-\subsection{Outils cryptographiques}
-\subsection{PAM} 
-\subsection{Android}
-\subsection{Gestion de projet}
-
-%A rédiger
-
 
 
 
 \section{Améliorations possibles}
 \subsection{HOTP en question/réponse}
-Utilisation d'un aléas à la place du compteur incrémental.
+HOTP est utilisable en question/réponse, c'est-à-dire que le serveur, lors d'une tentative de connexion, fournit un aléas pour lequel le client devra calculer l'OTP correspondant. La valeur aléatoire remplace le compteur dans le système standard.
+
+Ce faisant, on obtient une sécurité supplémentaire sur l'authentification effectuée, qui devient cryptographique. Ce type d'authentification résiste mieux aux attaques actives.
+
+Pour rajouter cette fonctionnalité, il faudrait modifier l'interface de l'application Android, ainsi qu'une partie du module PAM.
 
 \subsection{Token sur Java Card}
-Peut-être en M2...
-%A rédiger
 
+L'application de calcul d'OTP pourrait être portée sur Java Card. Ceci faisait partie des demandes initiales du client mais nous avons du abandonner son développement suite à l'absence prolongée de notre chef de projet.
+
+Néanmoins, notre bibliothèque de génération des OTP pour l'application Android étant écrite en Java, elle est parfaitement compatible avec les cartes (en théorie). Il ne resterait donc qu'à créer une interface de communication avec les cartes.
+
+Le token sur carte représente une alternative équivalente à la version Android, mais dans laquelle aucun aspect de la sécurité n'est sous-traité à Google.
 
 
 \section{Conclusion}
