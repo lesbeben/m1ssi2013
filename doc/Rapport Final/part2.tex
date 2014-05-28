@@ -1,7 +1,96 @@
 \chapter{Mise en œuvre}
 \section{La demande du client}
 
- \section{La gestion de projet}
+  Le projet a pour but de satisfaire la demande de nos clients :
+
+  \begin{description}
+    \item[Magali \bsc{Bardet}:] Enseignante-Chercheuse à l'université de Rouen.
+    \item[Bruno \bsc{Macadré}:] Ingénieur d'études à l'université de Rouen.\\
+  \end{description}
+
+  Parmi les livrables à fournir, on compte :
+
+  \begin{itemize}
+    \item Un état de l'art.
+    \item Une implémentation des protocoles retenus.
+  \end{itemize}
+
+  \subsection{État de l'art}
+
+    L'état de l'art consiste en une étude des protocoles existants afin de
+    déterminer les avantages et incovénients de chacuns et, à l'issue, choisir
+    ceux que nous implémeterons, en accord avec le client.
+
+    Afin d'optimiser le temps dédié à l'étude, nous avons formé trois équipes
+    de recherches, chacune devant lire les RFC de deux protocoles et établir
+    un rapport d'étude. Voici la formation choisie :
+
+    \begin{itemize}
+        \item OTP - OTPW
+      \begin{itemize}
+        \item Damien \bsc{Picard}
+        \item Adrien \bsc{Smondack}
+      \end{itemize}
+      \item EAP-POTP (WiFi)
+      \begin{itemize}
+        \item Tayewo-John-Yves \bsc{Adegoloye}
+        \item Claire \bsc{Hardouin}
+      \end{itemize}
+      \item HOTP - TOTP
+      \begin{itemize}
+        \item Gaëtan \bsc{Ferry}
+        \item Maxime \bsc{Michotte}
+        \item Benjamin \bsc{Zigh}
+      \end{itemize}
+    \end{itemize}
+
+    L'ensemble des rapports fournit nous a permit d'établir un rapport complet
+    et détaillé, avec un comparatif de chacun des protocoles et concluant sur
+    nos choix d'implantation :
+
+    \begin{itemize}
+      \item HOTP
+      \item TOTP
+    \end{itemize}
+
+    Pour plus d'informations sur les protocles étudiés et les critères de
+    sélection, vous pouvez vous reporter à l'état de l'art.
+
+
+  \subsection{Application}
+
+      Pour chaque protocoles validés par l'état de l'art nous devions fournir :
+
+      \begin{itemize}
+        \item Un module d'authentification.
+        \item Un token.
+      \end{itemize}
+
+      Dans la mesure où ces deux éléments fonctionnent ensemble et que
+      certaines bibliothèques sont identiques des deux côtés, nous avons
+      décider de les développer en parallèle afin d'avoir une base commune
+      solide.
+
+      Le groupe a donc été séparé en deux équipes dont voici la formation :
+
+      \begin{itemize}
+        \item PAM
+        \begin{itemize}
+          \item Claire \bsc{Hardouin}
+          \item Damien \bsc{Picard}
+          \item Adrien \bsc{Smondack}
+          \item Maxime \bsc{Michotte}
+        \end{itemize}
+        \item Android
+        \begin{itemize}
+          \item Gaëtan \bsc{Ferry}
+          \item Benjamin \bsc{Zigh}
+          \item Tayewo-John-Yves \bsc{Adegoloye}
+        \end{itemize}
+      \end{itemize}
+
+
+\section{La gestion de projet}
 
   \subsection{Communication au sein du groupe}
 
@@ -88,7 +177,7 @@
     L'avancement du projet y apparait aussi clairement de même que toutes les
     dates importantes. C'est un document à mettre à jour très régulièrement.
 
-    \href{../graphics/gantt2-0.png}{capture}
+    Un lien vers une capture du Gantt est disponible en \ref{annexe}.
 
     Les documents ont donc été particulièrement utiles notamment, l'\emph{
     analyse des risques} dont le formalisme a rendu la résolutions d'obstacle
@@ -131,6 +220,15 @@
 \newpage
 %------------------------------------------------------------------------------
 \section{Le Module PAM}
+\subsection{Qu'est-ce que PAM ?}
+PAM est un mécanisme d'authentification permettant a tout programme souhaitant
+une authentification de charger un certains nombre de sous programmes devant
+vérifier une authentification. Ces sous programmes sont contenus dans des
+fichiers compilés appelés modules PAM.
+
+Chaque programme demandant une authentification possède un fichier de configuration permettant à l'administrateur de configurer quels modules charger pour ce service.
+
+Ce mécanisme, accessible pour n'importe quel processus, est donc extensible et configurable a volonté.
 \subsection{Pourquoi un module PAM ?}
 La première solution d'implémentation envisagée était de reprogrammer un
 serveur d'authentification complet. Cette solution posait deux problème:
@@ -259,7 +357,7 @@ Pour TOTP cela revient même à réduire les chance de réussite d'une attaque
 exhaustive à une probabilité de $\frac{q\times w}{d\times10^{l}}$ avec des OTP
 sur un quantum $q$, d'une longueur $l$ avec un delay $d$.
 
-%-------------------------------------------------------------------------------
+
 \subsubsection{Fonction d'initialisation de secret}
 Cette fonction permet d'implémenter la demande d'initialisation de secret.
 C'est cette fonction qui sera appelé lorsqu'un service configuré pour utiliser
@@ -274,9 +372,14 @@ information d'authentification, c'est à dire:
 \end{itemize}
 Une fois ces information fourni le secret sera affiché. Cela implique que le
 renouvellement de secret doit se faire lorsque la connexion est sûre.
-
-%-------------------------------------------------------------------------------
 \newpage
+\subsection{Schéma d'architecture logicielle PAM}
+  \begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{../graphics/architecturepammodule.jpg}
+    \caption{Architecture logicielle du module PAM}
+  \end{figure}
+
 %------------------------------------------------------------------------------
 \section{L'application Android}
 \subsection{La bibliothèque de calcul}
@@ -396,7 +499,3 @@ clefs secrètes qui y sont stockés. De la même manière, le fait que le PIN de
 soit stocké sous la forme d'un haché, implique que même après accès au fichier de stockage du
 PIN, l'attaquant ne pourra pas déduire le PIN de l'utilisateur et donc la clef AES de
 déchiffrement du fichier de \emph{token}.
-
-
-
-
