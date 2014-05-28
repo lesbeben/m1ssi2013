@@ -80,6 +80,10 @@ Cette approche méthodique a était bénéfique à tous les niveaux du projets
 (communication, prévision, développement...), elle définit un cadre nécessaire à 
 l'accomplissement du projet.%faire les sous sections (voir Damien)
 
+
+\newpage
+%------------------------------------------------------------------------------
+
 \section{Le Module PAM}
 \subsection{Pourquoi un module PAM ?}
 La première solution d'implémentation envisagée était de reprogrammer un
@@ -166,7 +170,6 @@ Dans cette bibliothèque nous trouverons:
   \item Une fonction qui renvoie la valeur ou l'état d'une option.
 \end{itemize}
 
-
 \subsection{Programmation avec PAM}
 \subsubsection{Fonction d'authentification}
 Cette fonction permet d'authentifier un utilisateur. Chaque service configuré
@@ -227,6 +230,8 @@ Une fois ces information fourni le secret sera affiché. Cela implique que le
 renouvellement de secret doit se faire lorsque la connexion est sûre.
 
 %-------------------------------------------------------------------------------
+\newpage
+%------------------------------------------------------------------------------
 \section{L'application Android}
 \subsection{La bibliothèque de calcul}
 Afin que le token soit en mesure de générer des mots de passe jetables, il était
@@ -277,7 +282,7 @@ binaire ou sous la forme d'une chaine de caractère hexadécimaux.
 \subsubsection{Fonctions utilitaires}
 Enfin la dernière partie de la bibliothèque de calcul déclare des fonctions utilitaires 
 nécessaires aux calculs des mots de passes jetables. Concrètement, on y retrouve la
-définition de la fonction HMAC\cite{HMAC} ainsi que des deux algorithmes de troncature et 
+définition de la fonction HMAC\cite{HMACrfc} ainsi que des deux algorithmes de troncature et
 de conversion définis dans la rfc 4226.
 
 L'ensemble de ces fonctions est utilisé dans la classe abstraite \emph{OTPGenerator} pour la
@@ -285,7 +290,32 @@ génération des mots de passe jetables.
 
 \subsection{Architecture de l'application}
 
+L'application est architecturée autour de sept écrans principaux représentant chacune une
+action réalisable par l'utilisateur.
+
+\subsubsection{Splash screen}
+La première phase de l'application constituée par l'écran de \emph{splash screen} n'est pas à proprement parler un outil pour l'utilisateur. Elle permet
+en fait de charger les données enregistrées de l'utilisateur dans la mémoire de l'appareil. Dans le même temps, elle tente de contacter un serveur de temps NTP pour obtenir la valeur
+du décalage entre le temps système de l'appareil et le temps réseau exacte. Cette valeur est
+alors stockée avec les autres données de l'utilisateur et cet écran passe la main à celui
+de connexion (ou de création de PIN en cas de première connexion).
+
+\subsubsection{Écran de PIN}
+Il existe deux écrans relatifs aux entrées de PIN de l'utilisateur. Le premier permet la création
+du PIN, et donc l'enregistrement de ce dernier dans le fichier local approprié. Le second permet
+simplement la connexion de l'utilisateur et le déverrouillage de l'application\ref{secu}. Ces deux
+écrans dirige l'utilisateur vers l'écran de listing des \emph{tokens}
+
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.4]{../graphics/archi-android.jpg}
+  \caption{Architecture de la bibliothèque de calcul}
+  \label{fig:umlLib}
+\end{figure}
+
 \subsection{Sécurisation}
+\label{secu}
 La sécurisation de l'application est essentielle à la sécurité de l'ensemble du projet. En
 effet, c'est elle qui va garantir que l'authentification mise en place est bien une
 "authentification forte" grâce à l'ajout d'un facteur supplémentaire. L'enjeu de cette 
@@ -320,10 +350,6 @@ clefs secrètes qui y sont stockés. De la même manière, le fait que le PIN de
 soit stocké sous la forme d'un haché, implique que même après accès au fichier de stockage du
 PIN, l'attaquant ne pourra pas déduire le PIN de l'utilisateur et donc la clef AES de
 déchiffrement du fichier de \emph{token}.
-
-
-\subsection{Interface}
-
 
 
 
