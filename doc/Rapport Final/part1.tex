@@ -24,16 +24,16 @@
 	\end{description}
 
 	L'authentification dite forte est basée sur la concaténation d'au moins
-	deux facteurs différents (deux mots de passe n'est pas considéré comme une
+	deux facteurs différents (avoir deux mots de passe n'est pas considéré comme une
 	authentification forte). On trouvera par exemple des systèmes demandant
 	l'emploi d'un jeton et d'un mot de passe (matériel / mémoriel) ou d'un mot
 	de passe et d'une empreinte vocale (mémoriel / corporel).
 
 \subsection{L'authentification classique}
 
-	L'authentification par login / mot de passe est la méthode
+	L'authentification par identifiant / mot de passe est la méthode
 	d'authentification la plus répandue sur les systèmes informatique. On la
-	retrouve sur la plupart des services, qu'ils soientt hors ligne ou sur un
+	retrouve sur la plupart des services, qu'ils soient hors-ligne ou sur un
 	réseau. Le principe repose sur une identification classique (échange d'un
 	nom, d'un pseudo ou d'une adresse mail) et le partage d'un secret - une
 	information uniquement connue de l'utilisateur et du service -
@@ -43,16 +43,15 @@
 	peu sensibles et ne requérant pas un haut niveau de sécurité.	En
 	revanche le niveau de sécurité offert n'est pas optimal. En effet, outre
 	les méthodes d'attaque basées sur le \emph{social engineering} (
-	hameçonnage, écoute électronique, etc), l'authentification par login et
-	mot de passe est sensible aux attaques dites "par re-jeu" durant laquelle
+	hameçonnage, écoute électronique, etc), l'authentification par identifiant et
+	mot de passe est sensible aux attaques dites "par rejeu" durant laquelle
 	un attaquant récupère le mot de passe d'un utilisateur en vue d'une
 	réutilisation ultérieure, compromettant la sécurité des données ou des
 	ressources de l'utilisateur authentique.
 
 \subsection{L'authentification par mot de passe jetable (OTP)}
 
-	Ce type d'authentification est très efficace contre les attaques par re-
-	jeu vues précédemment puisque chaque mot de passe n'est utilisable qu'une
+	Ce type d'authentification est très efficace contre les attaques par rejeu vues précédemment puisque chaque mot de passe n'est utilisable qu'une
 	seule fois. Ainsi, un attaquant parvenant à observer un mot de passe lors
 	d'une authentification ne pourra s'en servir plus tard pour usurper
 	l'identité de l'utilisateur.
@@ -83,11 +82,11 @@
 	La sécurité des mots de passe générés repose sur leur non prédictibilité.
 	En effet, un attaquant potentiel doit être incapable de prédire le
 	prochain mot de passe à utiliser, même s'il a déjà observé plusieurs
-	authentification d'un utilisateur sur un service.
+	authentifications d'un utilisateur sur un service.
 
 \subsection{L'authentification cryptographique}
 
-	Les systèmes d'authentification dits "cryptographique" représentent le
+	Les systèmes d'authentification dits "cryptographiques" représentent le
 	niveau supérieur d'authentification pour les utilisateurs. Ils sont
 	utilisés dans toutes les situations où la sécurité des authentifications
 	est primordiale. On les retrouve donc dans les protocoles sécurisés du web
@@ -128,15 +127,15 @@
 	s'authentifier auprès de lui, il sera en mesure de réutiliser les mots de
 	passes ainsi obtenus pour s'authentifier à son tour sur le service
 	authentique. Ces systèmes offrent donc un niveau moindre de sécurité. Ils
-	sont cependant plus performant que les systèmes d'authentification par
-	login / mot de passe qui ne respectent que la première des trois
+	sont cependant plus performants que les systèmes d'authentification par
+	identifiant / mot de passe qui ne respectent que la première des trois
 	contraintes. C'est en fait l'illustration du fait que ce dernier système
-	est sensible aux attaques par re-jeu.
+	est sensible aux attaques par rejeu.
 
 	Au final, les systèmes d'authentification par mot de passe jetable que
 	nous avons étudié dans le cadre de ce projet représentent un bon compromis
 	entre la faible solution que constituent les mots de passe classiques et
-	les systèmes cryptographiques. Ils sont en effet plus sécurisant que les
+	la complexité des systèmes cryptographiques. Ils sont en effet plus sécurisant que les
 	mots de passe standards et plus simple à mettre en place que les systèmes
 	cryptographiques, tout en prevenant la plupart des attaques passives.
 
@@ -151,7 +150,7 @@
 		site web permettant une authentification auprès d'un serveur adapté;
 		\item[Le serveur :] l'entité qui permet d'authentifier un utilisateur,
 		contient une base de données contenant des informations utilisateur (
-		login, dernier mot de passe utilisé, ...) et dispose d'une routine
+		identifiant, dernier mot de passe utilisé, ...) et dispose d'une routine
 		permettant de vérifier l'authenticité de celui-ci avec le mot de passe
 		jetable qu'il lui a fourni;
 		\item[Le token :] élément physique ou logiciel permettant de générer
@@ -178,14 +177,14 @@
 		\item LinOTP;
 		\item DropBox;
 		\item Microsoft	Authenticator;
-		\item RedHat FreeOT;
+		\item RedHat FreeOTP;
 		\item etc.
 	\end{itemize}
 
 \subsection{Les différents types de protocole OTP}
 
-	Le protocole d'OTP de base date de 1998. Depuis, de nombreuses autres
-	implémentations ont été développées, parmi lesquelles :
+	Le protocole d'OTP de base date de 1996. Depuis, de nombreuses autres
+	implémentations ont été développées, on citera notamment :
 
 	\begin{description}
 		\item[OTP :] Protocole standard basé sur l'utilisation de fonctions de
@@ -194,7 +193,7 @@
 		l'utilisation du mécanisme d'authentification de message HMAC, utilise
 		un compteur de synchronisation lors du calcul des mots de passe
 		jetables;
-		\item[TOTP :] Système similaire à HOTP, emploit le temps comme
+		\item[TOTP :] Système similaire à HOTP mais employant le temps comme
 		compteur;
 		\item[OTPW :] Les mots de passe sont précalculés, l'authentification
 		se fait par question/réponse;
@@ -207,7 +206,7 @@
 		\hline
 		& \cellcolor{gray} Génération & \cellcolor{gray} Partage \\
 		\hline
-		OTP & Manuelle, secret transmit en clair par l'utilisateur lors de la
+		OTP & Manuelle, secret transmis en clair par l'utilisateur lors de la
 		création du token & Seul le token connait le secret \\
 		\hline
 		HOTP & Deux méthodes : déterministe ou aléatoire + initialisation d'un
@@ -216,9 +215,9 @@
 		TOTP & Deux méthodes : déterministe ou aléatoire & Entre le token et
 		le serveur \\
 		\hline
-		OTPW & Préfixe manuel, suffixe aléatoire. Une liste d'otp est générée
+		OTPW & Préfixe manuel, suffixe aléatoire. Une liste d'OTP est générée
 		immédiatement & La liste d'otp est transmise à l'utilisateur et le
-		serveur conserve une seconde liste contenant les hashés \\
+		serveur conserve une seconde liste contenant les hachés \\
 		\hline
 	\end{tabular}
 
@@ -229,13 +228,13 @@
 		& \cellcolor{gray} Calcul & \cellcolor{gray} Forme du mot de passe
 		jetable \\
 		\hline
-		OTP & 3 phases de calculs, le secret est haché un certain nombre de
+		OTP & 3 phases de calcul, le secret est haché un certain nombre de
 		fois, le dernier est transmis au serveur & Chaîne de 24 caractères \\
 		\hline
-		HOTP & Hashé du secret + compteur, puis phase de troncature & Suite
+		HOTP & Haché du secret + compteur, puis phase de troncature & Suite
 		courte de chiffres (6 à 8 caractères) \\
 		\hline
-		TOTP & Hashé du secret + composante temporelle, puis phase de
+		TOTP & Haché du secret + composante temporelle, puis phase de
 		troncature & Suite courte de chiffres (6 à 8 caractères) \\
 		\hline
 		OTPW & Mot de passe jetables pré-calculés & Chaîne de caractères \\
@@ -288,7 +287,7 @@
 	\begin{tabular}{| p{3cm} | p{12cm} |}
 		\hline
 		OTP & Oui car le nombre d'OTP générés par le secret est limité par le
-		nombre de hachage \\
+		nombre de hachages \\
 		\hline
 		HOTP & Non \\
 		\hline
@@ -343,16 +342,16 @@
 		& \cellcolor{gray} Avantages & \cellcolor{gray} Inconvénients /
 		Limites \\
 		\hline
-		OTP & Résistance au attaques par re-jeu & Périssable. De plus coup en
+		OTP & Résistance au attaques par re-jeu & Périssable. De plus, le coup en
 		calcul peut être important pour les premiers OTP \\
 		\hline
-		HOTP & L'un des protocoles les plus utilisés $\Rightarrow$ token
+		HOTP & L'un des protocoles les plus utilisés $\Rightarrow$ tokens
 		compatibles avec de nombreux services & Rien de particulier \\
 		\hline
 		TOTP & Synchronisation plus solide et fiable grâce au temps & Rien de
 		particulier \\
 		\hline
-		OTPW & Liste de suffixe figée mais inexploitable si l'attaquant ne
+		OTPW & Liste de suffixes figée mais inexploitable si l'attaquant ne
 		connait pas le préfixe & Périssable \\
 		\hline
 	\end{tabular}
@@ -363,7 +362,7 @@
 	critère.
 
 	Le choix se portera donc sur la simplicité d'utilisation et la performance
-	de calcul des OTP. De ce point de vu, on élimine le protocole OTP
+	de calcul des OTP. De ce point de vue, on élimine le protocole OTP
 	standard, ne laissant plus que OTPW, HOTP et TOTP.
 
 	OTPW offre une performance de calcul optimale puisque tous les mots de
@@ -371,7 +370,7 @@
 	problème de réinitialisation, nous l'avons donc éliminé.
 
 	Le deux méthodes restantes offrent un bon compromis entre efficacité et
-	simplicité ainsi qu'une pérennité importante. Nous implémenterons donc HOTP
+	simplicité ainsi qu'une pérennité importante. De plus ils sont compatibles avec les systèmes couramment employés sur internet, comme notre client le souhaite. Nous implémenterons donc HOTP
 	et TOTP.
 
 %------------------------------------------------------------------------------

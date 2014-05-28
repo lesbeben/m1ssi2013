@@ -18,8 +18,8 @@
   \subsection{État de l'art}
 
     L'état de l'art consiste en une étude des protocoles existants afin de
-    déterminer les avantages et incovénients de chacuns et, à l'issue, choisir
-    ceux que nous implémeterons, en accord avec le client.
+    déterminer les avantages et inconvénients de chacun et, à l'issue, choisir
+    ceux que nous implémenterons, en accord avec le client.
 
     Afin d'optimiser le temps dédié à l'étude, nous avons formé trois équipes
     de recherches, chacune devant lire les RFC de deux protocoles et établir
@@ -44,20 +44,17 @@
       \end{itemize}
     \end{itemize}
 
-    L'ensemble des rapports fournit nous a permit d'établir un rapport complet
+    L'ensemble des rapports fournis nous a permis d'établir un rapport complet
     et détaillé, avec un comparatif de chacun des protocoles et concluant sur
-    nos choix d'implantation :
+    nos choix d'implantation, comme précisé dans la partie précédente :
 
     \begin{itemize}
       \item HOTP
       \item TOTP
     \end{itemize}
 
-    Pour plus d'informations sur les protocles étudiés et les critères de
-    sélection, vous pouvez vous reporter à l'état de l'art.
 
-
-  \subsection{Application}
+  \section{Application}
 
       Pour chaque protocoles validés par l'état de l'art nous devions fournir :
 
@@ -95,7 +92,7 @@
   \subsection{Communication au sein du groupe}
 
     Dans un projet de cette importance et mené par autant de personnes, une
-    bonne communication est essentielle afin d'éviter des situations où des
+    bonne communication est essentielle afin d'éviter des situations où les
     membres d'une équipe ne se comprennent pas.
 
     Pour garantir cette bonne communication, nous avons donc organisé des
@@ -109,7 +106,7 @@
 
     Des systèmes d'échanges d'informations ont aussi été mis en place, comme le
     système de tickets (sur le site GitHub), afin de résoudre au plus vite tout
-    problème faisant obstacle à l'un des développeur.
+    problème faisant obstacle à l'un des développeurs.
 
     De plus, la communication au sein de notre groupe nous a permis de définir
     clairement le rôle de chacun.
@@ -123,7 +120,7 @@
 
     Un des principes fondamentaux de la méthode \emph{eXtreme Programming} est
     d'établir des tests de façon systématique (\emph{Test Driven Development}),
-    ce qui amoindri le nombre d'erreurs à la fin de chaque étapes du
+    ce qui amoindrit le nombre d'erreurs à la fin de chaque étape du
     développement. De plus on voit clairement, une fois les tests établis, à
     quelles exigences la fonctionnalité développée doit répondre : cela rend
     plus simple le développement.
@@ -134,7 +131,7 @@
       \item[La communication :] Faire en sorte que tous aient une bonne vision
       du projet, des ses objectifs, de son avancement et de ce qu'ils doivent
       faire, y compris les personnes extérieures au projet.
-      \item[Le feed-back :] Le projet doit aussi être régulièrement contrôlé
+      \item[Le feedback :] Le projet doit aussi être régulièrement contrôlé
       afin de ne pas dévier du but initial fixé par le client. Les tests
       unitaires constituaient un retour d'information efficace côté
       développement pour s'assurer du bon fonctionnement du code. Et les
@@ -145,7 +142,7 @@
     \end{description}
 
 
-  \subsection{Suivie du projet}
+  \subsection{Suivi du projet}
 
     Une bonne cohésion du groupe est essentielle (comme vu plus haut), mais
     nous devons aussi établir une communication solide avec le client afin de
@@ -156,7 +153,7 @@
     c'est-à-dire en accord avec les besoins des clients, tout au long du projet
     .
 
-    Le suivis était, pour la plus grande partie réalisé par la maîtrise
+    Le suivis était, pour la plus grande partie réalisés par la maîtrise
     d'ouvrage, qui tenait le reste de l'équipe informée, gardant ainsi un lien
     bien établi avec le client.
 
@@ -177,10 +174,10 @@
     L'avancement du projet y apparait aussi clairement de même que toutes les
     dates importantes. C'est un document à mettre à jour très régulièrement.
 
-    Un lien vers une capture du Gantt est disponible en \ref{annexe}.
+    Un lien vers une capture du Gantt est disponible en annexe.
 
     Les documents ont donc été particulièrement utiles notamment, l'\emph{
-    analyse des risques} dont le formalisme a rendu la résolutions d'obstacle
+    analyse des risques} dont le formalisme a rendu la résolution d'obstacle
     plus simples. D'une manière plus générale, ils nous ont guidé à travers ce
     projet conséquent en nous évitant d'être confronté à des problèmes pour
     lesquels aucune solution n'était encore en place, ils nous ont aussi évité
@@ -194,7 +191,7 @@
 
     La composition du groupe est la suivante :
     \begin{itemize}
-      \item Le chef d'équipe : Adrien \bsc{Smondack} (chef adjoint : Gaëtan
+      \item Le chef d'équipe : Adrien \bsc{Smondack} (suppléant : Gaëtan
       \bsc{Ferry})
       \item La maîtrise d'ouvrage : Benjamin \bsc{Zigh} et Maxime \bsc{Michotte
       }
@@ -208,11 +205,10 @@
   \subsection{Conclusion}
 
     Tout au long du projet les méthodes employées ont permis une meilleure
-    coordination au sein de l'équipe, et d'assurer une qualité de rendu
+    coordination au sein de l'équipe, afin d'assurer une qualité de rendu
     optimale.
 
-    Cette approche méthodique a été bénéfique à tous les niveaux du projet (
-    communication, prévision, développement, etc). Elle définit un cadre
+    Cette approche méthodique a été bénéfique à tous les niveaux du projet (communication, prévision, développement, etc). Elle définit un cadre
     nécessaire à l'accomplissement du projet en fixant des exigences en terme
     de qualité et de contenu des livrables.
 
@@ -222,8 +218,8 @@
 \section{Le Module PAM}
 \subsection{Qu'est-ce que PAM ?}
 PAM est un mécanisme d'authentification permettant a tout programme souhaitant
-une authentification de charger un certains nombre de sous programmes devant
-vérifier une authentification. Ces sous programmes sont contenus dans des
+une authentification de charger un certain nombre de sous-programmes devant
+vérifier une authentification. Ces sous-programmes sont contenus dans des
 fichiers compilés appelés modules PAM.
 
 Chaque programme demandant une authentification possède un fichier de configuration permettant à l'administrateur de configurer quels modules charger pour ce service.
@@ -231,7 +227,7 @@ Chaque programme demandant une authentification possède un fichier de configura
 Ce mécanisme, accessible pour n'importe quel processus, est donc extensible et configurable a volonté.
 \subsection{Pourquoi un module PAM ?}
 La première solution d'implémentation envisagée était de reprogrammer un
-serveur d'authentification complet. Cette solution posait deux problème:
+serveur d'authentification complet. Cette solution posait deux problèmes:
 \begin{enumerate}
   \item L'implémentation d'un protocole de communication.
   \item Inutilisable pour d'autres services en l'état.
@@ -239,7 +235,7 @@ serveur d'authentification complet. Cette solution posait deux problème:
 
 L'implémentation d'un module PAM résout ces deux problèmes, il est utilisable
 par de nombreux services et le protocole de communication est du ressort du
-service qui va utiliser le module. Cela a eu pour conséquence de réduire le
+service qui va utiliser le module. Ce qui a pour conséquence de réduire le
 temps de développement et d'augmenter les possibilité offertes.
 
 \subsection{Programmation de bibliothèques utilitaires}
@@ -252,7 +248,7 @@ La méthodologie pour le développement était la suivante:
 \begin{itemize}
   \item Rédaction des fichiers d'en-tête contenant les prototypes et la
   documentation des fonctions à implémenter.
-  \item Rédaction des éventuels test unitaires.
+  \item Rédaction des éventuels tests unitaires.
   \item Implémentation des fonctions.
   \item Exécution des tests, en cas d'échec retour à l'étape développement.
 \end{itemize}
@@ -260,28 +256,28 @@ La méthodologie pour le développement était la suivante:
 \subsubsection{Bibliothèque de gestion de secret}
 Cette bibliothèque est chargée de gérer la représentation de secrets en mémoire.
 Un secret est une suite d'octet partagée avec le token. Celui ci peut être
-représentée comme une suite de caractères \verb?ASCII? ou hexadécimale.
+représenté comme une suite de caractères \verb?ASCII? ou hexadécimaux.
 
 Dans cette bibliothèque nous trouverons:
 \begin{itemize}
   \item une structure \verb?secret?, qui consiste en un pointeur sur un tableau
   d'octets et une longueur codée sur un entier.
-  \item Des fonctions de création chargée d'allouer l'espace mémoire requis en
+  \item Des fonctions de création chargées d'allouer l'espace mémoire requis en
   fonction du nombre d'octets désirés ou d'une entrée utilisateur.
-  \item Des fonction chargé de représenter un secret dans différentes bases
+  \item Des fonction chargées de représenter un secret dans différentes bases
   sous la forme de chaînes de caractères.
   \item Une fonction permettant d'effacer un secret de la mémoire et de
   libérer les ressources.
 \end{itemize}
 
 \subsubsection{Bibliothèque de calcul de mot de passe jetable}
-Cette bibliothèque est chargé d'implémenter l'algorithme de génération de mot
-passe jetable tel que décrit dans la RFC 4226\cite{HOTPrfc}. Elle ne fourni
+Cette bibliothèque est chargée d'implémenter l'algorithme de génération de mot
+passe jetable tel que décrit dans la RFC 4226\cite{HOTPrfc}. Elle ne fournit
 qu'une fonction de génération. Pour générer un HOTP on lui passera un compteur
 arbitraire. Pour générer un TOTP on lui passera le temps en tant que compteur.
 
 \subsubsection{Bibliothèque de gestion des utilisateurs}
-Cette bibliothèque est chargé d'abstraire la gestion des utilisateur, ces
+Cette bibliothèque est chargée d'abstraire la gestion des utilisateurs, ces
 derniers ainsi que leurs informations sont enregistrés dans un fichier texte
 brut.
 
@@ -297,10 +293,10 @@ Nous nous sommes donc dotés des outils suivants:
 \end{itemize}
 
 Les fonctions de gestion de verrouillage sont la pour gérer les accès concurrents
-au fichier des utilisateurs. Il faut prévoir que ces fonction seront appelées
-dans un module chargé par différent service. Et donc sans ce verrou il devenait
+au fichier des utilisateurs. Il faut prévoir que ces fonctions seront appelées
+dans un module chargé par différents services. Et donc sans ce verrou il serait
 impossible de garantir qu'un OTP ne puisse pas être utilisé deux fois, Si deux
-processus lisent les information au même moment et permette l'authentification
+processus lisent les informations au même moment et permettent l'authentification
 alors un OTP fonctionnera plusieurs fois.
 
 \subsubsection{Bibliothèque de gestion des options}
@@ -309,7 +305,7 @@ par le service. Cela permet d'adapter un comportement différent pour chaque opt
 Dans cette bibliothèque nous trouverons:
 \begin{itemize}
   \item Une structure \verb?modopt?, qui contient la valeur ou l'état de chaque option.
-  \item Une fonction qui rempli la structure précédente d'après le contenu fourni en paramètre.
+  \item Une fonction qui remplit la structure précédente d'après le contenu fourni en paramètre.
   \item Une fonction qui modifie la valeur ou état de l'option souhaité.
   \item Une fonction qui renvoie la valeur ou l'état d'une option.
 \end{itemize}
@@ -318,42 +314,42 @@ Dans cette bibliothèque nous trouverons:
 \subsubsection{Fonction d'authentification}
 Cette fonction permet d'authentifier un utilisateur. Chaque service configuré
 pour utiliser le module exécutera cette fonction. Elle implémentera les
-mécaniques de vérification telles que décrites dans les RFC ainsi que les
-mécaniques de resynchronisation.
+mécanismes de vérification telles que décrites dans les RFC ainsi que les
+mécanismes de resynchronisation.
 \paragraph{HOTP}
-Pour HOTP la vérification de l'otp courant correspondant au compteur
+Pour HOTP la vérification de l'OTP courant correspondant au compteur
 $n$\footnote{Strictement positif.\label{int}} la vérification s'effectuera sur
-une fenêtre de  $k$ $^{\ref{int}}$ otp, c'est à dire qu'elle va comparer l'otp
-fourni aux otp de compteur $n$ à $n+k$ inclus. En cas de succès on enregistrera
+une fenêtre de  $k$ $^{\ref{int}}$ OTP, c'est à dire qu'elle va comparer l'OTP
+fourni aux OTP de compteur $n$ à $n+k$ inclus. En cas de succès on enregistrera
 le compteur courant comme nouveau compteur, c'est la phase de resynchronisation.
 \paragraph{TOTP}
-Pour TOTP la vérification de l'otp courant correspondant à un temps $t$ avec un
-quantum $q$ se fera sur les otp $\frac{t}{q} - 2$ à $\frac{t}{q} + 2$ avec un
+Pour TOTP la vérification de l'OTP courant correspondant à un temps $t$ avec un
+quantum $q$ se fera sur les OTP $\frac{t}{q} - 2$ à $\frac{t}{q} + 2$ avec un
 pas de $1$.
 \paragraph{Problème d'attaque exhaustive}
 On peut considérer qu'un OTP est une suite de 6 à 8 chiffres. Il est donc aisé
 de tous les générer en moins de 30 secondes, pour preuve le rapport de test
-indique 52ms pour 100 otp sur un smartphone android d'entrée de gamme,
+indique 52ms pour 100 OTP sur un smartphone Android d'entrée de gamme,
 il faut donc de 8m40s à 14h26m40s pour les générer sur un smartphone de faible
 puissance. Sur une machine standard \footnote{Processeur: i5-3210M, RAM: 8Go} ce
 n'est l'affaire que d'une dizaine de secondes.
 
 Dès lors on voit la possibilité d'exécuter une attaque exhaustive réussie contre
-le module devenir un problème bien réel. Pour palier à ce problème une première
-solution était de bannir un utilisateur après un nombre fini d'essai raté. Après
+le module devenir un problème bien réel. Pour pallier à ce problème une première
+solution était de bannir un utilisateur après un nombre fini d'essais ratés. Après
 discussion avec le client la solution retenue est un bannissement limité. Cela
-consiste a rejeté toute tentative d'authentification pendant un laps de temps
+consiste à rejeter toute tentative d'authentification pendant un laps de temps
 après une tentative ratée.
 
-Le delai par défaut est d'une secondes, on peut le modifier à l'aide des options
+Le délai par défaut est d'une seconde, on peut le modifier à l'aide des options
 \verb?delay_totp? et \verb?delay_hotp? au chargement du module\footnote{voir le
 Manuel d'installation du module PAM pour plus d'information}.
 
 Avec ce nouveau paramètre, pour HOTP, il faut donc $\frac{p\times10^{l}*d}{w}$
-secondes pour avoir $p\times100\%$ de chance de réussite avec des otp de
-longueur $l$ et une fenêtre de $w$ dans un delai de $d$.
+secondes pour avoir $p\times100\%$ de chance de réussite avec des OTP de
+longueur $l$ et une fenêtre de $w$ dans un délai de $d$.
 
-Pour TOTP cela revient même à réduire les chance de réussite d'une attaque
+Pour TOTP cela revient même à réduire les chances de réussite d'une attaque
 exhaustive à une probabilité de $\frac{q\times w}{d\times10^{l}}$ avec des OTP
 sur un quantum $q$, d'une longueur $l$ avec un delay $d$.
 
@@ -363,14 +359,14 @@ Cette fonction permet d'implémenter la demande d'initialisation de secret.
 C'est cette fonction qui sera appelé lorsqu'un service configuré pour utiliser
 le module fera une demande de renouvellement de secret. Cette fonction demandera
 à l'utilisateur de s'authentifier si c'est possible puis demandera les nouvelles
-information d'authentification, c'est à dire:
+informations d'authentification, c'est à dire:
 \begin{itemize}
-  \item La méthode d'authentification.\hfill\textbf{totp ou hotp}
-  \item Le quantum si la méthode est totp.\hfill \textbf{un entier positif}
-  \item La longueur des otp générés.
+  \item La méthode d'authentification.\hfill\textbf{TOTP ou HOTP}
+  \item Le quantum si la méthode est TOTP.\hfill \textbf{un entier positif}
+  \item La longueur des OTP générés.
   \hfill\textbf{entiers compris entre 6 et 8 inclus}
 \end{itemize}
-Une fois ces information fourni le secret sera affiché. Cela implique que le
+Une fois ces informations fournies le secret sera affiché. Cela implique que le
 renouvellement de secret doit se faire lorsque la connexion est sûre.
 \newpage
 \subsection{Schéma d'architecture logicielle PAM}
@@ -389,10 +385,10 @@ puisque le nom \emph{token} représente en fait l'unité matérielle (le termina
 
 \subsection{La bibliothèque de calcul}
 Afin que le token soit en mesure de générer des mots de passe jetables, il était
-nécessaire de développer une suite de fonctions de calcul. De plus, ces fonctions devait
-être cohérentes avec celle écrites pour la vérification dans le module PAM.
+nécessaire de développer une suite de fonctions de calcul. De plus, ces fonctions devaient
+être cohérentes avec celles écrites pour la vérification dans le module PAM.
 
-La bibliothèque est découpée en trois partie distinctes tel que décrites sur la figure
+La bibliothèque est découpée en trois parties distinctes telles que décrites sur la figure
 \ref{fig:umlLib}. On trouve donc un ensemble de quatre classes formant la partie calcul
 des mots de passe jetables, un deuxième de deux classes formant une couche d'abstraction
 pour la gestion des secrets cryptographiques et enfin une dernière classe utilitaire
@@ -406,32 +402,32 @@ contenant des fonctions nécessaires aux protocoles HOTP et TOTP.
 \end{figure}
 
 \subsubsection{Générateur d'OTP}
-La première des trois partie définit les générateur d'OTP en eux même. Il sont répartis en
-deux catégorie, correspondant aux deux méthode de génération implémentées, les générateur
-TOTP et les générateur HOTP. Du fait que la spécification du protocole TOTP découle de celle
-de celui d'HOTP, ces deux types d'objet sont très similaire dans leur fonctionnement. Les
+La première des trois parties définit les générateur d'OTP en eux-mêmes. Il sont répartis en
+deux catégories, correspondant aux deux méthodes de génération implémentées, les générateurs
+TOTP et les générateurs HOTP. Du fait que la spécification du protocole TOTP découle de celle
+de celui d'HOTP, ces deux types d'objet sont très similaires dans leur fonctionnement. Les
 parties communes des deux classes sont donc factorisées dans une classe abstraite. On
-retrouve donc explicitées dans cette classe les méthodes pour récupérer le nombre de chiffre
-composant les OTP ainsi que celle pour générer ces derniers. En effet, il est possible de
-déclarer cette méthode à cette endroit en déportant la récupération du paramètre "compteur"
-dans les classes inférieures. De ce fait, chacune des classes HOTP et TOTP défini sa
+retrouve donc explicitées dans cette classe les méthodes pour récupérer le nombre de chiffres
+composants les OTP ainsi que celle pour générer ces derniers. En effet, il est possible de
+déclarer cette méthode à cet endroit en déportant la récupération du paramètre "compteur"
+dans les classes inférieures. De ce fait, chacune des classes HOTP et TOTP définit sa
 méthode \emph{getCounter} qui dans un cas retournera l'incrément du compteur synchronisé et
-dans l'autre la valeur $ timestamp / quantum $ définie dans la rfc 4226\cite{TOTP}.
+dans l'autre la valeur $ timestamp / quantum $ définie dans la rfc 6238\cite{TOTP}.
 
-Le fonctionnement général des générateurs d'OTP est définit dans l'interface de
+Le fonctionnement général des générateurs d'OTP est défini dans l'interface de
 programmation IOTP. Cette interface reprend globalement le contenu des rfc 4226 et 6238.
 
 \subsubsection{Gestion des secrets utilisateurs}
 La deuxième partie formant l'abstraction des secrets cryptographiques est composée d'une
 interface de programmation, \emph{ISecret}, et d'une classe l'implémentant, \emph{Secret}.
 Elle a pour but de fournir une couche d'abstraction pour simplifier l'utilisation des secrets
-qui peut s'avérer inconfortable dès lors que ces derniers mesures plusieurs dizaines de
-caractère hexadécimaux.
+qui peut s'avérer inconfortable dès lors que ces derniers mesurent plusieurs dizaines de
+caractères hexadécimaux.
 
-On pourra donc grâce à ces deux classe créer des secrets pouvant être initialisés depuis des
+On pourra donc grâce à ces deux classes créer des secrets pouvant être initialisés depuis des
 données binaires brutes, des représentations hexadécimales ou encore depuis des données
 aléatoires. De la même manière, il sera possible de récupérer un secret sous représentation
-binaire ou sous la forme d'une chaine de caractère hexadécimaux.
+binaire ou sous la forme d'une chaine de caractères hexadécimaux.
 
 \subsubsection{Fonctions utilitaires}
 Enfin la dernière partie de la bibliothèque de calcul déclare des fonctions utilitaires
@@ -453,7 +449,7 @@ La première phase de l'application constituée par l'écran de \emph{splash scr
 proprement parler un outil pour l'utilisateur. Elle permet en fait de charger les données enregistrées
 de l'utilisateur dans la mémoire de l'appareil. Dans le même temps, elle tente de contacter un serveur
 de temps NTP pour obtenir la valeur du décalage entre le temps système de l'appareil et le temps réseau
-exacte. Cette valeur est alors stockée avec les autres données de l'utilisateur et cet écran passe la
+exact. Cette valeur est alors stockée avec les autres données de l'utilisateur et cet écran passe la
 main à celui de connexion (ou de création de PIN en cas de première connexion).
 
 \subsubsection{Écran de PIN}
@@ -465,7 +461,7 @@ si aucun n'existe.
 
 \subsubsection{Ajout de token}
 La page d'ajout de token permet à l'utilisateur d'ajouter ses différents \emph{tokens} de
-génération. On peut y créer différents générateurs de mots de passe jetable en fournissant la
+génération. On peut y créer différents générateurs de mots de passe jetables en fournissant la
 méthode à utiliser (HOTP ou TOTP), la clef secrète à utiliser, la longueur des mots de passe à
 générer et, si la méthode utilisée est TOTP, la durée de validité des mots de passe générés. Les
 générateurs ainsi créés sont alors disponibles dans la liste des tokens de l'utilisateur et
@@ -476,7 +472,7 @@ disponibles.
 La page de listing des \emph{tokens} est centrale dans l'application. En effet, si il est impossible sur
 celle ci d'effectuer d'autres opérations que la suppression de \emph{token}, c'est par elle qui faut
 passer pour joindre toutes les autres pages en utilisant le menu. Ce dernier permet d'accéder aux page
-de suppression et d'ajout de token, et à celle de modification de code PIN. C'est aussi de puis ce
+de suppression et d'ajout de token, et à celle de modification de code PIN. C'est aussi depuis ce
 dernier que l'on peut accéder à la fonction de resynchronisation d'horloge (qui interroge des serveurs
 ntp de la même manière que pendant l'écran de \emph{splash}).
 
@@ -499,13 +495,13 @@ la suppression de la page de listing.
 La sécurisation de l'application est essentielle à la sécurité de l'ensemble du projet. En
 effet, c'est elle qui va garantir que l'authentification mise en place est bien une
 "authentification forte" grâce à l'ajout d'un facteur supplémentaire. L'enjeu de cette
-partie est de garantir les 3 points suivant :
+partie est de garantir les 3 points suivants :
 
 
 \begin{itemize}
   \item[1 -] Un utilisateur honnête doit pouvoir déverrouiller l'application en utilisant
-  sont PIN. Il doit ensuite être en mesure de générer des mots de passe jetable en utilisant
-  un de ses \emph{tokens} ou utiliser n'importe quelle autre fonctionnalités à sa
+  son PIN. Il doit ensuite être en mesure de générer des mots de passe jetables en utilisant
+  un de ses \emph{tokens} ou utiliser n'importe quelle autre fonctionnalité à sa
   disposition.
   \item[2 -] Un attaquant qui ne connaitrait pas le PIN de l'utilisateur ne doit pas être en
   mesure de déverrouiller l'application et donc de générer des mots de passes jetables en
@@ -519,7 +515,7 @@ La solution retenue consiste en la mise en place d'un PIN de déverrouillage de 
 Ce PIN, demandé à chaque démarrage de l'application, sera dans un premier temps haché par la
 fonction SHA-1 en utilisant comme sel le \emph{device id} de l'appareil hôte. L'empreinte
 obtenue est alors comparée avec celle enregistrée lors de la création du PIN dans un fichier
-local. Si les deux valeurs sont cohérente, le PIN est alors utilisé pour déchiffrer le
+local. Si les deux valeurs sont cohérentes, le PIN est alors utilisé pour déchiffrer le
 fichier local contenant les informations relatives aux différents \emph{tokens} de
 l'utilisateur. L'application devient alors pleinement utilisable.
 
@@ -530,8 +526,8 @@ clefs secrètes qui y sont stockés. De la même manière, le fait que le PIN de
 soit stocké sous la forme d'un haché, implique que même après accès au fichier de stockage du
 PIN, l'attaquant ne pourra pas déduire le PIN de l'utilisateur et donc la clef AES de déchiffrement du fichier de \emph{token}. Il est à noter que le fichier contenant les données
 privées de l'utilisateur n'est jamais déchiffré autre-part qu'en mémoire. Ainsi, même pendant
-que l'application est déverrouillée et en court d'utilisation un attaquant ne pourra pas lire
-le fichier en question. De la même manière, les informations ne seront pas accessible si
+que l'application est déverrouillée et en cours d'utilisation un attaquant ne pourra pas lire
+le fichier en question. De la même manière, les informations ne seront pas accessibles si
 l'application \emph{crash} en cours d'utilisation.
 
 
