@@ -196,6 +196,9 @@ impossible de garantir qu'un OTP ne puisse pas être utilisé deux fois, Si deux
 processus lisent les information au même moment et permette l'authentification
 alors un OTP fonctionnera plusieurs fois.
 
+\subsubsection{Bibliothèque de gestion des options}
+
+
 \subsection{Programmation avec PAM}
 \subsubsection{Fonction d'authentification}
 Cette fonction permet d'authentifier un utilisateur. Chaque service configuré
@@ -205,13 +208,40 @@ mécaniques de resynchronisation.
 \paragraph{HOTP}
 Pour HOTP la vérification de l'otp courant correspondant au compteur
 $n$\footnote{Strictement positif.\label{int}} la vérification s'effectuera sur
-$k$ $^{\ref{int}}$ otp, c'est à dire qu'elle va comparer l'otp fourni aux otp de
-compteur $n$ à $n+k$ inclus. En cas de succès on enregistrera le compteur
-courant comme nouveau compteur, c'est la phase de resynchronisation.
+une fenêtre de  $k$ $^{\ref{int}}$ otp, c'est à dire qu'elle va comparer l'otp
+fourni aux otp de compteur $n$ à $n+k$ inclus. En cas de succès on enregistrera
+le compteur courant comme nouveau compteur, c'est la phase de resynchronisation.
 \paragraph{TOTP}
 Pour TOTP la vérification de l'otp courant correspondant à un temps $t$ avec un
-quantum $q$ se fera sur les otp $(t / q) - 2 * q$ à $(t / q) + 3 *q$ avec un
-pas de $q$.
+quantum $q$ se fera sur les otp $\frac{t}{q} - 2$ à $\frac{t}{q} + 2$ avec un
+pas de $1$.
+\paragraph{Problème d'attaque exhaustive}
+On peut considérer qu'un OTP est une suite de 6 à 8 chiffres. Il est donc aisé
+de tous les générer en moins de 30 secondes, pour preuve le rapport de test
+indique 52ms pour 100 otp sur un smartphone android d'entrée de gamme,
+il faut donc de 8m40s à 14h26m40s pour les générer sur un smartphone de faible
+puissance. Sur une machine standard \footnote{Processeur: i5-3210M, RAM: 8Go} ce
+n'est l'affaire que d'une dizaine de secondes.
+
+Dès lors on voit la possibilité d'exécuter une attaque exhaustive réussie contre
+le module devenir un problème bien réel. Pour palier à ce problème une première
+solution était de bannir un utilisateur après un nombre fini d'essai raté. Après
+discussion avec le client la solution retenue est un bannissement limité. Cela
+consiste a rejeté toute tentative d'authentification pendant un laps de temps
+après une tentative ratée.
+
+Le delai par défaut est d'une secondes, on peut le modifier à l'aide des options
+\verb?delay_totp? et \verb?delay_hotp? au chargement du module\footnote{voir le
+Manuel d'installation du module PAM pour plus d'information}.
+
+Avec ce nouveau paramètre, pour HOTP, il faut donc $\frac{p\times10^{l}*d}{w}$
+secondes pour avoir $p\times100\%$ de chance de réussite avec des otp de
+longueur $l$ et une fenêtre de $w$ dans un delai de $d$.
+
+Pour TOTP cela revient même à réduire les chance de réussite d'une attaque
+exhaustive à une probabilité de $\frac{q\times w}{d\times10^{l}}$ avec des OTP
+sur un quantum $q$, d'une longueur $l$ avec un delay $d$.
+
 %-------------------------------------------------------------------------------
 \subsubsection{Fonction d'initialisation de secret}
 Cette fonction permet d'implémenter la demande d'initialisation de secret.

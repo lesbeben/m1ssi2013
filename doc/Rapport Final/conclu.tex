@@ -1,33 +1,35 @@
 \chapter{Conclusion}
 
-\section{Enseignements tirés du projet}
-\begin{itemize}
-\item Maitrise de PAM.
-\item API Android.
-\item OTP.
-\item Outils cryptographiques.
-\item Gestion de projet.
-\end{itemize}
-%A rédiger
-
 
 
 
 \section{Améliorations possibles}
-HOTP en question/réponse
-Utilisation d'un aléas à la place du compteur incrémental.
+\subsection{HOTP en question/réponse}
+HOTP est utilisable en question/réponse, c'est-à-dire que le serveur, lors d'une tentative de connexion, fournit un aléas pour lequel le client devra calculer l'OTP correspondant. La valeur aléatoire remplace le compteur dans le système standard.
 
-Token sur Java Card
-Peut-être en M2...
-%A rédiger
+Ce faisant, on obtient une sécurité supplémentaire sur l'authentification effectuée, qui devient cryptographique. Ce type d'authentification résiste mieux aux attaques actives.
 
+Pour rajouter cette fonctionnalité, il faudrait modifier l'interface de l'application Android, ainsi qu'une partie du module PAM.
+
+\subsection{Token sur Java Card}
+
+L'application de calcul d'OTP pourrait être portée sur Java Card. Ceci faisait partie des demandes initiales du client mais nous avons du abandonner son développement suite à l'absence prolongée de notre chef de projet.
+
+Néanmoins, notre bibliothèque de génération des OTP pour l'application Android étant écrite en Java, elle est parfaitement compatible avec les cartes (en théorie). Il ne resterait donc qu'à créer une interface de communication avec les cartes.
+
+Le token sur carte représente une alternative équivalente à la version Android, mais dans laquelle aucun aspect de la sécurité n'est sous-traité à Google.
 
 
 \section{Conclusion}
 
-\begin{itemize}
-\item Un projet dans l'ère du temps.
-\item Un panel de connaissances variées.
-\item Une première expérience de gestion de projet.
-\end{itemize}
-%A rédiger
+Cette première expérience de projet avec une équipe conséquente (7 personnes) nous a permis de découvrir et de comprendre l'utilité des méthodologies de gestion de projet.
+
+En effet, la coordination des membres sur un projet de cet ampleur ne peut pas être laissée au hasard. Le rôle de chacun doit être défini et limité, et un point doit être fait régulièrement sur l'avancement de chaque partie du projet.
+
+En cela, les méthodologies Agile prennent tout leur sens, et représentent un acquis important pour notre future vie professionnelle.
+
+En outre, nous avons découvert au cours de ce projet de nombreuses technologies couramment utilisées en entreprise. Les connaissances que nous avons acquises sur Android, PAM et les OTP seront un atout non-négligeable pour les années à venir.
+
+Les mots de passe jetables, en particulier, sont une technologie très en vogue en sécurité informatique, et avoir une première expérience dans le développement devrait nous ouvrir de nombreuses portes lors de nos recherches de stage l'an prochain.
+
+Au final, ce projet nous a apporté énormément et continuera à nous porter au cours de nos carrières respectives.
