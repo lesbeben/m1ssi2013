@@ -53,8 +53,8 @@
       \item TOTP
     \end{itemize}
 
-
-  \section{Application}
+\newpage
+\section{Application}
 
       Pour chaque protocoles validés par l'état de l'art nous devions fournir :
 
@@ -326,6 +326,8 @@ le compteur courant comme nouveau compteur, c'est la phase de resynchronisation.
 Pour TOTP la vérification de l'OTP courant correspondant à un temps $t$ avec un
 quantum $q$ se fera sur les OTP $\frac{t}{q} - 2$ à $\frac{t}{q} + 2$ avec un
 pas de $1$.
+
+\newpage
 \paragraph{Problème d'attaque exhaustive}
 On peut considérer qu'un OTP est une suite de 6 à 8 chiffres. Il est donc aisé
 de tous les générer en moins de 30 secondes, pour preuve le rapport de test
@@ -376,6 +378,7 @@ renouvellement de secret doit se faire lorsque la connexion est sûre.
     \caption{Architecture logicielle du module PAM}
   \end{figure}
 
+\newpage
 %------------------------------------------------------------------------------
 \section{L'application Android}
 Dans toute cette partie, ce qui sera appelé \emph{token}, sera en fait un triplet clef secrète,
@@ -490,6 +493,7 @@ la suppression de la page de listing.
   \label{fig:umlLib}
 \end{figure}
 
+\newpage
 \subsection{Sécurisation}
 \label{secu}
 La sécurisation de l'application est essentielle à la sécurité de l'ensemble du projet. En

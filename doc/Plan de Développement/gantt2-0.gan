@@ -1,17 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="OTP" company="" webLink="https://github.com/lesbeben/m1ssi2013" view-date="2013-11-01" view-index="0" gantt-divider-location="394" resource-divider-location="257" version="2.0" locale="fr">
+<?xml version="1.0" encoding="UTF-8"?><project name="OTP" company="" webLink="https://github.com/lesbeben/m1ssi2013" view-date="2013-10-01" view-index="0" gantt-divider-location="1" resource-divider-location="257" version="2.0" locale="fr">
     <description/>
     <view zooming-state="default:8" id="gantt-chart">
-        <field id="tpd3" name="Nom" width="58" order="0"/>
-        <field id="tpd4" name="Date de début" width="13" order="1"/>
-        <field id="tpd5" name="Date de fin" width="13" order="2"/>
-        <field id="tpc0" name="Charges (jours-hommes)" width="6" order="3"/>
-        <field id="tpc1" name="Charges effectives (jours-hommes)" width="7" order="4"/>
+        <field id="tpd3" name="Nom" width="20" order="0"/>
+        <field id="tpd4" name="Date de début" width="20" order="1"/>
+        <field id="tpd5" name="Date de fin" width="20" order="2"/>
+        <field id="tpc0" name="Charges (jours-hommes)" width="20" order="3"/>
+        <field id="tpc1" name="Charges effectives (jours-hommes)" width="20" order="4"/>
+        <option id="taskLabelUp" value=""/>
+        <option id="taskLabelDown" value=""/>
         <option id="taskLabelLeft" value="name"/>
         <option id="taskLabelRight" value="resources"/>
     </view>
     <view id="resource-table">
-        <field id="0" name="Nom" width="64" order="0"/>
-        <field id="1" name="Rôle par défaut" width="35" order="1"/>
+        <field id="0" name="Nom" width="55" order="0"/>
+        <field id="1" name="Rôle par défaut" width="44" order="1"/>
     </view>
     <!-- -->
     <calendars>
@@ -161,7 +163,7 @@
                 <depend id="112" type="2" difference="0" hardness="Strong"/>
             </task>
         </task>
-        <task id="265" name="Finalisations" color="#666600" meeting="false" start="2014-05-10" duration="15" complete="86" expand="true">
+        <task id="265" name="Finalisations" color="#666600" meeting="false" start="2014-05-10" duration="15" complete="100" expand="true">
             <task id="113" name="Test Finaux / Crash test" color="#cccc00" meeting="false" start="2014-05-10" duration="7" complete="100" expand="true">
                 <depend id="243" type="2" difference="0" hardness="Strong"/>
                 <customproperty taskproperty-id="tpc0" value="49"/>
@@ -173,7 +175,7 @@
             <task id="245" name="Rédaction du manuel d'utilisation" color="#ffff66" meeting="false" start="2014-05-19" duration="2" complete="100" expand="true">
                 <depend id="248" type="2" difference="0" hardness="Strong"/>
             </task>
-            <task id="248" name="Rédaction du rapport de projet" color="#ffff66" meeting="false" start="2014-05-21" duration="4" complete="50" expand="true"/>
+            <task id="248" name="Rédaction du rapport de projet" color="#ffff66" meeting="false" start="2014-05-21" duration="4" complete="100" expand="true"/>
         </task>
         <task id="277" name="Rendu du rapport de projet" color="#ff0000" meeting="true" start="2014-05-28" duration="0" complete="0" expand="true"/>
         <task id="275" name="Soutenance de projet" color="#ff0000" meeting="true" start="2014-06-02" duration="0" complete="0" expand="true"/>
@@ -273,11 +275,11 @@
         <displaycolumn property-id="tpd9" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd8" order="-1" width="75" visible="false"/>
         <displaycolumn property-id="tpd0" order="-1" width="75" visible="false"/>
-        <displaycolumn property-id="tpd3" order="0" width="230" visible="true"/>
-        <displaycolumn property-id="tpd4" order="1" width="53" visible="true"/>
-        <displaycolumn property-id="tpd5" order="2" width="52" visible="true"/>
-        <displaycolumn property-id="tpc0" order="3" width="26" visible="true"/>
-        <displaycolumn property-id="tpc1" order="4" width="29" visible="true"/>
+        <displaycolumn property-id="tpd3" order="0" width="15" visible="true"/>
+        <displaycolumn property-id="tpd4" order="1" width="15" visible="true"/>
+        <displaycolumn property-id="tpd5" order="2" width="15" visible="true"/>
+        <displaycolumn property-id="tpc0" order="3" width="15" visible="true"/>
+        <displaycolumn property-id="tpc1" order="4" width="15" visible="true"/>
     </taskdisplaycolumns>
     <previous/>
     <roles roleset-name="Default"/>
