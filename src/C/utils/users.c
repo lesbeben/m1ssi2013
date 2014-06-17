@@ -9,6 +9,7 @@
 #include <sys/types.h>
 #include <pwd.h>
 #include <malloc.h>
+#include <errno.h>
 
 #include "users.h"
 #include "secret.h"
@@ -43,7 +44,7 @@
 #define SEPARATOR ":"
 #define SWAP_FILE "/var/otpasswd~"
 #define BUFFER_SIZE 1024
-
+#define CPY_BUFFER_SIZE 4096
 
 /*******************************************************************************
  *                                                                             *
@@ -218,17 +219,21 @@ int writeLine (FILE *f, otpuser *user) {
     return USR_SUCCESS;
 }
 
-int switchFile (char * from, char * to) {
-    // Supprime le lien physique vers le fichier to
-    if (unlink(to) == -1) {
-        return USR_ERR_IO;
+/** Recopie le contenue du fichier @a src dans le fichier @a dst.
+ * 
+ * @param[in] dst Le fichier dans le quel il faut écrire.
+ * @param[in] src Le fichier dans le quel il faut lire.
+ * 
+ * @return USR_SUCCESS en cas de succès, une autre macro en cas d'erreur.
+ */
+int fcpy (FILE * dst, FILE * src) {
+    char buffer[CPY_BUFFER_SIZE];
+    while (fgets(buffer, CPY_BUFFER_SIZE, src) != NULL) {
+        if (fputs(buffer, dst) == EOF) {
+            return USR_ERR_IO;
+        }
     }
-    // Créér un lien physique pour le fichier to vers from
-    if (link (from, to) == -1) {
-        return USR_ERR_IO;
-    }
-    // Supprime le lien physique vers le fichier from
-    if (unlink(from) == -1) {
+    if (ferror(src)) {
         return USR_ERR_IO;
     }
     return USR_SUCCESS;
@@ -357,42 +362,41 @@ int updateOTPUser(otpuser* user) {
 //     free(pwd);
 
     // Descripteur de fichier sur OTPWD_PATH.
-    FILE * user_file = fopen(OTPWD_PATH, "r");
+    FILE * user_file = fopen(OTPWD_PATH, "w+");
     if (user_file == NULL) {
-        int fd = open(OTPWD_PATH, O_WRONLY | O_CREAT | O_EXCL, S_IRWXU | S_ISVTX);
-        if (fd < 0) {
-            return USR_ERR_IO;
-        }
-
-        user_file = fdopen(fd, "w");
-        if (user_file == NULL) {
-            close(fd);
-            return USR_ERR_IO;
-        }
+        return USR_ERR_IO;
     }
-
     // Descripteur de fichier temporaire.
-    FILE * updated_user_file = fopen(SWAP_FILE, "w");
+    FILE * updated_user_file = fopen(SWAP_FILE, "w+");
     if (updated_user_file == NULL) {
         fclose(user_file);
         return USR_ERR_IO;
     }
 
+    // Mise en plase d'un verrou sur le fichier en cours de mise à jour.
     if (flock(fileno(updated_user_file), LOCK_EX) == -1) {
         fclose(user_file);
         fclose(updated_user_file);
         return USR_ERR_IO;
     }
-    struct stat old_file_stats;
-    if (fstat(fileno(user_file), &old_file_stats) != 0) {
+
+    struct stat user_file_stats;
+    if (fstat(fileno(user_file), &user_file_stats) != 0) {
+        fclose(user_file);
+        fclose(updated_user_file);
         return USR_ERR_IO;
     }
-    if (fchmod(fileno(updated_user_file), old_file_stats.st_mode) != 0) {
+    if (fchmod(fileno(updated_user_file), user_file_stats.st_mode) != 0) {
+        fclose(user_file);
+        fclose(updated_user_file);
         return USR_ERR_IO;
     }
-    if (fchown(fileno(updated_user_file), old_file_stats.st_uid, old_file_stats.st_gid) != 0) {
+    if (fchown(fileno(updated_user_file), user_file_stats.st_uid, user_file_stats.st_gid) != 0) {
+        fclose(user_file);
+        fclose(updated_user_file);
         return USR_ERR_IO;
     }
+
     // Recherche de l'utilisateur dans le fichier
     while((ret = readLine(user_file, &usr)) == USR_SUCCESS) {
         if (!strcmp(user->username, usr.username)) {
@@ -419,22 +423,44 @@ int updateOTPUser(otpuser* user) {
         }
     }
 
-    if (fclose(user_file) != 0) {
+
+    // Retour au début des deux fichiers.
+    if (fseek(user_file, 0, SEEK_SET)) {
+        fclose(user_file);
+        fclose(updated_user_file);
         return USR_ERR_IO;
     }
-
-    if ((ret = switchFile (SWAP_FILE, OTPWD_PATH)) != USR_SUCCESS) {
+    
+    if (fseek(updated_user_file, 0, SEEK_SET)) {
+        fclose(user_file);
+        fclose(updated_user_file);
+        return USR_ERR_IO;
+    }
+    
+    ret = fcpy(user_file, updated_user_file);
+    if (ret != USR_SUCCESS) {
+        fclose(updated_user_file);
+        fclose(user_file);
         return ret;
     }
-
+    
+    if (fclose(user_file) != 0) {
+        fclose(updated_user_file);
+        return USR_ERR_IO;
+    }
+    
     if (flock(fileno(updated_user_file), LOCK_UN) == -1) {
         fclose(updated_user_file);
         return USR_ERR_IO;
     }
-
+    
     if (fclose(updated_user_file) != 0) {
         return USR_ERR_IO;
     }
+    if (unlink(SWAP_FILE)) {
+        return USR_ERR_IO;
+    }
+
     return USR_SUCCESS;
 }
 
@@ -487,20 +513,41 @@ int removeOTPUser(char* usrname) {
         }
     }
 
-    if (fclose(user_file) != 0) {
+    // Retour au début des deux fichiers.
+    if (fseek(user_file, 0, SEEK_SET)) {
+        fclose(user_file);
+        fclose(updated_user_file);
         return USR_ERR_IO;
     }
-
-    if ((ret = switchFile (SWAP_FILE, OTPWD_PATH)) != USR_SUCCESS) {
+    
+    if (fseek(updated_user_file, 0, SEEK_SET)) {
+        fclose(user_file);
+        fclose(updated_user_file);
+        return USR_ERR_IO;
+    }
+    
+    ret = fcpy(user_file, updated_user_file);
+    if (ret != USR_SUCCESS) {
+        fclose(updated_user_file);
+        fclose(user_file);
         return ret;
     }
-
+    
+    if (fclose(user_file) != 0) {
+        fclose(updated_user_file);
+        return USR_ERR_IO;
+    }
+    
     if (flock(fileno(updated_user_file), LOCK_UN) == -1) {
         fclose(updated_user_file);
         return USR_ERR_IO;
     }
-
+    
     if (fclose(updated_user_file) != 0) {
+        return USR_ERR_IO;
+    }
+    
+    if (unlink(SWAP_FILE)) {
         return USR_ERR_IO;
     }
     return USR_SUCCESS;
@@ -531,7 +578,6 @@ int userExists(const char* username) {
         return USR_ERR_USR_UKN;
     }
     free(buf);
-//     free(pwd);
 
     FILE* users_base = fopen(OTPWD_PATH, "r");
     if (users_base == NULL) {

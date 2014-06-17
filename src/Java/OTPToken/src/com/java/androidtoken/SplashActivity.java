@@ -56,11 +56,7 @@ public class SplashActivity extends Activity {
 					if (IOFileUtils.internalFileExists(getApplicationContext(),
 							LocalData.LOCAL_PIN_FILE)) {
 						isAreadyHavePIN = true;
-					} else {
-						IOFileUtils.createInternalFile(getApplicationContext(),
-								LocalData.LOCAL_PIN_FILE);
-					}
-					
+					}					
 					
 					// tester l'existence du fichier localData.xml, 
 					// s'il n'existe pas, le créer

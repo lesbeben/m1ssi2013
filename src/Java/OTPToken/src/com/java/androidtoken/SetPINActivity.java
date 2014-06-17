@@ -1,5 +1,6 @@
 package com.java.androidtoken;
 
+import com.java.dataManager.IOFileUtils;
 import com.java.dataManager.LocalData;
 
 import android.app.Activity;
@@ -85,7 +86,10 @@ public class SetPINActivity extends Activity {
 				showDialog(DIALOG_DIFF_NEW_PIN);
 				return;
 			}
-
+			if (!isChange) {
+				IOFileUtils.createInternalFile(getApplicationContext(),
+						LocalData.LOCAL_PIN_FILE);
+			}
 			LocalData.getInstance().setPIN(newPin1);
 			LocalData.getInstance().savePin(getApplicationContext());
 
